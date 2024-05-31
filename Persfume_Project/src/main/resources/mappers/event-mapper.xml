@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="eventMapper">
+	
+	<!-- EVENT 테이블의 조회 결과를 자바 Event VO 타입으로 뽑아주는 resultMap -->
+	<resultMap type="event" id="eventResultSet">
+		<result column="EVENT_NO" property="eventNo" />
+		<result column="EVENT_TITLE" property="eventTitle" />
+		<result column="EVENT_CONTENT" property="eventContent" />
+		<result column="START_DATE" property="startDate" />
+		<result column="DEW_DATE" property="dewDate" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="STATUS" property="status" />
+	</resultMap>
+	
+	
+	
+ 	 
+</mapper>

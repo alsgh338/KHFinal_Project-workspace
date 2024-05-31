@@ -15,23 +15,14 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
-	<!-- 
 	<typeAliases>
-		<typeAlias type="com.kh.spring.member.model.vo.Member" alias="member" />
-		<typeAlias type="com.kh.spring.board.model.vo.Board" alias="board" />
-		<typeAlias type="com.kh.spring.board.model.vo.Reply" alias="reply" />
+		<typeAlias type="com.mata.persfume.event.model.vo.Event" alias="event" />
+		<typeAlias type="com.mata.persfume.event.model.vo.EventImg" alias="eventImg" />
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="/mappers/member-mapper.xml" />
-		<mapper resource="/mappers/board-mapper.xml" />
+		<mapper resource="/mappers/event-mapper.xml" />
 	</mappers>
-	 -->
-	<!-- 
-		* 파일이 없는 상태에서 mapper 등록하면 오류 발생
-		* 파일이 있는 상태지만 namespace 를 누락하면 마찬가지로
-		   				 mapper 등록하면 오류 발생
-	-->
 	
 </configuration>  
 
