@@ -13,4 +13,5 @@ public class Chat {
 
 	private int chatNo;
 	private int classNo;
+	//2024-05-31test commit : 홍현 
 }
