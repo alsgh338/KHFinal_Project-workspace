@@ -9,8 +9,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class Chat {
+public class ChatMem {
 
 	private int chatNo;
-	private int classNo;
+	private int memNo;
 }

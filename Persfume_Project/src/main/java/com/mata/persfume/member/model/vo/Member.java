@@ -1,8 +1,18 @@
 package com.mata.persfume.member.model.vo;
 
+import java.sql.Date;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Member {
 
-	/*
 	private int memNo;
 	private String memId;
 	private String memPwd;
@@ -12,6 +22,11 @@ public class Member {
 	private String addressNo;
 	private String address;
 	private String gender;
-	private */
+	private Date birthDate;
+	private Date enrollDate;
+	private Date modifyDate;
+	private Date testDate;
+	private String status;
+	
 	
 }
