@@ -1,6 +1,8 @@
 package com.mata.persfume.product.model.vo;
 
 
+import java.sql.Date;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
