@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+		* spring-security.xml 파일
+		내가 만든 설정파일로 스프링 시큐리티 관련 빈들만 등록해둘 것임
+	-->
+	<bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" 
+		  id="bcryptPasswordEncoder" />
+
+</beans>

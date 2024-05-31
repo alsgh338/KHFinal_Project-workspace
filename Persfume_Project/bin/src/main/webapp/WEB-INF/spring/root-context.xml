@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- 읽혀지는 순서 2번 : DB연결 -->
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<bean class="org.apache.commons.dbcp.BasicDataSource" 
+		  id="dataSource" destroy-method="close">
+		<property name="driverClassName" 
+				  value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" 
+				  value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="PERSFUME" />
+		<property name="password" value="PERSFUME" />
+	</bean>
+	
+	<!-- 2단계. MyBatis Spring 에서 제공하는 SQL 명령어 실행을 위한 bean 등록 -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" 
+		  id="sqlSessionFactory">
+		<!-- 
+			MyBatis 설정파일의 위치를 지정 (mybatis-config.xml) 
+			classpath: 가 resources 폴더를 의미함
+		-->
+		<property name="configLocation" 
+				  value="classpath:mybatis-config.xml" />
+		<!-- 연결을 위한 객체를 참조해오기 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 3단계. SQL 구문 실행을 위한 템플릿을 제공하는 객체 등록 -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate" 
+		  id="sqlSession">
+		<!-- 2단계에서 등록한 빈을 참조하겠다. -->
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+	
+	<!-- 트랜잭션 관리를 위한 빈 등록 -->
+	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+		  id="transactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- @Transactional 어노테이션 활성화 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!-- 파일 업로드 관련 빈 등록 -->
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" 
+		  id="multipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		
+		<property name="maxUploadSize" value="10000000" />
+	</bean>
+	
+	<!-- CASE 1. 단일 property 파일 사용 시, 간단하게 사용하는 방법 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="locations" value="classpath:/key.properties" />
+	</bean>
+	
+	<!-- CASE 2. 여러 개의 property 파일 사용 시 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="locations">
+	        <list>
+	            <value>classpath:/key.properties</value>
+	        </list>
+	    </property>
+	</bean>
+	
+</beans>

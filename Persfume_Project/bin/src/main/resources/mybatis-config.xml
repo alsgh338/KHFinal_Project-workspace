@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+	
+	<!-- 
+		기존 : settings, typeAliases, environments, mappers 영역 작성
+		스프링 마이바티스 연동 후 : settings, typeAliases, mappers 영역만 작성
+		(environments 영역에 작성했었던 DB 접속 정보는 이미
+		 root-context.xml 에 적었기 때문에)
+	-->
+	
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	<!-- 
+	<typeAliases>
+		<typeAlias type="com.kh.spring.member.model.vo.Member" alias="member" />
+		<typeAlias type="com.kh.spring.board.model.vo.Board" alias="board" />
+		<typeAlias type="com.kh.spring.board.model.vo.Reply" alias="reply" />
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/board-mapper.xml" />
+	</mappers>
+	 -->
+	<!-- 
+		* 파일이 없는 상태에서 mapper 등록하면 오류 발생
+		* 파일이 있는 상태지만 namespace 를 누락하면 마찬가지로
+		   				 mapper 등록하면 오류 발생
+	-->
+	
+</configuration>  
+
+
+
+
+
