@@ -539,30 +539,6 @@
 
     </div>
     
-    <!-- 네비게이션 바 스타일 스크립트 -->
-    <script>
-        $(document).ready(function() {
-            var jbOffset = $('.content-area>#home').offset().top + $('.content-area>#home').height();
-            $(window).scroll(function() {
-                if ($(document).scrollTop() > jbOffset/2) {
-                    $('#header').addClass('jbFixed-after');
-                    $('#header').removeClass('jbFixed-before');
-                } else {
-                    $('#header').addClass('jbFixed-before');
-                    $('#header').removeClass('jbFixed-after');
-                }
-            });
-
-            $("#header").hover(function(){
-                $('#header').addClass('jbFixed-after');
-                $('#header').removeClass('jbFixed-before');   
-            }, function(){
-                $('#header').addClass('jbFixed-before');
-                $('#header').removeClass('jbFixed-after');
-            });
-        });
-    </script>
-
     <!-- Main Page 관련 스크립트 -->
     <script>
         $(function(){
