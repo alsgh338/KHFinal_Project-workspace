@@ -7,13 +7,32 @@
 		<result column="EVENT_NO" property="eventNo" />
 		<result column="EVENT_TITLE" property="eventTitle" />
 		<result column="EVENT_CONTENT" property="eventContent" />
+		<result column="EVENT_COUNT" property="eventCount" />
 		<result column="START_DATE" property="startDate" />
 		<result column="DEW_DATE" property="dewDate" />
 		<result column="CREATE_DATE" property="createDate" />
 		<result column="STATUS" property="status" />
 	</resultMap>
 	
+	<select id="selectListCount"
+			resultType="_int">
+		SELECT COUNT(*)
+		  FROM EVENT
+		 WHERE STATUS = 'Y'
+	</select>
 	
+	<select id="selectList"
+			resultMap="eventResultSet">
+		SELECT EVENT_NO
+		     , EVENT_TITLE
+		     , EVENT_COUNT
+		     , START_DATE
+		     , DEW_DATE
+		     , CREATE_DATE
+		  FROM EVENT
+		 WHERE STATUS = 'Y'
+		 ORDER BY EVENT_NO DESC
+	</select>
 	
  	 
 </mapper>

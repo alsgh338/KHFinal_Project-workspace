@@ -21,4 +21,10 @@ public class Event {
 	private Date dewDate;
 	private Date createDate;
 	private String status;
+	
+	// 이미지
+	private int eventImgNo;
+	private String eventImgPath;
+	private String eventImgLevel;
+	private String imgStatus;
 }
