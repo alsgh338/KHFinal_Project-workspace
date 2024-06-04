@@ -225,7 +225,7 @@
         </div>
         <div id="nav-auth">
             <div>
-                <a href="">SIGN IN</a> |
+                <a href="enroll.me">SIGN IN</a> |
                 <a href="">SIGN UP</a> 
             </div>
         </div>
