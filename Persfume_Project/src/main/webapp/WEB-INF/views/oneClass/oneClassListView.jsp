@@ -7,7 +7,15 @@
 <title>Insert title here</title>
 
 <style>
-       div:not(#header, #header *, .oneday-class, .content-main, .oneday-class *){
+       /* div:not(#header, #header *, .oneday-class, .content-main, .oneday-class *){
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        } */
+        
+        .content-area,
+        .content-area>div:not(.content-main){
           display: flex;
           flex-direction: column;
           justify-content: center;
