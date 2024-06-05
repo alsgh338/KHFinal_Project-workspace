@@ -219,7 +219,7 @@
         <div id="nav-btn" style="">
             <div><a href="">NOTICE</a></div>
             <div><a href="list.ev">EVENT</a></div>
-            <div><a href="">PERFUME</a></div>
+            <div><a href="list.po">PERFUME</a></div>
             <div><a href="list.oc">ONEDAY CLASS</a></div>
             <div><a href="">SCENT RECOMMAND</a></div>
         </div>

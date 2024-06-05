@@ -18,10 +18,13 @@
 	<typeAliases>
 		<typeAlias type="com.mata.persfume.event.model.vo.Event" alias="event" />
 		<typeAlias type="com.mata.persfume.event.model.vo.EventImg" alias="eventImg" />
+		<typeAlias type="com.mata.persfume.product.model.vo.Product" alias="product" />
+		<typeAlias type="com.mata.persfume.product.model.vo.ProductImg" alias="productImg" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/event-mapper.xml" />
+		<mapper resource="/mappers/product-mapper.xml" />
 	</mappers>
 	
 </configuration>  
