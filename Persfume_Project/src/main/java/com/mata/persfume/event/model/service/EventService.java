@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.mata.persfume.common.model.vo.PageInfo;
 import com.mata.persfume.event.model.vo.Event;
+import com.mata.persfume.event.model.vo.EventImg;
 
 public interface EventService {
 
@@ -14,7 +15,11 @@ public interface EventService {
 	// 이벤트 리스트 조회
 	ArrayList<Event> selectList(PageInfo pi);
 	
-	// 이벤트 작성? (관리자에서 ?)
+	// 이벤트 작성
+	int insertEvent(Event e);
+	// 이벤트 작성 성공시 실행할 이미지 삽입
+	int insertEventImg(EventImg ei);
+	
 	
 	// 이벤트 상세 조회
 	// 조회수 증가 먼저

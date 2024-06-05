@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,17 +40,27 @@
         
 
         .content-subtitle{
-            line-height: 150px;
+            line-height: 120px;
             font-size: 30px;
             font-weight: 600;
         }
-
+		
         .content-main{
             display: inline-block;
             text-align: center;
         }
 
         /* 여기서부턴 개별 스타일? (아마도) */
+        
+		#event-info{
+			display: flex;
+			flex-direction: row;
+		}
+		
+		#event-info div{
+			line-height: 80px;
+		}
+        
 		#event-detail {
 			width: 100%;
 			align-items: center;
@@ -75,11 +86,18 @@
 	
     <div class="content-area">
         <div class="content-title" id="home">EVENT</div>
-        <div class="content-subtitle">(이벤트 상세내용)</div>
+        <div class="content-subtitle">${ requestScope.e.eventTitle }</div>
+        
+        <!-- 상세 정보 -->
+        <div id="event-info">
+        	<div class="event-term">기간 : ${ requestScope.e.startDate } ~ ${ requestScope.e.dewDate }</div>&emsp;&emsp;
+        	<div class="count">조회수 : ${ requestScope.e.eventCount }</div>
+        </div>
+        
         <div class="content-main">
         
         	<div id="event-detail">
-        		<img src="resources/images/images.jpg" alt="">
+        		<img src="${ requestScope.e.eventImgPath }" alt="">
 				<div id="hidden"></div>
         	</div>
 	        

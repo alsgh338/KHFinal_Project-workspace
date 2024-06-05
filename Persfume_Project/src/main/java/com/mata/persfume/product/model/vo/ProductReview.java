@@ -15,7 +15,9 @@ public class ProductReview {
 
 	private int reviewNo;
 	private String reviewContent;
-	private String reviewImg;
+	private String reviewImgPath;
+	private String reviewImgOrigin;
+	private String reviewImgChange;
 	private Date reviewDate;
 	private String reviewStatus;
 	private int memNo;

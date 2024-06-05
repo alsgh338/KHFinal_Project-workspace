@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mata.persfume.common.model.vo.PageInfo;
 import com.mata.persfume.event.model.dao.EventDao;
 import com.mata.persfume.event.model.vo.Event;
+import com.mata.persfume.event.model.vo.EventImg;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -31,14 +33,29 @@ public class EventServiceImpl implements EventService {
 		return eventDao.selectList(sqlSession, pi);
 	}
 
+	// 썸네일 + 텍스트 insert
 	@Override
-	public int increaseCount(int eventNo) {
-		return 0;
+	@Transactional
+	public int insertEvent(Event e) {
+		return eventDao.insertEvent(sqlSession, e);
+	}
+	
+	// 본문 이미지 insert
+	@Override
+	@Transactional
+	public int insertEventImg(EventImg ei) {
+		return eventDao.insertEventImg(sqlSession, ei);
+	}
+	
+	@Override
+	public int increaseCount(int eno) {
+		return eventDao.increaseCount(sqlSession, eno);
 	}
 
 	@Override
-	public Event selectEvent(int eventNo) {
-		return null;
+	public Event selectEvent(int eno) {
+		return eventDao.selectEvent(sqlSession, eno);
 	}
+
 
 }

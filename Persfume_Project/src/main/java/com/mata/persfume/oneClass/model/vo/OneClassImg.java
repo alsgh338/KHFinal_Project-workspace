@@ -11,8 +11,10 @@ import lombok.ToString;
 @ToString
 public class OneClassImg {
 
-	private int imgNo;
-	private String imgName;
+	private int classImgNo;
+	private String classImgPath;
+	private String classImgOrigin;
+	private String classImgChange;
 	private int imgType;
 	private String status;
 	private int refCno;

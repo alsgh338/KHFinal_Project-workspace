@@ -113,40 +113,18 @@
         
         <div class="content-main">
         
-        	
+        	<c:forEach var="event" items="${ requestScope.list }">
+				<div class="event">
+					<div class="event-img">
+						<input type="hidden" value="${ event.eventNo }">
+						<img src="${ event.eventImgPath }" alt="">
+					</div>
+					<div>${ event.eventTitle }</div>
+					<div>기간 : ${ event.startDate } ~ ${ event.dewDate }</div>
+			</div>
+			</c:forEach>
 	        <!-- sysdate 가 시작일과 종료일 사이라면 진행중인 이벤트 -->
 			<!-- sysdate 가 종료일보다 늦을 경우 종료된 이벤트 -->
-			<div class="event">
-				<div class="event-img">
-					<img src="resources/images/event_thumbnail.jpg" alt="">
-					<!-- 퀴즈(향수추천) 참여 시 쿠폰 증정 관련 이벤트(썸네일, 내용물) -->
-				</div>
-				<div>제목</div>
-			</div>
-		
-			<div class="event">
-				<div class="event-img">
-					<img src="resources/images/images.jpg" alt="">
-				</div>
-				
-				event
-			</div>
-			
-			<div class="event">
-				<div class="event-img">
-					<img src="resources/images/images.jpg" alt="">
-				</div>
-				
-				event
-			</div>
-			
-			<div class="event">
-				<div class="event-img">
-					<img src="resources/images/images.jpg" alt="">
-				</div>
-				
-				event
-			</div>
 			
         </div>
     </div>
@@ -159,12 +137,13 @@
 		$(function(){
 			$(".event").click(function(){
 				
-				location.href = "detail.ev"
+				let eventNo = $(this).find('input[type="hidden"]').val();
+				
+				location.href = "detail.ev?eno=" + eventNo;
 			});
 		});
 		
 	</script>
-	
 	<div id="pagingArea">
         <ul class="pagination">
                 

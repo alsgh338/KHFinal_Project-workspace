@@ -18,6 +18,8 @@ public class Notice {
 	private String noticeContent;
 	private int count;
 	private Date createDate;
-	private String noticeImg;
+	private String noticeImgPath;
+	private String noticeImgOrigin;
+	private String noticeImgChange;
 	private String status;
 }

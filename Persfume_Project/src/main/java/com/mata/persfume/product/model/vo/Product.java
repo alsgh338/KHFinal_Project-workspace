@@ -19,6 +19,7 @@ public class Product {
 	private int productPrice;
 	private int productStock;
 	private Date registDate;
+	private int discount;
 	private String category;
 	private String gender;
 	private String topNote;

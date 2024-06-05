@@ -11,9 +11,11 @@ import lombok.ToString;
 @ToString
 public class EventImg {
 
-	// 안쓰이면 삭제 예정인 VO
+	
 	private int eventImgNo;
 	private String eventImgPath;
+	private String eventImgOrigin;
+	private String eventImgChange;
 	private String eventImgLevel;
 	private String status;
 	private int eventNo;

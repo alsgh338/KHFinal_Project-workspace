@@ -12,6 +12,7 @@
 		<result column="DEW_DATE" property="dewDate" />
 		<result column="CREATE_DATE" property="createDate" />
 		<result column="STATUS" property="status" />
+		<result column="EVENTIMG_PATH" property="eventImgPath" />
 	</resultMap>
 	
 	<select id="selectListCount"
@@ -25,14 +26,72 @@
 			resultMap="eventResultSet">
 		SELECT EVENT_NO
 		     , EVENT_TITLE
+		     , EVENT_CONTENT
 		     , EVENT_COUNT
 		     , START_DATE
 		     , DEW_DATE
 		     , CREATE_DATE
-		  FROM EVENT
-		 WHERE STATUS = 'Y'
+		     , EVENTIMG_PATH
+		  FROM EVENT JOIN EVENT_IMG USING (EVENT_NO)
+		 WHERE EVENT.STATUS = 'Y'
+		   AND EVENTIMG_LEVEL = 1
 		 ORDER BY EVENT_NO DESC
 	</select>
 	
+	<insert id="insertEvent"
+			parameterType="event">
+		INSERT INTO EVENT(EVENT_NO
+		                , EVENT_TITLE
+		                , EVENT_CONTENT
+		                , START_DATE
+		                , DEW_DATE
+		                , CREATE_DATE)
+		           VALUES(SEQ_EVENT_NO.NEXTVAL
+		                , #{eventTitle}
+		                , #{eventContent}
+		                , #{startDate}
+		                , #{dewDate}
+		                , SYSDATE)
+	</insert>
+	
+	<insert id="insertEventImg"
+			parameterType="eventImg">
+		INSERT INTO EVENT_IMG(EVENTIMG_NO
+							, EVENT_NO
+		                    , EVENTIMG_LEVEL
+		                	, EVENTIMG_PATH
+		                	, EVENTIMG_ORIGIN
+		                	, EVENTIMG_CHANGE
+		                	, STATUS)
+		           	   VALUES(SEQ_EVENTIMG_NO.NEXTVAL
+		           	   		, SEQ_EVENT_NO.CURRVAL
+		               	    , #{eventImgLevel}
+		                    , #{eventImgPath}
+		                    , #{eventImgOrigin}
+		                    , #{eventImgChange}
+		            		, #{status})
+	</insert>
  	 
+ 	<update id="increaseCount"
+ 			parameterType="_int">
+ 		UPDATE EVENT
+		   SET EVENT_COUNT = EVENT_COUNT + 1
+		 WHERE EVENT_NO = #{eno}
+		   AND STATUS = 'Y'
+ 	</update>
+ 	
+ 	<select id="selectEvent"
+ 			parameterType="_int"
+ 			resultMap="eventResultSet">
+	 	SELECT EVENT_TITLE
+		     , EVENT_CONTENT
+		     , EVENT_COUNT
+		     , START_DATE
+		     , DEW_DATE
+		     , EVENTIMG_PATH
+		  FROM EVENT JOIN EVENT_IMG USING (EVENT_NO)
+		 WHERE EVENT.STATUS = 'Y'
+		   AND EVENTIMG_LEVEL = 2
+		   AND EVENT_NO = #{eno}
+ 	</select>
 </mapper>

@@ -49,22 +49,9 @@
             text-align: center;
         }
 
-        /* 여기서부턴 개별 스타일? (아마도) */
-		#event-detail {
-			width: 100%;
-			align-items: center;
-			border: 1px solid black; 
-		}
-		
-		#event-detail>img {
-			width: 70%;
-			align-items: center;
-			border: 1px solid black; 
-		}
-		
-		#hidden {
-			height: 200px;
-		}
+        #enrollForm {
+        	display: inline-block;
+        }
         
 </style>
 
@@ -77,32 +64,33 @@
         <div class="content-title" id="home">EVENT</div>
         <div class="content-subtitle">(이벤트 상세내용)</div>
         <div class="content-main">
-        
-        	<div id="event-enroll">
-        		<input type="file" />
-				<div id="hidden"></div>
-        	</div>
-        	
         	
         	<form id="enrollForm" method="post" action="insert.ev" enctype="multipart/form-data">
                     <table align="center">
                         <tr>
                             <th><label for="title">제목</label></th>
-                            <td><input type="text" id="title" class="form-control" name="eventTitle" required></td>
+                            <td colspan="3"><input type="text" id="title" class="form-control" name="eventTitle" required></td>
+                        </tr>
+                        <tr>
+                        	<th><label for="date">기간</label></th>
+                        	<td><input type="date" id="startDate" class="form-control" name="startDate"></td>
+                        	<th><label>~</label></th>
+                        	<td><input type="date" id="dewDate" class="form-control" name="dewDate"></td>
                         </tr>
                         <tr>
                             <th><label for="upfileThumbnail">썸네일</label></th>
-                            <td><input type="file" id="upfileThumbnail" class="form-control-file border" name="upfiles"></td>
+                            <td colspan="3"><input type="file" id="upfileThumbnail" class="form-control-file border" name="upfiles" required></td>
                         </tr>
                         <tr>
                             <th><label for="upfileMain">본문 사진</label></th>
-                            <td><input type="file" id="upfileMain" class="form-control-file border" name="upfiles"></td>
+                            <td colspan="3"><input type="file" id="upfileMain" class="form-control-file border" name="upfiles" required></td>
                         </tr>
                         <tr>
                             <th><label for="content">내용</label></th>
-                            <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
+                            <td colspan="3"><textarea id="content" class="form-control" rows="10" style="resize:none;" name="eventContent" placeholder="미입력시 이미지만 업로드 됩니다."></textarea></td>
                         </tr>
                     </table>
+                    
                     <br>
     
                     <div align="center">
