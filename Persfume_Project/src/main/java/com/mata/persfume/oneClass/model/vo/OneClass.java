@@ -25,4 +25,8 @@ public class OneClass {
 	private Date enrollDate;
 	private String status;
 	
+	
+	private String thumbnailImg;
+	private int currentStudent;
+	
 }

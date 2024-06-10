@@ -21,12 +21,18 @@
 		<typeAlias type="com.mata.persfume.product.model.vo.Product" alias="product" />
 		<typeAlias type="com.mata.persfume.product.model.vo.ProductImg" alias="productImg" />
 		<typeAlias type="com.mata.persfume.member.model.vo.Member" alias="member" />
+		<typeAlias type="com.mata.persfume.recommand.model.vo.Recommand" alias="recommand" />
+		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClass" alias="oneClass" />
+		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClassImg" alias="oneClassImg" />
+
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/product-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/recommand-mapper.xml" />
+		<mapper resource="/mappers/oneclass-mapper.xml" />
 	</mappers>
 	
 </configuration>  

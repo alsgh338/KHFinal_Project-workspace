@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,6 +146,18 @@
             align-items: center;
             height: 10%;
         }
+        
+        #oneclass-not-found{
+        	color: blue;
+        	font-size: 40px;
+        	font-weight: 800;
+        	margin : 100px 0;
+        }
+        #oneclass-not-found>img{
+        	width: 200px;
+        	height: 200px;
+        	object-fit: cover;
+        }
 
 </style>
 
@@ -157,151 +170,108 @@
         <div class="content-title" id="home">ONEDAY CLASS</div>
         <div class="content-subtitle">LIST</div>
         <div class="content-main">
-
-            <div class="">정렬이나 검색바 들어갈 자리</div>
-
-			<div class="oneday-class">
-                <div class="class-img">
-                    <img src="resources/images/class_title.jpg" alt="">
-                </div>
-
-                <div class="class-data">
-                    <div class="class-teacher">
-                        <div class="teacher-img">
-                            <img src="resources/images/bg.png" alt="">
-                        </div>
-                        공건희 강사
-                    </div>
-                    <div class="student_cnt">인원 : 1 / 10</div>
-                </div>
-                
-                <div class="class-title">원데이 클래스</div>
-
-                <div class="class-data">
-                    <div class="class-location">사랑시 고백구 행복동</div>
-                    <div class="class-price">19,000원</div>
-                </div>
-            </div>
-
-            <div class="oneday-class">
-                <div class="class-img">
-                    <img src="resources/images/class_title.jpg" alt="">
-                </div>
-
-                <div class="class-data">
-                    <div class="class-teacher">
-                        <div class="teacher-img">
-                            <img src="resources/images/bg.png" alt="">
-                        </div>
-                        공건희 강사
-                    </div>
-                    <div class="student_cnt">인원 : 1 / 10</div>
-                </div>
-                
-                <div class="class-title">원데이 클래스</div>
-
-                <div class="class-data">
-                    <div class="class-location">사랑시 고백구 행복동</div>
-                    <div class="class-price">19,000원</div>
-                </div>
-            </div>
-            
-            			<div class="oneday-class">
-                <div class="class-img">
-                    <img src="resources/images/class_title.jpg" alt="">
-                </div>
-
-                <div class="class-data">
-                    <div class="class-teacher">
-                        <div class="teacher-img">
-                            <img src="resources/images/bg.png" alt="">
-                        </div>
-                        공건희 강사
-                    </div>
-                    <div class="student_cnt">인원 : 1 / 10</div>
-                </div>
-                
-                <div class="class-title">원데이 클래스</div>
-
-                <div class="class-data">
-                    <div class="class-location">사랑시 고백구 행복동</div>
-                    <div class="class-price">19,000원</div>
-                </div>
-            </div>
-
-            <div class="oneday-class">
-                <div class="class-img">
-                    <img src="resources/images/class_title.jpg" alt="">
-                </div>
-
-                <div class="class-data">
-                    <div class="class-teacher">
-                        <div class="teacher-img">
-                            <img src="resources/images/bg.png" alt="">
-                        </div>
-                        공건희 강사
-                    </div>
-                    <div class="student_cnt">인원 : 1 / 10</div>
-                </div>
-                
-                <div class="class-title">원데이 클래스</div>
-
-                <div class="class-data">
-                    <div class="class-location">사랑시 고백구 행복동</div>
-                    <div class="class-price">19,000원</div>
-                </div>
-            </div>
-            
-            			<div class="oneday-class">
-                <div class="class-img">
-                    <img src="resources/images/class_title.jpg" alt="">
-                </div>
-
-                <div class="class-data">
-                    <div class="class-teacher">
-                        <div class="teacher-img">
-                            <img src="resources/images/bg.png" alt="">
-                        </div>
-                        공건희 강사
-                    </div>
-                    <div class="student_cnt">인원 : 1 / 10</div>
-                </div>
-                
-                <div class="class-title">원데이 클래스</div>
-
-                <div class="class-data">
-                    <div class="class-location">사랑시 고백구 행복동</div>
-                    <div class="class-price">19,000원</div>
-                </div>
-            </div>
-
-            <div class="oneday-class">
-                <div class="class-img">
-                    <img src="resources/images/class_title.jpg" alt="">
-                </div>
-
-                <div class="class-data">
-                    <div class="class-teacher">
-                        <div class="teacher-img">
-                            <img src="resources/images/bg.png" alt="">
-                        </div>
-                        공건희 강사
-                    </div>
-                    <div class="student_cnt">인원 : 1 / 10</div>
-                </div>
-                
-                <div class="class-title">원데이 클래스</div>
-
-                <div class="class-data">
-                    <div class="class-location">사랑시 고백구 행복동</div>
-                    <div class="class-price">19,000원</div>
-                </div>
-            </div>
-
-           
-
-
-
+            <c:choose>
+            	<c:when test="${ empty requestScope.list}">
+   	            	<div id="oneclass-not-found">
+   	            		<img alt="힝..." src="resources/images/error-sad.png"> <br>
+		            	클래스가 존재하지 않습니다.
+	            	</div>
+            	</c:when>
+            	
+            	<c:otherwise>
+            	
+  			        <div class="">정렬이나 검색바 들어갈 자리</div>            
+		            <c:forEach var="oc" items="${ requestScope.list }">
+			            <div class="oneday-class">
+			            <div style="display:none;">
+			            	${ oc.classNo }
+			            </div>
+			                <div class="class-img">
+			                    <img src= ${oc.thumbnailImg } alt="쌈네일">
+			                </div>
+			
+			                <div class="class-data">
+			                    <div class="class-teacher">
+			                        <div class="teacher-img">
+			                            <img src="resources/images/person-circle.svg" alt="강사">
+			                        </div>
+			                        ${oc.classTeacher} 강사
+			                    </div>
+			                    <div class="student_cnt">인원 : ${oc.currentStudent} / ${oc.studentMaxNo}</div>
+			                </div>
+			                
+			                <div class="class-title">${oc.className}</div>
+			
+			                <div class="class-data">
+			                    <div class="class-location">사랑시 고백구 행복동</div>
+			                    <div class="class-price">${oc.price}원</div>
+			                </div>
+			            </div>
+		            
+		            
+		            </c:forEach>
+		            <div id="pagingArea">
+		                <ul class="pagination">
+		                
+		                	<c:choose>
+		                	<c:when test="${ requestScope.pi.currentPage eq 1 }">	
+		                    	<li class="page-item disabled">
+		                    		<a class="page-link" href="#">Previous</a>
+		                    	</li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item">
+		                    		<a class="page-link" 
+		                    		   href="list.oc?cpage=${ requestScope.pi.currentPage - 1 }">
+		                    			Previous
+		                    		</a>
+		                    	</li>
+		                    </c:otherwise>
+		                    </c:choose>
+		                    
+		                    <c:forEach var="p" begin="${ requestScope.pi.startPage }"
+		                    		   end="${ requestScope.pi.endPage }"
+		                    		   step="1">
+		                    	
+		                    	<c:choose>	   
+		                    	<c:when test="${ requestScope.pi.currentPage ne p }">
+		                    		<li class="page-item">
+				                    	<a class="page-link" href="list.oc?cpage=${ p }">
+											${ p }
+										</a>
+				                    </li>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<li class="page-item active">
+				                    	<a class="page-link">
+											${ p }
+										</a>
+				                    </li>
+		                    	</c:otherwise>
+			                    </c:choose>
+		                    </c:forEach>
+		                    
+		                    <c:choose>
+		                    <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+			                    <li class="page-item disabled">
+			                    	<a class="page-link" href="#">
+			                    		Next
+			                    	</a>
+			                    </li>
+		                    </c:when>
+		                    <c:otherwise>
+			                    <li class="page-item">
+			                    	<a class="page-link" 
+			                    	   href="list.oc?cpage=${ requestScope.pi.currentPage + 1 }">
+			                    		Next
+			                    	</a>
+			                    </li>
+			                </c:otherwise>
+		                    </c:choose>
+		                </ul>
+		            </div>
+               	</c:otherwise>
+            </c:choose>
         </div>
     </div>
 
@@ -309,7 +279,11 @@
         $(function(){
             $(".oneday-class").hover(function(){
                 $(this).toggleClass("onHover");
-                console.log("히히");
+            });
+            
+            $(".oneday-class").on("click",function(){
+            	let ocno = $(this).chlildren().eq(0).text();
+            	location.href = "detail.oc?ocno=" + ocno;
             });
 
         });

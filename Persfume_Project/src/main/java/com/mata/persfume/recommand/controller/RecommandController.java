@@ -1,17 +1,21 @@
 package com.mata.persfume.recommand.controller;
 
-import java.util.ArrayList;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.mata.persfume.member.model.vo.Member;
+import com.mata.persfume.product.model.vo.Product;
+import com.mata.persfume.recommand.model.service.RecommandServiceImpl;
+import com.mata.persfume.recommand.model.vo.Recommand;
 
 @Controller
 public class RecommandController {
+	
+	@Autowired
+	private RecommandServiceImpl recommandService;
 	
 	@GetMapping(value="test.rc")
 	public String selectList() {
@@ -19,17 +23,23 @@ public class RecommandController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value="test.rc", produces="application/json; charset=UTF-8")
-	public String selectPerfumeList() {
+	@PostMapping(value="result.rc", produces="application/json; charset=UTF-8")
+	public String selectList(Recommand r, int memNo) {
 		
-		ArrayList<Member> list = new ArrayList<>();
-		list.add(new Member());
-		list.add(new Member());
-		list.add(new Member());
-		list.add(new Member());
-		list.add(new Member());
 		
-		return new Gson().toJson(list);
+		Product p =  recommandService.selectList(r);
+		
+		
+		if(p != null) {
+			
+			int result = recommandService.insertCoupone(memNo);
+			
+			if(result > 0) {
+				return new Gson().toJson(p);
+			} 
+			
+		} 
+		return null;
 		
 	}
 

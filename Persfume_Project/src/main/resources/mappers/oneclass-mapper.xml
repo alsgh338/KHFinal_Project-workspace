@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="oneClassMapper">
+	
+	<!-- 조회 결과를 자바 product VO 타입으로 뽑아주는 resultMap -->
+	<resultMap type="oneClass" id="oneClassResultSet">
+		<result column="CLASS_NO" property="classNo" />
+		<result column="CLASS_NAME" property="className" />
+		<result column="CLASS_TEACHER" property="classTeacher" />
+		<result column="STUDENT_MAXNO" property="studentMaxNo" />
+		<result column="CLASS_DETAIL" property="classDetail" />
+		<result column="PRICE" property="price" />
+		<result column="START_TIME" property="startTime" />
+		<result column="END_TIME" property="endTime" />
+		<result column="START_DATE" property="startDate" />
+		<result column="ENROLL_DATE" property="enrollDate" />
+		<result column="STATUS" property="status" />
+		<result column="THUMBNAIL_IMG" property="thumbnailImg" />
+		<result column="CURRENT_STUDENT" property="currentStudent" />
+	</resultMap>
+	<resultMap type="oneClassImg" id="oneClassImgResultSet">
+		<result column="CLASS_IMG_NO" property="classImgNo" />
+		<result column="CLASS_IMG_PATH" property="classImgPath" />
+		<result column="CLASS_IMG_ORIGIN" property="classImgOrigin" />
+		<result column="CLASS_IMG_CHANGE" property="classImgChange" />
+		<result column="CLASS_IMG_TYPE" property="imgType" />
+		<result column="STATUS" property="status" />
+		<result column="REF_CNO" property="refCno" />
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM CLASS
+		 WHERE STATUS = 'Y'
+	</select>
+	
+	<select id="selectList"
+			resultMap="oneClassResultSet">
+		SELECT C.CLASS_NO
+		     , C.CLASS_NAME
+		     , C.CLASS_TEACHER
+             , C.STUDENT_MAXNO
+             , C.CLASS_DETAIL
+             , C.PRICE
+             , CIMG.CLASS_IMG_PATH AS THUMBNAIL_IMG
+		     , TO_CHAR(C.START_TIME, 'YYYY-MM-DD') AS "START_TIME"
+             , TO_CHAR(C.END_TIME, 'YYYY-MM-DD') AS "END_TIME"
+             , TO_CHAR(C.START_DATE, 'YYYY-MM-DD') AS "START_DATE"
+             , TO_CHAR(C.ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
+             , (SELECT COUNT(*) 
+				          FROM CLASS_REGIST CR 
+				         WHERE CR.CLASS_NO = C.CLASS_NO) AS CURRENT_STUDENT
+                         
+		  FROM CLASS C
+          JOIN CLASS_IMG CIMG ON C.CLASS_NO = CIMG.REF_CNO
+		 WHERE CLASS_NO = #{oneClassNo}
+		   AND C.STATUS = 'Y'
+           AND CIMG.CLASS_IMG_TYPE = 1
+	</select>
+	
+	<select id="selectOneClass"
+			parameterType="_int"
+			resultMap="oneClassResultSet">
+		SELECT CLASS_NO
+		     , CLASS_NAME
+		     , CLASS_TEACHER
+             , STUDENT_MAXNO
+             , CLASS_DETAIL
+             , PRICE
+		     , TO_CHAR(START_TIME, 'YYYY-MM-DD') AS "START_TIME"
+             , TO_CHAR(END_TIME, 'YYYY-MM-DD') AS "END_TIME"
+             , TO_CHAR(START_DATE, 'YYYY-MM-DD') AS "START_DATE"
+             , TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
+		  FROM CLASS
+		 WHERE CLASS_NO = #{oneClassNo}
+		   AND STATUS = 'Y'
+	</select>
+	
+	<select id="selectOneClassImgList"
+			parameterType="_int"
+			resultMap="oneClassResultSet">
+		SELECT CLASS_NO
+		     , CLASS_NAME
+		     , CLASS_TEACHER
+             , STUDENT_MAXNO
+             , CLASS_DETAIL
+             , PRICE
+		     , TO_CHAR(START_TIME, 'YYYY-MM-DD') AS "START_TIME"
+             , TO_CHAR(END_TIME, 'YYYY-MM-DD') AS "END_TIME"
+             , TO_CHAR(START_DATE, 'YYYY-MM-DD') AS "START_DATE"
+             , TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
+		  FROM CLASS
+		 WHERE CLASS_NO = #{oneClassNo}
+		   AND STATUS = 'Y'
+	</select>
+
+ 	 
+</mapper>

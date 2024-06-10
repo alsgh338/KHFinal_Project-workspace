@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="recommandMapper">
+	
+	<!-- 조회 결과를 자바 product VO 타입으로 뽑아주는 resultMap -->
+	<resultMap type="product" id="productResultSet">
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="PRODUCT_EXPLAIN" property="productExplain" />
+		<result column="PRODUCT_PRICE" property="productPrice" />
+		<result column="PRODUCT_STOCK" property="productStock" />
+		<result column="REGIST_DATE" property="registDate" />
+		<result column="CATEGORY" property="category" />
+		<result column="GENDER" property="gender" />
+		<result column="TOP_NOTE" property="topNote" />
+		<result column="MIDDLE_NOTE" property="middleNote" />
+		<result column="BASE_NOTE" property="baseNote" />
+		<result column="PRODUCT_STATUS" property="productStatus" />
+	</resultMap>
+	
+	<select id="selectList"
+			parameterType="recommand"
+			resultMap="productResultSet">
+			
+            SELECT PRODUCT_NAME, PRODUCT_EXPLAIN
+              FROM PRODUCT P
+              JOIN PRODUCT_IMG PI USING(PRODUCT_NO)
+              JOIN PRODUCT_REVIEW PR USING(PRODUCT_NO)
+             WHERE GENDER = #{genderAnswer}
+              AND CATEGORY = #{categoryAnswer}
+			  AND (TOP_NOTE LIKE '%'||#{scentAnswer}||'%' 
+			   OR MIDDLE_NOTE LIKE '%'||#{scentAnswer}||'%'
+			   OR BASE_NOTE LIKE '%'||#{scentAnswer}||'%')              
+			  AND PRODUCT_STATUS = 'Y'
+              <choose>
+              	<when test='reviewStart == 0'>
+	              	AND(SELECT COUNT(PR2.REVIEW_NO) 
+                 		  FROM PRODUCT_REVIEW PR2 
+                   		 WHERE PR2.PRODUCT_NO = PRODUCT_NO) BETWEEN 0 AND #{reviewStart}                                            
+
+              	</when>
+              	<when test='reviewEnd == 0'>
+             		AND(SELECT COUNT(PR2.REVIEW_NO) 
+                 		  FROM PRODUCT_REVIEW PR2 
+                   		 WHERE PR2.PRODUCT_NO = PRODUCT_NO) >= #{reviewEnd}
+              	</when>
+              	<otherwise>
+              		AND(SELECT COUNT(PR2.REVIEW_NO) 
+                 		  FROM PRODUCT_REVIEW PR2 
+                   		 WHERE PR2.PRODUCT_NO = PRODUCT_NO) BETWEEN #{reviewStart} AND #{reviewEnd}
+              	</otherwise>
+           	  </choose>
+        	  <choose>
+              	<when test='reviewStart == 0'>
+	              	AND PRODUCT_PRICE BETWEEN 0 AND #{priceEnd}
+              	</when>
+              	<when test='priceEnd == 0'>
+              		AND PRODUCT_PRICE >= #{priceEnd}
+              	</when>
+              	<otherwise>
+              		AND PRODUCT_PRICE BETWEEN #{priceStart} AND #{priceEnd}
+              	</otherwise>
+           	  </choose>
+
+	</select>
+	
+	<insert id="insertCoupone"
+			parameterType = "_int">
+		
+	</insert>
+
+ 	 
+</mapper>
