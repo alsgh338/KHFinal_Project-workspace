@@ -19,8 +19,10 @@ public class Member {
 	private String memName;
 	private String email;
 	private String phone;
-	private String addressNo;
+	private String postcode;
 	private String address;
+	private String detailAddress;
+	private String extraAddress;
 	private String gender;
 	private Date birthDate;
 	private Date enrollDate;

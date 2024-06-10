@@ -1,1 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+
+<mapper namespace="memberMapper">
+
+	<!-- 아이디 중복체크용 쿼리문 -->
+	<select id="idCheck"
+			parameterType="string"
+			resultType="_int">
+		SELECT COUNT(*)
+		  FROM MEMBER
+		 WHERE MEM_ID = #{checkId}
+	</select>
+	
+	<!-- 회원가입용 쿼리문 -->
+	<insert id="insertMember"
+			parameterType="member">
+		INSERT INTO MEMBER(MEM_NO
+			,MEM_ID
+	        , MEM_PWD
+	        , MEM_NAME
+	        , EMAIL
+	        , PHONE
+	        , POSTCODE
+	        , ADDRESS
+	        , DETAILADDRESS
+	        , EXTRAADDRESS
+	        , GENDER
+	        , BIRTH_DATE)
+	    VALUES( SEQ_MEM_NO.NEXTVAL 
+	    	,#{memId}
+	        , #{memPwd}
+	        , #{memName}
+	        , #{email}
+	        , #{phone}
+	        , #{postcode}
+	        , #{address}
+	        , #{detailAddress}
+	        , #{extraAddress}
+	        , #{gender}
+	        , #{birthDate})
+	
+	</insert>
+	
+</mapper>
