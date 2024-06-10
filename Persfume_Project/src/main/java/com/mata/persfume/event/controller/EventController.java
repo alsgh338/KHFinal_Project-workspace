@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,20 +31,46 @@ public class EventController {
 	
 	// ongoing과 finished로 나눠서 페이지 분할
 	@GetMapping("list.ev")
-	public String eventList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+	public String eventList(@RequestParam(value="cpage", defaultValue="1") int currentPage, 
+							@RequestParam(value="condition") String condition,
+							Model model) {
 		
-		int listCount = eventService.selectListCount();
+		int listCount; 
+		ArrayList<Event> list;
+		PageInfo pi;
+		
 		int pageLimit = 10;
 		int boardLimit = 8;
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
-		ArrayList<Event> list = eventService.selectList(pi);
+		if (condition.equals("expired")) {
+	        listCount = eventService.selectExpiredListCount();
+	        pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+	        list = eventService.selectExpiredList(pi);
+	    } else if (condition.equals("onGoing")) {
+	        listCount = eventService.selectOngoingListCount();
+	        pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+	        list = eventService.selectOngoingList(pi);
+	    } else {
+	        listCount = eventService.selectScheduledListCount();
+	        pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+	        list = eventService.selectScheduledList(pi);
+	    }
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
+		model.addAttribute("condition", condition);
 		
 		return "event/eventListView";
+			
+	}
+	
+	@GetMapping("eventList")
+	@ResponseBody
+	public ArrayList<Event> showMainEvent(Model model) {
+		
+        ArrayList<Event> list = eventService.selectEventList();
+        return list;
+        
 	}
 	
 	@GetMapping("detail.ev")
@@ -119,7 +146,7 @@ public class EventController {
 				
 				session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
 				
-				mv.setViewName("redirect:/list.ev");
+				mv.setViewName("redirect:/list.ev?condition=onGoing");
 			} else {
 				
 				mv.addObject("errorMsg", "게시글 등록 실패").setViewName("common/errorPage");

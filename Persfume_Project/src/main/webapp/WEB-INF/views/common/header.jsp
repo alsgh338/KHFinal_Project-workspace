@@ -211,14 +211,15 @@
 
     <div id="header" class="jbFixed-before">
         <div id="nav-logo">
-            <a href="">
+        	<!-- 로고로 contextPath 이동 추가 - 민호 2024/06/10 -->
+            <a href="${pageContext.request.contextPath}">
                 <img src="resources/images/Persfume_Logo.png">
             </a>
         </div>
 
         <div id="nav-btn" style="">
             <div><a href="">NOTICE</a></div>
-            <div><a href="list.ev">EVENT</a></div>
+            <div><a href="list.ev?condition=onGoing">EVENT</a></div>
             <div><a href="list.po">PERFUME</a></div>
             <div><a href="list.oc">ONEDAY CLASS</a></div>
             <div><a href="">SCENT RECOMMAND</a></div>

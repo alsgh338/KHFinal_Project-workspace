@@ -15,21 +15,51 @@ import com.mata.persfume.event.model.vo.EventImg;
 public class EventDao {
 
 	// 이벤트 총 갯수
-	public int selectListCount(SqlSession sqlSession) {
-		return sqlSession.selectOne("eventMapper.selectListCount");
+	public int selectExpiredListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("eventMapper.selectExpiredListCount");
+	}
+
+	public int selectOngoingListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("eventMapper.selectOngoingListCount");
+	}
+
+	public int selectScheduledListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("eventMapper.selectScheduledListCount");
 	}
 
 	// 이벤트 리스트 조회
-	public ArrayList<Event> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		
+	public ArrayList<Event> selectExpiredList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("eventMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("eventMapper.selectExpiredList", null, rowBounds);
 	}
 
+	public ArrayList<Event> selectOngoingList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("eventMapper.selectOngoingList", null, rowBounds);
+	}
+
+	public ArrayList<Event> selectScheduledList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("eventMapper.selectScheduledList", null, rowBounds);
+	}
+
+	public ArrayList<Event> selectEventList(SqlSessionTemplate sqlSession) {
+		ArrayList<Event> list = (ArrayList)sqlSession.selectList("eventMapper.selectEventList");
+		return list;
+	}
+	
 	// 이벤트 작성 (제목, 내용, 기간)
 	public int insertEvent(SqlSessionTemplate sqlSession, Event e) {		
 		return sqlSession.insert("eventMapper.insertEvent", e);
@@ -49,6 +79,12 @@ public class EventDao {
 	public Event selectEvent(SqlSessionTemplate sqlSession, int eno) {
 		return sqlSession.selectOne("eventMapper.selectEvent", eno);
 	}
+
+	
+
+	
+
+	
 	
 	
 	

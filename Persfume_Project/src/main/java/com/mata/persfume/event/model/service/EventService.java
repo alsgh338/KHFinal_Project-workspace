@@ -10,10 +10,20 @@ public interface EventService {
 
 	// 게시판 리스트 조회 서비스 + 페이징 처리
 	// 게시글 총 갯수 조회
-	int selectListCount();
+	int selectExpiredListCount();
+
+	int selectOngoingListCount();
+
+	int selectScheduledListCount();
 	
 	// 이벤트 리스트 조회
-	ArrayList<Event> selectList(PageInfo pi);
+	ArrayList<Event> selectExpiredList(PageInfo pi);
+
+	ArrayList<Event> selectOngoingList(PageInfo pi);
+
+	ArrayList<Event> selectScheduledList(PageInfo pi);
+
+	ArrayList<Event> selectEventList();
 	
 	// 이벤트 작성
 	int insertEvent(Event e);
@@ -26,6 +36,11 @@ public interface EventService {
 	int increaseCount(int eventNo);
 	// 이벤트 상세 조회
 	Event selectEvent(int eventNo);
+
+
+	
+
+	
 	
 	
 	

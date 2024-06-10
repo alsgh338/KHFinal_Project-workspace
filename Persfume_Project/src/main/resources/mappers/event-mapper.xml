@@ -15,14 +15,35 @@
 		<result column="EVENTIMG_PATH" property="eventImgPath" />
 	</resultMap>
 	
-	<select id="selectListCount"
+	<select id="selectExpiredListCount"
 			resultType="_int">
 		SELECT COUNT(*)
 		  FROM EVENT
 		 WHERE STATUS = 'Y'
+		   AND SYSDATE &gt; START_DATE
+		   AND SYSDATE &gt; DEW_DATE
 	</select>
 	
-	<select id="selectList"
+	<select id="selectOngoingListCount"
+			resultType="_int">
+		SELECT COUNT(*)
+		  FROM EVENT
+		 WHERE STATUS = 'Y'
+		   AND SYSDATE &gt; START_DATE
+		   AND SYSDATE &lt; DEW_DATE
+	</select>
+	
+	<select id="selectScheduledListCount"
+			resultType="_int">
+		SELECT COUNT(*)
+		  FROM EVENT
+		 WHERE STATUS = 'Y'
+		   AND SYSDATE &lt; START_DATE
+		   AND SYSDATE &lt; DEW_DATE
+	</select>
+	
+	
+	<select id="selectExpiredList"
 			resultMap="eventResultSet">
 		SELECT EVENT_NO
 		     , EVENT_TITLE
@@ -35,8 +56,81 @@
 		  FROM EVENT JOIN EVENT_IMG USING (EVENT_NO)
 		 WHERE EVENT.STATUS = 'Y'
 		   AND EVENTIMG_LEVEL = 1
+		   AND SYSDATE &gt; START_DATE
+		   AND SYSDATE &gt; DEW_DATE
 		 ORDER BY EVENT_NO DESC
 	</select>
+	
+	<select id="selectOngoingList"
+			resultMap="eventResultSet">
+		SELECT EVENT_NO
+			 , EVENT_TITLE
+			 , EVENT_CONTENT
+			 , EVENT_COUNT
+			 , START_DATE
+			 , DEW_DATE
+			 , CREATE_DATE
+			 , EVENTIMG_PATH
+			FROM EVENT JOIN EVENT_IMG USING (EVENT_NO)
+			WHERE EVENT.STATUS = 'Y'
+			AND EVENTIMG_LEVEL = 1
+			AND SYSDATE &gt; START_DATE
+			AND SYSDATE &lt; DEW_DATE
+			ORDER BY EVENT_NO DESC
+	</select>
+	
+	<select id="selectScheduledList"
+			resultMap="eventResultSet">
+		SELECT EVENT_NO
+			 , EVENT_TITLE
+			 , EVENT_CONTENT
+			 , EVENT_COUNT
+			 , START_DATE
+			 , DEW_DATE
+			 , CREATE_DATE
+			 , EVENTIMG_PATH
+			FROM EVENT JOIN EVENT_IMG USING (EVENT_NO)
+			WHERE EVENT.STATUS = 'Y'
+			AND EVENTIMG_LEVEL = 1
+			AND SYSDATE &lt; START_DATE
+			AND SYSDATE &lt; DEW_DATE
+			ORDER BY EVENT_NO DESC
+	</select>
+	
+	<select id="selectEventList"
+			resultMap="eventResultSet">
+		SELECT EVENT_NO
+		     , EVENT_TITLE
+		     , EVENT_CONTENT
+		     , EVENT_COUNT
+		     , START_DATE
+		     , DEW_DATE
+		     , CREATE_DATE
+		     , EVENTIMG_PATH
+		     , rn
+		FROM (
+		    SELECT EVENT_NO
+		         , EVENT_TITLE
+		         , EVENT_CONTENT
+		         , EVENT_COUNT
+		         , START_DATE
+		         , DEW_DATE
+		         , CREATE_DATE
+		         , EVENTIMG_PATH
+		         , ROW_NUMBER() OVER (ORDER BY EVENT_NO DESC) AS rn
+		    FROM EVENT 
+		    JOIN EVENT_IMG USING (EVENT_NO)
+		    WHERE EVENT.STATUS = 'Y'
+		    AND EVENTIMG_LEVEL = 1
+		    AND SYSDATE &gt; START_DATE
+		    AND SYSDATE &lt; DEW_DATE
+		)
+		WHERE rn IN (1, 2)
+		ORDER BY rn ASC
+	</select>
+	
+	
+	
 	
 	<insert id="insertEvent"
 			parameterType="event">

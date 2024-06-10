@@ -22,17 +22,41 @@ public class EventServiceImpl implements EventService {
 	@Autowired
 	private EventDao eventDao;
 	
-	
 	@Override
-	public int selectListCount() {
-		return eventDao.selectListCount(sqlSession);
+	public int selectExpiredListCount() {
+		return eventDao.selectExpiredListCount(sqlSession);
 	}
 
 	@Override
-	public ArrayList<Event> selectList(PageInfo pi) {
-		return eventDao.selectList(sqlSession, pi);
+	public int selectOngoingListCount() {
+		return eventDao.selectOngoingListCount(sqlSession);
 	}
 
+	@Override
+	public int selectScheduledListCount() {
+		return eventDao.selectScheduledListCount(sqlSession);
+	}
+
+	//////////////////////////////
+	@Override
+	public ArrayList<Event> selectExpiredList(PageInfo pi) {
+		return eventDao.selectExpiredList(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<Event> selectOngoingList(PageInfo pi) {
+		return eventDao.selectOngoingList(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<Event> selectScheduledList(PageInfo pi) {
+		return eventDao.selectScheduledList(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<Event> selectEventList() {
+		return eventDao.selectEventList(sqlSession);
+	}
 	// 썸네일 + 텍스트 insert
 	@Override
 	@Transactional
@@ -56,6 +80,11 @@ public class EventServiceImpl implements EventService {
 	public Event selectEvent(int eno) {
 		return eventDao.selectEvent(sqlSession, eno);
 	}
+
+
+	
+
+	
 
 
 }

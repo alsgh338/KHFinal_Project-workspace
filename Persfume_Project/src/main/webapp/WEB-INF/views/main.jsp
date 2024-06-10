@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +45,7 @@
 
         .main-section{
             position: relative;
-            width: 100vw;
+            width: 100%;
             height: 100vh;
             /* border: 1px solid red; */
             /* position: relative; */
@@ -360,7 +361,34 @@
         #home-text>h1{
             font-size: 70px;
         }
-
+        
+        .event {
+	        display: flex;
+	        flex-direction: column;
+	        width: calc(50%);
+	        border: 1px solid #e9ecef;
+	        border-radius: 10px;
+	        transition: transform 0.3s, box-shadow 0.3s;
+	        overflow: hidden;
+	        background-color: #ffffff;
+	    }
+	    
+	    .event *{
+	    	width:100%;
+	    	object-fit: cover;
+	    }
+		.event:hover {
+	        cursor: pointer;
+	        transform: translateY(-10px);
+	        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	    }
+	    
+	    #eventList{
+	    	display: flex;
+	    	justify-content: center;
+	    	align-items: center;
+	    	
+	    }
 </style>
 
 </head>
@@ -453,8 +481,11 @@
         </div>
 
         <div class="main-section" id="one2">
-            <img src="https://cf.bysuco.net/aa42a4399152647e08868f088bc763df.jpg?w=2400&f=webp" alt="">
-            <img src="https://cf.bysuco.net/aa42a4399152647e08868f088bc763df.jpg?w=2400&f=webp" alt="">
+            
+            <div id="eventList">
+        		<!-- 여기에 이벤트 목록이 표시될 것입니다. -->
+    		</div>
+            
         </div>
 
 
@@ -632,6 +663,52 @@
         observer.observe(mainSection[3]);
         observer.observe(mainSection[4]);
 
+        
+        
+        
+        // 이벤트 상위 2개 노출 ajax 사용 - 민호 2024/06/10
+         $(document).ready(function() {
+            // 페이지가 로드될 때 이벤트 목록을 가져오는 함수 호출
+            getEventList();
+        });
+        
+         function getEventList() {
+             $.ajax({
+                 type: "GET",
+                 url: "eventList", // 데이터를 가져올 엔드포인트 URL
+                 success: function(result) {
+                     // 서버로부터 받은 데이터를 처리하여 이벤트 목록을 표시하는 함수 호출
+                     displayEventList(result);
+                 },
+                 error: function(xhr, status, error) {
+                     console.log("이벤트 최근 2개 조회 실패", error);
+                 }
+             });
+         }
+         
+         function displayEventList(eventList) {
+             var eventListDiv = $("#eventList");
+             eventListDiv.empty(); // 기존 목록을 비웁니다.
+
+             // 받아온 이벤트 목록을 반복하여 표시합니다.
+             for (var i = 0; i < eventList.length; i++) {
+                 var event = eventList[i];
+                 var eventHtml = '<div class="event">' +
+                 					 '<div class="event-img">' +
+                 					 	'<input type="hidden" value="' + event.eventNo +'">' +
+                 					 	'<img src="' + event.eventImgPath + '" alt="' + event.eventTitle + '">' +
+                 					 '</div>' +
+                                 '</div>';
+                 eventListDiv.append(eventHtml);
+             }
+         }
+        
+         $(function(){
+             $(document).on("click", ".event" , function(){
+                 let eventNo = $(this).find('input[type="hidden"]').val();
+                 location.href = "detail.ev?eno=" + eventNo;
+             });
+         });
     </script>
 
 	<jsp:include page="common/footer.jsp"></jsp:include>
