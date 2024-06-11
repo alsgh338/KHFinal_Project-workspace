@@ -14,26 +14,26 @@ public  interface NoticeService {
 
 
 
-	// °øÁö±Û  ¸®½ºÆ® Á¶È¸ ¼­ºñ½º + ÆäÀÌÂ¡ Ã³¸®
-	// °øÁö±Û  ÃÑ °¹¼ö Á¶È¸
+	// ê³µì§€ê¸€  ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ì„œë¹„ìŠ¤ + íŽ˜ì´ì§• ì²˜ë¦¬
+	// ê³µì§€ê¸€  ì´ ê°¯ìˆ˜ ì¡°íšŒ
 	int selectListCount();
 	
-	// °øÁö±Û  ¸®½ºÆ® Á¶È¸
+	// ê³µì§€ê¸€  ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 	ArrayList<Notice> selectList(PageInfo pi);
 	
-	// °øÁö±Û ÀÛ¼ºÇÏ±â ¼­ºñ½º
+	// ê³µì§€ê¸€ ìž‘ì„±í•˜ê¸° ì„œë¹„ìŠ¤
 	int insertNotice(Notice n);
 
 
-	// °øÁö±Û  Á¶È¸¼ö Áõ°¡
+	// ê³µì§€ê¸€  ì¡°íšŒìˆ˜ ì¦ê°€
 	int increaseCount(int noticeNo);
-	// °øÁö±Û  »ó¼¼Á¶È¸ ¼­ºñ½º
+	// ê³µì§€ê¸€  ìƒì„¸ì¡°íšŒ ì„œë¹„ìŠ¤
 	Notice selectNotice(int noticeNo);
 	
-	// °øÁö±Û »èÁ¦ ¼­ºñ½º
+	// ê³µì§€ê¸€ ì‚­ì œ ì„œë¹„ìŠ¤
 	int deleteNotice(int noticeNo);
 	
-	// °øÁö±Û ¼öÁ¤ ¼­ºñ½º
+	// ê³µì§€ê¸€ ìˆ˜ì • ì„œë¹„ìŠ¤
 	int updateNotice(Notice n);
 	
 	

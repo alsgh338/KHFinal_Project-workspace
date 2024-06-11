@@ -31,19 +31,19 @@ public class NoticeController {
 	
 	@GetMapping("list.no")
 	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
-		// ¸Ş´º¹Ù Å¬¸¯ ½Ã : list.no (±âº»ÀûÀ¸·Î 1¹ø ÆäÀÌÁö·Î ¿äÃ»)
-		// ÆäÀÌÂ¡¹Ù Å¬¸¯ ½Ã : list.no?cpage=¿äÃ»ÆäÀÌÁö¼ö
+		// ë©”ë‰´ë°” í´ë¦­ ì‹œ : list.no (ê¸°ë³¸ì ìœ¼ë¡œ 1ë²ˆ í˜ì´ì§€ë¡œ ìš”ì²­)
+		// í˜ì´ì§•ë°” í´ë¦­ ì‹œ : list.no?cpage=ìš”ì²­í˜ì´ì§€ìˆ˜
 		
 		 //System.out.println(currentPage);
-		// > defaultValue ¼Ó¼º »ı·« ½Ã 400 ¿¡·¯ ¹ß»ı!!
+		// > defaultValue ì†ì„± ìƒëµ ì‹œ 400 ì—ëŸ¬ ë°œìƒ!!
 		
-		// ÆäÀÌÂ¡Ã³¸®¿ë º¯¼öµé (4°³)
+		// í˜ì´ì§•ì²˜ë¦¬ìš© ë³€ìˆ˜ë“¤ (4ê°œ)
 		int listCount = noticeService.selectListCount();
 		
 		int pageLimit = 10;
 		int boardLimit = 5;
 		
-		// PageInfo °´Ã¼ ¸¸µé¾î³»±â
+		// PageInfo ê°ì²´ ë§Œë“¤ì–´ë‚´ê¸°
 		PageInfo pi 
 			= Pagination.getPageInfo(listCount, 
 								 	 currentPage, 
@@ -52,7 +52,7 @@ public class NoticeController {
 		
 		 System.out.println(pi);
 		
-		// °Ô½Ã±Û ¸ñ·Ï Á¶È¸
+		// ê²Œì‹œê¸€ ëª©ë¡ ì¡°íšŒ
 		ArrayList<Notice> list 
 					= noticeService.selectList(pi);
 		
@@ -63,43 +63,43 @@ public class NoticeController {
 		
 
 		
-		// ÀÀ´äµ¥ÀÌÅÍ ´ã±â
+		// ì‘ë‹µë°ì´í„° ë‹´ê¸°
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		// ÀÀ´äÆäÀÌÁö Æ÷¿öµù
+		// ì‘ë‹µí˜ì´ì§€ í¬ì›Œë”©
 		return "notice/noticeListView";
 	}
 	
 	
-	//°Ô½Ã±Û ÀÛ¼ºÇÏ±â 
+	//ê²Œì‹œê¸€ ì‘ì„±í•˜ê¸° 
 	@GetMapping("enrollForm.no")
 	public ModelAndView enrollForm(ModelAndView mv) {
 		
-		// °Ô½Ã±Û ÀÛ¼ºÇÏ±â ÆäÀÌÁö Æ÷¿öµù
+		// ê²Œì‹œê¸€ ì‘ì„±í•˜ê¸° í˜ì´ì§€ í¬ì›Œë”©
 		mv.setViewName("notice/noticeEnrollForm");
 		
 		return mv;
 	}
 	
-	// * ¸¸¾à ´ÙÁßÆÄÀÏ ¾÷·Îµå ±â´ÉÀ» ±¸ÇöÇÏ°í ½Í´Ù¸é?
-	// > form ÅÂ±× ³»ºÎ¿¡¼­ ¿©·¯°³ÀÇ input type="file" ¿ä¼Ò¿¡
-	//   µ¿ÀÏÇÑ Å°°ªÀ¸·Î ºÎ¿© (¿¹. upfiles)
-	// > ÇØ´ç ¿äÃ»½Ã Àü´Ş°ªÀ¸·Î ¸Å°³º¯¼ö·Î 
-	//   MultipartFile[] upfiles ¶Ç´Â
-	//   ArrayList<MultipartFile> upfiles ·Î ¹Ş¾Æ
-	//   ¹İº¹¹® Ã³¸®ÇÏ¸é ³¡!!
-	//   (¾î¶² ¹æ¹ıÀ¸·Î ¹Şµç °£¿¡ 0¹øÂ° ÀÎµ¦½ººÎÅÍ Â÷°îÂ÷°î
-	//    Ã·ºÎÆÄÀÏ Á¤º¸µéÀÌ µé¾î°¡ ÀÖÀ» °ÍÀÓ)
+	// * ë§Œì•½ ë‹¤ì¤‘íŒŒì¼ ì—…ë¡œë“œ ê¸°ëŠ¥ì„ êµ¬í˜„í•˜ê³  ì‹¶ë‹¤ë©´?
+	// > form íƒœê·¸ ë‚´ë¶€ì—ì„œ ì—¬ëŸ¬ê°œì˜ input type="file" ìš”ì†Œì—
+	//   ë™ì¼í•œ í‚¤ê°’ìœ¼ë¡œ ë¶€ì—¬ (ì˜ˆ. upfiles)
+	// > í•´ë‹¹ ìš”ì²­ì‹œ ì „ë‹¬ê°’ìœ¼ë¡œ ë§¤ê°œë³€ìˆ˜ë¡œ 
+	//   MultipartFile[] upfiles ë˜ëŠ”
+	//   ArrayList<MultipartFile> upfiles ë¡œ ë°›ì•„
+	//   ë°˜ë³µë¬¸ ì²˜ë¦¬í•˜ë©´ ë!!
+	//   (ì–´ë–¤ ë°©ë²•ìœ¼ë¡œ ë°›ë“  ê°„ì— 0ë²ˆì§¸ ì¸ë±ìŠ¤ë¶€í„° ì°¨ê³¡ì°¨ê³¡
+	//    ì²¨ë¶€íŒŒì¼ ì •ë³´ë“¤ì´ ë“¤ì–´ê°€ ìˆì„ ê²ƒì„)
 	
 	 @PostMapping("insert.no")
 	    public String insertNotice(Notice notice, @RequestParam("upfile") MultipartFile upfile, HttpSession session, Model model) {
 	        if (!upfile.isEmpty()) {
-	            // ÆÄÀÏ ¾÷·Îµå °æ·Î ¼³Á¤
+	            // íŒŒì¼ ì—…ë¡œë“œ ê²½ë¡œ ì„¤ì •
 	            String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
 	            String changeName = saveFile(upfile, savePath);
 
-	            // ¿øº» ÆÄÀÏ¸í°ú ÀúÀåµÈ ÆÄÀÏ¸í ¼³Á¤
+	            // ì›ë³¸ íŒŒì¼ëª…ê³¼ ì €ì¥ëœ íŒŒì¼ëª… ì„¤ì •
 	           // notice.setNoticeImgOrigin(upfile.getOriginalFilename());
 	           // notice.setNoticeImgChange("resources/uploadFiles/" + changeName);
 	            
@@ -110,28 +110,28 @@ public class NoticeController {
 	        if (result > 0) {
 	            return "redirect:/noticeList";
 	        } else {
-	            model.addAttribute("msg", "°øÁö»çÇ× µî·Ï ½ÇÆĞ");
+	            model.addAttribute("msg", "ê³µì§€ì‚¬í•­ ë“±ë¡ ì‹¤íŒ¨");
 	            return "common/errorPage";
 	        }
 	    }
 
 	    private String saveFile(MultipartFile file, String savePath) {
-	        // ÆÄÀÏÀÌ ÀúÀåµÉ µğ·ºÅä¸® »ı¼º
+	        // íŒŒì¼ì´ ì €ì¥ë  ë””ë ‰í† ë¦¬ ìƒì„±
 	        File folder = new File(savePath);
 	        if (!folder.exists()) {
 	            folder.mkdirs();
 	        }
 
-	        // ¿øº» ÆÄÀÏ¸í°ú º¯°æµÈ ÆÄÀÏ¸í ¼³Á¤
+	        // ì›ë³¸ íŒŒì¼ëª…ê³¼ ë³€ê²½ëœ íŒŒì¼ëª… ì„¤ì •
 	        String originalFileName = file.getOriginalFilename();
 	        String changeName = System.currentTimeMillis() + "_" + originalFileName;
 
-	        // ÆÄÀÏ ÀúÀå
+	        // íŒŒì¼ ì €ì¥
 	        try {
 	            file.transferTo(new File(savePath + changeName));
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	            // ¿¹¿Ü Ã³¸® ÄÚµå Ãß°¡
+	            // ì˜ˆì™¸ ì²˜ë¦¬ ì½”ë“œ ì¶”ê°€
 	        }
 
 	        return changeName;
@@ -143,26 +143,26 @@ public class NoticeController {
 									ModelAndView mv) {
 		
 		// System.out.println(nno);
-		// > bno ¿¡´Â »ó¼¼Á¶È¸ ÇÏ°íÀÚ ÇÏ´Â ÇØ´ç °Ô½Ã±Û ¹øÈ£°¡ ´ã°ÜÀÖÀ½
+		// > bno ì—ëŠ” ìƒì„¸ì¡°íšŒ í•˜ê³ ì í•˜ëŠ” í•´ë‹¹ ê²Œì‹œê¸€ ë²ˆí˜¸ê°€ ë‹´ê²¨ìˆìŒ
 		
-		// 1. ÇØ´ç °Ô½Ã±Û Á¶È¸¼ö Áõ°¡¿ë ¼­ºñ½º È£Ãâ ¹× °á°ú ¹Ş±â
+		// 1. í•´ë‹¹ ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ìš© ì„œë¹„ìŠ¤ í˜¸ì¶œ ë° ê²°ê³¼ ë°›ê¸°
 		int result = noticeService.increaseCount(nno);
 		
-		if(result > 0) { // ¼º°øÀûÀ¸·Î Á¶È¸¼ö°¡ Áõ°¡µÇ¾ú´Ù¸é
+		if(result > 0) { // ì„±ê³µì ìœ¼ë¡œ ì¡°íšŒìˆ˜ê°€ ì¦ê°€ë˜ì—ˆë‹¤ë©´
 			
-			// °Ô½Ã±Û »ó¼¼Á¶È¸ ÆäÀÌÁö¿¡¼­ º¸¿©Áú
-			// ÇØ´ç °Ô½Ã±Û Á¤º¸¸¦ Á¶È¸ÇØ¿Í¾ßÇÔ!!
+			// ê²Œì‹œê¸€ ìƒì„¸ì¡°íšŒ í˜ì´ì§€ì—ì„œ ë³´ì—¬ì§ˆ
+			// í•´ë‹¹ ê²Œì‹œê¸€ ì •ë³´ë¥¼ ì¡°íšŒí•´ì™€ì•¼í•¨!!
 			Notice n = noticeService.selectNotice(nno);
 			
-			// Á¶È¸µÈ µ¥ÀÌÅÍ¸¦ ´ã¾Æ¼­ ÀÀ´äÆäÀÌÁö·Î Æ÷¿öµù
+			// ì¡°íšŒëœ ë°ì´í„°ë¥¼ ë‹´ì•„ì„œ ì‘ë‹µí˜ì´ì§€ë¡œ í¬ì›Œë”©
 			
 			mv.addObject("n", n)
 			  .setViewName("notice/noticeDetailView");
 			
-		} else { // Á¶È¸¼ö Áõ°¡¿¡ ½ÇÆĞÇß´Ù¸é
+		} else { // ì¡°íšŒìˆ˜ ì¦ê°€ì— ì‹¤íŒ¨í–ˆë‹¤ë©´
 			
-			// ¿¡·¯¹®±¸¸¦ ´ã¾Æ¼­ ¿¡·¯ÆäÀÌÁö·Î Æ÷¿öµù
-			mv.addObject("errorMsg", "°Ô½Ã±Û »ó¼¼Á¶È¸ ½ÇÆĞ")
+			// ì—ëŸ¬ë¬¸êµ¬ë¥¼ ë‹´ì•„ì„œ ì—ëŸ¬í˜ì´ì§€ë¡œ í¬ì›Œë”©
+			mv.addObject("errorMsg", "ê²Œì‹œê¸€ ìƒì„¸ì¡°íšŒ ì‹¤íŒ¨")
 			  .setViewName("common/errorPage");
 		}
 		
@@ -175,35 +175,35 @@ public class NoticeController {
 							  HttpSession session) {
 		
 		// System.out.println(bno);
-		// > »èÁ¦ÇÏ°íÀÚ ÇÏ´Â ±Û¹øÈ£
+		// > ì‚­ì œí•˜ê³ ì í•˜ëŠ” ê¸€ë²ˆí˜¸
 		
 		int result = noticeService.deleteNotice(nno);
 		
-		if(result > 0) { // ¼º°ø
+		if(result > 0) { // ì„±ê³µ
 			
-			// »èÁ¦µÈ °Ô½Ã±Û¿¡ Ã·ºÎÆÄÀÏÀÌ ÀÖ¾úÀ» °æ¿ì
-			// > ÆÄÀÏ »èÁ¦ Ã³¸®
-			// (¼­¹ö¿¡ ¿ë·®¸¸ Â÷Áö)
+			// ì‚­ì œëœ ê²Œì‹œê¸€ì— ì²¨ë¶€íŒŒì¼ì´ ìˆì—ˆì„ ê²½ìš°
+			// > íŒŒì¼ ì‚­ì œ ì²˜ë¦¬
+			// (ì„œë²„ì— ìš©ëŸ‰ë§Œ ì°¨ì§€)
 			if(!filePath.equals("")) {
 				
-				// ÇØ´ç ÆÄÀÏÀÇ ¹°¸®ÀûÀÎ Ç® °æ·Î ¾Ë¾Æ³»±â
+				// í•´ë‹¹ íŒŒì¼ì˜ ë¬¼ë¦¬ì ì¸ í’€ ê²½ë¡œ ì•Œì•„ë‚´ê¸°
 				String realPath = session.getServletContext()
 										 .getRealPath(filePath);
 				
-				// realPath °¡ °¡¸®Å°´Â ÆÄÀÏ °´Ã¼ »ı¼º ÈÄ delete
+				// realPath ê°€ ê°€ë¦¬í‚¤ëŠ” íŒŒì¼ ê°ì²´ ìƒì„± í›„ delete
 				new File(realPath).delete();
 			}
 			
-			// session ¿¡ ÀÏÈ¸¼º ¾Ë¶÷¹®±¸¸¦ ´ãÀº ÈÄ
-			// list.no ·Î url Àç¿äÃ»
-			session.setAttribute("alertMsg", "¼º°øÀûÀ¸·Î °Ô½Ã±ÛÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù.");
+			// session ì— ì¼íšŒì„± ì•ŒëŒë¬¸êµ¬ë¥¼ ë‹´ì€ í›„
+			// list.no ë¡œ url ì¬ìš”ì²­
+			session.setAttribute("alertMsg", "ì„±ê³µì ìœ¼ë¡œ ê²Œì‹œê¸€ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.");
 			
 			return "redirect:/list.no";
 			
-		} else { // ½ÇÆĞ
+		} else { // ì‹¤íŒ¨
 			
-			// ¿¡·¯¹®±¸¸¦ ´ã¾Æ¼­ ¿¡·¯ÆäÀÌÁö·Î Æ÷¿öµù
-			model.addAttribute("errorMsg", "°Ô½Ã±Û »èÁ¦ ½ÇÆĞ");
+			// ì—ëŸ¬ë¬¸êµ¬ë¥¼ ë‹´ì•„ì„œ ì—ëŸ¬í˜ì´ì§€ë¡œ í¬ì›Œë”©
+			model.addAttribute("errorMsg", "ê²Œì‹œê¸€ ì‚­ì œ ì‹¤íŒ¨");
 			
 			return "common/errorPage";
 		}
@@ -211,11 +211,11 @@ public class NoticeController {
 	
 //	@PostMapping("updateForm.no")
 //	public String updateForm(int nno, Model model) {
-//		// filePath °ªÀ» ³Ñ±â±ä ÇÏ³ª, »èÁ¦½Ã¿¡¸¸ ÇÊ¿äÇÏ±â ¶§¹®¿¡
-//		// ±»ÀÌ ¿äÃ» ½Ã Àü´Ş°ªÀ¸·Î ¹ŞÁö ¾ÊÀ½!!
+//		// filePath ê°’ì„ ë„˜ê¸°ê¸´ í•˜ë‚˜, ì‚­ì œì‹œì—ë§Œ í•„ìš”í•˜ê¸° ë•Œë¬¸ì—
+//		// êµ³ì´ ìš”ì²­ ì‹œ ì „ë‹¬ê°’ìœ¼ë¡œ ë°›ì§€ ì•ŠìŒ!!
 //		
-//		// °Ô½Ã±Û ÇÑ°Ç Á¶È¸
-//		// > ±âÁ¸ °Ô½Ã±Û »ó¼¼º¸±â ¼­ºñ½º ·ÎÁ÷ ÀçÈ°¿ë
+//		// ê²Œì‹œê¸€ í•œê±´ ì¡°íšŒ
+//		// > ê¸°ì¡´ ê²Œì‹œê¸€ ìƒì„¸ë³´ê¸° ì„œë¹„ìŠ¤ ë¡œì§ ì¬í™œìš©
 //		Notice n = noticeService.selectNotice(nno);
 //		
 //		model.addAttribute("n", n);
@@ -233,26 +233,26 @@ public class NoticeController {
 //		// System.out.println(b);
 //		// System.out.println(reupfile);
 //		
-//		// »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏÀÌ ÀÖÀ» °æ¿ì
+//		// ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì´ ìˆì„ ê²½ìš°
 //		if(!reupfile.getOriginalFilename().equals("")) {
 //			
-//			// 1. ±âÁ¸¿¡ Ã·ºÎÆÄÀÏÀÌ ÀÖ¾úÀ» °æ¿ì
-//			// > ±âÁ¸ÀÇ Ã·ºÎÆÄÀÏÀ» Ã£¾Æ¼­ »èÁ¦
-//			// > »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏÀ» ¼­¹ö·Î ¾÷·Îµå ½ÃÅ°±â
-//			// > b ¿¡ »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏ¿¡ ´ëÇÑ 
-//			//   ¿øº»ÆÄÀÏ¸í, ¼öÁ¤ÆÄÀÏ¸í (°æ·Î Æ÷ÇÔ) ´õ ´ã±â
+//			// 1. ê¸°ì¡´ì— ì²¨ë¶€íŒŒì¼ì´ ìˆì—ˆì„ ê²½ìš°
+//			// > ê¸°ì¡´ì˜ ì²¨ë¶€íŒŒì¼ì„ ì°¾ì•„ì„œ ì‚­ì œ
+//			// > ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì„ ì„œë²„ë¡œ ì—…ë¡œë“œ ì‹œí‚¤ê¸°
+//			// > b ì— ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì— ëŒ€í•œ 
+//			//   ì›ë³¸íŒŒì¼ëª…, ìˆ˜ì •íŒŒì¼ëª… (ê²½ë¡œ í¬í•¨) ë” ë‹´ê¸°
 //			
-//			// 2. ±âÁ¸¿¡ Ã·ºÎÆÄÀÏÀÌ ¾ø¾úÀ» °æ¿ì
-//			// > »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏÀ» ¼­¹ö·Î ¾÷·Îµå ½ÃÅ°±â
-//			// > b ¿¡ »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏ¿¡ ´ëÇÑ 
-//			//   ¿øº»ÆÄÀÏ¸í, ¼öÁ¤ÆÄÀÏ¸í (°æ·Î Æ÷ÇÔ) ´õ ´ã±â
+//			// 2. ê¸°ì¡´ì— ì²¨ë¶€íŒŒì¼ì´ ì—†ì—ˆì„ ê²½ìš°
+//			// > ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì„ ì„œë²„ë¡œ ì—…ë¡œë“œ ì‹œí‚¤ê¸°
+//			// > b ì— ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì— ëŒ€í•œ 
+//			//   ì›ë³¸íŒŒì¼ëª…, ìˆ˜ì •íŒŒì¼ëª… (ê²½ë¡œ í¬í•¨) ë” ë‹´ê¸°
 //			
-//			// ±âÁ¸ Ã·ºÎÆÄÀÏÀÌ ÀÖ¾úÀ» °æ¿ì ±âÁ¸ ÆÄÀÏ »èÁ¦ ¸ÕÀú
-//			// > ±âÁ¸ Ã·ºÎÆÄÀÏÀÌ ÀÖ¾úÀ» °æ¿ì b ÀÇ
-//			//   originName, changeName ÇÊµå°ªÀÌ °°ÀÌ ³Ñ¾î¿È
+//			// ê¸°ì¡´ ì²¨ë¶€íŒŒì¼ì´ ìˆì—ˆì„ ê²½ìš° ê¸°ì¡´ íŒŒì¼ ì‚­ì œ ë¨¼ì €
+//			// > ê¸°ì¡´ ì²¨ë¶€íŒŒì¼ì´ ìˆì—ˆì„ ê²½ìš° b ì˜
+//			//   originName, changeName í•„ë“œê°’ì´ ê°™ì´ ë„˜ì–´ì˜´
 //			if(n.getOriginName() != null) {
-//				// ±âÁ¸ Ã·ºÎÆÄÀÏÀÌ ÀÖ¾úÀ» °æ¿ì
-//				// > ÇØ´ç ÆÄÀÏÀ» Ã£¾Æ¼­ »èÁ¦
+//				// ê¸°ì¡´ ì²¨ë¶€íŒŒì¼ì´ ìˆì—ˆì„ ê²½ìš°
+//				// > í•´ë‹¹ íŒŒì¼ì„ ì°¾ì•„ì„œ ì‚­ì œ
 //				
 //				String realPath 
 //						= session.getServletContext()
@@ -261,104 +261,104 @@ public class NoticeController {
 //				new File(realPath).delete();
 //			}
 //			
-//			// »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏ ÆÄÀÏ¸íÀ» ¼öÁ¤ÀÛ¾÷ ÈÄ ¼­¹ö·Î ¾÷·Îµå
+//			// ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ íŒŒì¼ëª…ì„ ìˆ˜ì •ì‘ì—… í›„ ì„œë²„ë¡œ ì—…ë¡œë“œ
 //			String changeName = savePath(reupfile, session);
 //			
-//			// b ¿¡ »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏÀÇ ¿øº»ÆÄÀÏ¸í, ¼öÁ¤ÆÄÀÏ¸í ÇÊµå°ª ´ã±â
+//			// b ì— ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì˜ ì›ë³¸íŒŒì¼ëª…, ìˆ˜ì •íŒŒì¼ëª… í•„ë“œê°’ ë‹´ê¸°
 //			n.setOriginName(reupfile.getOriginalFilename());
 //			n.setChangeName("resources/uploadFiles/" + changeName);
 //			
 //		}
 //		
 //		/*
-//		 * * b ¿¡ ¹«Á¶°Ç ´ã°ÜÀÖ´Â ³»¿ë
+//		 * * b ì— ë¬´ì¡°ê±´ ë‹´ê²¨ìˆëŠ” ë‚´ìš©
 //		 * boardTitle, boardContent, boardNo
 //		 * 
-//		 * * Ãß°¡ÀûÀ¸·Î °í·ÁÇØ¾ß ÇÒ °æ¿ìÀÇ ¼ö
-//		 * 1. »õ·Î Ã·ºÎµÈ ÆÄÀÏ X, ±âÁ¸ Ã·ºÎ ÆÄÀÏ X
+//		 * * ì¶”ê°€ì ìœ¼ë¡œ ê³ ë ¤í•´ì•¼ í•  ê²½ìš°ì˜ ìˆ˜
+//		 * 1. ìƒˆë¡œ ì²¨ë¶€ëœ íŒŒì¼ X, ê¸°ì¡´ ì²¨ë¶€ íŒŒì¼ X
 //		 * > originName : null, changeName : null
 //		 * 
-//		 * 2. »õ·Î Ã·ºÎµÈ ÆÄÀÏ X, ±âÁ¸ Ã·ºÎ ÆÄÀÏ O
-//		 * > originName : ±âÁ¸ Ã·ºÎÆÄÀÏÀÇ ¿øº»ÆÄÀÏ¸í,
-//		 *   changeName : ±âÁ¸ Ã·ºÎÆÄÀÏÀÇ ¼öÁ¤ÆÄÀÏ¸í
+//		 * 2. ìƒˆë¡œ ì²¨ë¶€ëœ íŒŒì¼ X, ê¸°ì¡´ ì²¨ë¶€ íŒŒì¼ O
+//		 * > originName : ê¸°ì¡´ ì²¨ë¶€íŒŒì¼ì˜ ì›ë³¸íŒŒì¼ëª…,
+//		 *   changeName : ê¸°ì¡´ ì²¨ë¶€íŒŒì¼ì˜ ìˆ˜ì •íŒŒì¼ëª…
 //		 * 
-//		 * 3. »õ·Î Ã·ºÎµÈ ÆÄÀÏ O, ±âÁ¸ Ã·ºÎ ÆÄÀÏ X
-//		 * > originName : »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏÀÇ ¿øº»ÆÄÀÏ¸í,
-//		 *   changeName : »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏÀÇ ¼öÁ¤ÆÄÀÏ¸í
+//		 * 3. ìƒˆë¡œ ì²¨ë¶€ëœ íŒŒì¼ O, ê¸°ì¡´ ì²¨ë¶€ íŒŒì¼ X
+//		 * > originName : ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì˜ ì›ë³¸íŒŒì¼ëª…,
+//		 *   changeName : ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì˜ ìˆ˜ì •íŒŒì¼ëª…
 //		 *   
-//		 * 4. »õ·Î Ã·ºÎµÈ ÆÄÀÏ O, ±âÁ¸ Ã·ºÎÆÄÀÏ O
-//		 * > originName : »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏÀÇ ¿øº»ÆÄÀÏ¸í,
-//		 *   changeName : »õ·Î ³Ñ¾î¿Â Ã·ºÎÆÄÀÏÀÇ ¼öÁ¤ÆÄÀÏ¸í
+//		 * 4. ìƒˆë¡œ ì²¨ë¶€ëœ íŒŒì¼ O, ê¸°ì¡´ ì²¨ë¶€íŒŒì¼ O
+//		 * > originName : ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì˜ ì›ë³¸íŒŒì¼ëª…,
+//		 *   changeName : ìƒˆë¡œ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ì˜ ìˆ˜ì •íŒŒì¼ëª…
 //		 *   
-//		 * ¸¸¾à, Board Å×ÀÌºí°ú Attachment Å×ÀÌºíÀ» µû·Î µÑ °æ¿ì
-//		 * 2. Board Å×ÀÌºí Update
-//		 * 3. Board Å×ÀÌºí Update, Attachment Å×ÀÌºí Insert
-//		 * 4. Board Å×ÀÌºí Update, Attachment Å×ÀÌºí Update
-//		 * ÀÌ Äõ¸®¸¦ °í·ÁÇØ¾ßÇÔ!!  
+//		 * ë§Œì•½, Board í…Œì´ë¸”ê³¼ Attachment í…Œì´ë¸”ì„ ë”°ë¡œ ë‘˜ ê²½ìš°
+//		 * 2. Board í…Œì´ë¸” Update
+//		 * 3. Board í…Œì´ë¸” Update, Attachment í…Œì´ë¸” Insert
+//		 * 4. Board í…Œì´ë¸” Update, Attachment í…Œì´ë¸” Update
+//		 * ì´ ì¿¼ë¦¬ë¥¼ ê³ ë ¤í•´ì•¼í•¨!!  
 //		 */
 //		
 //		int result = noticeService.updateNotice(n);
 //		
-//		if(result > 0) { // ¼º°ø
+//		if(result > 0) { // ì„±ê³µ
 //			
-//			// ÀÏÈ¸¼º ¾Ë¶÷¹®±¸¸¦ ´ã¾Æ¼­ 
-//			// ÇØ´ç °Ô½Ã±Û »ó¼¼º¸±â ÆäÀÌÁö·Î url Àç¿äÃ»
-//			session.setAttribute("alertMsg", "¼º°øÀûÀ¸·Î °Ô½Ã±ÛÀÌ ¼öÁ¤µÇ¾ú½À´Ï´Ù.");
+//			// ì¼íšŒì„± ì•ŒëŒë¬¸êµ¬ë¥¼ ë‹´ì•„ì„œ 
+//			// í•´ë‹¹ ê²Œì‹œê¸€ ìƒì„¸ë³´ê¸° í˜ì´ì§€ë¡œ url ì¬ìš”ì²­
+//			session.setAttribute("alertMsg", "ì„±ê³µì ìœ¼ë¡œ ê²Œì‹œê¸€ì´ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.");
 //			
 //			return "redirect:/detail.no?nno=" + n.getNoticeNo();
 //			
-//		} else { // ½ÇÆĞ
+//		} else { // ì‹¤íŒ¨
 //			
-//			// ¿¡·¯¹®±¸¸¦ ´ã¾Æ¼­ ¿¡·¯ÆäÀÌÁö·Î Æ÷¿öµù
-//			model.addAttribute("errorMsg", "°Ô½Ã±Û ¼öÁ¤ ½ÇÆĞ");
+//			// ì—ëŸ¬ë¬¸êµ¬ë¥¼ ë‹´ì•„ì„œ ì—ëŸ¬í˜ì´ì§€ë¡œ í¬ì›Œë”©
+//			model.addAttribute("errorMsg", "ê²Œì‹œê¸€ ìˆ˜ì • ì‹¤íŒ¨");
 //			
 //			return "common/errorPage";
 //		}
 //	}
 //	
 //	
-//	// ---------------- ÀÏ¹İ¸Ş¼Òµå ---------------------
+//	// ---------------- ì¼ë°˜ë©”ì†Œë“œ ---------------------
 //	
-//	// ÇöÀç ³Ñ¾î¿Â Ã·ºÎÆÄÀÏ ±× ÀÚÃ¼¸¦ ¼­¹öÀÇ Æú´õ·Î ÀúÀå½ÃÅ°´Â ¸Ş¼Òµå
-//	// > ÀÏ¹İ¸Ş¼Òµå·Î BoardController ¿¡ ¸¸µé°í ÀÖÀ½
-//	// > Controller Å¬·¡½º¿¡ url À» ¿äÃ»ÇÏ´Â ¸Ş¼Òµå¸¸ ÀÖ´Ù¶ó´Â ¹ıÀº ¾øÀ½!!
-//	//   Áï, ÀÏ¹İ¸Ş¼Òµåµµ ³»°¡ ÇÊ¿äÇÏ´Ù¸é ¸· ¸¸µé¾î¼­ È£ÃâÇØµµµÊ!!
+//	// í˜„ì¬ ë„˜ì–´ì˜¨ ì²¨ë¶€íŒŒì¼ ê·¸ ìì²´ë¥¼ ì„œë²„ì˜ í´ë”ë¡œ ì €ì¥ì‹œí‚¤ëŠ” ë©”ì†Œë“œ
+//	// > ì¼ë°˜ë©”ì†Œë“œë¡œ BoardController ì— ë§Œë“¤ê³  ìˆìŒ
+//	// > Controller í´ë˜ìŠ¤ì— url ì„ ìš”ì²­í•˜ëŠ” ë©”ì†Œë“œë§Œ ìˆë‹¤ë¼ëŠ” ë²•ì€ ì—†ìŒ!!
+//	//   ì¦‰, ì¼ë°˜ë©”ì†Œë“œë„ ë‚´ê°€ í•„ìš”í•˜ë‹¤ë©´ ë§‰ ë§Œë“¤ì–´ì„œ í˜¸ì¶œí•´ë„ë¨!!
 //	public String savePath(MultipartFile upfile,
 //						   HttpSession session) {
 //		
-//		// ¿¹) "bono.jpg" --> "2024052116143012345.jpg"
-//		// 1. ¿øº»ÆÄÀÏ¸í »Ì¾Æ¿À±â
+//		// ì˜ˆ) "bono.jpg" --> "2024052116143012345.jpg"
+//		// 1. ì›ë³¸íŒŒì¼ëª… ë½‘ì•„ì˜¤ê¸°
 //		String originName = upfile.getOriginalFilename(); 
 //										// "bono.jpg"
 //		
-//		// 2. ½Ã°£ Çü½ÄÀ¸·Î ¹®ÀÚ¿­·Î »Ì¾Æ³»±â (³â¿ùÀÏ½ÃºĞÃÊ)
+//		// 2. ì‹œê°„ í˜•ì‹ìœ¼ë¡œ ë¬¸ìì—´ë¡œ ë½‘ì•„ë‚´ê¸° (ë…„ì›”ì¼ì‹œë¶„ì´ˆ)
 //		String currentTime 
 //				= new SimpleDateFormat("yyyyMMddHHmmss")
 //									.format(new Date());
 //										// "20240521161430" 
 //		
-//		// 3. µÚ¿¡ ºÙÀ» 5ÀÚ¸® ·£´ı¼ö ¾ò¾î³»±â (10000 ~ 99999)
+//		// 3. ë’¤ì— ë¶™ì„ 5ìë¦¬ ëœë¤ìˆ˜ ì–»ì–´ë‚´ê¸° (10000 ~ 99999)
 //		int ranNum = (int)(Math.random() * 90000 + 10000);
 //										// 12345
 //		
-//		// 4. ¿øº»ÆÄÀÏ¸íÀ¸·ÎºÎÅÍ È®ÀåÀÚ¸í »Ì±â
+//		// 4. ì›ë³¸íŒŒì¼ëª…ìœ¼ë¡œë¶€í„° í™•ì¥ìëª… ë½‘ê¸°
 //		String ext 
 //			= originName.substring(originName.lastIndexOf("."));
 //										// ".jpg"
 //		
-//		// 5. 2 ~ 4 ±îÁö ¸ğµÎ ÀÌ¾î ºÙÀÌ±â
+//		// 5. 2 ~ 4 ê¹Œì§€ ëª¨ë‘ ì´ì–´ ë¶™ì´ê¸°
 //		String changeName = currentTime + ranNum + ext;
 //		
-//		// 6. ¾÷·ÎµåÇÏ°íÀÚ ÇÏ´Â ¹°¸®ÀûÀÎ ¼­¹öÀÇ °æ·Î ¾Ë¾Æ³»±â
-//		// > application °´Ã¼·ÎºÎÅÍ
+//		// 6. ì—…ë¡œë“œí•˜ê³ ì í•˜ëŠ” ë¬¼ë¦¬ì ì¸ ì„œë²„ì˜ ê²½ë¡œ ì•Œì•„ë‚´ê¸°
+//		// > application ê°ì²´ë¡œë¶€í„°
 //		// (webapp/resources/uploadFiles/~~)
 //		String savePath
 //				= session.getServletContext()
 //						 .getRealPath("/resources/uploadFiles/");
 //		
-//		// 7. °æ·Î¿Í ¼öÁ¤ÆÄÀÏ¸í ÇÕÃ¼ ÈÄ ÆÄÀÏÀ» ¾÷·ÎµåÇØÁÖ±â
-//		// > MultipartFile °´Ã¼°¡ Á¦°øÇÏ´Â
-//		//   transferTo ¸Ş¼Òµå¸¦ ÀÌ¿ëÇÔ
+//		// 7. ê²½ë¡œì™€ ìˆ˜ì •íŒŒì¼ëª… í•©ì²´ í›„ íŒŒì¼ì„ ì—…ë¡œë“œí•´ì£¼ê¸°
+//		// > MultipartFile ê°ì²´ê°€ ì œê³µí•˜ëŠ”
+//		//   transferTo ë©”ì†Œë“œë¥¼ ì´ìš©í•¨
 //		try {
 //			
 //			upfile.transferTo(new File(savePath + changeName));
@@ -367,7 +367,7 @@ public class NoticeController {
 //			e.printStackTrace();
 //		}
 //		
-//		// ¼öÁ¤ÆÄÀÏ¸í ¹®ÀÚ¿­À» ¸®ÅÏ
+//		// ìˆ˜ì •íŒŒì¼ëª… ë¬¸ìì—´ì„ ë¦¬í„´
 //		return changeName;
 //	}
 //	

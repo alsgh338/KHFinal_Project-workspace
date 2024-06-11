@@ -19,7 +19,7 @@ public class NoticeDao {
 		}
 	
 	
-	// °øÁö»çÇ× ¸®½ºÆ® Á¶È¸¿ë
+	// ê³µì§€ì‚¬í•­ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒìš©
 	public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
 		int limit = pi.getBoardLimit();
@@ -30,7 +30,7 @@ public class NoticeDao {
 		return(ArrayList)sqlSession.selectList("noticeMapper.selectList", null, rowBounds);
 	}
 
-	// °øÁö»çÇ× ÀÛ¼º¿ë ¸Ş¼Òµå
+	// ê³µì§€ì‚¬í•­ ì‘ì„±ìš© ë©”ì†Œë“œ
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
 		
 		
@@ -38,14 +38,14 @@ public class NoticeDao {
 		
 	}
 	
-	// Á¶È¸¼ö Áõ°¡¿ë ¸Ş¼Òµå
+	// ì¡°íšŒìˆ˜ ì¦ê°€ìš© ë©”ì†Œë“œ
 	public int increaseCount(SqlSessionTemplate sqlSession,
 							 int noticeNo) {
 		
 		return sqlSession.update("noticeMapper.increaseCount", noticeNo);
 	}
 	
-	// °øÁö»çÇ× »ó¼¼Á¶È¸¿ë ¸Ş¼Òµå
+	// ê³µì§€ì‚¬í•­ ìƒì„¸ì¡°íšŒìš© ë©”ì†Œë“œ
 	public Notice selectNotice(SqlSessionTemplate sqlSession,
 							   int noticeNo) {
 		
@@ -53,14 +53,14 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.selectBoard", noticeNo);
 	}
 	
-	// °øÁö»çÇ× ¼öÁ¤¿ë ¸Ş¼Òµå
+	// ê³µì§€ì‚¬í•­ ìˆ˜ì •ìš© ë©”ì†Œë“œ
 	public int updateNotice(SqlSessionTemplate sqlSession,
 							Notice n) {
 		
 		return sqlSession.update("noticeMapper.updateNotice", n);
 	}
 	
-	// °øÁö»çÇ× »èÁ¦¿ë ¸Ş¼Òµå
+	// ê³µì§€ì‚¬í•­ ì‚­ì œìš© ë©”ì†Œë“œ
 	public int deleteNotice(SqlSessionTemplate sqlSession,
 							int noticeNo) {
 		
