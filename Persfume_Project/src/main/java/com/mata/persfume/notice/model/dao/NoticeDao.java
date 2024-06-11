@@ -39,8 +39,7 @@ public class NoticeDao {
 	}
 	
 	// 조회수 증가용 메소드
-	public int increaseCount(SqlSessionTemplate sqlSession,
-							 int noticeNo) {
+	public int increaseCount(SqlSessionTemplate sqlSession, int noticeNo) {
 		
 		return sqlSession.update("noticeMapper.increaseCount", noticeNo);
 	}
@@ -50,7 +49,7 @@ public class NoticeDao {
 							   int noticeNo) {
 		
 	
-		return sqlSession.selectOne("noticeMapper.selectBoard", noticeNo);
+		return sqlSession.selectOne("noticeMapper.selectNotice", noticeNo);
 	}
 	
 	// 공지사항 수정용 메소드
@@ -61,8 +60,7 @@ public class NoticeDao {
 	}
 	
 	// 공지사항 삭제용 메소드
-	public int deleteNotice(SqlSessionTemplate sqlSession,
-							int noticeNo) {
+	public int deleteNotice(SqlSessionTemplate sqlSession,int noticeNo) {
 		
 		return sqlSession.update("noticeMapper.deleteNotice",noticeNo );
 	

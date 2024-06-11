@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+<mapper namespace="noticeMapper">
+
+    <!-- Notice 테이블의 조회 결과를 자바 VO 타입으로 뽑아주는 resultMap -->
+  <resultMap id="noticeResultSet" type="notice">
+    <result column="NOTICE_NO" property="noticeNo"/>
+    <result column="NOTICE_TITLE" property="noticeTitle"/>
+    <result column="NOTICE_CONTENT" property="noticeContent"/>
+ 	<result column="NOTICE_COUNT" property="count"/> 
+    <result column="CREATE_DATE" property="createDate"/>
+    <result column="NOTICE_IMG_ORIGIN" property="noticeImgOrigin"/>
+   
+    <result column="NOTICE_IMG_CHANGE" property="noticeImgChange"/>
+    
+
+</resultMap>
+
+
+    <!-- NOTICE 테이블 관련 쿼리문 -->
+    <!-- 공지글 갯수 구하는 쿼리문 -->
+    <select id="selectListCount" 
+    		resultType="_int">
+        SELECT COUNT(*) 
+        FROM NOTICE 
+        WHERE STATUS = 'Y'
+    </select>
+
+    <!-- 공지사항 목록 구하는 쿼리문 -->
+    <select id="selectList" 
+    		resultMap="noticeResultSet">
+        SELECT NOTICE_NO,
+               NOTICE_TITLE,
+               NOTICE_CONTENT,
+               NOTICE_COUNT,
+               TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
+               NOTICE_IMG_ORIGIN
+        FROM NOTICE
+        WHERE STATUS = 'Y'
+        ORDER BY NOTICE_NO DESC
+    </select>
+
+    <!-- 게시글 작성용 쿼리문 -->
+    <insert id="insertNotice" 
+    		parameterType="notice">
+        INSERT INTO NOTICE(NOTICE_NO,
+                           NOTICE_TITLE,
+                           NOTICE_CONTENT,                                                 
+                           NOTICE_IMG_ORIGIN,
+                           NOTICE_IMG_CHANGE)
+			        VALUES (SEQ_NNO.NEXTVAL,
+			                #{noticeTitle},
+			                #{noticeContent},
+			                #{noticeImgOrigin},
+			                #{noticeImgChange})
+    </insert>
+
+    <!-- 조회수 증가용 쿼리문 -->
+    <update id="increaseCount" parameterType="_int">
+        UPDATE NOTICE 
+        SET NOTICE_COUNT = NOTICE_COUNT + 1 
+        WHERE NOTICE_NO = #{noticeNo} 
+        AND STATUS = 'Y'
+    </update>
+
+    <!-- 게시글 상세조회용 쿼리문 -->
+    <select id="selectNotice" 
+		    parameterType="_int" 
+		    resultMap="noticeResultSet">
+        SELECT NOTICE_NO,
+               NOTICE_TITLE,
+               NOTICE_CONTENT,
+               NOTICE_COUNT,
+               TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+        FROM NOTICE
+        WHERE NOTICE_NO = #{noticeNo} 
+        	AND STATUS = 'Y'
+    </select>
+
+    <!-- 공지사항 수정용 쿼리문 -->
+    <update id="updateNotice" parameterType="notice">
+        UPDATE NOTICE
+        SET NOTICE_TITLE = #{noticeTitle},
+            NOTICE_CONTENT = #{noticeContent}
+        WHERE NOTICE_NO = #{noticeNo} AND STATUS = 'Y'
+    </update>
+
+    <!-- 공지사항 삭제용 쿼리문 -->
+    <update id="deleteNotice" 
+    		parameterType="_int">
+        UPDATE NOTICE SET STATUS = 'N' 
+        WHERE NOTICE_NO = #{noticeNo} 
+        AND STATUS = 'Y'
+    </update>
+
+</mapper>

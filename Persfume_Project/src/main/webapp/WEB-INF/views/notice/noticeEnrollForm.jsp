@@ -200,27 +200,13 @@
             line-height: 1.25;
             font-family: 'Pretendard', 'Poppins', 'Noto Sans KR', sans-serif, Dotum, "돋움", DotumChe, "돋움체", Verdana, monospace, Corbel, AppleGothic, Helvetica;
         }
-          /* 버튼 스타일 */
-          .custom-file-upload {
-            display: inline-block;
-            padding: 8px 20px;
-            font-size: 14px;
-            cursor: pointer;
-            border: 1px solid #ccc;
-            background-color: #f5f5f5;
-            color: #333;
-            border-radius: 4px;
-        }
-
-        /* 숨겨진 실제 파일 입력(input) 요소 */
-        #real-file-input {
-            display: none;
-        }
+          
+      
         
     </style>
 </head>
 <body>
-
+<jsp:include page="../common/header.jsp" />
   <div class="content-area">
         <div class="content-title" id="home">NOTICE</div>
     <div id="contentWrapper">
@@ -233,7 +219,7 @@
                             <h3>공지글 작성하기</h3>
                         </div>
                         <div class="bbs-table-write">
-                            <form name="boardForm" action="board.html" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off">
+                            <form name="boardForm" action="insert.no" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off">
                                 <div id="passimg" style="position:absolute; visibility:hidden; z-index:999;"></div>
                                 <table summary="">
                                     <colgroup>
@@ -245,7 +231,7 @@
                                             <th><div>제목</div></th>
                                             <td colspan="3">
                                                 <div class="title">
-                                                    <input id="bw_input_subject" class="MS_input_txt input_style2" type="text" name="subject" value="">
+                                                    <input id="bw_input_subject" class="MS_input_txt input_style2" type="text" name="subject" required>
                                                     <div class="title_select"></div>
                                                 </div>
                                             </td>
@@ -254,13 +240,14 @@
                                             <th><div>내용</div></th>
                                             <td colspan="3" class="text_content">
                                                 <div>
-                                                    <textarea id="MS_text_content" name="content" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;"></textarea>
+                                                    <textarea id="MS_text_content" name="content" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;"
+                                                    required ></textarea>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><div>파일</div></th>
-                                            <td colspan="3">
+                                            <td colspan="4">
                                                 <div>
                                                     <input  type="file" id="bw_input_file" class="MS_input_txt input_style2" name="file_name1" value="">
                                                 </div>
@@ -275,7 +262,7 @@
                                 <dl class="bbs-link bbs-link-btm">
                                     <dt></dt>
                                     <dd>
-                                        <a href="insert.no" class="CSSbuttonBlack">등록하기</a>
+                                        <a href="insert.no" class="CSSbuttonBlack" type="submit">등록하기</a>
                                         <a href="list.no" class="CSSbuttonWhite">목록보기</a>
                                     </dd>
                                 </dl>
@@ -289,4 +276,5 @@
     </div><!-- #contentWrapper -->
 </body>
 
+    <jsp:include page="../common/footer.jsp" />
 </html>

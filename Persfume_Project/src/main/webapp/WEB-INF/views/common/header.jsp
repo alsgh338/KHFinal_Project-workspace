@@ -217,7 +217,7 @@
         </div>
 
         <div id="nav-btn" style="">
-            <div><a href="">NOTICE</a></div>
+            <div><a href="list.no">NOTICE</a></div>
             <div><a href="list.ev?condition=onGoing">EVENT</a></div>
             <div><a href="list.po">PERFUME</a></div>
             <div><a href="list.oc">ONEDAY CLASS</a></div>

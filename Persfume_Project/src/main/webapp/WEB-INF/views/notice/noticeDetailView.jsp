@@ -170,14 +170,28 @@
         .navigation a:hover {
             text-decoration: underline;
         }
+         /* 여기에 공통 스타일 작성 */
+
+        /* 이전글과 다음글 테이블 스타일 */
+        .navigation {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .navigation th,
+        .navigation td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
         
         
         
     </style>
-    <jsp:include page="../common/header.jsp" />
 </head>
 <body>
-
+  <jsp:include page="../common/header.jsp" />
+    <div class="content-area">
+        <div class="content-title" id="home">NOTICE</div>
 <div class="container">
     <div class="title">
         <h2>공지사항</h2>
@@ -186,38 +200,96 @@
         <tbody>
             <tr>
                 <th>제목</th>
-                <td class="subject">퍼스퓸 입점</td>
+                <td class="subject">${ n.noticeTitle }</td>
             </tr>
             <tr>
                 <td colspan="2">
                     <ul class="meta">
-                        <li><strong>작성일:</strong> <span>2024-06-05</span></li>
-                        <li><strong>조회수:</strong> <span>23</span></li>
+                        <li><strong>작성일:</strong> <span>${n.createDate}</span></li>
+                        <li><strong>조회수:</strong> <span>${n.count }</span></li>
                     </ul>
                     <div class="content">
-                        <p class="center-text">안녕하세요, 퍼스퓸 입니다.</p>
-                        <img src="img/NoticePersfume.png" alt="Perfume">
+                        <p class="center-text">${n.noticeContent }</p>
+                       
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
+    <hr>
+    <br><br>
     <div class="buttons">
-        <a href="/board/notice/8/?page=2" class="btn btn-normal">목록</a>
-        <a href="#none" onclick="postFormSubmit(1)" class="btn btn-normal">삭제</a>
-        <a href="/board/gallery/modify.html?board_act=edit&amp;no=87994&amp;board_no=8&amp;page=2" class="btn btn-normal">수정</a>
+        <a href="list.no" class="btn btn-normal">목록</a>
+        <a onclick="postFormSubmit(1)" class="btn btn-normal">수정</a>
+        <a onclick="postFormSubmit(2)" class="btn btn-normal">삭제</a>
+        <c:if test="${ (not empty sessionScope.loginUser) and (sessionScope.loginUser.userId eq requestScope.b.boardWriter) }">
+            <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
+	                <!-- 
+	                	* 기존의 수정하기, 삭제하기 요청을 GET 방식으로 보냈었음!!
+	                	> 쿼리스트링을 조작하여 내가 쓴 게시글이 아니더라도 수정, 삭제가 가능해짐
+	                	> 수정하기, 삭제하기 요청을 POST 방식으로 보내면 해결 가능함
+	                -->
+	  
+	   	<a href="delte.no" onclick="postFormSubmit(1)" class="btn btn-normal">삭제</a>
+        <a href="updateForm.no">수정</a>
     </div>
-    <br>
+    <br>			</c:if>
+    
+           <form id="postForm" action="" method="post">
+	            	<!-- 수정하기든, 삭제하기든 간에 글번호를 넘겨줘야함 -->
+	            	<input type="hidden" name="nno" value="${ requestScope.n.noticeNo }">
+	            	<!-- 삭제 요청 시 첨부파일의 수정파일명을 같이 보내기 -->
+	            	<input type="hidden" name="filePath" value="${ requestScope.n.noticeImgChange }" >
+	            </form>
+	            
+    	            <script>
+	            	function postFormSubmit(num) {
+	            		
+	            		 console.log("호출됨", num);
+	            		
+	            		if(num == 1) { // 수정하기 클릭 시
+	            			
+	            			$("#postForm").attr("action", "updateForm.no")
+	            						  .submit();
+	            			
+	            		} else { // 삭제하기 클릭 시
+	            			
+	            			$("#postForm").attr("action", "delete.no")
+	            						  .submit();
+	            		}
+	            		// > form 요소를 선택 후 attr 메소드를 이용해서
+	            		//   action 속성을 각각 부여해준 후 submit 메소드로 요청 날리기
+	            	}
+	            </script>
+	            
+
+			</div>
+			
+			<br><br><br>
     <table class="table navigation">
         <tbody>
-            <tr>
-                <th>이전글</th>
-                <td class="small-text"><a href="#none" onclick="BOARD_READ.file_download('/exec/front/Board/download/?no=87994&amp;realname=2023/06/01/ef50ebd55198f00a8a15bc3566b025ae.jpg&amp;filename=230601_공지사항_th.jpg');">230601_공지사항_퍼스퓸 4월 신상jpg</a></td>
-            </tr>
-            <tr>
-                <th>다음글</th>
-                <td class="small-text"><a href="#none" onclick="BOARD_READ.file_download('/exec/front/Board/download/?no=87994&amp;realname=2023/06/01/ef50ebd55198f00a8a15bc3566b025ae.jpg&amp;filename=230601_공지사항_th.jpg');">230601_공지사항_퍼스퓸 6월 신상.jpg</a></td>
-            </tr>
+           <!-- 이전글 -->
+                <tr>
+                    <th>이전글</th>
+                    <td class="small-text">
+                        <c:if test="${not empty previousArticle}">
+                            <a href="<c:out value="${previousArticle.link}"/>">
+                                <c:out value="${previousArticle.title}"/>
+                            </a>
+                        </c:if>
+                    </td>
+                </tr>
+                <!-- 다음글 -->
+                <tr>
+                    <th>다음글</th>
+                    <td class="small-text">
+                        <c:if test="${not empty nextArticle}">
+                            <a href="<c:out value="${nextArticle.link}"/>">
+                                <c:out value="${nextArticle.title}"/>
+                            </a>
+                        </c:if>
+                    </td>
+                </tr>
         </tbody>
     </table>
 </div>
