@@ -3,6 +3,26 @@
 
 <mapper namespace="memberMapper">
 
+	 <resultMap id="memberResultSet"
+	 			type="member">
+	 	<result column="MEM_NO" property="memNo"/>
+	 	<result column="MEM_ID" property="memId"/>
+	 	<result column="MEM_PWD" property="memPwd"/>
+	 	<result column="MEM_NAME" property="memName"/>
+	 	<result column="EMAIL" property="email"/>
+	 	<result column="PHONE" property="phone"/>
+	 	<result column="POSTCODE" property="postcode"/>
+	 	<result column="ADDRESS" property="address"/>
+	 	<result column="DETAILADDRESS" property="detailAddress"/>
+	 	<result column="EXTRAADDRESS" property="extraAddress"/>
+	 	<result column="GENDER" property="gender"/>
+	 	<result column="BIRTH_DATE" property="birthDate"/>
+	 	<result column="ENROLL_DATE" property="enrollDate"/>
+	 	<result column="MODIFY_DATE" property="modifyDate"/>
+	 	<result column="CHANGE_NAME" property="testDate"/>
+	 	<result column="STATUS" property="status"/>
+	 </resultMap>
+
 	<!-- 아이디 중복체크용 쿼리문 -->
 	<select id="idCheck"
 			parameterType="string"
@@ -42,4 +62,32 @@
 	
 	</insert>
 	
+	<!-- 로그인용 쿼리문 -->
+	<select id="loginMember"
+			parameterType="member"
+			resultMap="memberResultSet">
+	<!-- 암호화 작업 후 : 오로지 아이디만을 가지고 조회 -->
+	 	SELECT *
+	 	  FROM MEMBER
+	 	 WHERE MEM_ID = #{memId}
+	 	   AND STATUS = 'Y'
+	</select>
+	
+	<insert id="insertCoupon"
+			parameterType="int">
+		INSERT INTO MEM_COUPON(REGIST_DATE,
+				MEM_NO,
+				COUPON_NO)
+		VALUES (SYSDATE,
+				#{memNo},
+				)
+	</insert>
+	
+	<insert id="makeCoupon">
+		INSERT INTO COUPON(COUPON_NO
+			,COUPON_NAME)
+		VALUES(SEQ_COUPON_NO.NEXTVAL
+			,1234)
+	
+	</insert>
 </mapper>

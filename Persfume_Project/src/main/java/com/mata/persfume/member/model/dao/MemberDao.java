@@ -18,4 +18,19 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 
+	public Member loginMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("memberMapper.loginMember", m);
+	}
+
+	public int insertCoupon(SqlSessionTemplate sqlSession, int memNo) {
+		
+		return sqlSession.insert("memberMapper.insertCoupon", memNo);
+	}
+	
+	
+	public int makeCoupon(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.insert("memberMapper.makeCoupon");
+	}
 }

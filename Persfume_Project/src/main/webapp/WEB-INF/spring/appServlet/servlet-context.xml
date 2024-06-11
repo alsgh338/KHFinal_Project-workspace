@@ -39,5 +39,24 @@
 	    </beans:property>
 	</beans:bean>
 	
+	<!-- Email 전송 관련 빈 -->
+	<beans:bean class="org.springframework.mail.javamail.JavaMailSenderImpl" id="mailSender">
+		<beans:property name="host" value="smtp.gmail.com" />
+		<beans:property name="port" value="25" />
+		<!-- 25번 포트 사용은 암묵적인 룰 -->
+		<beans:property name="username" value="persfume2024@gmail.com" />
+		<beans:property name="password" value="aispwzfqtvwdgosx" />
+		
+		<beans:property name="javaMailProperties">
+			<beans:props>
+				<beans:prop key="mail.transport.protocol">smtp</beans:prop>
+				<!-- smtp 타입으로 이메일을 보내겠다 -->
+				<beans:prop key="mail.smtp.auth">true</beans:prop>
+				<!-- smtp 타입으로 이메일을 보내는걸 허용하겠다 -->
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+				<!--  이메일을 보낼 때 암호화 과정을 거치겠다  -->
+			</beans:props>
+		</beans:property>
+	</beans:bean>
 	
 </beans:beans>

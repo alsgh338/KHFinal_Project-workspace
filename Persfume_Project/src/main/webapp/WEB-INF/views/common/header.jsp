@@ -18,7 +18,6 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-
     <!-- swiper.js 라이브러리추가 (cdn) -->
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
@@ -227,7 +226,7 @@
         <div id="nav-auth">
             <div>
                 <a href="enroll.me">SIGN IN</a> |
-                <a href="">SIGN UP</a> 
+                <a href="login.fo">SIGN UP</a> 
             </div>
         </div>
     </div>

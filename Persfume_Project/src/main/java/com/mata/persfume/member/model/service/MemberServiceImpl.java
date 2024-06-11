@@ -33,5 +33,27 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	@Transactional
+	public Member loginMember(Member m) {
+
+		return memberDao.loginMember(sqlSession,m);
+	}
+
+	@Override
+	@Transactional
+	public int insertCoupon(int memNo) {
+		
+		return memberDao.insertCoupon(sqlSession,memNo);
+	}
+
+	@Override
+	public int makeCoupon() {
+		
+		return memberDao.makeCoupon(sqlSession);
+	}
+	
+	
+
 	
 }
