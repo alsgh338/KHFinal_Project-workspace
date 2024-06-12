@@ -1,86 +1,312 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
-        #updateForm>table {width:100%;}
-        #updateForm>table * {margin:5px;}
+     .content-area,
+        .content-area>div:not(.content-main){
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        /* 여기서부턴 공통 스타일? (아마도) */
+
+        .content-title{
+            height: 320px;
+            background: url(resources/images/class_title.jpg);
+            background-size: cover;
+            background-position: center;
+            object-fit: cover;
+            text-align: center;
+            line-height: 320px;
+            font-size: 50px;
+            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+            color: white;
+            width: 100%;
+        }
+
+        .content-subtitle,
+        .content-main
+        {
+            width: 1400px;
+        }
+        
+
+        .content-subtitle{
+            line-height: 150px;
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+        .content-main{
+            display: inline-block;
+            text-align: center;
+        }
+        /* 여기에 CSS 스타일을 복사하여 붙여넣으세요 */
+        
+        .bbs-tit {
+            margin-top: 60px;
+        }
+
+        .bbs-tit h3 {
+            text-align: center;
+            font-size: 16px;
+            color: #000000;
+            font-weight: bold;
+            line-height: 30px;
+        }
+
+        /* 단순화된 CSS 스타일 */
+        html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        * {
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-size-adjust: none;
+        }
+
+        div {
+            display: block;
+            unicode-bidi: isolate;
+        }
+
+        body, h1, h2, h3, h4, h5, h6, table, select, textarea, a, p {
+            font-family: 'Pretendard', "Noto Sans KR", "Roboto", Dotum, AppleGothic, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            table-layout: fixed;
+            word-wrap: break-word;
+            word-break: keep-all;
+        }
+
+        /* 제목과 파일 스타일 */
+        .bbs-table-write .input_style2 {
+            width: 700px;
+        }
+
+        .bbs-table-write tbody th {
+            padding-left: 30px;
+            font-size: 14px;
+            font-weight: normal;
+            background: #f8f8f8;
+            text-align: center; /* 가운데 정렬 추가 */
+        }
+
+        .bbs-table-write tbody th div {
+            text-align: center; /* div 요소의 가운데 정렬 추가 */
+        }
+
+        /* textarea 스타일 */
+        textarea {
+            color: #1c1c1c;
+            line-height: 1.25;
+            word-wrap: break-word;
+            word-break: keep-all;
+            border-spacing: 0;
+            border-collapse: collapse;
+            font-family: 'Pretendard', "Noto Sans KR", "Roboto", Dotum, AppleGothic, Helvetica, sans-serif;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-size-adjust: none;
+            width: 700px;
+            height: 328px !important; /* 높이 강제 적용 */
+            padding: 2px;
+            border: 1px solid #EDEDED;
+            resize: none;
+        }
+ .bbs-table-write {
+        margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
+        width: 800px; /* 테이블의 최대 너비 설정 */
+    }
+        .bbs-table-write tbody th, .bbs-table-write tbody td {
+            padding: 13px 0;
+            text-align: left;
+            border-bottom: 1px solid #e9e9e9;
+        }
+        
+        .bbs-table-write .MS_input_txt {
+            
+            height: 38px;
+            line-height: 31px;
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+
+        .bbs-table-write tbody td {
+            padding: 13px 10px;
+        }
+
+        .bbs-table-write .btn_file {
+            display: inline-block;
+            margin-left: -1px;
+            padding: 0 5px;
+            height: 31px;
+            font-size: 11px;
+            line-height: 31px;
+            border: 1px solid #e4e4e5;
+            background: #f5f5f5;
+            text-decoration: none; /* 밑줄 제거 */
+        }
+
+        /* 버튼 */
+        #bbsData .bbs-link-btm {
+            margin-top: 40px;
+            text-align: center;
+        }
+        #bbsData .bbs-link-btm a {
+            width: 228px;
+            height: 58px;
+            font-size: 16px;
+            line-height: 58px;
+            text-decoration: none; /* 밑줄 제거 */
+        }
+
+        .CSSbuttonBlack {
+            display: inline-block;
+            color: #fff;
+            text-align: center;
+            border: 1px solid #231f20;
+            background: #231f20;
+            transition: all 0.3s ease;
+            text-decoration: none; /* 밑줄 제거 */
+        }
+
+        .CSSbuttonWhite {
+            display: inline-block;
+            color: #1d1b1b;
+            text-align: center;
+            border: 1px solid #dbdbdb;
+            background: #fff;
+            transition: all 0.3s ease;
+            text-decoration: none; /* 밑줄 제거 */
+        }
+
+        body, h1, h2, h3, h4, h5, h6, table, pre, xmp, plaintext, listing, input, textarea, select, button, a {
+            font-size: 13px;
+            color: #1c1c1c;
+            line-height: 1.25;
+            font-family: 'Pretendard', 'Poppins', 'Noto Sans KR', sans-serif, Dotum, "돋움", DotumChe, "돋움체", Verdana, monospace, Corbel, AppleGothic, Helvetica;
+        }
+          
+          
+      
+        
     </style>
 </head>
 <body>
-        
-    <jsp:include page="../common/header.jsp" />
-      <div class="content-area">
+<jsp:include page="../common/header.jsp" />
+  <div class="content-area">
         <div class="content-title" id="home">NOTICE</div>
-
-    <div class="content">
-        <br><br>
-        <div class="innerOuter">
-            <h2>게시글 수정하기</h2>
-            <br>
-
-            <form id="updateForm" method="post" action="update.no" enctype="multipart/form-data">
+    <div id="contentWrapper">
+        <div id="contentWrap">
+            <link type="text/css" rel="stylesheet" href="/template_common/shop/basic_simple/menu.1.css?t=201711221039">
+            <div id="content">
+                <div id="bbsData">
+                    <div class="page-body">
+                        <div class="bbs-tit">
+                            <h3>공지글 수정하기</h3>
+                        </div>
+                        
+                        
+                        <div class="bbs-table-write">
+                            <form name="updateForm" action="update.no" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off">
+                                   <!-- 해당 게시글의 글번호 (PK) 도 같이 넘기기 -->
+                					<input type="hidden" name="noticeNo" value="${ requestScope.n.noticeNo }">
                 
-                <!-- 해당 게시글의 글번호 (PK) 도 같이 넘기기 -->
-                <input type="hidden" name="noticeNo" value="${ requestScope.n.noticeNo }">
-                
-                <table align="center">
-                    <tr>
-                        <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" value="${ requestScope.n.noticeTitle }" name="noticeTitle" required></td>
-                    </tr>
-                    <tr>
-                        <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ requestScope.n.noticeWriter }" readonly></td>
-                    </tr>
-                    <tr>
-                        <th><label for="upfile">첨부파일</label></th>
-                        <td>
-                            <input type="file" id="upfile" class="form-control-file border" name="reupfile">
-	                        
-	                        <!-- 
-	                        	기존 첨부파일이 있었을 경우 : 기존 파일을 삭제해줘야함 
-	                        	(해당 파일의 원본파일명, 수정파일명 넘기기) 
-	                        -->
-	                        <c:if test="${ not empty requestScope.n.originName }">                    
-	                                                    현재 업로드된 파일 : 
-	                            <a href="${ requestScope.n.changeName }" 
-	                               download="${ requestScope.n.originName }">
-	                            	${ requestScope.n.originName }
-	                            </a>
-	                            
-	                            <input type="hidden" 
-	                            	   name="originName" 
-	                            	   value="${ requestScope.n.originName }" >
-	                           	<input type="hidden"
-	                           		   name="changeName"
-	                           		   value="${ requestScope.n.changeName }" >
-	                        </c:if>
-	                        
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label for="content">내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required>${ requestScope.b.boardContent }</textarea></td>
-                    </tr>
-                </table>
-                <br>
+                                <div id="passimg" style="position:absolute; visibility:hidden; z-index:999;"></div>
+                                <table align="center">
+                                    <colgroup>
+                                        <col width="135">
+                                        <col width="*">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th><div>제목</div></th>
+                                            <td colspan="3">
+                                                <div class="title">
+                                                    <input id="bw_input_subject" class="MS_input_txt input_style2" value="${requestScope.n.noticeTitle }" type="text" name="noticeTitle" required>
+                                                    <div class="title_select"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                      <tr>
+							    <th><div>내용</div></th>
+							    <td colspan="3" class="text_content">
+							        <div>
+							            <textarea id="MS_text_content" name="noticeContent" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;"
+							            style="resize:none;" required>${requestScope.n.noticeContent}</textarea>
+							        </div>
+							    </td>
+							</tr>
+						
+						<tr>
+						    <th><div>파일</div></th>
+						    <td colspan="4">
+						        <div>
+						            <input type="file" id="bw_input_file" class="MS_input_txt input_style2" name="reupfile">
+						       </div>     
+							<c:if test="${not empty requestScope.n.noticeImgOrigin}">
+						    현재 업로드된 파일 :
+						    <a href="${requestScope.n.noticeImgChange}" 
+						    	download="${requestScope.n.noticeImgOrigin}">
+						        ${requestScope.n.noticeImgOrigin}
+						    </a>
 
-                <div align="center">
-                    <button type="submit" class="btn btn-primary">수정하기</button>
-                    <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1);">이전으로</button>
-                </div>
-            </form>
-        </div>
-        <br><br>
+				    <input type="hidden" 
+				    		name="noticeImgOrigin" 
+				    		value="${requestScope.n.noticeImgOrigin}">
+				    <input type="hidden" 
+				    		name="noticeImgChange" 
+				    		value="${requestScope.n.noticeImgChange}">
+					</c:if>
+   
+    </td>
+</tr>
+        </table>                                   
+</div>
+                                               
+                                
+                            
+                              
+                       <dl class="bbs-link bbs-link-btm">
+					    <dt></dt>
+					    <dd>
+							<a href="javascript:void(0);" class="CSSbuttonBlack" onclick="submitForm();">수정하기</a>
+					        <a onclick="javascript:history.go(-1);" class="CSSbuttonWhite">뒤로가기</a>
+					    </dd>
+					</dl>
+					  </form>
+					<script>
+					function submitForm() {
+					    document.updateForm.submit();
+					}
 
-    </div>
+					</script>
+	
+
+                                  <br><br>
+                          
+                        </div>
+                    </div><!-- .page-body -->
+                </div><!-- #bbsData -->
+            </div><!-- #content -->
+        </div><!-- #contentWrap -->
+    </div><!-- #contentWrapper -->
     
     <jsp:include page="../common/footer.jsp" />
-    
 </body>
+
 </html>

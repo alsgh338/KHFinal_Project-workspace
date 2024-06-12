@@ -35,8 +35,8 @@ public  interface NoticeService {
 	
 	// 공지글 수정 서비스
 	int updateNotice(Notice n);
-	
-	
+
+
 }
 
 

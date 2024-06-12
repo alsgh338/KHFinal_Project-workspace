@@ -10,8 +10,10 @@
  	<result column="NOTICE_COUNT" property="count"/> 
     <result column="CREATE_DATE" property="createDate"/>
     <result column="NOTICE_IMG_ORIGIN" property="noticeImgOrigin"/>
-   
+    <result column="NOTICE_IMG_PATH" property="noticeImgPath"/>
+    
     <result column="NOTICE_IMG_CHANGE" property="noticeImgChange"/>
+
     
 
 </resultMap>
@@ -30,11 +32,12 @@
     <select id="selectList" 
     		resultMap="noticeResultSet">
         SELECT NOTICE_NO,
-               NOTICE_TITLE,
+         	   NOTICE_IMG_PATH,
+               NOTICE_TITLE,              
                NOTICE_CONTENT,
                NOTICE_COUNT,
                TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
-               NOTICE_IMG_ORIGIN
+               NOTICE_IMG_PATH
         FROM NOTICE
         WHERE STATUS = 'Y'
         ORDER BY NOTICE_NO DESC
@@ -71,7 +74,9 @@
                NOTICE_TITLE,
                NOTICE_CONTENT,
                NOTICE_COUNT,
-               TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+               TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
+               NOTICE_IMG_ORIGIN,
+               NOTICE_IMG_CHANGE
         FROM NOTICE
         WHERE NOTICE_NO = #{noticeNo} 
         	AND STATUS = 'Y'
@@ -81,16 +86,21 @@
     <update id="updateNotice" parameterType="notice">
         UPDATE NOTICE
         SET NOTICE_TITLE = #{noticeTitle},
-            NOTICE_CONTENT = #{noticeContent}
-        WHERE NOTICE_NO = #{noticeNo} AND STATUS = 'Y'
+            NOTICE_CONTENT = #{noticeContent},
+            NOTICE_IMG_ORIGIN = #{noticeImgOrigin},
+            NOTICE_IMG_CHANGE =#{noticeImgChange}
+        WHERE NOTICE_NO = #{noticeNo} 
+        AND STATUS = 'Y'
     </update>
 
     <!-- 공지사항 삭제용 쿼리문 -->
     <update id="deleteNotice" 
     		parameterType="_int">
-        UPDATE NOTICE SET STATUS = 'N' 
+        UPDATE NOTICE 
+        SET STATUS = 'N' 
         WHERE NOTICE_NO = #{noticeNo} 
         AND STATUS = 'Y'
     </update>
+	
 
 </mapper>

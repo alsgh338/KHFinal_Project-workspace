@@ -138,11 +138,13 @@
         }
         
         .bbs-table-write .MS_input_txt {
-            padding: 0 0 0 5px;
-            height: 31px;
+              
+            height: 38px;
             line-height: 31px;
             border: 1px solid #ddd;
             background: #fff;
+        }
+
         }
 
         .bbs-table-write tbody td {
@@ -231,7 +233,7 @@
                                             <th><div>제목</div></th>
                                             <td colspan="3">
                                                 <div class="title">
-                                                    <input id="bw_input_subject" class="MS_input_txt input_style2" type="text" name="subject" required>
+                                                    <input id="bw_input_subject" class="MS_input_txt input_style2" type="text" name="noticeTitle" required>
                                                     <div class="title_select"></div>
                                                 </div>
                                             </td>
@@ -240,7 +242,7 @@
                                             <th><div>내용</div></th>
                                             <td colspan="3" class="text_content">
                                                 <div>
-                                                    <textarea id="MS_text_content" name="content" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;"
+                                                    <textarea id="MS_text_content" name="noticeContent" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;"
                                                     required ></textarea>
                                                 </div>
                                             </td>
@@ -249,7 +251,7 @@
                                             <th><div>파일</div></th>
                                             <td colspan="4">
                                                 <div>
-                                                    <input  type="file" id="bw_input_file" class="MS_input_txt input_style2" name="file_name1" value="">
+                                                    <input  type="file" id="bw_input_file" class="MS_input_txt input_style2" name="upfile" value="">
                                                 </div>
                                             </td>
                                         </tr>
@@ -258,14 +260,15 @@
                                 </table>
                                 
                               
-                                <!-- 하단 버튼 -->
-                                <dl class="bbs-link bbs-link-btm">
-                                    <dt></dt>
-                                    <dd>
-                                        <a href="insert.no" class="CSSbuttonBlack" type="submit">등록하기</a>
-                                        <a href="list.no" class="CSSbuttonWhite">목록보기</a>
-                                    </dd>
-                                </dl>
+                       <dl class="bbs-link bbs-link-btm">
+					    <dt></dt>
+					    <dd>
+					        <a href="javascript:void(0);" class="CSSbuttonBlack" onclick="document.boardForm.submit();">등록하기</a>
+					        <a href="list.no" class="CSSbuttonWhite">목록보기</a>
+					    </dd>
+					</dl>
+
+
                                   <br><br>
                             </form>
                         </div>

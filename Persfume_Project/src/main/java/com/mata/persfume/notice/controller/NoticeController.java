@@ -80,46 +80,15 @@ public class NoticeController {
 		return mv;
 	}
 	
-	// * 만약 다중파일 업로드 기능을 구현하고 싶다면?
-	// > form 태그 내부에서 여러개의 input type="file" 요소에
-	//   동일한 키값으로 부여 (예. upfiles)
-	// > 해당 요청시 전달값으로 매개변수로 
-	//   MultipartFile[] upfiles 또는
-	//   ArrayList<MultipartFile> upfiles 로 받아
-	//   반복문 처리하면 끝!!
-	//   (어떤 방법으로 받든 간에 0번째 인덱스부터 차곡차곡
-	//    첨부파일 정보들이 들어가 있을 것임)
-	
-	
 	
 	@PostMapping("insert.no")
 	public ModelAndView insertNotice(Notice n, 
 									MultipartFile upfile,
 									HttpSession session,
 									ModelAndView mv) {
-		// 스프링에서 요청 시 첨부파일을 받고 싶을 경우
-		// 해당 메소드의 매개변수로 MultipartFile 타입으로 받는다.
-		
-		 System.out.println(n);
-		// > 커맨드 객체 방식이 제대로 동작하지 않음
-		// System.out.println(upfile);
-		// > 분명히 파일을 넘겼는데도 upfile 값이 null 로 뜸
-		
-		// 해결방법 : 파일업로드를 지원하는 라이브러리를 연동 (pom.xml)
-		
-		// 넘어온 첨부파일이 없을 경우
-		// > MultipartFile 객체의 filename (원본파일명) 이
-		//   빈 문자열로 넘어옴
-		// 넘어온 첨부파일이 있을 경우
-		// > MultipartFile 객체의 filename (원본파일명) 이
-		//   실제 원본파일명 문자열로 넘어옴
-		
-		// 요청 시 전달된 파일이 있을 경우
-		// > 파일명 수정 작업 후 서버로 업로드
-		// MultipartFile 의 filename 값을 얻어오기
-		// [ 표현법 ]
-		// upfile.getOriginalFilename() : String (원본파일명)
-		
+	
+	
+	
 		if(!upfile.getOriginalFilename().equals("")) {
 			// 요청 시 전달된 파일이 있을 경우
 			
@@ -128,14 +97,13 @@ public class NoticeController {
 			//   스프링에서는 기본적으로 제공되는게 없기 때문에 내가 직접 짜야함
 			String changeName = savePath(upfile, session);
 			
-			// 8. 원본파일명, 서버에 업로드된 경로를 포함한 수정파일명을
-			//    Board b 에 이어서 담기
+		
 			n.setNoticeImgOrigin(upfile.getOriginalFilename());
 			n.setNoticeImgChange("resources/uploadFiles/" + changeName);
 			
 		}
 		
-		// System.out.println(n);
+		 //System.out.println(n);
 		// > 이 시점 기준으로
 		//   넘어온 첨부파일이 있든 없든 공통적으로
 		//   boardTitle, boardWriter, boardContent 필드값 O
@@ -185,11 +153,14 @@ public class NoticeController {
 			// 해당 게시글 정보를 조회해와야함!!
 			Notice n = noticeService.selectNotice(nno);
 			
+			 
+			
 			// 조회된 데이터를 담아서 응답페이지로 포워딩
-			
-			mv.addObject("n", n)
-			  .setViewName("notice/noticeDetailView");
-			
+	     
+		
+	
+	         mv.addObject("n", n)
+				  .setViewName("notice/noticeDetailView");
 		} else { // 조회수 증가에 실패했다면
 			
 			// 에러문구를 담아서 에러페이지로 포워딩
@@ -327,12 +298,6 @@ public class NoticeController {
 	}
 
 
-// ---------------- 일반메소드 ---------------------
-
-// 현재 넘어온 첨부파일 그 자체를 서버의 폴더로 저장시키는 메소드
-// > 일반메소드로 BoardController 에 만들고 있음
-// > Controller 클래스에 url 을 요청하는 메소드만 있다라는 법은 없음!!
-//   즉, 일반메소드도 내가 필요하다면 막 만들어서 호출해도됨!!
 public String savePath(MultipartFile upfile,
 					   HttpSession session) {
 	

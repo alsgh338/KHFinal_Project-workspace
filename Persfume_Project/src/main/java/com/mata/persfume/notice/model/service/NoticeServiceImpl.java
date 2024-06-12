@@ -68,7 +68,6 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.updateNotice(sqlSession, n);
 	}
 
-
 	
 
 

@@ -132,26 +132,34 @@
         .buttons {
             margin-top: 20px;
             text-align: center;
+           
+   
         }
-        .btn {
-            display: inline-block;
-            padding: 8px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: #fff;
-            margin-right: 10px;
-        }
-        .btn-normal {
-            padding: 6px 8px;
-            border: 1px solid #d1d1d1;
-            font-size: 13px;
-            background-color: #fff;
-            color: #333;
-        }
-        .btn-normal:hover {
-            border-color: #111;
-        }
+       .btn {
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    margin-right: 10px;
+    border: 1px solid #007bff; /* 버튼 테두리 실선 추가 */
+    background-color: #007bff; /* 버튼 배경색 추가 */
+}
+
+.btn-normal {
+    padding: 6px 8px;
+    font-size: 13px;
+    background-color: #fff;
+    color: #333;
+}
+
+.btn:hover {
+    background-color: #fff; /* 마우스 오버 시 배경색 변경 */
+ 
+}
+
+      
         .navigation th, .navigation td {
             font-weight: bold;
             color: #333;
@@ -185,7 +193,46 @@
         }
         
         
+         /* 기존 스타일 유지 */
+        .content-area,
+        .content-area>div:not(.content-main){
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 공통 스타일 */
+        /* 기존 스타일 유지 */
+
+       /* 추가한 스타일 */
+        .attachment {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .attachment a {
+            margin-left: 20px;
+            font-size: 18px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        /* 추가한 스타일: 구분선 */
+        .divider {
+            border-top: 1px solid #ccc;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        /* 추가한 스타일: 구분선 */
+        .divider {
+            border-top: 1px solid #ccc;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
         
+      
     </style>
 </head>
 <body>
@@ -201,27 +248,43 @@
             <tr>
                 <th>제목</th>
                 <td class="subject">${ n.noticeTitle }</td>
+               
             </tr>
             <tr>
                 <td colspan="2">
                     <ul class="meta">
                         <li><strong>작성일:</strong> <span>${n.createDate}</span></li>
                         <li><strong>조회수:</strong> <span>${n.count }</span></li>
+                         <li><strong>첨부파일: </strong>
+                         <c:choose>
+	                    	<c:when test="${ empty requestScope.n.noticeImgOrigin }">
+	                    		첨부파일이 없습니다.
+	                    	</c:when>
+	                    	<c:otherwise>
+                         <a href="${ requestScope.b.changeName }" 
+                         download="${ requestScope.n.noticeImgOrigin }">${ requestScope.n.noticeImgOrigin }
+                         </a>
+                         </li>
+                         </c:otherwise>
+                        </c:choose>
                     </ul>
                     <div class="content">
                         <p class="center-text">${n.noticeContent }</p>
-                       
+                   
                     </div>
                 </td>
+                  
             </tr>
         </tbody>
     </table>
-    <hr>
-    <br><br>
+      
+    
+  <br>
     <div class="buttons">
         <a href="list.no" class="btn btn-normal">목록</a>
         <a onclick="postFormSubmit(1)" class="btn btn-normal">수정</a>
         <a onclick="postFormSubmit(2)" class="btn btn-normal">삭제</a>
+        
         <c:if test="${ (not empty sessionScope.loginUser) and (sessionScope.loginUser.userId eq requestScope.b.boardWriter) }">
             <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
 	                <!-- 
@@ -230,8 +293,8 @@
 	                	> 수정하기, 삭제하기 요청을 POST 방식으로 보내면 해결 가능함
 	                -->
 	  
-	   	<a href="delte.no" onclick="postFormSubmit(1)" class="btn btn-normal">삭제</a>
-        <a href="updateForm.no">수정</a>
+	   	<a onclick="postFormSubmit(2)" class="btn btn-normal">삭제</a>
+        <a href="updateForm.no"  onclick="postFormSubmit(2)" class="btn btn-normal">수정</a>
     </div>
     <br>			</c:if>
     
@@ -242,56 +305,53 @@
 	            	<input type="hidden" name="filePath" value="${ requestScope.n.noticeImgChange }" >
 	            </form>
 	            
-    	            <script>
-	            	function postFormSubmit(num) {
-	            		
-	            		 console.log("호출됨", num);
-	            		
-	            		if(num == 1) { // 수정하기 클릭 시
-	            			
-	            			$("#postForm").attr("action", "updateForm.no")
-	            						  .submit();
-	            			
-	            		} else { // 삭제하기 클릭 시
-	            			
-	            			$("#postForm").attr("action", "delete.no")
-	            						  .submit();
-	            		}
-	            		// > form 요소를 선택 후 attr 메소드를 이용해서
-	            		//   action 속성을 각각 부여해준 후 submit 메소드로 요청 날리기
-	            	}
-	            </script>
+    	          <script>
+			    function postFormSubmit(num) {
+			        //console.log("호출됨", num);
+			        if (num == 1) { // 수정하기 클릭 시
+			            $("#postForm").attr("action", "updateForm.no")
+			            			.submit();
+			        } else { // 삭제하기 클릭 시
+			            if (confirm("게시글을 정말 삭제하시겠습니까?")) { // 사용자에게 확인 메시지 표시
+			                $("#postForm").attr("action", "delete.no").submit();
+			                (confirm("게시글을 삭제했습니다."))
+			            } else {
+			                // 사용자가 취소를 선택한 경우 아무런 동작도 하지 않음
+			            }
+			        }
+    }
+</script>
+
 	            
 
 			</div>
 			
 			<br><br><br>
-    <table class="table navigation">
-        <tbody>
-           <!-- 이전글 -->
-                <tr>
-                    <th>이전글</th>
-                    <td class="small-text">
-                        <c:if test="${not empty previousArticle}">
-                            <a href="<c:out value="${previousArticle.link}"/>">
-                                <c:out value="${previousArticle.title}"/>
-                            </a>
-                        </c:if>
-                    </td>
-                </tr>
-                <!-- 다음글 -->
-                <tr>
-                    <th>다음글</th>
-                    <td class="small-text">
-                        <c:if test="${not empty nextArticle}">
-                            <a href="<c:out value="${nextArticle.link}"/>">
-                                <c:out value="${nextArticle.title}"/>
-                            </a>
-                        </c:if>
-                    </td>
-                </tr>
-        </tbody>
-    </table>
+   <table class="table navigation">
+    <tbody>
+        <tr>
+            <th>이전글</th>
+            <td class="small-text">
+                <c:if test="${not empty prevArticle}">
+                    <a href="detail.no?nno=${prevArticle.noticeNo}">
+                        ${prevArticle.noticeTitle}
+                    </a>
+                </c:if>
+            </td>
+        </tr>
+        <tr>
+            <th>다음글</th>
+            <td class="small-text">
+                <c:if test="${not empty nextArticle}">
+                    <a href="detail.no?nno=${nextArticle.noticeNo}">
+                        ${nextArticle.noticeTitle}
+                    </a>
+                </c:if>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 </div>
 
     <jsp:include page="../common/footer.jsp" />

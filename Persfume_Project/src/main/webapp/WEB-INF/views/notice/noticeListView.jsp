@@ -188,7 +188,8 @@
             background-color: #f2f2f2;
         }
 
-       
+
+	
         /* 수정된 스타일 */
         .bbs-table-list tbody tr:nth-child(even) {
             background-color: #aliceblue; /* 짝수 행 배경색 */
@@ -199,6 +200,20 @@
             text-align: center;
             margin-left: 40% /* 필요한 경우 위 여백 추가 */
         }
+        
+/* 공지사항 리스트 끝 */
+/* 게시글 리스트 시작 (한 페이지당 게시글 수) */
+/* 짝수형 색 설정
+.bbs-table-list tbody tr:nth-child(even) {
+    background-color: #; 
+}
+*/
+
+.bbs-table-list tbody tr:hover {
+    background-color: #aab9c6; /* 호버시 배경색 변경 */
+    cursor: pointer; /* 호버시 커서를 손가락 모양으로 설정 */
+}
+
     </style>
 </head>
 <body>
@@ -220,33 +235,24 @@
     <br>
     
     <div class="bbs-sch">
-    <form action="board.html" name="form1">
-
-<input type="hidden" name="review_type" value="">
-<!-- .검색 폼시작 -->
-   
-        
-            <label>
-         <input type="radio" name="searchType" value="name" onclick="change(1);" class="MS_input_checkbox">이름
-            </label>
-            <label>
-             <input type="radio" name="searchType" value="subject" onclick="change(2);" checked="checked" class="MS_input_checkbox">제목
-            </label>
-            <label>
-           <input type="radio" name="searchType" value="content" onclick="change(3);" class="MS_input_checkbox">내용
-            </label>
-           <span class="key-wrap">
-                <input type="text" name="stext" value="" class="MS_input_txt">                                        
-               <!-- 이미지를 버튼으로 대체 -->
-         <a href="javascript:document.form1.submit();" 
-            class="search-button">검색</a>
-
-                
-            </span>
-        
-    </form><!-- .검색 폼 끝 -->
-    </div><!-- .bbs-sch -->
-</div>
+                                <form action="board.html" name="form1">
+                                    <input type="hidden" name="review_type" value="">
+                                    <!-- 검색 폼 시작 -->
+                                    <label>
+                                        <input type="radio" name="searchType" value="subject" checked="checked" class="MS_input_checkbox">제목
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="searchType" value="content" class="MS_input_checkbox">내용
+                                    </label>
+                                    <span class="key-wrap">
+                                        <input type="text" name="stext" value="" class="MS_input_txt">                                        
+                                        <!-- 검색 버튼 -->
+                                        <a href="javascript:document.form1.submit();" class="search-button">검색</a>
+                                    </span>
+                                </form><!-- 검색 폼 끝 -->
+                            </div><!-- .bbs-sch -->
+                        </div>
+                    </div>
         <div class="bbs-table-list">
             
 		  		<colgroup>
@@ -260,8 +266,7 @@
 			<table id="noticeList" summary="No, content,Name,Data,Hits">
                 <thead>
                     <tr>
-                        <th scope="col"><div class="tb-center">NO.</div></th>
-                        <th scope="col"><div class="tb-center">&nbsp;</div></th>
+                        <th scope="col"><div class="tb-center">NO.</div></th>                      
                         <th scope="col"><div class="tb-center">TITLE</div></th>
                         <th scope="col"><div class="tb-center">CONTENT</div></th>
                         <th scope="col"><div class="tb-center">DATE</div></th>
@@ -276,12 +281,13 @@
                    
                     <tr>
                         <td><div class="tb-center">${n.noticeNo }</div></td>
-                        <td><div class="tb-left">
-                      
-                     		${n.noticeImgOrigin }
+             
                         </div></td>
                         <td>
-                            <div class="tb-left">${ n.noticeTitle } </div></td>
+                            <div class="tb-left">
+                      	${n.noticeTitle }
+                      	<!-- <img src="${n.noticeImgPath}" alt="${n.noticeTitle}"> -->
+                            </div></td>
                         <td>
                             <div class="tb-center">
                 <a> ${n.noticeContent }	</a>               
@@ -303,7 +309,7 @@
                                 });
                             </script>
             
-            
+            <!-- 관리자만 쓰기  -->
             <div class="bbs-btm">
         <div class="bbs-link">
         <a href="enrollForm.no" class="CSSbuttonWhite">WRITE</a></div>
@@ -312,17 +318,70 @@
             </div>
             </div>
             </div>
+            
+            <!-- 페이징바 -->
   <div id="pagingArea">
     <ul class="pagination">
-        <li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item"><a class="page-link" href="#">다음</a></li>
-    </ul>
-</div>
+    
+    
+    	<c:choose>
+     	<c:when test="${ requestScope.pi.currentPage eq 1 }">	
+        <li class="page-item disabled">
+        	<a class="page-link" href="#">이전</a>
+        	</li>
+        </c:when>
+        
+   		<c:otherwise>
+        <li class="page-item">
+        	<a class="page-link" 
+                    		   href="list.no?cpage=${ requestScope.pi.currentPage - 1 }">
+              		이전
+            </a>
+       	</li> 
+       	</c:otherwise>
+       	</c:choose>
+       	
+       	<c:forEach var="p" begin="${ requestScope.pi.startPage }"
+                    		   end="${ requestScope.pi.endPage }"
+                    		   step="1">
+        	<c:choose>	   
+            	<c:when test="${ requestScope.pi.currentPage ne p }">
+                		<li class="page-item">
+                  	<a class="page-link" href="list.no?cpage=${ p }">
+					${ p }
+				</a>
+                  </li>
+             	</c:when> 
+          		<c:otherwise>
+                    <li class="page-item active">
+		                  <a class="page-link">
+								${ p }
+					</a>
+		        </li>
+              </c:otherwise>            	
+			</c:choose>
+		</c:forEach>   		
+		
+		   <c:choose>
+                    <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+	                    <li class="page-item disabled">
+	                    	<a class="page-link" href="#">
+	                    		다음
+	                    	</a>
+	                    </li>
+                    </c:when>
+                    <c:otherwise>
+	                    <li class="page-item">
+	                    	<a class="page-link" 
+	                    	   href="list.no?cpage=${ requestScope.pi.currentPage + 1 }">
+	                    		다음
+	                    	</a>
+	                    </li>
+	                </c:otherwise>
+                    </c:choose>
+                </ul>
+            </div>   
+     
 
 
 </body>
