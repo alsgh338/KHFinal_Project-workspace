@@ -18,11 +18,23 @@
 		<result column="PRODUCT_STATUS" property="productStatus" />
 	</resultMap>
 	
-		<resultMap type="productImg" id="productImgResultSet">
-		<result column="IMG_NO" property="imgNo" />
-		<result column="IMG_NAME" property="imgName" />
+	<resultMap type="productImg" id="productImgResultSet">
+		<result column="IMG_NO" property="productImgNo" />
+		<result column="IMG_NAME" property="productImgPath" />
 		<result column="IMG_TYPE" property="imgType" />
 		<result column="PRODUCT_NO" property="productNo" />
+	</resultMap>
+	
+	<resultMap type="MemCoupon" id="MemCouponResultSet">
+		<result column="REGIST_DATE" property="registDate" />
+		<result column="STATUS" property="status" />
+		<result column="MEM_NO" property="memNo" />
+		<result column="COUPON_NO" property="couponNo" />
+	</resultMap>
+	
+	<resultMap type="Coupon" id="CouponResultSet">
+		<result column="COUPON_NO" property="coupon_no" />
+		<result column="COUPON_NAME" property="coupon_name" />
 	</resultMap>
 	
 	<!--  상품조회 카운트 숫자 구하는 쿼리문 -->
@@ -75,6 +87,23 @@
 		 WHERE PRODUCT_NO = #{pno} 
 		  AND IMG_TYPE = '1' 
 	</select>
-	
+	<!--  회원번호를 통해 발급 받은 쿠폰 긁어가기 -->
+ 	 <select id="searchCoupon"
+		parameterType="_int"
+		resultMap="MemCouponResultSet">
+		SELECT * 
+		FROM MEM_COUPON 
+		WHERE MEM_NO = #{mno} 
+		AND STATUS = 'Y' 
+		AND ADD_MONTHS(REGIST_DATE, 1) > SYSDATE
+		</select>
+			<!--  쿠폰  이름 긁어가기 -->
+ 	 <select id="searchCouponName"
+ 	 	parameterType="_int"
+		resultMap="CouponResultSet">
+		SELECT * 
+		FROM COUPON 
+		WHERE COUPON_NO = #{cno} 
+		</select>
  	 
 </mapper>

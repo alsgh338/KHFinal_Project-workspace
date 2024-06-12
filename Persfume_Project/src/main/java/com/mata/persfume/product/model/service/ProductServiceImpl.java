@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.mata.persfume.common.model.vo.PageInfo;
 import com.mata.persfume.product.model.dao.ProductDao;
+import com.mata.persfume.product.model.vo.Coupon;
+import com.mata.persfume.product.model.vo.MemCoupon;
 import com.mata.persfume.product.model.vo.Product;
 import com.mata.persfume.product.model.vo.ProductImg;
 
@@ -55,6 +57,18 @@ public class ProductServiceImpl implements ProductService {
 	public ProductImg selectProductImg(int pno) {
 		
 		return productDao.selectProductImg(sqlSession, pno);
+	}
+
+	@Override
+	public ArrayList<MemCoupon> searchCoupon(int mno) {
+		
+		return productDao.searchCoupon(sqlSession, mno);
+	}
+
+	@Override
+	public Coupon searchCouponName(int cno) {
+		
+		return productDao.searchCouponName(sqlSession, cno);
 	}
 
 

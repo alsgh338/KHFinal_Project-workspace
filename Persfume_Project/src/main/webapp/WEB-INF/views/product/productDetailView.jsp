@@ -4,10 +4,8 @@
      %>
     
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
-    <% 
-    DecimalFormat df = new DecimalFormat("#,###");
-    %>
+  	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+
     
 <!DOCTYPE html>
 <html>
@@ -15,20 +13,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> <!--  구글 CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"><!--  구글 CDN -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!--  구글 CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet"><!--  구글 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet"><!--  구글 이모지 -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>   
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    
 
     <style>
  
-        /* 전체 화면 영역 확인용 스타일 */
-    
+     /* 구글 이모지 css*/
+	    .noto-color-emoji-regular {
+		  font-family: "Noto Color Emoji", sans-serif;
+		  font-weight: 400;
+		  font-style: normal;
+		}
+		   
+	/* 전체 화면 영역 확인용 스타일 */ 
         *{
             margin: 0;
             padding: 0;
@@ -82,6 +86,9 @@
             width: 50%;
             height: 100%;
         }
+        #content_1R div{
+        display: inline-block;
+        }
         #c1{
         width: 100%;
         height: 70%;
@@ -106,11 +113,10 @@
         #c3 {
             width: 100%;
             height: 30%;
-        
         }
         #c4 {
             width: 100%;
-            height: 30%;
+       
             font-size: 15px;
         }
         #c5{
@@ -121,7 +127,7 @@
         }
         #c5 a{
             margin-left: 20px;
-            margin-top: 45px;
+        
             font-size: 20px;
             text-decoration: none;
             display: inline-block
@@ -139,7 +145,7 @@
                         }
         #buy{
             margin-left: 20px;
-            margin-top: 45px;
+         
             padding: 0px;
             font-size: 20px;
             border: 0px;
@@ -209,59 +215,59 @@
             <div id="content_1" >
                 <div id="content_1L">
                     <div id="c1">
-                        <img id="img4" src="${ requestScope.pi.imgName }" alt="이미지">
+                        <img id="img4" src="${ requestScope.pi.productImgPath }" alt="이미지">
                     </div>
-                 
                     <div id="c2">
                        <c:forEach var="i" items="${ requestScope.pilist }" varStatus="status">
-                    <img id="img${status.count}" src="${i.imgName}" alt="이미지">
-                    </c:forEach>
-                    </div>
-                   
+               			     <img id="img${status.count}" src="${i.productImgPath}" alt="이미지">
+                   	   </c:forEach>
+                    </div>               
                 </div>
                <div id="content_1R">
                     <div id="c3"> 
-                 
                                 <p style="font-size: 20px;"> ${ requestScope.p.productName }</p>
                                 <hr>
-                              
-                                    <b style="font-weight:400; font-size: 13px;  overflow-y: auto;">${ requestScope.p.productExplain }</b>
+								 <b style="font-weight:400; font-size: 13px;  overflow-y: auto;">${ requestScope.p.productExplain }</b>
                                 <hr>
-                            
-                                <b style="font-weight:400; font-size: 13px;">탑노트 : ${ requestScope.p.topNote }</b> <br>
-                                <b style="font-weight:400; font-size: 13px;">미들노트 : ${ requestScope.p.middleNote }</b> <br>
-                                <b style="font-weight:400; font-size: 13px;">베이스노트 : ${ requestScope.p.baseNote }</b> <br>
+                                <b style="font-size:15px;">[부향률]</b>  <br>      
+                                <img src="resources/images/perfumeIcon.jpg"> <b> ${requestScope.p.category}</b> <br>
+                                
+	                            <b style="font-weight:400; font-size: 13px;">탑노트 : ${ requestScope.p.topNote }</b> <br>
+	                            <b style="font-weight:400; font-size: 13px;">미들노트 : ${ requestScope.p.middleNote }</b> <br>
+	                            <b style="font-weight:400; font-size: 13px;">베이스노트 : ${ requestScope.p.baseNote }</b> <br>
                     </div>
-                        <p>배송정보</p>
+                    <br>  <br>                 
                    <div id="c4">
-                         <p>3,000원 / 주문시결제</p>
-                         <p>배송방법(수령장소 및 수령일)은 결제단계에서 요청사항으로 작성해주세요.</p>
-                        수량&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div id='result' name='result' style="width: 50px; display:contents" >1</div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type='button' style=" background-color: gray; color: white; border: 0px; font-weight:700; width:25px;"
-                                onclick='count("plus")'
-                                value='+'/>
-                        <input type='button' style=" background-color: gray; color: white; border: 0px; font-weight:700; width:25px;"
-                                onclick='count("minus")'
-                                value='-'/>
-                               
-                    </div> 
+                         <b style="font-size:15px;">[배송정보]</b> <br> 🚀 예상배송일 : 1~2일(배송비 : 3,000원)<br>📝 배송방법(수령장소 및 수령일)은 요청사항으로 작성해주세요.
+                    <br><br>
+				                        수량&nbsp;&nbsp;&nbsp;&nbsp;
+				               <div id='result' name='result' style="width: 50px; display:contents" >1</div>
+				                &nbsp;&nbsp;&nbsp;&nbsp;
+				                   <input type='button' style=" background-color: gray; color: white; border: 0px; font-weight:700; width:25px;"
+				                    onclick='count("plus")'
+				                    value='+'/>
+				                   <input type='button' style=" background-color: gray; color: white; border: 0px; font-weight:700; width:25px;"
+				                     onclick='count("minus")'
+				                     value='-'/>                            
+                   </div> 
+                    <br><br>
                     <form id="c5" action="order.po?pno=${requestScope.p.productNo}"  method="post">
                          <div id="c5_1">
-              
-                           선택수량 : <b id="select" name="select">1</b>   
-                           개당가격 : &nbsp; <p id="select_amount"> ${ requestScope.p.productPrice }원 </p> 
-                            <b id="select_acount"> 원</b>
-                         </div>
+                         <br>
+				                           선택수량 : <b id="select" name="select">1</b>   
+				                           개당가격 : &nbsp; <p id="select_amount"> <fmt:formatNumber value="${ requestScope.p.productPrice}" type="number" />원 </p>
+				            
+				          </div><br>
                          <div id="c5_2"> 
                             <b style="font-size: 20px;">총 합계금액</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <p id="total_amount" name='total_amount' style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400;">1,000원</p>
-                            <s style="color:lightgray; font-weight:400; font-size: 20px; margin: 0px;">1000원</s> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <p id="total_amount" name='total_amount' style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400;">
+                             <fmt:formatNumber value="${ requestScope.p.productPrice}" type="number" /></p>
+                             <b style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400;">원</b>   &nbsp;&nbsp;             
                             <b style="font-size: 20px;"> → </b>  
                             <p id="total_acount" name='total_account' style="font-size: 20px; color: red; font-weight:600;">
-                            20</p>
-                            <b style="font-size: 20px; color: red;">원</b>  
+                 			  <fmt:formatNumber value="${ requestScope.p.productPrice * (1-(20/100))}" type="number" /> </p>
+                		      <b style="font-size: 20px; margin: 0px; color:red; font-weight:600;">원</b>
+                   
                             <input type="text" id="result1" name="result1" style="display:none;">
                             <input type="text" id="result2" name="result2" style="display:none;">
                             <input type="text" id="result3" name="result3" style="display:none;">
@@ -432,28 +438,22 @@ function count(type)  {
 	  selectElement.innerText = number;
 	
 	  total_amountElement.innerText =  (number*${requestScope.p.productPrice}).toLocaleString('ko-KR');
-
+	  total_acountElement.innerText =   (number*${requestScope.p.productPrice *(1-(20/100))}).toLocaleString('ko-KR');
 	  
-
 	};
 	
-	   // 향후  장바구니로   구매수량이랑 가격 쏴줄 때 필요함!
-	// var send = document.getElementById("send");
-	//send.addEventListener("click", function () {
-	//  var form = document.getElementById("form");
-	//  var id = document.getElementById("id");
-	//  var pw = document.getElementById("pw");
 
-	//  if (pw.value.trim() == "" || id.value.trim() == "") {
-//	    alert("id와 비번 잘 적어라");
-//	    return false;
-	//  }
+</script>
+<!--  +- 버튼 클릭하지 않고 바로 구매 시 결제화면으로 데이터 넘기는 JS -->
+<script>
+const buy = document.getElementById('buy');
+const resultElement = document.getElementById('result');
 
-	//  form.action = "http://www.naver.com";
-	//  form.mothod = "GET";
-	//  form.submit();
-	// });
-	
+buy.addEventListener('mouseenter', (event) => {
+	let number = parseInt(resultElement.innerText);
+	document.getElementById('result1').value = number; // 구매수량
+
+	})	
 </script>
 
      

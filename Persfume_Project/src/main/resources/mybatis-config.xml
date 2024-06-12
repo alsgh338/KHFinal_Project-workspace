@@ -25,6 +25,8 @@
 		<typeAlias type="com.mata.persfume.recommand.model.vo.Recommand" alias="recommand" />
 		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClass" alias="oneClass" />
 		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClassImg" alias="oneClassImg" />
+		<typeAlias type="com.mata.persfume.product.model.vo.MemCoupon" alias="MemCoupon" />
+		<typeAlias type="com.mata.persfume.product.model.vo.Coupon" alias="Coupon" />
 
 	</typeAliases>
 	

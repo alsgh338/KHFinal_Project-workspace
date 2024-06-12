@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
     
 <!DOCTYPE html>
 <html>
@@ -420,7 +420,7 @@
 		
             <div class="oneday-class" name="${p.productNo}">
                 <div class="class-img">
-                    <img src="${ilist[status.index].imgName}" alt="상품이미지">
+                    <img src="${ilist[status.index].productImgPath}" alt="상품이미지">
                 </div>
 
                 <div class="class-data">

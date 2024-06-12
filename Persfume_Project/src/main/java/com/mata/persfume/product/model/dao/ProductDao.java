@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mata.persfume.common.model.vo.PageInfo;
+import com.mata.persfume.product.model.vo.Coupon;
+import com.mata.persfume.product.model.vo.MemCoupon;
 import com.mata.persfume.product.model.vo.Product;
 import com.mata.persfume.product.model.vo.ProductImg;
 
@@ -50,5 +52,12 @@ public class ProductDao {
 	public ProductImg selectProductImg(SqlSessionTemplate sqlSession, int pno) {
 		 return sqlSession.selectOne("productMapper.selectProductImg", pno);
 		}
+	public ArrayList<MemCoupon> searchCoupon(SqlSessionTemplate sqlSession, int mno) {
+		 return (ArrayList)sqlSession.selectList("productMapper.searchCoupon", mno);
+		}
+	public  Coupon searchCouponName(SqlSessionTemplate sqlSession, int cno){
+		return sqlSession.selectOne("productMapper.searchCouponName", cno);
+	}
+	
 	
 }// 클래스종료
