@@ -17,6 +17,7 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.mata.persfume.notice.model.vo.Notice" alias="notice" />
+		<typeAlias type="com.mata.persfume.cart.model.vo.Cart" alias="cart" />
 		<typeAlias type="com.mata.persfume.event.model.vo.Event" alias="event" />
 		<typeAlias type="com.mata.persfume.event.model.vo.EventImg" alias="eventImg" />
 		<typeAlias type="com.mata.persfume.product.model.vo.Product" alias="product" />
@@ -32,6 +33,7 @@
 	
 	<mappers>
 		<mapper resource="/mappers/notice-mapper.xml" />
+		<mapper resource="/mappers/cart-mapper.xml" />
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/product-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />

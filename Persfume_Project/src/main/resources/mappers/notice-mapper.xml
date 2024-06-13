@@ -14,9 +14,7 @@
     
     <result column="NOTICE_IMG_CHANGE" property="noticeImgChange"/>
 
-    
-
-</resultMap>
+	</resultMap>
 
 
     <!-- NOTICE 테이블 관련 쿼리문 -->

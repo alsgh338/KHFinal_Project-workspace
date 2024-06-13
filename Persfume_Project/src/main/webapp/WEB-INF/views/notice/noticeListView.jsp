@@ -80,12 +80,33 @@
         /* 테이블 스타일링 */
         table {
             border-collapse: collapse;
-            width: 100%;
             margin: 0 auto;
-            
+            width: 100%; /* 테이블이 100% 너비를 차지하도록 설정합니다 */
+        	border-collapse: collapse; /* 테두리가 겹치도록 설정합니다 */            
             table-layout: fixed; /* 이 속성을 추가하여 테이블의 너비를 고정합니다 */
         }
 
+	  
+	th.title{
+  padding: 18px 0;
+    border: 1px solid #e8e8e8;
+    border-bottom-width: 0;
+    border-right-width: 0;
+    color: #999;
+    text-align: center;
+    font-weight: normal;
+    background-color: #fafafa;
+    vertical-align: middle;
+}
+
+    td.subject {
+        padding: 10px; /* 셀 안의 여백을 설정합니다 */
+        border-top: 1px solid #e8e8e8; /* 위쪽 테두리를 추가합니다 */
+        color: #333; /* 글자색을 설정합니다 */
+        vertical-align: middle; /* 수직 정렬을 가운데로 설정합니다 */
+        word-break: keep-all; /* 단어가 길어질 경우 줄바꿈을 방지합니다 */
+        word-wrap: break-word; /* 긴 단어의 경우 줄바꿈을 처리합니다 */
+    }
         .tb-center {
             text-align: center;
         }
@@ -178,7 +199,7 @@
         .pagination a {
             text-decoration: none;
             color: #000;
-            padding: 5px 10px;
+            padding: 5px 20px;
             border: 1px solid #ddd;
             border-radius: 4px;
             transition: background-color 0.3s;
@@ -198,7 +219,7 @@
        
          #pagingArea {
             text-align: center;
-            margin-left: 40% /* 필요한 경우 위 여백 추가 */
+            margin-left: 45% /* 필요한 경우 위 여백 추가 */
         }
         
 /* 공지사항 리스트 끝 */
@@ -217,175 +238,136 @@
     </style>
 </head>
 <body>
+    <%-- 헤더 include --%>
     <jsp:include page="../common/header.jsp" />
+    
     <div class="content-area">
         <div class="content-title" id="home">NOTICE</div>
-        
-            <br> <br> 
+        <br> <br> 
 
-<div id="content">
-      <div id="bbsData">
-        <div class="page-body">
-            <!-- 게시판 리스트 -->
-              <div class="bbs-hd">
-<div class="bbs-tit">
-    <h3>공지사항</h3>
- 
+        <div id="content">
+            <div id="bbsData">
+                <div class="page-body">
+                    <div class="bbs-hd">
+                        <div class="bbs-tit">
+                            <h3>공지사항</h3>
+                            <br>
+                            <div class="bbs-sch">
+                               <form action="list.no" method="get">
+    <input type="hidden" name="review_type" value="">
+    <!-- 검색 폼 시작 -->
+    <label>
+        <input type="radio" name="searchType" value="subject" checked="checked">제목
+    </label>
+    <label>
+        <input type="radio" name="searchType" value="content">내용
+    </label>
+    <span class="key-wrap">
+        <input type="text" name="stext" class="MS_input_txt">                                        
+        <!-- 검색 버튼 -->
+        <button type="submit" class="search-button">검색</button>
+    </span>
+</form><!-- 검색 폼 끝 -->
 
-    <br>
-    
-    <div class="bbs-sch">
-                                <form action="board.html" name="form1">
-                                    <input type="hidden" name="review_type" value="">
-                                    <!-- 검색 폼 시작 -->
-                                    <label>
-                                        <input type="radio" name="searchType" value="subject" checked="checked" class="MS_input_checkbox">제목
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="searchType" value="content" class="MS_input_checkbox">내용
-                                    </label>
-                                    <span class="key-wrap">
-                                        <input type="text" name="stext" value="" class="MS_input_txt">                                        
-                                        <!-- 검색 버튼 -->
-                                        <a href="javascript:document.form1.submit();" class="search-button">검색</a>
-                                    </span>
-                                </form><!-- 검색 폼 끝 -->
                             </div><!-- .bbs-sch -->
                         </div>
                     </div>
-        <div class="bbs-table-list">
-            
-		  		<colgroup>
-		            <col width="70">
-		            <col width="10">
-		            <col width="70">
-		            <col width="*">
-		            <col width="110">
-		            <col width="75">
-		        </colgroup>
-			<table id="noticeList" summary="No, content,Name,Data,Hits">
-                <thead>
-                    <tr>
-                        <th scope="col"><div class="tb-center">NO.</div></th>                      
-                        <th scope="col"><div class="tb-center">TITLE</div></th>
-                        <th scope="col"><div class="tb-center">CONTENT</div></th>
-                        <th scope="col"><div class="tb-center">DATE</div></th>
-                        <th scope="col"><div class="tb-center">HITS</div></th>
-                    </tr>
-                </thead>
-              
-                    <!-- 공지사항 리스트 끝 -->
-                    <!-- 게시글 리스트 시작 (한 페이지당 게시글 수) -->
-                     <tbody>
-                    <c:forEach var="n" items="${requestScope.list}">
-                   
-                    <tr>
-                        <td><div class="tb-center">${n.noticeNo }</div></td>
-             
-                        </div></td>
-                        <td>
-                            <div class="tb-left">
-                      	${n.noticeTitle }
-                      	<!-- <img src="${n.noticeImgPath}" alt="${n.noticeTitle}"> -->
-                            </div></td>
-                        <td>
-                            <div class="tb-center">
-                <a> ${n.noticeContent }	</a>               
-                             
-                            </div>
-                        </td>
-                        <td><div class="tb-center">${n.createDate}</div></td>
-                        <td><div class="tb-center">${n.count }</div></td>
-                    </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            <script>
-                                $(function() {
-                                    $("#noticeList>tbody>tr").click(function() {
-                                        let nno = $(this).children().eq(0).text();
-                                        location.href = "detail.no?nno=" + nno;
-                                    });
+
+                    <div class="bbs-table-list">
+                        <table id="noticeList" summary="No, content,Name,Data,Hits">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><div class="tb-center">NO.</div></th>                      
+                                    <th scope="col"><div class="tb-center">TITLE</div></th>
+                                    <th scope="col"><div class="tb-center">CONTENT</div></th>
+                                    <th scope="col"><div class="tb-center">DATE</div></th>
+                                    <th scope="col"><div class="tb-center">HITS</div></th>
+                                </tr>
+                            </thead>
+                          <tbody>
+    <c:forEach var="n" items="${requestScope.list}">
+        <tr>
+            <td><div class="tb-center">${n.noticeNo }</div></td>
+            <td>
+                <div class="tb-left">
+                    ${n.noticeTitle }
+                </div>
+            </td>
+            <td>
+                <div class="tb-center">
+                    <a>${n.noticeContent }</a>
+                </div>
+            </td>
+            <td><div class="tb-center">${n.createDate}</div></td>
+            <td><div class="tb-center">${n.count }</div></td>
+        </tr>
+    </c:forEach>
+</tbody>
+
+                        </table>
+                        <script>
+                            $(function() {
+                                $("#noticeList>tbody>tr").click(function() {
+                                    let nno = $(this).children().eq(0).text();
+                                    location.href = "detail.no?nno=" + nno;
                                 });
-                            </script>
-            
-            <!-- 관리자만 쓰기  -->
-            <div class="bbs-btm">
-        <div class="bbs-link">
-        <a href="enrollForm.no" class="CSSbuttonWhite">WRITE</a></div>
-            
-            <br>
-            </div>
-            </div>
-            </div>
-            
-            <!-- 페이징바 -->
-  <div id="pagingArea">
-    <ul class="pagination">
-    
-    
-    	<c:choose>
-     	<c:when test="${ requestScope.pi.currentPage eq 1 }">	
-        <li class="page-item disabled">
-        	<a class="page-link" href="#">이전</a>
-        	</li>
-        </c:when>
-        
-   		<c:otherwise>
-        <li class="page-item">
-        	<a class="page-link" 
-                    		   href="list.no?cpage=${ requestScope.pi.currentPage - 1 }">
-              		이전
-            </a>
-       	</li> 
-       	</c:otherwise>
-       	</c:choose>
-       	
-       	<c:forEach var="p" begin="${ requestScope.pi.startPage }"
-                    		   end="${ requestScope.pi.endPage }"
-                    		   step="1">
-        	<c:choose>	   
-            	<c:when test="${ requestScope.pi.currentPage ne p }">
-                		<li class="page-item">
-                  	<a class="page-link" href="list.no?cpage=${ p }">
-					${ p }
-				</a>
-                  </li>
-             	</c:when> 
-          		<c:otherwise>
-                    <li class="page-item active">
-		                  <a class="page-link">
-								${ p }
-					</a>
-		        </li>
-              </c:otherwise>            	
-			</c:choose>
-		</c:forEach>   		
-		
-		   <c:choose>
-                    <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
-	                    <li class="page-item disabled">
-	                    	<a class="page-link" href="#">
-	                    		다음
-	                    	</a>
-	                    </li>
-                    </c:when>
-                    <c:otherwise>
-	                    <li class="page-item">
-	                    	<a class="page-link" 
-	                    	   href="list.no?cpage=${ requestScope.pi.currentPage + 1 }">
-	                    		다음
-	                    	</a>
-	                    </li>
-	                </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>   
-     
+                            });
+                        </script>
+                    </div>
 
-
-</body>
+                    <!-- 페이징바 -->
+                    <div id="pagingArea">
+                        <ul class="pagination">
+                            <c:choose>
+                                <c:when test="${ requestScope.pi.currentPage eq 1 }">    
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#">이전</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" href="list.no?cpage=${ requestScope.pi.currentPage - 1 }">이전</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                            
+                            <c:forEach var="p" begin="${ requestScope.pi.startPage }"
+                                       end="${ requestScope.pi.endPage }"
+                                       step="1">
+                                <c:choose>      
+                                    <c:when test="${ requestScope.pi.currentPage ne p }">
+                                        <li class="page-item">
+                                            <a class="page-link" href="list.no?cpage=${ p }">${ p }</a>
+                                        </li>
+                                    </c:when> 
+                                    <c:otherwise>
+                                        <li class="page-item active">
+                                            <a class="page-link">${ p }</a>
+                                        </li>
+                                    </c:otherwise>               
+                                </c:choose>
+                            </c:forEach>   
+                            
+                            <c:choose>
+                                <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#">다음</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" href="list.no?cpage=${ requestScope.pi.currentPage + 1 }">다음</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <%-- 푸터 include --%>
     <jsp:include page="../common/footer.jsp" />
-
-
+</body>
 </html>

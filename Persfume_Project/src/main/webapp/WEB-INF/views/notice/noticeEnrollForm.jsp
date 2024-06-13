@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
-     .content-area,
+  .content-area,
         .content-area>div:not(.content-main){
           display: flex;
           flex-direction: column;
@@ -167,33 +167,38 @@
         #bbsData .bbs-link-btm {
             margin-top: 40px;
             text-align: center;
+            display: flex;
+            justify-content: center;
         }
         #bbsData .bbs-link-btm a {
-            width: 228px;
-            height: 58px;
+            margin: 0 10px;
             font-size: 16px;
             line-height: 58px;
             text-decoration: none; /* 밑줄 제거 */
         }
 
-        .CSSbuttonBlack {
+        .CSSbuttonBlack, .CSSbuttonWhite {
             display: inline-block;
-            color: #fff;
             text-align: center;
-            border: 1px solid #231f20;
-            background: #231f20;
+            border: 1px solid;
             transition: all 0.3s ease;
             text-decoration: none; /* 밑줄 제거 */
+            padding: 15px 30px;
+            cursor: pointer;
+            width: 228px;
+            height: 58px;
+        }
+
+        .CSSbuttonBlack {
+            color: #fff;
+            background: #231f20;
+            border-color: #231f20;
         }
 
         .CSSbuttonWhite {
-            display: inline-block;
             color: #1d1b1b;
-            text-align: center;
-            border: 1px solid #dbdbdb;
             background: #fff;
-            transition: all 0.3s ease;
-            text-decoration: none; /* 밑줄 제거 */
+            border-color: #dbdbdb;
         }
 
         body, h1, h2, h3, h4, h5, h6, table, pre, xmp, plaintext, listing, input, textarea, select, button, a {
@@ -203,7 +208,6 @@
             font-family: 'Pretendard', 'Poppins', 'Noto Sans KR', sans-serif, Dotum, "돋움", DotumChe, "돋움체", Verdana, monospace, Corbel, AppleGothic, Helvetica;
         }
           
-      
         
     </style>
 </head>
@@ -221,51 +225,72 @@
                             <h3>공지글 작성하기</h3>
                         </div>
                         <div class="bbs-table-write">
-                            <form name="boardForm" action="insert.no" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off">
-                                <div id="passimg" style="position:absolute; visibility:hidden; z-index:999;"></div>
-                                <table summary="">
-                                    <colgroup>
-                                        <col width="135">
-                                        <col width="*">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th><div>제목</div></th>
-                                            <td colspan="3">
-                                                <div class="title">
-                                                    <input id="bw_input_subject" class="MS_input_txt input_style2" type="text" name="noticeTitle" required>
-                                                    <div class="title_select"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th><div>내용</div></th>
-                                            <td colspan="3" class="text_content">
-                                                <div>
-                                                    <textarea id="MS_text_content" name="noticeContent" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;"
-                                                    required ></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th><div>파일</div></th>
-                                            <td colspan="4">
-                                                <div>
-                                                    <input  type="file" id="bw_input_file" class="MS_input_txt input_style2" name="upfile" value="">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                                
-                              
-                       <dl class="bbs-link bbs-link-btm">
-					    <dt></dt>
-					    <dd>
-					        <a href="javascript:void(0);" class="CSSbuttonBlack" onclick="document.boardForm.submit();">등록하기</a>
-					        <a href="list.no" class="CSSbuttonWhite">목록보기</a>
-					    </dd>
+            <form name="boardForm" action="insert.no" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off" onsubmit="return validateForm();">
+    <div id="passimg" style="position:absolute; visibility:hidden; z-index:999;"></div>
+    <table summary="">
+        <colgroup>
+            <col width="135">
+            <col width="*">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th><div>제목</div></th>
+                <td colspan="3">
+                    <div class="title">
+                        <input id="bw_input_subject" class="MS_input_txt input_style2" type="text" name="noticeTitle" required>
+                        <div class="title_select"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><div>내용</div></th>
+                <td colspan="3" class="text_content">
+                    <div>
+                        <textarea id="MS_text_content" name="noticeContent" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;" required></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><div>파일</div></th>
+                <td colspan="4">
+                    <div>
+                        <input type="file" id="bw_input_file" class="MS_input_txt input_style2" name="upfile" value="">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <dl class="bbs-link bbs-link-btm">
+        <dt></dt>
+        <dd>
+ 
+            <button type="submit" class="CSSbuttonBlack">등록하기</button>
+            <button type="reset" class="CSSbuttonWhite">취소하기</button>
+        </dd>
+    </dl>
+</form>
+
+<script>
+function validateForm() {
+    var title = document.forms["boardForm"]["noticeTitle"].value;
+    var content = document.forms["boardForm"]["noticeContent"].value;
+
+    if (title.trim() === "") {
+        alert("제목을 입력해주세요.");
+        return false;
+    }
+
+    if (content.trim() === "") {
+        alert("내용을 입력해주세요.");
+        return false;
+    }
+
+    return true; // 폼 제출을 허용
+}
+					}
+					</script>
+
 					</dl>
 
 

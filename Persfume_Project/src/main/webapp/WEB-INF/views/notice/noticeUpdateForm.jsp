@@ -284,17 +284,34 @@
                        <dl class="bbs-link bbs-link-btm">
 					    <dt></dt>
 					    <dd>
-							<a href="javascript:void(0);" class="CSSbuttonBlack" onclick="submitForm();">수정하기</a>
-					        <a onclick="javascript:history.go(-1);" class="CSSbuttonWhite">뒤로가기</a>
+<a href="javascript:void(0);" class="CSSbuttonBlack" onclick="submitForm();">수정하기</a>
+<a onclick="javascript:history.go(-1);" class="CSSbuttonWhite">뒤로가기</a>
+
 					    </dd>
 					</dl>
 					  </form>
-					<script>
-					function submitForm() {
-					    document.updateForm.submit();
-					}
+					  <script>
+function submitForm() {
+    var title = document.getElementById('bw_input_subject').value.trim();
+    var content = document.getElementById('MS_text_content').value.trim();
 
-					</script>
+    if (title === '') {
+        alert('제목을 입력해주세요.');
+        return;
+    }
+
+    if (content === '') {
+        alert('내용을 입력해주세요.');
+        return;
+    }
+
+    // 추가적인 유효성 검사를 원한다면 여기에 추가
+
+    document.updateForm.submit(); // 폼 제출
+}
+</script>
+					  
+				
 	
 
                                   <br><br>

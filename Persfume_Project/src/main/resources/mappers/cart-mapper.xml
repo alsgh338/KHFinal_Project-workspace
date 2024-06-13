@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+<mapper namespace="cartMapper">
+  <!-- Cart 테이블의 조회 결과를 자바 VO 타입으로 뽑아주는 resultMap -->
+  <resultMap id="cartResultSet" type="cart">
+ 	<result column="CART_NO" property="cartNo"/>
+    <result column="PRICE" property="price"/>
+    <result column="QUANTITY" property="quantity"/>
+    <result column="MEM_NO" property="memNo"/>
+    <result column="PRODUCT_NO" property="productNo"/>
+</resultMap>
+	
+	<!--특정 회원의 장바구니 목록을 조회  -->
+	<select id="selectCart" 
+			resultMap="cartResultSet">
+	    SELECT * 
+	    FROM CART
+	    WHERE MEM_NO = #{memNo}
+	    ORDER BY PRODUCT_NO DESC      
+	</select>
+
+	
+   <!--  장바구니 추가 쿼리문 -->
+<insert id="addCart" 
+		parameterType="cart">
+    INSERT INTO Cart(CART_NO,
+                     PRICE,
+                     QUANTITY,
+                     MEM_NO,
+                     PRODUCT_NO)
+    VALUES (SEQ_BNO.NEXTVAL,
+            #{cartNo},
+            #{price},
+            #{quantity},
+            #{memNo},
+            #{productNo})
+</insert>
+
+
+
+	
+	<!-- 장바구니 전체 삭제 -->
+	<update id="allDeleteCart">
+	    DELETE 
+	    FROM CART
+	    WHERE MEM_NO = #{memNo}
+	</update>
+
+	   
+	 
+	<!-- 특정 회원의 장바구니 목록을 페이징하여 조회 -->
+	<select id="selectList" 
+			resultMap="cartResultSet">
+	    SELECT * 
+	    FROM (
+	        SELECT ROW_NUMBER() OVER(ORDER BY PRODUCT_NO DESC) AS RNUM,
+	               CART_NO,
+	               PRICE,
+	               QUANTITY,
+	               MEM_NO,
+	               PRODUCT_NO
+	        FROM CART
+	        WHERE MEM_NO = #{memberNo}
+	    ) V
+	    WHERE RNUM BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- 특정 회원의 장바구니 목록 개수를 조회 -->
+	<select id="selectListCount"
+			resultType="int">
+	    SELECT COUNT(*) 
+	    FROM CART
+	    WHERE MEM_NO = #{memberNo}
+	</select>
+
+	
+	
+</mapper>
+	
