@@ -59,4 +59,13 @@
 		</beans:property>
 	</beans:bean>
 	
+	
+	<!-- Login Interceptor -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/myPage.me" />
+			<beans:bean class="com.mata.persfume.common.interceptor.LoginInterceptor"
+						id="loginInterceptor"/>
+		</interceptor>
+	</interceptors>
 </beans:beans>

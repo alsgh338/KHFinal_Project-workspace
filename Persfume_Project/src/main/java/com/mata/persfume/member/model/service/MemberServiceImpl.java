@@ -52,8 +52,13 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberDao.makeCoupon(sqlSession);
 	}
-	
-	
 
+	@Override
+	public int updateMember(Member m) {
+		
+		return memberDao.updateMember(sqlSession, m);
+	
+	}
 	
 }
+	

@@ -13,4 +13,6 @@ public interface MemberService {
 	int insertCoupon(int memNo);
 	
 	int makeCoupon();
+	
+	int updateMember(Member m);
 }

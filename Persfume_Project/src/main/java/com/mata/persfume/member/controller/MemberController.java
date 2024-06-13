@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -166,7 +167,7 @@ public class MemberController {
 		return "인증번호 발급 완료";
 		*/
 		
-	}
+	} // sendMail fin.
 	
 	@ResponseBody
 	@PostMapping(value="emailCheck.do", produces="text/html; charset=UTF-8")
@@ -200,18 +201,48 @@ public class MemberController {
 		
 		return "member/loginForm";
 		
-	}
+	} // loginme fin.
 	
 	@PostMapping("login.me")
 	public ModelAndView loginMember(Member m,
 							ModelAndView mv,
+							String saveId,
 							HttpSession session,
-							HttpServletResponse respons) {
+							HttpServletResponse response) {
 		
 		//System.out.println("잘 호출되나요!!!!");
 		
 		// System.out.println("이렇게 해도 넘어오나 ? : " + m.getMemId());
 		
+			System.out.println("체크한거 잘 넘어오나? : " + saveId);
+		
+		// 아이디 저장 로직 추가
+		if(saveId != null && saveId.equals("y")) {
+					// 로그인 요청 시 아이디를 저장하겠다.
+					
+					// saveId 라는 키 값으로 현재 아이디값을 쿠키로 저장
+					Cookie cookie = new Cookie("saveId",m.getMemId());
+					
+					System.out.println("저장할 아이디 값 잘 넘어오나? : " + m.getMemId());
+					
+					// 유효기간 1일 
+					cookie.setMaxAge(1 * 24 * 60 * 60); // 초단위로 작성 
+					// 2일이면  cookie.setMaxAge(2 * 24 * 60 * 60)
+					// 3일이면  cookie.setMaxAge(3 * 24 * 60 * 60)
+					
+					// 만들어진 Cookie 객체를 response 에 첨부
+					 response.addCookie(cookie);
+				}else {
+					// 아이디를 저장하지 않겠다.
+					// 삭제 구문 따로 X 동일한 키값으로 덮어씌우기
+					// 유효기간을 0초로 지정하면 됨
+					Cookie cookie = new Cookie("saveId" , m.getMemId());
+					
+					cookie.setMaxAge(0);
+					
+					response.addCookie(cookie);
+					
+		}
 		
 		Member loginMember = memberService.loginMember(m);
 		
@@ -227,21 +258,6 @@ public class MemberController {
 			 
 		session.setAttribute("alertMsg", "성공적으로 로그인이 되었습니다.");
 	
-	
-		// 회원에게 부여할 쿠폰 먼저 발급
-		memberService.makeCoupon();
-		
-		int memNo = loginMember.getMemNo();
-		
-		System.out.println("회원 번호를 잘 뽑아오나??"+ memNo);
-		
-		int resultC = memberService.insertCoupon(memNo);
-		
-		if(resultC > 0) {
-			System.out.println("회원에게 쿠폰 발급 성공!");
-		}else {
-			System.out.println("회원에게 쿠폰 발급 실패!");
-		}
 		
 		System.out.println("로그인 성공!!!");
 			 
@@ -256,7 +272,89 @@ public class MemberController {
 		
 		return mv;
 		
+	}// loginMember fin.
+	
+	
+	@GetMapping("logout.me")
+	public ModelAndView logoutMember(HttpSession session,
+				 			ModelAndView mv) {
+		
+//		System.out.println("로그아웃 잘 호출 되나?!");
+		
+		session.removeAttribute("loginMember");
+		
+		session.setAttribute("alertMsg", "성공적으로 로그아웃 되었습니다.");
+		
+		mv.setViewName("redirect:/");
+		
+		System.out.println("로그아웃 잘 되나?!");
+		
+		return mv;
+		
+	} // logoutMember fin.
+
+	@GetMapping("myPage.me")
+	public String myPage(){
+		
+		return "member/myPage";
+		
+	}//myPage fin.
+	
+	@GetMapping("delete.me")
+	public String deleteMe() {
+		
+		return "member/deleteMember";
+	}// deleteMe fin.
+
+	
+	@PostMapping("update.me")
+	public String updateMember(Member m,
+							HttpSession session,
+							Model model) {
+		
+//		System.out.println("회원정보 수정 잘 호출되나?!");
+		
+		 int result =  memberService.updateMember(m);
+		 
+		 if(result > 0) { // 성공
+				
+				// 갱신된 회원의 정보를 다시 조회해와서
+				// session 의 loginUser 에 덮어씌웠어야함
+				Member updateMember = memberService.loginMember(m);
+				// 기존의 loginMember 서비스를 재활용(아이디만 가지고 조회)
+				
+				session.setAttribute("loginMember", updateMember);
+				
+				session.setAttribute("alertMsg", "성공적으로 회원정보가 변경되었습니다.");
+				
+				// 마이페이지로  url 재요청
+				return "redirect:/myPage.me";
+				
+				
+			}else { // 실패
+				
+				// 에러문구를 담아서 에러페이지로 포워딩
+				model.addAttribute("errorMsg","회원정보 변경 실패");			
+				
+				// /WEB-INF/views/common/errorPage.jsp
+				return "common/errorPage";
+				
+			}
+		 
+	}// updateMember fin.
+	
+	@GetMapping("findId.me")
+	public void findId() {
+		
+		System.out.println("아이디 찾기 잘 호출 되나?");
+		
 	}
+	
+	@GetMapping("findPwd.me")
+	public void findPwd() {
+		System.out.println("비밀번호 찾기 잘 호출되나?");
+	}
+	
 	
 
 }

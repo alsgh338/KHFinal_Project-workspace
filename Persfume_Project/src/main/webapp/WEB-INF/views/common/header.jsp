@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -223,12 +224,28 @@
             <div><a href="list.oc">ONEDAY CLASS</a></div>
             <div><a href="">SCENT RECOMMAND</a></div>
         </div>
-        <div id="nav-auth">
-            <div>
-                <a href="enroll.me">SIGN IN</a> |
-                <a href="login.fo">SIGN UP</a> 
-            </div>
-        </div>
+        <c:choose>
+            <c:when test="${ empty sessionScope.loginMember }">
+		        <div id="nav-auth">
+		            <div>
+		                <a href="enroll.me">SIGN IN</a> |
+		                <a href="login.fo">SIGN UP</a> 
+		            </div>
+		        </div>
+            </c:when>
+            <c:otherwise>
+                <!-- 로그인 후 -->
+               <div id="nav-auth">
+		            <div>
+						<a href="myPage.me">MY PAGE</a> |
+			            <a href="logout.me">LOGOUT</a> 
+		            </div>
+		        </div>
+            </c:otherwise>
+            </c:choose>
+        
+        
+
     </div>
 
     <div id="sub-btns" class="hidden">

@@ -73,21 +73,19 @@
 	 	   AND STATUS = 'Y'
 	</select>
 	
-	<insert id="insertCoupon"
-			parameterType="int">
-		INSERT INTO MEM_COUPON(REGIST_DATE,
-				MEM_NO,
-				COUPON_NO)
-		VALUES (SYSDATE,
-				#{memNo},
-				)
-	</insert>
 	
-	<insert id="makeCoupon">
-		INSERT INTO COUPON(COUPON_NO
-			,COUPON_NAME)
-		VALUES(SEQ_COUPON_NO.NEXTVAL
-			,1234)
-	
-	</insert>
+	<!--  회원정보 수정용 쿼리문 -->
+	<update id="updateMember"
+			parameterType="member">
+			UPDATE MEMBER
+			SET MEM_NAME = #{memName}
+			, EMAIL = #{email}
+			, PHONE = #{phone}
+			, POSTCODE = #{postcode}
+			, ADDRESS = #{address}
+			, DETAILADDRESS = #{detailAddress}
+			, EXTRAADDRESS = #{extraAddress}
+			WHERE MEM_ID = #{memId}
+			AND STATUS = 'Y'
+	</update>
 </mapper>
