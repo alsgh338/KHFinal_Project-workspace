@@ -313,8 +313,18 @@
                                 });
                             });
                         </script>
-                    </div>
-
+                          
+            <!-- 관리자만 쓰기  -->
+            <div class="bbs-btm">
+        <div class="bbs-link">
+        <a href="enrollForm.no" class="CSSbuttonWhite">WRITE</a></div>
+            
+            <br>
+            </div>
+            </div>
+            </div>
+            
+         
                     <!-- 페이징바 -->
                     <div id="pagingArea">
                         <ul class="pagination">
