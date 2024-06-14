@@ -36,6 +36,12 @@ public  interface NoticeService {
 	// 공지글 수정 서비스
 	int updateNotice(Notice n);
 
+	//공지글 검색 갯수
+	int getSearchListCount(String searchType, String keyword);
+
+	//공지글 검색 리스트 조회
+	ArrayList<Notice> searchNoticeList(PageInfo pi, String searchType, String keyword);
+
 
 }
 
