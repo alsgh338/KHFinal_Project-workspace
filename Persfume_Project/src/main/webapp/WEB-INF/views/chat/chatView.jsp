@@ -81,8 +81,6 @@
             <!-- 원데이클래스 명 --> 채팅방
             <!-- <input type="hidden" 채팅방 번호 뽑을수 있으면 뽑기> -->
             <input type="hidden" value="1" id="classNo"/>
-            <!-- 혹시 여기서 hidden으로 chatNo을 뽑아올수 있다면? -->
-            <input type="hidden" value="1" id="chatNo" />
         </div>
         <div class="chat-messages" id="chat-messages">
             <!-- 채팅 메시지가 여기에 표시됩니다 -->

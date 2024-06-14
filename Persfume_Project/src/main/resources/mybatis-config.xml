@@ -27,7 +27,6 @@
 		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClassImg" alias="oneClassImg" />
 		<typeAlias type="com.mata.persfume.product.model.vo.MemCoupon" alias="MemCoupon" />
 		<typeAlias type="com.mata.persfume.product.model.vo.Coupon" alias="Coupon" />
-		<typeAlias type="com.mata.persfume.chat.model.vo.Chat" alias="chat" />
 		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMem" alias="chatMem" />
 		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMessage" alias="chatMessage" />
 		<typeAlias type="com.mata.persfume.product.model.vo.OrderDetail" alias="OrderDetail" />

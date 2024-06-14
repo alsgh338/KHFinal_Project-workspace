@@ -6,14 +6,14 @@
 		<result column="CM_NO" property="cmNo" />
 		<result column="CM_CONTENT" property="cmContent" />
 		<result column="CREATE_DATE" property="createDate" />
-		<result column="CHAT_NO" property="chatNo" />
+		<result column="CLASS_NO" property="classNo" />
 		<result column="MEM_NAME" property="memName" />
 	</resultMap>
 	
 	<select id="selectChatRoomId"
 			parameterType="string"
 			resultType="string">
-		SELECT CHAT_NO
+		SELECT CLASS_NO
 		  FROM CHAT
 		 WHERE CLASS_NO = #{classNo}
 	</select>
@@ -24,7 +24,7 @@
 		SELECT COUNT(*)
 		  FROM CHAT_MEM
 		 WHERE MEM_NO = #{memNo}
-		   AND CHAT_NO = #{chatNo}
+		   AND CLASS_NO = #{classNo}
 	</select>
 	
 	<select id="getMemName"
@@ -40,7 +40,7 @@
 		INSERT INTO CHAT_MESSAGE VALUES(SEQ_CM_NO.NEXTVAL, 
 		                                #{cmContent}, 
 		                                TO_DATE(#{createDate}, 'YYYY-MM-DD HH24:MI:SS'), 
-		                                #{chatNo}, 
+		                                #{classNo}, 
 		                                #{memNo})
 	</insert>
 	
@@ -53,7 +53,7 @@
 		     , MEM_NAME
 		  FROM CHAT_MESSAGE
 		  JOIN MEMBER USING (MEM_NO)
-		 WHERE CHAT_NO = #{chatNo}
+		 WHERE CLASS_NO = #{classNo}
 		 ORDER BY CREATE_DATE ASC
 	</select>
 </mapper>

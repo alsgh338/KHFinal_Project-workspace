@@ -14,6 +14,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.google.gson.Gson;
 import com.mata.persfume.chat.model.service.ChatService;
 import com.mata.persfume.chat.model.vo.ChatMessage;
+import com.mata.persfume.member.model.vo.Member;
 
 public class WebSocketServer extends TextWebSocketHandler {
 
@@ -35,10 +36,12 @@ public class WebSocketServer extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
-		// 임시로 값 넣자 String memNo = (String)session.getAttributes().get("loginUser");    // 발신자 (로그인 회원의 회원번호로 뽑아야함)
-		int memNo = 1; 
+		Member mem = (Member)session.getAttributes().get("loginMember");    // 발신자 (로그인 회원의 회원번호로 뽑아야함)
+		System.out.println(mem);
+		String memName = mem.getMemName();
+		int memNo = mem.getMemNo();
 		
-		String memName = chatService.getMemName(memNo);
+		//String memName = chatService.getMemName(memNo);
 		
 		String classNo = session.getUri().getQuery(); // 전체 쿼리를 가져옴 (?classNo=12345)
 	    String[] queryParams = classNo.split("="); // "="를 기준으로 쿼리 파라미터 분리
@@ -46,17 +49,16 @@ public class WebSocketServer extends TextWebSocketHandler {
 	        classNo = queryParams[1]; // 실제 classNo 값 추출
 	    }
 	    
-		int chatNo = Integer.parseInt(chatService.selectChatRoomId(classNo)); // > 채팅방 번호
+		int clNo = Integer.parseInt(classNo); // > 채팅방 번호
 		
 		String sendTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()); // 언제? (현재시간이 곧 사용자가 메세지를 보낸 시간)
 		
 		System.out.println("클래스번호 : " + classNo);
-		System.out.println("채팅창번호 : " + chatNo);
 		System.out.println("보낸 시간 : " + sendTime);
 		System.out.println("보낸이 : " + memName);
 		
 		// 로그인된 사용자여야 함, 존재하는 클래스여야 함, 사용자가 클래스에 속해야 함 
-		if(/*userId != null && */chatNo != 0 /*&& chatService.checkUserCanExistChat(userId, chatNo)*/) {
+		if(memName != null && clNo != 0 /*&& chatService.checkUserCanExistChat(userId, classNo)*/) {
 			
 			String msg = message.getPayload(); // > 메세지 내용 추출
 			
@@ -70,7 +72,7 @@ public class WebSocketServer extends TextWebSocketHandler {
 			m.setCmContent(msg);	// cmContent 에 msg 담기
 			m.setMemNo(memNo);
 			m.setMemName(memName);		// memName 에 memName 담기
-			m.setChatNo(chatNo);	// chatNo 에 chatNo 담기
+			m.setClassNo(clNo);	// chatNo 에 chatNo 담기
 			m.setCreateDate(sendTime);	// createDate 에 sendTime 담기
 			
 			System.out.println(m);
