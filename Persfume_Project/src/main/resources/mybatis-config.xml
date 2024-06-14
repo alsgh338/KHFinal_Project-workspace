@@ -17,7 +17,6 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.mata.persfume.notice.model.vo.Notice" alias="notice" />
-		<typeAlias type="com.mata.persfume.cart.model.vo.Cart" alias="cart" />
 		<typeAlias type="com.mata.persfume.event.model.vo.Event" alias="event" />
 		<typeAlias type="com.mata.persfume.event.model.vo.EventImg" alias="eventImg" />
 		<typeAlias type="com.mata.persfume.product.model.vo.Product" alias="product" />
@@ -28,12 +27,13 @@
 		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClassImg" alias="oneClassImg" />
 		<typeAlias type="com.mata.persfume.product.model.vo.MemCoupon" alias="MemCoupon" />
 		<typeAlias type="com.mata.persfume.product.model.vo.Coupon" alias="Coupon" />
-		<typeAlias type="com.mata.persfume.chat.model.vo.Chat" alias="chat" />
 		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMem" alias="chatMem" />
 		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMessage" alias="chatMessage" />
 		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClassReview" alias="oneClassReview" />
 		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClassRegist" alias="oneClassRegist" />
-
+		<typeAlias type="com.mata.persfume.product.model.vo.OrderDetail" alias="OrderDetail" />
+		<typeAlias type="com.mata.persfume.product.model.v	o.Cart" alias="Cart" />
+		<typeAlias type="com.mata.persfume.product.model.vo.ProductReview" alias="productReview" />
 	</typeAliases>
 	
 	<mappers>
