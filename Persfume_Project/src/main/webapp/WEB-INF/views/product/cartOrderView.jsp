@@ -322,22 +322,24 @@
 		<div id="content" style="text-align:left;">            
 			<div id="content_1" style=" margin-top:10px; color:navy; font-size:20px">주문/결제</div>
             <hr>
+            <c:forEach var="c" items="${ requestScope.clist }" varStatus="status">
             <div id="content_2">
-                <div id="c2_1"><img src="${ requestScope.pi.productImgPath}"></div>
-                <div id="c2_2">${ requestScope.p.productName }</div>                                                            
-                <div id="c2_3">선택수량 :  ${ requestScope.pCount }개</div> 
-                <div id="c2_4"><fmt:formatNumber value="${ requestScope.p.productPrice }" type="number"/>원</div> 
+                <div id="c2_1"><img src="${ pilist[status.index].productImgPath}"></div>
+                <div id="c2_2">${ plist[status.index].productName }</div>                                                            
+                <div id="c2_3">선택수량 :  ${ c.quantity }개</div> 
+                <div id="c2_4"><fmt:formatNumber value="${plist[status.index].productPrice}" type="number"/>원</div> 
            </div>
+           </c:forEach>
  			<hr>
             <div id="content_3">
-                <div id="c3_d1">총 상품금액<br><fmt:formatNumber value="${ requestScope.p.productPrice * requestScope.pCount}" type="number"/>원</div>
+                <div id="c3_d1">총 상품금액<br></div>
                 <div id="c3_d2">-</div>
-                <div id="c3_d3">총 할인금액<br><b id="buyprice3" style="font-weight: 400;"><fmt:formatNumber value="${ (requestScope.p.productPrice * requestScope.pCount)-(requestScope.p.productPrice*(1-(20/100))* requestScope.pCount)}" type="number"/></b>원</div>
+                <div id="c3_d3">총 할인금액<br><b id="buyprice3" style="font-weight: 400;"></b>원</div>
                 <div id="c3_d4">+</div>
                 <div id="c3_d5">배송비<br>3000원</div>
                 <div id="c3_d6">=</div>
                 <div id="c3_d7"><b style="color: crimson;">결제금액</b><br>
-             <b id="buyprice2"><fmt:formatNumber value="${requestScope.p.productPrice*(1-(20/100)) * requestScope.pCount +3000}" type="number"/></b><b>원</b></div>
+             <b id="buyprice2"></b><b>원</b></div>
             </div>
        <hr>     
        
@@ -457,7 +459,7 @@
              </div>
              
              <div id="content_8" style=" font-size: 20px; font-weight: 600;">
-	              <p  name="buyPrice"> <b id="buyprice1">최종결제금액 : <fmt:formatNumber value="${requestScope.p.productPrice*(1-(20/100)) * requestScope.pCount +3000}" type="number"/></b>
+	              <p  name="buyPrice"> <b id="buyprice1">최종결제금액 :</b>
 	               원<br>
 	                <input type="checkbox" required><b style="font-size: 13px; color: red;" >(필수)</b>
 	                <b style="font-size: 13px;">구매하실 상품의 결제정보 및 배송지를 확인하였으며, 구매진행에 동의합니다.</b>
@@ -617,6 +619,8 @@ function selectAll(selectAll)  {
     	 $("#buyprice2").html(str2);
      	let str3 = "<fmt:formatNumber value='${ (requestScope.p.productPrice * requestScope.pCount)-(requestScope.p.productPrice*(1-(20/100))* requestScope.pCount)+10000}' type='number'/>";
      	$("#buyprice3").html(str3);
+  
+     
      }
    
      
@@ -661,7 +665,7 @@ function selectAll(selectAll)  {
                           data: {
                               merchant_uid: rsp.merchant_uid,
                               imp_uid: rsp.imp_uid,
-                              amount : ${ requestScope.p.productPrice },
+                              amount : 100,
     				 		  mno: ${ requestScope.memNo },
     				 		  want5 : document.getElementById('want').value
                         		 },

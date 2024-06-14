@@ -437,8 +437,7 @@
                     <div class="class-price">190,000원</div>
                 </div>
             </div>
-                   </c:forEach> 
-              
+                   </c:forEach>   
         </div>
     </div>
  </div>

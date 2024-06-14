@@ -265,15 +265,11 @@
                              <b style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400;">원</b>   &nbsp;&nbsp;             
                             <b style="font-size: 20px;"> → </b>  
                             <p id="total_acount" name='total_account' style="font-size: 20px; color: red; font-weight:600;">
-                 			  <fmt:formatNumber value="${ requestScope.p.productPrice * (1-(20/100))}" type="number" /> </p>
+                 			 <fmt:formatNumber value="${ requestScope.p.productPrice * (1-(20/100))}" type="number" /> </p>
                 		      <b style="font-size: 20px; margin: 0px; color:red; font-weight:600;">원</b>
                    
                             <input type="text" id="result1" name="result1" style="display:none;">
-                            <input type="text" id="result2" name="result2" style="display:none;">
-                            <input type="text" id="result3" name="result3" style="display:none;">
-                            <input type="number" id="result4" name="result4" style="display:none;">
-                            <input type="text" id="result5" name="result5" style="display:none;">
-                            <input type="text" id="result6" name="result6" style="display:none;">
+                        
                             
                         </div>
                         <div id="cb" >                  
@@ -437,8 +433,8 @@ function count(type)  {
 	  resultElement.innerText = number;
 	  selectElement.innerText = number;
 	
-	  total_amountElement.innerText =  (number*${requestScope.p.productPrice}).toLocaleString('ko-KR');
-	  total_acountElement.innerText =   (number*${requestScope.p.productPrice *(1-(20/100))}).toLocaleString('ko-KR');
+	  total_amountElement.innerText =  (number * ${requestScope.p.productPrice}).toLocaleString('ko-KR');
+	  total_acountElement.innerText =   (number * ${requestScope.p.productPrice *(1-(20/100))}).toLocaleString('ko-KR');
 	  
 	};
 	
@@ -455,6 +451,27 @@ buy.addEventListener('mouseenter', (event) => {
 
 	})	
 </script>
+
+<script>
+const cart = document.getElementById('cart');
+
+cart.onclick = function() {
+
+let quantity = $("#select").html();
+let productNo = ${requestScope.p.productNo};
+let mno = ${requestScope.memNo};
+
+console.log("gg");
+
+let url = "BasketAdd.ba?quantity=" + quantity + "&productNo=" + productNo + "&mno=" + mno;
+
+$("#cart").attr("href", url);
+};
+
+
+
+</script>
+
 
      
 </body>
