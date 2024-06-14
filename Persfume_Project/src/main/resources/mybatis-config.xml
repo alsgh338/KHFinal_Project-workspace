@@ -31,6 +31,9 @@
 		<typeAlias type="com.mata.persfume.chat.model.vo.Chat" alias="chat" />
 		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMem" alias="chatMem" />
 		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMessage" alias="chatMessage" />
+		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClassReview" alias="oneClassReview" />
+		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClassRegist" alias="oneClassRegist" />
+
 	</typeAliases>
 	
 	<mappers>
