@@ -28,7 +28,9 @@
 		<typeAlias type="com.mata.persfume.oneClass.model.vo.OneClassImg" alias="oneClassImg" />
 		<typeAlias type="com.mata.persfume.product.model.vo.MemCoupon" alias="MemCoupon" />
 		<typeAlias type="com.mata.persfume.product.model.vo.Coupon" alias="Coupon" />
-
+		<typeAlias type="com.mata.persfume.chat.model.vo.Chat" alias="chat" />
+		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMem" alias="chatMem" />
+		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMessage" alias="chatMessage" />
 	</typeAliases>
 	
 	<mappers>
@@ -39,6 +41,7 @@
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/recommand-mapper.xml" />
 		<mapper resource="/mappers/oneclass-mapper.xml" />
+		<mapper resource="/mappers/chat-mapper.xml" />
 	</mappers>
 	
 </configuration>  

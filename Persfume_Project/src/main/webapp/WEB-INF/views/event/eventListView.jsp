@@ -271,6 +271,21 @@
         </ul>
     </div>
 
+	<button onclick="openChat();" >이동</button>
+	<script>
+		function openChat(){
+			const width = 500;
+		    const height = 900;
+
+		    let chatWindow = window.open('showChat', 'chat room', `width=${width}, height=${height}, resizable=no, location=no, status=no, scrollbars=no`);
+		    
+		    // 창의 크기를 고정시키기
+		    chatWindow.resizeTo(width, height);
+			
+		}
+	</script>
+	
+	
     <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

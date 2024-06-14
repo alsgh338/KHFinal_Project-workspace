@@ -22,10 +22,7 @@
 	<!-- 2단계. MyBatis Spring 에서 제공하는 SQL 명령어 실행을 위한 bean 등록 -->
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" 
 		  id="sqlSessionFactory">
-		<!-- 
-			MyBatis 설정파일의 위치를 지정 (mybatis-config.xml) 
-			classpath: 가 resources 폴더를 의미함
-		-->
+		
 		<property name="configLocation" 
 				  value="classpath:mybatis-config.xml" />
 		<!-- 연결을 위한 객체를 참조해오기 -->

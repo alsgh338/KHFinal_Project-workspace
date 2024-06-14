@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="chatMapper">
+	
+	<resultMap type="chatMessage" id="chatResultSet">
+		<result column="CM_NO" property="cmNo" />
+		<result column="CM_CONTENT" property="cmContent" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="CHAT_NO" property="chatNo" />
+		<result column="MEM_NAME" property="memName" />
+	</resultMap>
+	
+	<select id="selectChatRoomId"
+			parameterType="string"
+			resultType="string">
+		SELECT CHAT_NO
+		  FROM CHAT
+		 WHERE CLASS_NO = #{classNo}
+	</select>
+	
+	<select id="checkUserCanExistChat"
+		parameterType="chatMem"
+		resultType="_int">
+		SELECT COUNT(*)
+		  FROM CHAT_MEM
+		 WHERE MEM_NO = #{memNo}
+		   AND CHAT_NO = #{chatNo}
+	</select>
+	
+	<select id="getMemName"
+		parameterType="_int"
+		resultType="string">
+		SELECT MEM_NAME
+		  FROM MEMBER
+		 WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<insert id="insertMsg"
+			parameterType="chatMessage">
+		INSERT INTO CHAT_MESSAGE VALUES(SEQ_CM_NO.NEXTVAL, 
+		                                #{cmContent}, 
+		                                TO_DATE(#{createDate}, 'YYYY-MM-DD HH24:MI:SS'), 
+		                                #{chatNo}, 
+		                                #{memNo})
+	</insert>
+	
+	<select id="getPrevChatMessage"
+		parameterType="_int"
+		resultMap="chatResultSet">
+		SELECT CM_NO
+			 , CM_CONTENT
+		     , CREATE_DATE
+		     , MEM_NAME
+		  FROM CHAT_MESSAGE
+		  JOIN MEMBER USING (MEM_NO)
+		 WHERE CHAT_NO = #{chatNo}
+		 ORDER BY CREATE_DATE ASC
+	</select>
+</mapper>
