@@ -56,4 +56,16 @@
 		 WHERE CHAT_NO = #{chatNo}
 		 ORDER BY CREATE_DATE ASC
 	</select>
+	
+	<insert id="insertChatMem"
+		parameterType="oneClassRegist">
+			INSERT INTO CHAT_MEM(
+			            CLASS_NO,
+			            MEM_NO)
+				       VALUES (
+				            #{classNo},
+				            #{memNo}
+				       )
+	</insert>
+	
 </mapper>

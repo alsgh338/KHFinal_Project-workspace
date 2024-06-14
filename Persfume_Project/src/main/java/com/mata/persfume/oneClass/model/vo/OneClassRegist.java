@@ -11,9 +11,14 @@ import lombok.ToString;
 @ToString
 public class OneClassRegist {
 
-	private int registNo;
-	private int registPaycode;
+	private String registNo;
+	private String registPaycode;
+	private int registPrice;
+	private int registPersonNo;
+	private String registDate;
+	private String registCancleDate;
 	private String status;
 	private int classNo;
 	private int memNo;
+	
 }

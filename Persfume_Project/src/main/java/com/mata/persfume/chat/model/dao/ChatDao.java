@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mata.persfume.chat.model.vo.ChatMessage;
+import com.mata.persfume.oneClass.model.vo.OneClassRegist;
 
 @Repository
 public class ChatDao {
@@ -42,6 +45,11 @@ public class ChatDao {
 		
 		return list;
 	}
+	
+	public int insertChatMem(SqlSessionTemplate sqlSession, OneClassRegist ocr) {
+		return sqlSession.insert("chatMapper.insertChatMem", ocr);
+	}
+	
 
 	
 	

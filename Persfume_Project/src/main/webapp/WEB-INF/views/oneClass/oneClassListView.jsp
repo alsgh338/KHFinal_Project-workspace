@@ -158,6 +158,8 @@
         	height: 200px;
         	object-fit: cover;
         }
+        
+        #pagingArea {width:fit-content; margin:auto;}
 
 </style>
 
@@ -183,9 +185,7 @@
   			        <div class="">정렬이나 검색바 들어갈 자리</div>            
 		            <c:forEach var="oc" items="${ requestScope.list }">
 			            <div class="oneday-class">
-			            <div style="display:none;">
-			            	${ oc.classNo }
-			            </div>
+				            <input type="hidden" value="${ oc.classNo }">
 			                <div class="class-img">
 			                    <img src= ${oc.thumbnailImg } alt="쌈네일">
 			                </div>
@@ -282,7 +282,7 @@
             });
             
             $(".oneday-class").on("click",function(){
-            	let ocno = $(this).chlildren().eq(0).text();
+            	let ocno = $(this).children().eq(0).val();
             	location.href = "detail.oc?ocno=" + ocno;
             });
 

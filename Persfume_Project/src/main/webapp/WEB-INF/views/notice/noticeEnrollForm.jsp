@@ -19,7 +19,7 @@
 
         .content-title{
             height: 320px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/공지사항.jpg);
             background-size: cover;
             background-position: center;
             object-fit: cover;
@@ -264,7 +264,7 @@
     <dl class="bbs-link bbs-link-btm">
         <dt></dt>
         <dd>
- 
+ 			<button onclick="javascript:history.go(-1);" class="CSSbuttonWhite">뒤로가기</button>
             <button type="submit" class="CSSbuttonBlack">등록하기</button>
             <button type="reset" class="CSSbuttonWhite">취소하기</button>
         </dd>

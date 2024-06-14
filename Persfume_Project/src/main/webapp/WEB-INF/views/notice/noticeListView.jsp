@@ -18,7 +18,7 @@
 
         .content-title {
             height: 320px;
-            background: url(resources/images/class_title.jpg);
+             background: url(resources/images/공지사항.jpg);
             background-size: cover;
             background-position: center;
             object-fit: cover;
@@ -252,24 +252,23 @@
                         <div class="bbs-tit">
                             <h3>공지사항</h3>
                             <br>
-                            <div class="bbs-sch">
-                               <form action="list.no" method="get">
-    <input type="hidden" name="review_type" value="">
-    <!-- 검색 폼 시작 -->
-    <label>
-        <input type="radio" name="searchType" value="subject" checked="checked">제목
-    </label>
-    <label>
-        <input type="radio" name="searchType" value="content">내용
-    </label>
-    <span class="key-wrap">
-        <input type="text" name="stext" class="MS_input_txt">                                        
-        <!-- 검색 버튼 -->
-        <button type="submit" class="search-button">검색</button>
-    </span>
-</form><!-- 검색 폼 끝 -->
-
+                            <!-- 검색 기능 -->
+                           <div class="bbs-sch">
+                                <form action="list.no" method="get">
+                                    <input type="hidden" name="review_type" value="">
+                                    <label>
+                                        <input type="radio" name="searchType" value="subject" checked="checked">제목
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="searchType" value="content">내용
+                                    </label>
+                                    <span class="key-wrap">
+                                        <input type="text" name="stext" class="MS_input_txt">                                        
+                                        <button type="submit" class="search-button">검색</button>
+                                    </span>
+                                </form>
                             </div><!-- .bbs-sch -->
+                       
                         </div>
                     </div>
 
@@ -277,7 +276,7 @@
                         <table id="noticeList" summary="No, content,Name,Data,Hits">
                             <thead>
                                 <tr>
-                                    <th scope="col"><div class="tb-center">NO.</div></th>                      
+                                    <th scope="col"><div class="tb-center">NO.</div></th>                                                        
                                     <th scope="col"><div class="tb-center">TITLE</div></th>
                                     <th scope="col"><div class="tb-center">CONTENT</div></th>
                                     <th scope="col"><div class="tb-center">DATE</div></th>
@@ -288,6 +287,7 @@
     <c:forEach var="n" items="${requestScope.list}">
         <tr>
             <td><div class="tb-center">${n.noticeNo }</div></td>
+       
             <td>
                 <div class="tb-left">
                     ${n.noticeTitle }
@@ -305,6 +305,7 @@
 </tbody>
 
                         </table>
+                        
                         <script>
                             $(function() {
                                 $("#noticeList>tbody>tr").click(function() {

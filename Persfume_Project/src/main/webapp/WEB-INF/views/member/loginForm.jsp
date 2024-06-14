@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
 </head>
 <body>
 
@@ -34,18 +36,19 @@
 
 
 <script>
-	function findId() {
-		
-		let url = "findId.me"
-    
-		$("#findId").attr("href", url);
-	}
 
 	function findPwd() {
 
 		let url = "findPwd.me"
-    
-		$("#findPwd").attr("href", url);
+
+		$("#findPwd").attr("href",url);
+	}
+
+	function findId() {
+
+	let url = "findId.me"
+
+	$("#findId").attr("href",url);
 	}
 </script>
 </body>

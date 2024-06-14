@@ -11,6 +11,7 @@ import com.mata.persfume.common.model.vo.PageInfo;
 import com.mata.persfume.oneClass.model.dao.OneClassDao;
 import com.mata.persfume.oneClass.model.vo.OneClass;
 import com.mata.persfume.oneClass.model.vo.OneClassImg;
+import com.mata.persfume.oneClass.model.vo.OneClassRegist;
 import com.mata.persfume.oneClass.model.vo.OneClassReview;
 
 @Service
@@ -40,9 +41,8 @@ public class OneClassServiceImpl implements OneClassService {
 	}
 
 	@Override
-	public ArrayList<OneClassReview> selectReplyList(int oneClassNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<OneClassReview> selectClassReviewList(int oneClassNo) {
+		return oneClassDao.selectClassReviewList(sqlSession, oneClassNo);
 	}
 
 	@Override
@@ -55,6 +55,19 @@ public class OneClassServiceImpl implements OneClassService {
 	public ArrayList<OneClassImg> selectOneClassImgList(int oneClassNo) {
 		return oneClassDao.selectOneClassImgList(sqlSession, oneClassNo);
 	}
+
+	@Override
+	public int insertOneClassReigst(OneClassRegist orc) {
+		return oneClassDao.insertOneClassReigst(sqlSession, orc);
+	}
+
+	@Override
+	public OneClassRegist selectOneClassRegist(String ocrno) {
+		return oneClassDao.selectOneClassRegist(sqlSession, ocrno);
+	}
+
+
+
 	
 	
 	

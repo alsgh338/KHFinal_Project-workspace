@@ -1,6 +1,8 @@
 package com.mata.persfume.notice.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,13 +15,14 @@ import com.mata.persfume.notice.model.vo.Notice;
 @Repository
 public class NoticeDao {
 	
+	//공지사항 리스트 총 갯수 조회
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 			
 			return sqlSession.selectOne("noticeMapper.selectListCount");
 		}
 	
 	
-	// 공지사항 리스트 조회용
+	// 공지사항 리스트 조회
 	public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
 		int limit = pi.getBoardLimit();
@@ -66,6 +69,25 @@ public class NoticeDao {
 	
 }
 
+
+    // 공지사항 검색 리스트 총 갯수 조회
+    public int getSearchListCount(SqlSessionTemplate sqlSession, String searchType, String keyword) {
+        Map<String, String> map = new HashMap<>();
+        map.put("searchType", searchType);
+        map.put("keyword", keyword);
+        return sqlSession.selectOne("noticeMapper.getSearchListCount", map);
+    }
+    
+	 // 공지사항 검색 리스트 조회
+    public ArrayList<Notice> searchNoticeList(SqlSessionTemplate sqlSession, PageInfo pi, String searchType, String keyword) {
+    	   Map<String, Object> map = new HashMap<>();
+           map.put("searchType", searchType);
+           map.put("keyword", keyword);
+           int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+           RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        
+        return (ArrayList) sqlSession.selectList("noticeMapper.searchNoticeList", map, rowBounds);
+    }
 
 	
 }

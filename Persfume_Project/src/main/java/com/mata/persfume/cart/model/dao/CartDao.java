@@ -20,11 +20,6 @@ public class CartDao {
     }
 
 
-
-
-
-  
-
     // 장바구니 추가
     public int addCart(SqlSessionTemplate sqlSession, Cart c) {
         return sqlSession.insert("cartMapper.addCart", c);
@@ -38,25 +33,24 @@ public class CartDao {
     }
     
 
-    // 장바구니 내용 수정
+    // 장바구니  수정
     public int editCart(SqlSessionTemplate sqlSession, Cart c) {
         return sqlSession.update("cartMapper.editCart", c);
     }
 
-    // 특정 상품을 장바구니에서 삭제
+    // 장바구니 삭제
     public int deleteCart(SqlSessionTemplate sqlSession, String[] cartNos) {
         return sqlSession.delete("cartMapper.deleteCart", cartNos);
     }
 
     
     
-
     // 장바구니 목록 조회
     public ArrayList<Cart> cartList(SqlSessionTemplate sqlSession, Cart c) {
         return (ArrayList) sqlSession.selectList("cartMapper.cartList", c);
     }
 
-    // 특정 회원의 장바구니 모두 삭제
+    //  장바구니 모두 삭제
     public int allDeleteCart(SqlSessionTemplate sqlSession, int memNo) {
         return sqlSession.delete("cartMapper.allDeleteCart", memNo);
     }

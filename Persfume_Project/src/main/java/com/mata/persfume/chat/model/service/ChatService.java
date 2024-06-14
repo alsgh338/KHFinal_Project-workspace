@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mata.persfume.chat.model.vo.ChatMessage;
+import com.mata.persfume.oneClass.model.vo.OneClassRegist;
 
 public interface ChatService {
 
@@ -22,6 +23,10 @@ public interface ChatService {
 
 	// 이전 채팅목록 조회
 	ArrayList<ChatMessage> getPrevChatMessage(int chatNo);
+	
+	
+	// 채팅방 명단 추가 ajax
+	int insertChatMem(OneClassRegist ocr);
 	
 	
 }

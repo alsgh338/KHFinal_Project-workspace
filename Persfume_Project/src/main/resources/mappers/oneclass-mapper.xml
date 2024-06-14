@@ -28,6 +28,29 @@
 		<result column="REF_CNO" property="refCno" />
 	</resultMap>
 	
+	<!-- 클래스 리뷰용 resultMap -->
+	<resultMap type="oneClassReview" id="oneClassReviewResultSet">
+		<result column="CLASS_REVIEW_NO" property="classReviewNo" />
+		<result column="CLASS_REVIEW_CONTENT" property="classReviewContent" />
+		<result column="LIST_NO" property="listNo" />
+		<result column="REVIEW_WRITER" property="reviewWriter" />
+		<result column="START_DATE" property="startDate" />
+		<result column="CLASS_NAME" property="className" />
+	</resultMap>
+	
+	<!-- 클래스 신청용 resultMap -->
+	<resultMap type="oneClassRegist" id="oneClassRegistResultSet">
+		<result column="REGIST_NO" property="registNo" />
+		<result column="REGIST_PAYCODE" property="registPaycode" />
+		<result column="REGIST_PRICE" property="registPrice" />
+		<result column="REGIST_PERSON_NO" property="registPersonNo" />
+		<result column="REGIST_DATE" property="registDate" />
+		<result column="REGIST_CANCEL_DATE" property="registCancleDate" />
+		<result column="STATUS" property="status" />
+		<result column="CLASS_NO" property="classNo" />
+		<result column="MEM_NO" property="memNo" />
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
 		  FROM CLASS
@@ -53,45 +76,95 @@
                          
 		  FROM CLASS C
           JOIN CLASS_IMG CIMG ON C.CLASS_NO = CIMG.REF_CNO
-		 WHERE CLASS_NO = #{oneClassNo}
-		   AND C.STATUS = 'Y'
+		 WHERE C.STATUS = 'Y'
            AND CIMG.CLASS_IMG_TYPE = 1
 	</select>
 	
 	<select id="selectOneClass"
 			parameterType="_int"
 			resultMap="oneClassResultSet">
-		SELECT CLASS_NO
-		     , CLASS_NAME
-		     , CLASS_TEACHER
-             , STUDENT_MAXNO
-             , CLASS_DETAIL
-             , PRICE
-		     , TO_CHAR(START_TIME, 'YYYY-MM-DD') AS "START_TIME"
-             , TO_CHAR(END_TIME, 'YYYY-MM-DD') AS "END_TIME"
-             , TO_CHAR(START_DATE, 'YYYY-MM-DD') AS "START_DATE"
-             , TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
-		  FROM CLASS
-		 WHERE CLASS_NO = #{oneClassNo}
-		   AND STATUS = 'Y'
+		SELECT C.CLASS_NO
+		     , C.CLASS_NAME
+		     , C.CLASS_TEACHER
+             , C.STUDENT_MAXNO
+             , C.CLASS_DETAIL
+             , C.PRICE
+		     , TO_CHAR(C.START_TIME, 'HH:MI') AS "START_TIME"
+             , TO_CHAR(C.END_TIME, 'HH:MI') AS "END_TIME"
+             , TO_CHAR(C.START_DATE, 'YYYY-MM-DD') AS "START_DATE"
+             , TO_CHAR(C.ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
+			 , CIMG.CLASS_IMG_PATH AS THUMBNAIL_IMG
+		  FROM CLASS C
+		  JOIN CLASS_IMG CIMG ON C.CLASS_NO = CIMG.REF_CNO
+		 WHERE C.CLASS_NO = #{oneClassNo}
+		   AND C.STATUS = 'Y'
+		   AND CIMG.CLASS_IMG_TYPE = 1
+		   
 	</select>
 	
 	<select id="selectOneClassImgList"
 			parameterType="_int"
-			resultMap="oneClassResultSet">
-		SELECT CLASS_NO
-		     , CLASS_NAME
-		     , CLASS_TEACHER
-             , STUDENT_MAXNO
-             , CLASS_DETAIL
-             , PRICE
-		     , TO_CHAR(START_TIME, 'YYYY-MM-DD') AS "START_TIME"
-             , TO_CHAR(END_TIME, 'YYYY-MM-DD') AS "END_TIME"
-             , TO_CHAR(START_DATE, 'YYYY-MM-DD') AS "START_DATE"
-             , TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
-		  FROM CLASS
-		 WHERE CLASS_NO = #{oneClassNo}
-		   AND STATUS = 'Y'
+			resultMap="oneClassImgResultSet">
+		SELECT *
+		  FROM CLASS_IMG
+		 WHERE REF_CNO = #{oneClassNo}
+		   AND STATUS='Y'
+		   AND CLASS_IMG_TYPE = 2
+	</select>
+	
+	
+	<select id="selectClassReviewList"
+			parameterType="_int"
+			resultMap="oneClassReviewResultSet">
+				SELECT CR.CLASS_REVIEW_NO,
+				       CR.CLASS_REVIEW_CONTENT, 
+				       CR.LIST_NO, 
+				       M.MEM_NAME AS REVIEW_WRITER,
+				       C.CLASS_NAME,
+				       TO_CHAR(C.START_DATE, 'YYYY-MM-DD') AS "START_DATE"
+				  FROM CLASS_REVIEW CR
+				  JOIN MEMBER M USING(MEM_NO)
+				  JOIN CLASS_REGIST CREG ON CREG.REGIST_NO = CR.LIST_NO
+				  JOIN CLASS C ON CREG.CLASS_NO = C.CLASS_NO
+				 WHERE CREG.CLASS_NO = #{oneClassNo}
+
+	</select>
+	
+	
+	<insert id="insertOneClassReigst"
+				parameterType="oneClassRegist">
+			INSERT INTO CLASS_REGIST(REGIST_NO
+			                , REGIST_PAYCODE
+			                , REGIST_PRICE
+			                , REGIST_PERSON_NO
+			                , REGIST_DATE
+			                , MEM_NO
+			                , CLASS_NO)
+			           VALUES(#{registNo}
+			                , #{registPaycode}
+			                , #{registPrice}
+			                , #{registPersonNo}
+			                , SYSDATE
+			                , #{memNo}
+			                , #{classNo})
+	</insert>
+	
+	<select id="selectOneClassRegist"
+			parameterType="String"
+			resultMap="oneClassRegistResultSet">
+			
+			SELECT REGIST_NO
+			     , REGIST_PAYCODE
+			     , REGIST_PRICE
+			     , REGIST_PERSON_NO
+			     , TO_CHAR(REGIST_DATE, 'YYYY-MM-DD') AS "REGIST_DATE"
+			     , TO_CHAR(REGIST_CANCEL_DATE, 'YYYY-MM-DD') AS "REGIST_CANCEL_DATE"
+			     , STATUS
+			     , CLASS_NO
+			     , MEM_NO
+			  FROM CLASS_REGIST
+			 WHERE REGIST_NO = #{ocrno}
+	
 	</select>
 
  	 

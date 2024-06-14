@@ -12,7 +12,7 @@ import lombok.ToString;
 
 public class Cart {
 
-	private int cartNo;
+	private int cartNo; 
 	private int price;	
 	private int quantity;	//수량 
 	private int memberNo;	//(회원테이블참조)  

@@ -40,6 +40,39 @@
         WHERE STATUS = 'Y'
         ORDER BY NOTICE_NO DESC
     </select>
+    
+    
+   <!-- getSearchListCount -->
+	<select id="getSearchListCount" parameterType="map" resultType="int">
+	    SELECT COUNT(*) FROM NOTICE
+	    WHERE
+	    <choose>
+	        <when test="searchType == 'title'">
+	            notice_title LIKE '%' || #{keyword} || '%'
+	        </when>
+	        <when test="searchType == 'content'">
+	            notice_content LIKE '%' || #{keyword} || '%'
+	        </when>
+	    </choose>
+	</select>
+
+
+	<!-- searchNoticeList -->
+	<select id="searchNoticeList" parameterType="map" resultType="com.mata.persfume.notice.model.vo.Notice">
+	    SELECT * FROM NOTICE
+	    WHERE
+	    <choose>
+	        <when test="searchType == 'title'">
+	            notice_title LIKE '%' || #{keyword} || '%'
+	        </when>
+	        <when test="searchType == 'content'">
+	            notice_content LIKE '%' || #{keyword} || '%'
+	        </when>
+	    </choose>
+	    ORDER BY NOTICE_NO DESC
+	    OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+	</select>
+
 
     <!-- 게시글 작성용 쿼리문 -->
     <insert id="insertNotice" 
@@ -49,7 +82,7 @@
                            NOTICE_CONTENT,                                                 
                            NOTICE_IMG_ORIGIN,
                            NOTICE_IMG_CHANGE)
-			        VALUES (SEQ_NNO.NEXTVAL,
+			        VALUES (SEQ_NOTICE_NO.NEXTVAL,
 			                #{noticeTitle},
 			                #{noticeContent},
 			                #{noticeImgOrigin},

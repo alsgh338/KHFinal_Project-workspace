@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mata.persfume.chat.model.dao.ChatDao;
 import com.mata.persfume.chat.model.vo.ChatMessage;
+import com.mata.persfume.oneClass.model.vo.OneClassRegist;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -46,6 +47,12 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public ArrayList<ChatMessage> getPrevChatMessage(int chatNo) {
 		return chatDao.getPrevChatMessage(sqlSession, chatNo);
+	}
+	
+	// 채팅방 명단 추가 ajax
+	@Override
+	public int insertChatMem(OneClassRegist ocr) {
+		return chatDao.insertChatMem(sqlSession, ocr);
 	}
 
 	

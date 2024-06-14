@@ -7,8 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mata.persfume.common.model.vo.PageInfo;
+import com.mata.persfume.product.model.vo.Cart;
 import com.mata.persfume.product.model.vo.Coupon;
 import com.mata.persfume.product.model.vo.MemCoupon;
+import com.mata.persfume.product.model.vo.OrderDetail;
 import com.mata.persfume.product.model.vo.Product;
 import com.mata.persfume.product.model.vo.ProductImg;
 
@@ -58,6 +60,36 @@ public class ProductDao {
 	public  Coupon searchCouponName(SqlSessionTemplate sqlSession, int cno){
 		return sqlSession.selectOne("productMapper.searchCouponName", cno);
 	}
+	public  int orderComplete(SqlSessionTemplate sqlSession, String merchant_uid, int amount, String want5, int mno) {
 	
+	 OrderDetail od = new OrderDetail(merchant_uid, amount, want5, mno);
+		
+		return sqlSession.insert("productMapper.orderComplete", od);
+	}
+	public OrderDetail orderview(SqlSessionTemplate sqlSession, String merchant_uid) {
+		return sqlSession.selectOne("productMapper.orderview", merchant_uid);
+	}
+	public int cartAdd(SqlSessionTemplate sqlSession, int account, int quantity, int mno, int pno) {
+		Cart c = new Cart(account, quantity, mno, pno);
+		return sqlSession.insert("productMapper.cartAdd", c);
+	}
+	public ArrayList<Cart> selectCartList(SqlSessionTemplate sqlSession, int mno){
+		return (ArrayList)sqlSession.selectList("productMapper.selectCartList", mno);	
+	}
+	
+	public int cartdelete(SqlSessionTemplate sqlSession, int deletecartNo) {
+		int cno = deletecartNo;
+		return sqlSession.delete("productMapper.cartdelete", cno);
+		
+	}
+	public int cartUpdate(SqlSessionTemplate sqlSession, int basketNo, int quantity, int price) {
+		Cart c = new Cart(basketNo, price, quantity);
+		return sqlSession.update("productMapper.cartUpdate", c);
+	}
+	
+	public Cart cartSelect(SqlSessionTemplate sqlSession, int basketNo) {
+		int cno = basketNo;
+		return sqlSession.selectOne("productMapper.cartSelect", cno);			
+	}
 	
 }// 클래스종료

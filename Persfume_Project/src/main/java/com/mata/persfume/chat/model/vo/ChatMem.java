@@ -11,6 +11,6 @@ import lombok.ToString;
 @ToString
 public class ChatMem {
 
-	private int chatNo;
+	private int classNo;
 	private int memNo;
 }

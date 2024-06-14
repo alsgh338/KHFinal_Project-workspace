@@ -19,10 +19,10 @@ public class OneClass {
 	private int studentMaxNo;
 	private String classDetail;
 	private int price;
-	private Date startTime;
-	private Date endTime;
-	private Date startDate;
-	private Date enrollDate;
+	private String startTime;
+	private String endTime;
+	private String startDate;
+	private String enrollDate;
 	private String status;
 	
 	

@@ -222,7 +222,7 @@
             <div><a href="list.ev?condition=onGoing">EVENT</a></div>
             <div><a href="list.po">PERFUME</a></div>
             <div><a href="list.oc">ONEDAY CLASS</a></div>
-            <div><a href="">SCENT RECOMMAND</a></div>
+            <div><a href="detail.oc?ocno=1">SCENT RECOMMAND</a></div>
         </div>
         <c:choose>
             <c:when test="${ empty sessionScope.loginMember }">

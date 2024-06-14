@@ -14,5 +14,9 @@ public class OneClassReview {
 	private int classReviewNo;
 	private String classReviewContent;
 	private int listNo;
-	private int memNo;
+	private String reviewWriter;
+	
+	private String startDate;
+	private String className;
+	
 }
