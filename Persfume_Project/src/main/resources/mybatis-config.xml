@@ -30,9 +30,9 @@
 		<typeAlias type="com.mata.persfume.chat.model.vo.Chat" alias="chat" />
 		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMem" alias="chatMem" />
 		<typeAlias type="com.mata.persfume.chat.model.vo.ChatMessage" alias="chatMessage" />
-
 		<typeAlias type="com.mata.persfume.product.model.vo.OrderDetail" alias="OrderDetail" />
 		<typeAlias type="com.mata.persfume.product.model.vo.Cart" alias="Cart" />
+		<typeAlias type="com.mata.persfume.product.model.vo.ProductReview" alias="productReview" />
 
 	</typeAliases>
 	

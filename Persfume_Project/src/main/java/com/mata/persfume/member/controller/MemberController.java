@@ -1,5 +1,6 @@
 package com.mata.persfume.member.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.mata.persfume.member.model.service.MemberService;
 import com.mata.persfume.member.model.vo.Member;
+import com.mata.persfume.product.model.vo.ProductReview;
 
 @Controller
 public class MemberController {
@@ -300,11 +303,61 @@ public class MemberController {
 		
 	}//myPage fin.
 	
-	@GetMapping("delete.me")
-	public String deleteMe() {
+	@GetMapping("delete.fo")
+	public String deleteFo() {
 		
 		return "member/deleteMember";
 	}// deleteMe fin.
+	
+	@PostMapping("delete.me")
+	public ModelAndView deleteMember(Member m,
+							@RequestParam(value="CheckPwd") String CheckPwd,
+							@RequestParam(value="memId") String memId,
+							@RequestParam(value="memPwd") String memPwd,
+							HttpSession session,
+				 			ModelAndView mv) {
+		
+		/*
+		System.out.println("회원 탈퇴 잘 호출되나??");
+		
+		System.out.println("회원이 입력한 비밀번호 : " + CheckPwd);
+		
+		System.out.println("현재 탈퇴를 원하는 회원의 아이디 " + memId);
+		
+		System.out.println("현재 탈퇴를 원하는 회원의 비밀번호 " + memPwd);
+		*/
+		
+		// 비밀번호를 잘 입력했는지 아닌지 부터 확인해야함
+		if(bcryptPasswordEncoder.matches(CheckPwd, memPwd)) {
+			// 알맞게 입력
+			
+			int result = memberService.deleteMember(m);
+			
+			if(result > 0) {// 탈퇴 성공
+				
+				System.out.println("탈퇴 성공");
+				
+			}else {// 잘 입력했을 시
+				// 탈퇴 실패 
+				System.out.println("탈퇴 실패");
+			}
+			
+		}else {
+			// 틀리게 입력 할 시 틀렸다고 알람만 띄워주기
+			
+			System.out.println("비밀번호 틀렸습니다.");
+			
+			session.setAttribute("alertMsg", "비밀번호가 틀렸습니다. 다시 시도해주세요");
+			
+			mv.setViewName( "member/deleteMember");
+			
+		}
+		
+		
+			return mv;
+		
+		
+	}
 
 	
 	@PostMapping("update.me")
@@ -316,27 +369,20 @@ public class MemberController {
 		
 		 int result =  memberService.updateMember(m);
 		 
-		 if(result > 0) { // 성공
-				
-				// 갱신된 회원의 정보를 다시 조회해와서
-				// session 의 loginUser 에 덮어씌웠어야함
+		 if(result > 0) {
+
 				Member updateMember = memberService.loginMember(m);
-				// 기존의 loginMember 서비스를 재활용(아이디만 가지고 조회)
 				
 				session.setAttribute("loginMember", updateMember);
 				
-				session.setAttribute("alertMsg", "성공적으로 회원정보가 변경되었습니다.");
-				
-				// 마이페이지로  url 재요청
+				session.setAttribute("alertMsg", "회원정보가 수정되었습니다.");
+
 				return "redirect:/myPage.me";
 				
 				
-			}else { // 실패
+			}else { 
+				model.addAttribute("errorMsg","회원정보 수정 실패, 다시 시도 해주세요");			
 				
-				// 에러문구를 담아서 에러페이지로 포워딩
-				model.addAttribute("errorMsg","회원정보 변경 실패");			
-				
-				// /WEB-INF/views/common/errorPage.jsp
 				return "common/errorPage";
 				
 			}
@@ -344,16 +390,68 @@ public class MemberController {
 	}// updateMember fin.
 	
 	@GetMapping("findId.me")
-	public void findId() {
-		
+	public String findId() {
+	
 		System.out.println("아이디 찾기 잘 호출 되나?");
+		
+		return "member/findWhat";
 		
 	}
 	
 	@GetMapping("findPwd.me")
-	public void findPwd() {
+	public String findPwd() {
 		System.out.println("비밀번호 찾기 잘 호출되나?");
+		
+		return "member/findWhat";
 	}
+	
+	
+	
+	
+//	여기서부터 조회 관련 
+	@PostMapping(value="myReview.me")
+	public String myReview(int memNo, Model model){
+		
+		 System.out.println("리뷰 폼 잘 호출 되나??");
+		 
+		 System.out.println("현재 로그인한 회원의 회원번호도 잘 끌어오나?" + memNo);
+
+		
+		// 1. 세션의 memNo 으로 회원이 쓴 리뷰 색출
+		// 2. 리뷰 테이블의 productNo 으로 리뷰를 누르면 해당 리뷰로 갈 수 있게 쏘기
+		// 3. 리뷰 제목, 리뷰 내용 정도만 보여주기 
+		 
+		 ArrayList<ProductReview> list =  memberService.selectReview(memNo);
+		
+		model.addAttribute("reviewList", list); // Model에 데이터를 attribute로 설정
+		
+		System.out.println(list);
+		
+		
+		return "member/myReview";
+	
+}
+	
+	
+	@GetMapping("myLike.me")
+	public void myLike(){
+		
+//		 System.out.println("좋아요 폼 잘 호출 되나??");
+		
+		
+		
+		
+	}
+	@GetMapping("myOrder.me")
+	public void myOrder(){
+		
+//		 System.out.println("주문목록 폼 잘 호출 되나??");
+		
+		
+		
+	}
+	
+	
 	
 	
 

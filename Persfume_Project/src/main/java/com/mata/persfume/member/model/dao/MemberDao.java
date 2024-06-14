@@ -1,9 +1,12 @@
 package com.mata.persfume.member.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mata.persfume.member.model.vo.Member;
+import com.mata.persfume.product.model.vo.ProductReview;
 
 @Repository
 public class MemberDao {
@@ -38,5 +41,15 @@ public class MemberDao {
 	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
 		
 		return sqlSession.update("memberMapper.updateMember",m);
+	}
+	
+	public int deleteMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("memberMapper.deleteMember", m);
+	}
+
+	public ArrayList<ProductReview> selectReview(SqlSessionTemplate sqlSession, int memNo) {
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectReview", memNo);
 	}
 }

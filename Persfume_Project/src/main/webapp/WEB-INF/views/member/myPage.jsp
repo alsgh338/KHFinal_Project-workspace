@@ -166,13 +166,74 @@ fieldset {
 	overflow-y: auto;
 }
 
+#myPagelist{
+	display: flex;
+    list-style-type: none; /* 기본 목록 스타일 제거 */
+   	padding: 0;
+   	margin: 0;
+	justify-content: space-around;
+}
+
+#myPagelist li {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	margin-right: 60px; /* 각 항목 간 간격 추가 */
+	height: 50px; /* 필요에 따라 높이 조정 */
+	font-size: 20px;
+}
+
+
+#nav-btn{
+    width: 70%;
+    display: flex;
+    align-items: center;
+}
+
+#myPagelist a::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 0;
+	height: 4px;
+	background: rgba(217, 93, 48, 1)/*#D95D30*/;
+	transition: all .5s ease-out;
+ }
+
+#myPagelist a:hover::after {
+    width: 100%;
+}
+
+
+
+
 </style>
 </head>
 <body>
 	<jsp:include page="../common/header.jsp" />
 	<div class="content-title" id="home">welcome</div>
 	<div id="outer">
-		<br> <br> <br> <br>
+		<ul id="myPagelist">
+			<li style="padding-left: 110px;">
+				<a href="/persfume/myPage.me">내 정보 조회</a>
+			</li>
+			<li>
+				<a id="Review" href="" onclick="reviewGo(); return false;">내 리뷰 조회</a>
+				<form method="post" action="myReview.me" id="myReviewForm">
+					<input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+				</form>
+			</li>
+			<li>
+				<a href="/persfume/myLike.me">내 찜목록 조회</a>
+			</li>
+			<li>
+				<a href="/persfume/myOrder.me">내 주문목록(배송상태)</a>
+			</li>
+		</ul>
+		<br>
 		<form action="update.me" method="post" id="EnrollForm">
 			<table id="mem_info" class="table_css">
 				<tr>
@@ -251,14 +312,21 @@ fieldset {
 			</div>
 
 		</form>
+		
+		<jsp:include page="../common/footer.jsp" />
 
 
 
 
 		<script>
+
+		function reviewGo() {
+				$("#myReviewForm").submit();
+		}
+		
             function deleteMem() {
 
-                let url = "delete.me"
+                let url = "delete.fo"
     
                 $("#deleteMem").attr("href", url);
             }
@@ -351,5 +419,7 @@ fieldset {
 			});
 		</script>
 	</div>
+	
+	
 </body>
 </html>

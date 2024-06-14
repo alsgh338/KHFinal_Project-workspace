@@ -22,6 +22,19 @@
 	 	<result column="CHANGE_NAME" property="testDate"/>
 	 	<result column="STATUS" property="status"/>
 	 </resultMap>
+	 
+	 	 <resultMap id="ReviewResultSet"
+	 			    type="productReview">
+	 	<result column="REVIEW_NO" property="reviewNo"/>
+	 	<result column="REVIEW_CONTENT" property="reviewContent"/>
+	 	<result column="REVIEW_IMG_PATH" property="reviewImgPath"/>
+	 	<result column="REVIEW_IMG_ORIGIN" property="reviewImgOrigin"/>
+	 	<result column="REVIEW_IMG_CHANGE" property="reviewImgChange"/>
+	 	<result column="REVIEW_DATE" property="reviewDate"/>
+	 	<result column="REVIEW_STATUS" property="reviewStatus"/>
+	 	<result column="MEM_NO" property="memNo"/>
+	 	<result column="PRODUCT_NO" property="productNo"/>
+	 </resultMap>
 
 	<!-- 아이디 중복체크용 쿼리문 -->
 	<select id="idCheck"
@@ -88,4 +101,22 @@
 			WHERE MEM_ID = #{memId}
 			AND STATUS = 'Y'
 	</update>
+	
+	<!-- 회원탈퇴 -->
+	<update id="deleteMember"
+			parameterType="member">
+			UPDATE MEMBER
+			SET STATUS = 'N'
+			WHERE MEM_ID = #{memId}
+			AND STATUS = 'Y'
+	</update>
+	
+	<!-- 내가 쓴 리뷰 조회 -->
+	<select id="selectReview"
+			parameterType="_int"
+			resultMap="ReviewResultSet">
+			SELECT * 
+			FROM PRODUCT_REVIEW
+			WHERE MEM_NO = #{memNo}
+	</select>
 </mapper>
