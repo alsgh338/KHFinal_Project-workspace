@@ -205,6 +205,23 @@
 
 </head>
 <body>
+	<!-- 일회성 알람문구 처리 script -->
+			
+	<!--  
+		sessionScope 의 alertMsg 값이 있다면
+		자바스크립트의 alert 함수로 메세지 내용 출력
+		> session 으로부터 remove
+		(script 밖으로 Action 태그를 빼서 작성함)
+	-->
+	<c:if test="${ not empty sessionScope.alertMsg }">
+		<script>
+			/* alertify.alert('알림', '${ sessionScope.alertMsg }', function(){ alertify.success('Ok'); }); */
+			alert("${ sessionScope.alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+
+
 	<!--  
         * 여기부터 헤더 영역
     -->
