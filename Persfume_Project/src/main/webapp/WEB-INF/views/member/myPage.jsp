@@ -139,18 +139,7 @@
 	font-size: 15px;
 }
 
-#enroll_btn {
-	background-color: #0c263f;
-	color: white;
-	width: 200px;
-	height: 32px;
-	margin-top: 50px;
-	border-radius: 5px;
-	box-sizing: border-box;
-	display: inline-block;
-}
-
-#reset_btn {
+#update_btn {
 	background-color: lightgray;
 	border-style: none;
 	width: 110px;
@@ -158,6 +147,7 @@
 	border-radius: 5px;
 	box-sizing: border-box;
 	display: inline-block;
+	
 }
 
 fieldset {
@@ -227,10 +217,16 @@ fieldset {
 				</form>
 			</li>
 			<li>
-				<a href="/persfume/myLike.me">내 찜목록 조회</a>
+				<a id="Like" href="" onclick="likeGo(); return false;">내 찜목록 조회</a>
+				<form method="post" action="myLike.me" id="myLikeForm">
+					<input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+				</form>
 			</li>
 			<li>
-				<a href="/persfume/myOrder.me">내 주문목록(배송상태)</a>
+				<a id="order" href="" onclick="orderGo(); return false;">내 주문목록(배송상태)</a>
+				<form method="post" action="myOrder.me" id="myOrderForm">
+					<input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+				</form>
 			</li>
 		</ul>
 		<br>
@@ -244,14 +240,6 @@ fieldset {
 					<td colspan="4">
 						<input type="text" id="memId" name="memId" value="${ sessionScope.loginMember.memId }" required readonly>
 					</td>
-				</tr>
-                <tr>
-					<th>비밀번호</th>
-					<td colspan="4"><input type="password" id="memPwd"
-						name="memPwd" required> (대소문자와 특수기호(!@#$%) 조합으로 8~20자로
-						입력해주세요)
-						<div id="checkPwdResult1" style="font-size: 0.8em; display: none;">
-						</div></td>
 				</tr>
 				<tr>
 					<th>이름</th>
@@ -305,23 +293,39 @@ fieldset {
 					<td colspan="4"><input type="text" id="gender" name="gender" value="${ sessionScope.loginMember.gender }"  style="width: 200px;"></td>
 				</tr>
 			</table>
-			<div style="text-align: center;">
-				<button type="submit" id="reset_btn">회원정보 수정</button>
-                <a id="updatePwd" href="" onclick="">비밀번호 변경</a>
+			<br><br>
+				<button type="submit" id="update_btn">회원정보 수정</button>
+			</form>
+			
+			
+			<div>
+                <a id="updatePwd" href="updatePwd.fo">비밀번호 변경</a>
                 <a id="deleteMem" href="" onclick="deleteMem();">회원탈퇴</a>
 			</div>
 
-		</form>
-		
 		<jsp:include page="../common/footer.jsp" />
 
 
-
-
 		<script>
+		function likeGo() {
+			
+			console.log("likeGO야 실행 돼?");
+			
+			$("#myLikeForm").submit();
 
+		}
+		
+		function orderGo() {
+			
+			console.log("orderGO야 실행 돼?");
+			
+			$("#myOrderForm").submit();
+
+		}
+		
+		
 		function reviewGo() {
-				$("#myReviewForm").submit();
+			$("#myReviewForm").submit();
 		}
 		
             function deleteMem() {

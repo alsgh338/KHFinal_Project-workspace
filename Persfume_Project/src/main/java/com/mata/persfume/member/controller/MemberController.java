@@ -11,6 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.mata.persfume.member.model.service.MemberService;
 import com.mata.persfume.member.model.vo.Member;
+import com.mata.persfume.member.model.vo.PWDmember;
+import com.mata.persfume.product.model.vo.Favorites;
+import com.mata.persfume.product.model.vo.OrderDetail;
 import com.mata.persfume.product.model.vo.ProductReview;
 
 @Controller
@@ -171,6 +174,7 @@ public class MemberController {
 		*/
 		
 	} // sendMail fin.
+	
 	
 	@ResponseBody
 	@PostMapping(value="emailCheck.do", produces="text/html; charset=UTF-8")
@@ -337,9 +341,16 @@ public class MemberController {
 				
 				System.out.println("탈퇴 성공");
 				
-			}else {// 잘 입력했을 시
-				// 탈퇴 실패 
+				session.setAttribute("alertMsg", "탈퇴가 완료되었습니다. 꼭 다시 뵙길 바랍니다.");
+				
+				mv.setViewName("main");
+				
+			}else {// 탈퇴 실패 
 				System.out.println("탈퇴 실패");
+				
+				session.setAttribute("alertMsg", "탈퇴에 실패했습니다. 다시 시도해주세요");
+				
+				mv.setViewName("member/deleteMember");
 			}
 			
 		}else {
@@ -347,13 +358,13 @@ public class MemberController {
 			
 			System.out.println("비밀번호 틀렸습니다.");
 			
-			session.setAttribute("alertMsg", "비밀번호가 틀렸습니다. 다시 시도해주세요");
+			session.setAttribute("alertMsg", "비밀번호가 틀렸습니다. 다시 입력해주세요");
 			
-			mv.setViewName( "member/deleteMember");
+			mv.setViewName("member/deleteMember");
 			
 		}
 		
-		
+
 			return mv;
 		
 		
@@ -392,21 +403,208 @@ public class MemberController {
 	@GetMapping("findId.me")
 	public String findId() {
 	
-		System.out.println("아이디 찾기 잘 호출 되나?");
+		System.out.println("아이디 찾기 폼 잘 호출 되나?");
 		
-		return "member/findWhat";
+		return "member/findId";
 		
+	}
+	
+	@PostMapping("IDfind.me")
+	public String IDfind(@RequestParam(value="email") String email,
+					   HttpSession session){
+		
+		System.out.println("아이디 찾기 잘 호출 되나?!");
+		
+		System.out.println("사용자가 입력한 이메일 잘 끌어오나? " + email);
+		
+		String result = memberService.IDfind(email);
+		
+		System.out.println("아이디 찾기 성공했나 ? : " + result );
+		
+		session.setAttribute("ID", result);
+		
+		return "redirect:/findId.me";
 	}
 	
 	@GetMapping("findPwd.me")
 	public String findPwd() {
-		System.out.println("비밀번호 찾기 잘 호출되나?");
+		System.out.println("비밀번호 찾기 폼 잘 호출되나?");
 		
-		return "member/findWhat";
+		return "member/findPwd";
 	}
 	
 	
+	public String sendPWD(String email) throws MessagingException{
+		
+		// 임시 비밀번호 생성 10자리 
+		String randomString = RandomStringUtils.randomAlphanumeric(10);
+		
+		// 발급한 인증번호를 사용자에게 그냥 넘기는게 아니라
+		// MEMEBR 테이블의 비밀번호 값을 임시 비밀번호로 바꿔주어야한다
+		
+		// 입력받은 이메일과 임시 비밀번호를 객체 하나로 가공 후 서비스단으로 넘기기 
+		PWDmember pm1 = new PWDmember();
+		
+		pm1.setEmail(email);
+		
+		// 비밀번호 암호화
+		String randomPwd = bcryptPasswordEncoder.encode(randomString);
+		// 임시 비밀번호를 암호화해서 randomPwd 에 담는다
+		
+		pm1.setRandomPwd(randomPwd);
+		// 암호화한 임시 비밀번호를 객체에 담아서
+		
+		memberService.sendPWD(pm1);
+		// 서비스단으로 넘긴다 
 	
+		MimeMessage message = mailSender.createMimeMessage();
+		
+		
+		MimeMessageHelper mimeMessageHelper
+		= new MimeMessageHelper(message, true, "UTF-8");
+		
+		
+		mimeMessageHelper.setTo(email);
+		// 입력 받은 이메일로 설정
+		
+		// 제목
+		mimeMessageHelper.setSubject("[Persfume] 임시 비밀번호 입니다");
+		
+		// 내용
+		mimeMessageHelper.setText("<h1>[Persfume] 임시 비밀번호 입니다.</h1>"
+				+ "<br>"
+				+ "<div>"
+				+ "<h3>"
+				+ "로그인 화면으로 돌아가 아래의 임시비밀번호로 로그인 후 비밀번호를 변경해주세요"
+				+ "</h3>"
+				+ "<p> 임시비밀번호 : "+ randomString +"</p>"
+				+ "</div>", true);
+		
+		// 메세지 전송
+		mailSender.send(message);
+		
+		
+		return "임시 비밀번호 전송 성공!!";
+
+		
+	} // sendPWD fin.
+	
+	@PostMapping("PWDfind.me")
+	public String PWDfind(@RequestParam(value="ID") String ID,
+						@RequestParam(value="email") String email,
+						HttpSession session) throws MessagingException {
+		
+		// 최종 결과값을 담을 변수 설정 
+		
+		System.out.println("비밀번호 찾기 잘 호출되나?!");
+		
+		System.out.println("사용자가 입력한 아이디 잘 끌어오나? : " + ID );
+		
+		// id 가 유효한 아이디 인지 체크
+		int result1 = memberService.selectId(ID);
+		
+		if(result1 > 0) {// 아이디가 유효함
+			
+			// 입력한 이메일이 아이디에 맞는 이메일인지 확인하기
+			String result2 = memberService.IDfind(email);
+			
+			System.out.println("이메일로 찾은 아이디는 ? " + result2);
+			
+			if(ID.contentEquals(result2)) {
+				// 입력한 아이디와 이메일로 DB에서 찾은 아이디가 동일하다면 임시비밀번호 전송
+				sendPWD(email);
+				
+				session.setAttribute("alertMsg", "임시비밀번호를 전송하였습니다.");
+				
+				return "member/loginForm";
+			}else {
+				// 아니라면 알람창 띄우고 돌아가기 
+				 System.out.println("입력한 아이디와 이메일이 맞지 않습니다!");
+				 
+				session.setAttribute("alertMsg", "입력한 아이디와 이메일이 맞지 않습니다!");
+				 
+				return "redirect:/findPwd";
+			}
+			
+		}else { // 유효하지 않음
+			
+			 System.out.println("아이디가 없는 아이디인디요?");
+			 
+			 session.setAttribute("alertMsg", "이 아이디는 없는 아이디 입니다");
+			 
+			 return "redirect:/findPwd";
+		}
+		
+		
+		
+	}
+	
+	@GetMapping(value="updatePwd.fo")
+	public String updatePwdForm() {
+		
+		return "member/updatePwd";
+		
+	}
+	
+	@PostMapping(value="updatePwd.me")
+	public String updatePwd(PWDmember pm, HttpSession session) {
+		
+		System.out.println("비밀번호 변경 잘 호출되나?");
+		
+		System.out.println("회원번호도 잘 끌어오나? " + pm.getMemNo());
+		
+		System.out.println("회원이 입력한 새로운 비밀번호도 ? " + pm.getNewPwd());
+		
+		System.out.println("회원이 받았던 임시 비밀번호는 ? " + pm.getRandomPwd());
+		
+		System.out.println("현재 DB에 저장되어있는 비밀번호는 뭐야 ? " + pm.getMemPwd());
+		
+		// 사용자가 입력한 현재 비밀번호가 맞는지 확인 
+		if(bcryptPasswordEncoder.matches(pm.getRandomPwd(),pm.getMemPwd())) {
+			// 맞으면  새로 입력한 비밀번호로 변경해주기
+			// 암호화 필수!
+			System.out.println("너가 맞구나?!");
+			
+			
+			// 비밀번호 암호화
+			String newPwd = bcryptPasswordEncoder.encode(pm.getNewPwd());
+			// 사용자가 입력한 새로운 비밀번호를 암호화해서 encPwd 에 담는다
+			
+			pm.setNewPwd(newPwd);
+			// pm 객체에 암호화된 새로운비밀번호로 세팅한다
+			
+			// 이 pm 객체를 서비스단으로 넘겨준다 
+			int result = memberService.updatePwd(pm);
+			
+			if(result > 0) {
+				// 비밀번호 변경 성공
+					
+				System.out.println("비번 변경 성공!!");
+				
+				session.removeAttribute("loginMember");
+				session.setAttribute("alertMsg", "비밀번호가 변경되었습니다. 다시 로그인 해주세요");
+				 	
+				return "redirect:/";
+				
+			}else {
+				// 실패
+				System.out.println("비번 변경 실패!!");
+				
+				return "member/updatePwd";
+			}
+			
+			
+		}else {
+			// 틀리면
+			System.out.println("너 누구여?!");
+			
+			return "member/updatePwd";
+		}
+		
+		
+	}
+	
+
 	
 //	여기서부터 조회 관련 
 	@PostMapping(value="myReview.me")
@@ -421,9 +619,9 @@ public class MemberController {
 		// 2. 리뷰 테이블의 productNo 으로 리뷰를 누르면 해당 리뷰로 갈 수 있게 쏘기
 		// 3. 리뷰 제목, 리뷰 내용 정도만 보여주기 
 		 
-		 ArrayList<ProductReview> list =  memberService.selectReview(memNo);
+		ArrayList<ProductReview> list =  memberService.selectReview(memNo);
 		
-		model.addAttribute("reviewList", list); // Model에 데이터를 attribute로 설정
+		model.addAttribute("reviewList", list); // Model에 list를  attribute로 설정
 		
 		System.out.println(list);
 		
@@ -433,19 +631,40 @@ public class MemberController {
 }
 	
 	
-	@GetMapping("myLike.me")
-	public void myLike(){
+	@PostMapping("myLike.me")
+	public String myLike(int memNo, Model model){
 		
 //		 System.out.println("좋아요 폼 잘 호출 되나??");
+		
+		System.out.println("현재 로그인한 회원의 회원번호도 잘 끌어오나?" + memNo);
+		
+		ArrayList<Favorites> list =  memberService.selectLike(memNo);
+		
+		model.addAttribute("likeList", list); // Model에 list를  attribute로 설정
+		
+		System.out.println(list);
+		
+		return "member/myLike";
 		
 		
 		
 		
 	}
-	@GetMapping("myOrder.me")
-	public void myOrder(){
+	
+	@PostMapping("myOrder.me")
+	public String myOrder(int memNo, Model model){
 		
 //		 System.out.println("주문목록 폼 잘 호출 되나??");
+		
+		System.out.println("현재 로그인한 회원의 회원번호도 잘 끌어오나?" + memNo);
+		
+		ArrayList<OrderDetail> list = memberService.selectOrder(memNo);
+		
+		model.addAttribute("orderList", list); // Model에 list를  attribute로 설정
+		
+		System.out.println(list);
+		
+		return "member/myOrder";
 		
 		
 		

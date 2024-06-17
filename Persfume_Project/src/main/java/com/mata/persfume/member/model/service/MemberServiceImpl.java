@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mata.persfume.member.model.dao.MemberDao;
 import com.mata.persfume.member.model.vo.Member;
+import com.mata.persfume.member.model.vo.PWDmember;
+import com.mata.persfume.product.model.vo.Favorites;
+import com.mata.persfume.product.model.vo.OrderDetail;
 import com.mata.persfume.product.model.vo.ProductReview;
 
 @Service
@@ -75,6 +78,42 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<ProductReview> selectReview(int memNo) {
 		
 		return memberDao.selectReview(sqlSession, memNo);
+	}
+
+	@Override
+	public String IDfind(String email) {
+		
+		return memberDao.IDfind(sqlSession, email);
+	}
+
+	@Override
+	public int selectId(String ID) {
+		
+		return memberDao.selectId(sqlSession, ID);
+	}
+
+	@Override
+	public int sendPWD(PWDmember pm1) {
+		
+		return memberDao.sendPWD(sqlSession,pm1);
+	}
+
+	@Override
+	public int updatePwd(PWDmember pm) {
+		
+		return memberDao.updatePwd(sqlSession,pm);
+	}
+
+	@Override
+	public ArrayList<Favorites> selectLike(int memNo) {
+		
+		return memberDao.selectLike(sqlSession,memNo);
+	}
+
+	@Override
+	public ArrayList<OrderDetail> selectOrder(int memNo) {
+		
+		return memberDao.selectOrder(sqlSession,memNo);
 	}
 	
 }

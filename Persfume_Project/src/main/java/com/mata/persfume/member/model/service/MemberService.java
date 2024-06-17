@@ -3,6 +3,9 @@ package com.mata.persfume.member.model.service;
 import java.util.ArrayList;
 
 import com.mata.persfume.member.model.vo.Member;
+import com.mata.persfume.member.model.vo.PWDmember;
+import com.mata.persfume.product.model.vo.Favorites;
+import com.mata.persfume.product.model.vo.OrderDetail;
 import com.mata.persfume.product.model.vo.ProductReview;
 
 public interface MemberService {
@@ -21,5 +24,17 @@ public interface MemberService {
 	
 	int deleteMember(Member m);
 	
- ArrayList<ProductReview> selectReview(int memNo);
+	ArrayList<ProductReview> selectReview(int memNo);
+	
+	String IDfind(String email);
+	
+	int selectId(String ID);
+
+	int sendPWD(PWDmember pm1);
+
+	int updatePwd(PWDmember pm);
+
+	ArrayList<Favorites> selectLike(int memNo);
+	
+	ArrayList<OrderDetail> selectOrder(int memNo);
 }

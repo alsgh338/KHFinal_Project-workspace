@@ -23,8 +23,8 @@
 	 	<result column="STATUS" property="status"/>
 	 </resultMap>
 	 
-	 	 <resultMap id="ReviewResultSet"
-	 			    type="productReview">
+	 <resultMap id="ReviewResultSet"
+	 			type="productReview">
 	 	<result column="REVIEW_NO" property="reviewNo"/>
 	 	<result column="REVIEW_CONTENT" property="reviewContent"/>
 	 	<result column="REVIEW_IMG_PATH" property="reviewImgPath"/>
@@ -34,6 +34,32 @@
 	 	<result column="REVIEW_STATUS" property="reviewStatus"/>
 	 	<result column="MEM_NO" property="memNo"/>
 	 	<result column="PRODUCT_NO" property="productNo"/>
+	 </resultMap>
+	 
+	 <resultMap id="LikeResultSet"
+	 			type="product">
+	 	<result column="PRODUCT_NO" property="productNo"/>
+	 	<result column="PRODUCT_NAME" property="productName"/>
+	 	<result column="PRODUCT_EXPLAIN" property="productExplain"/>
+	 	<result column="PRODUCT_PRICE" property="productPrice"/>
+	 	<result column="PRODUCT_STOCK" property="productStock"/>
+	 	<result column="CATEGORY" property="category"/>
+	 	<result column="GENDER" property="gender"/>
+	 	<result column="TOP_NOTE" property="topNote"/>
+	 	<result column="MIDDLE_NOTE" property="middleNote"/>
+	 	<result column="BASE_NOTE" property="baseNote"/>
+	 </resultMap>
+	 
+	 <resultMap id="OrderResultSet"
+	 			type="OrderDetail">
+	 	<result column="ORDER_NO" property="orderNo"/>
+	 	<result column="PAY_CODE" property="payCode"/>
+	 	<result column="TOTAL_PRICE" property="totalPrice"/>
+	 	<result column="ORDER_WANT" property="orderWant"/>
+	 	<result column="DELIVERY_STATUS" property="deliveryStatus"/>
+	 	<result column="ORDER_DATE" property="orderDate"/>
+	 	<result column="REFUND_DATE" property="refundDate"/>
+	 	<result column="MEM_NO" property="memNo"/>
 	 </resultMap>
 
 	<!-- 아이디 중복체크용 쿼리문 -->
@@ -118,5 +144,66 @@
 			SELECT * 
 			FROM PRODUCT_REVIEW
 			WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<!-- 내 아이디 찾기 -->
+	<select id="IDfind"
+			parameterType="string"
+			resultType="String">
+			SELECT MEM_ID
+			FROM MEMBER
+			WHERE EMAIL = #{email}
+	</select>
+	
+	<!-- 비밀번호 찾기  -->
+	
+	<!-- 아이디가 유효한지 체크 -->
+	<select id="selectId"
+		   parameterType="string"
+		   resultType="_int">
+		SELECT COUNT (*)
+			FROM MEMBER
+			WHERE MEM_ID = #{ID}
+			AND STATUS = 'Y'
+	</select>
+	
+	<!-- 임시 비밀번호를 DB에 적용 -->
+	<update id="sendPWD"
+			parameterType="PWDmember">
+			UPDATE MEMBER
+			SET MEM_PWD = #{randomPwd}
+			WHERE EMAIL = #{email}
+			AND STATUS = 'Y'
+	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePwd"
+			parameterType="PWDmember">
+			UPDATE MEMBER
+			SET MEM_PWD = #{newPwd}
+			WHERE MEM_No = #{memNo}
+			AND STATUS = 'Y'
+	</update>
+	
+	<!-- 내가 찜한 상품 보기 -->
+	<select id="selectLike"
+			parameterType="_int"
+			resultMap="LikeResultSet">
+		SELECT *
+		FROM PRODUCT
+		WHERE PRODUCT_NO IN (
+		    SELECT PRODUCT_NO
+		    FROM FAVORITES
+		    WHERE MEM_NO = #{memNo}
+		)
+	</select>
+	
+	<!-- 내 주문 목록 보기(배송상태 확인) -->
+	<select id="selectOrder"
+			parameterType="_int"
+			resultMap="OrderResultSet">
+				SELECT *
+		    FROM ORDER_DETAIL
+		    WHERE MEM_NO = 23
 	</select>
 </mapper>
