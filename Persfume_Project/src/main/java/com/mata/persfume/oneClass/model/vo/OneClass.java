@@ -29,4 +29,5 @@ public class OneClass {
 	private String thumbnailImg;
 	private int currentStudent;
 	
+	private int memNo;
 }

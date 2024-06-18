@@ -483,7 +483,7 @@
         <div class="main-section" id="one2">
             
             <div id="eventList">
-        		<!-- 여기에 이벤트 목록이 표시될 것입니다. -->
+        		<!-- 여기에 이벤트 목록이 표시 -->
     		</div>
             
         </div>

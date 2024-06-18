@@ -19,12 +19,6 @@ public class ChatServiceImpl implements ChatService {
 	@Autowired
 	private ChatDao chatDao;
 	
-	// 원데이클래스 번호로 채팅방 번호 추출
-	@Override
-	public String selectChatRoomId(String classNo) {
-		return chatDao.selectChatRoomId(sqlSession, classNo);
-	}
-	
 	// 사용자 번호로 사용자 이름 추출
 	@Override
 	public String getMemName(int memNo) {
@@ -33,8 +27,8 @@ public class ChatServiceImpl implements ChatService {
 	
 	// 채팅에 참여한 유저가 채팅참여 가능한 유저인지 체크
 	@Override
-	public boolean checkUserCanExistChat(String userId, String chatNo) {
-		return chatDao.checkUserCanExistChat(sqlSession, userId, chatNo);
+	public boolean checkUserCanExistChat(ChatMessage m) {
+		return chatDao.checkUserCanExistChat(sqlSession, m);
 	}
 
 	// 채팅내역 저장
@@ -45,14 +39,20 @@ public class ChatServiceImpl implements ChatService {
 
 	// 이전 채팅목록 조회
 	@Override
-	public ArrayList<ChatMessage> getPrevChatMessage(int chatNo) {
-		return chatDao.getPrevChatMessage(sqlSession, chatNo);
+	public ArrayList<ChatMessage> getPrevChatMessage(String classNo) {
+		return chatDao.getPrevChatMessage(sqlSession, classNo);
 	}
 	
 	// 채팅방 명단 추가 ajax
 	@Override
 	public int insertChatMem(OneClassRegist ocr) {
 		return chatDao.insertChatMem(sqlSession, ocr);
+	}
+
+	// 내가 속한 채팅방 리스트 조회
+	@Override
+	public ArrayList<ChatMessage> getChatList(int memNo) {
+		return chatDao.getChatList(sqlSession, memNo);
 	}
 
 	

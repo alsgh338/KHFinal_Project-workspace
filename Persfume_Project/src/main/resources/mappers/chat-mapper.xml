@@ -2,29 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="chatMapper">
 	
+	<resultMap type="chatMem" id="chatMemResultSet">
+		<result column="CLASS_NO" property="classNo" />
+		<result column="MEM_NO" property="memNo" />
+	</resultMap>
+	
 	<resultMap type="chatMessage" id="chatResultSet">
 		<result column="CM_NO" property="cmNo" />
 		<result column="CM_CONTENT" property="cmContent" />
 		<result column="CREATE_DATE" property="createDate" />
-		<result column="CHAT_NO" property="chatNo" />
+		<result column="CLASS_NO" property="classNo" />
 		<result column="MEM_NAME" property="memName" />
+		<result column="MEM_NO" property="memNo" />
 	</resultMap>
 	
-	<select id="selectChatRoomId"
-			parameterType="string"
-			resultType="string">
-		SELECT CHAT_NO
-		  FROM CHAT
-		 WHERE CLASS_NO = #{classNo}
-	</select>
+	<resultMap type="oneClass" id="classResultSet">
+		<result column="CLASS_NAME" property="className" />
+		<result column="CLASS_NO" property="classNo" />
+		<result column="CLASS_TEACHER" property="classTeacher" />
+		<result column="START_TIME" property="startTime" />
+		<result column="END_TIME" property="endTime" />
+	</resultMap>
 	
 	<select id="checkUserCanExistChat"
-		parameterType="chatMem"
+		parameterType="chatMessage"
 		resultType="_int">
 		SELECT COUNT(*)
 		  FROM CHAT_MEM
 		 WHERE MEM_NO = #{memNo}
-		   AND CHAT_NO = #{chatNo}
+		   AND CLASS_NO = #{classNo}
 	</select>
 	
 	<select id="getMemName"
@@ -40,12 +46,12 @@
 		INSERT INTO CHAT_MESSAGE VALUES(SEQ_CM_NO.NEXTVAL, 
 		                                #{cmContent}, 
 		                                TO_DATE(#{createDate}, 'YYYY-MM-DD HH24:MI:SS'), 
-		                                #{chatNo}, 
+		                                #{classNo}, 
 		                                #{memNo})
 	</insert>
 	
 	<select id="getPrevChatMessage"
-		parameterType="_int"
+		parameterType="string"
 		resultMap="chatResultSet">
 		SELECT CM_NO
 			 , CM_CONTENT
@@ -53,7 +59,7 @@
 		     , MEM_NAME
 		  FROM CHAT_MESSAGE
 		  JOIN MEMBER USING (MEM_NO)
-		 WHERE CHAT_NO = #{chatNo}
+		 WHERE CLASS_NO = #{classNo}
 		 ORDER BY CREATE_DATE ASC
 	</select>
 	
@@ -63,9 +69,22 @@
 			            CLASS_NO,
 			            MEM_NO)
 				       VALUES (
-				            #{classNo},
-				            #{memNo}
+			            #{classNo},
+			            #{memNo}
 				       )
 	</insert>
+	
+	<select id="getChatList"
+		parameterType="_int"
+		resultMap="classResultSet">
+		SELECT CLASS_NAME
+			 , CLASS_NO
+		     , CLASS_TEACHER
+		     , START_TIME
+		     , END_TIME
+		  FROM CLASS
+		  JOIN CHAT_MEM USING (CLASS_NO)
+		 WHERE MEM_NO = #{memNo}
+	</select>
 	
 </mapper>

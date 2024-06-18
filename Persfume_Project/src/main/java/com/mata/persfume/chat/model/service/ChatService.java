@@ -9,11 +9,8 @@ import com.mata.persfume.oneClass.model.vo.OneClassRegist;
 
 public interface ChatService {
 
-	// 원데이클래스 번호로 채팅방 번호 추출
-	String selectChatRoomId(String classNo);
-	
 	// 채팅에 참여한 유저가 채팅참여 가능한 유저인지 체크
-	boolean checkUserCanExistChat(String userId, String chatNo);
+	boolean checkUserCanExistChat(ChatMessage m);
 	
 	// 채팅 내역 DB에 저장
 	int insertMsg(ChatMessage m);
@@ -22,11 +19,13 @@ public interface ChatService {
 	String getMemName(int memNo);
 
 	// 이전 채팅목록 조회
-	ArrayList<ChatMessage> getPrevChatMessage(int chatNo);
+	ArrayList<ChatMessage> getPrevChatMessage(String classNo);
 	
 	
 	// 채팅방 명단 추가 ajax
 	int insertChatMem(OneClassRegist ocr);
+
+	ArrayList<ChatMessage> getChatList(int memNo);
 	
 	
 }

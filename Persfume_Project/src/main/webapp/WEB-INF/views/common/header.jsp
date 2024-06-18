@@ -267,7 +267,7 @@
 
     <div id="sub-btns" class="hidden">
         <div class="side-btn animate__animated animate__fast" id="sub-btn1" >
-            <img src="resources/images/chatbot_white.png" alt="dpgpdl dksskdhsp">
+            <img src="resources/images/chatbot_white.png" alt="dpgpdl dksskdhsp" onclick="openChatList();">
         </div>
         <div class="side-btn animate__animated animate__fast" id="sub-btn2">
             <img src="resources/images/chatbot_white.png" alt="dpgpdl dksskdhsp">
@@ -282,6 +282,18 @@
     </div>
 
     <script>
+	    function openChatList(){
+			const width = 500;
+		    const height = 900;
+	
+		    let chatWindow = window.open('showChatList', 'chat room', `width=${width}, height=${height}, resizable=no, location=no, status=no, scrollbars=no`);
+		    
+		    // 창의 크기를 고정시키기
+		    chatWindow.resizeTo(width, height);
+			
+		}
+    
+    
         $(function(){
             $("#toggle-btn").click(function(){
                 document.querySelectorAll("#sub-btns>div:not(#toggle-btn)").forEach(function(element) {

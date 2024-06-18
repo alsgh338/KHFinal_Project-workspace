@@ -162,12 +162,6 @@ public class EventController {
 	}
 	
 	
-	// -------------------- 임시 채팅창 연습용 페이지 이동
-	@GetMapping("showChat")
-	public String showChat() {
-		
-		return "chat/chatView";
-	}
 	
 	
 	
