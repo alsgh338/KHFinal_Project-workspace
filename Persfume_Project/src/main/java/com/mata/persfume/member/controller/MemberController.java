@@ -315,9 +315,9 @@ public class MemberController {
 	
 	@PostMapping("delete.me")
 	public ModelAndView deleteMember(Member m,
-							@RequestParam(value="CheckPwd") String CheckPwd,
-							@RequestParam(value="memId") String memId,
-							@RequestParam(value="memPwd") String memPwd,
+							String CheckPwd,
+							String memId,
+							String memPwd,
 							HttpSession session,
 				 			ModelAndView mv) {
 		
@@ -342,6 +342,8 @@ public class MemberController {
 				System.out.println("탈퇴 성공");
 				
 				session.setAttribute("alertMsg", "탈퇴가 완료되었습니다. 꼭 다시 뵙길 바랍니다.");
+				
+				session.removeAttribute("loginMember");
 				
 				mv.setViewName("main");
 				
@@ -410,7 +412,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("IDfind.me")
-	public String IDfind(@RequestParam(value="email") String email,
+	public String IDfind(String email,
 					   HttpSession session){
 		
 		System.out.println("아이디 찾기 잘 호출 되나?!");
@@ -490,8 +492,8 @@ public class MemberController {
 	} // sendPWD fin.
 	
 	@PostMapping("PWDfind.me")
-	public String PWDfind(@RequestParam(value="ID") String ID,
-						@RequestParam(value="email") String email,
+	public String PWDfind(String ID,
+						String email,
 						HttpSession session) throws MessagingException {
 		
 		// 최종 결과값을 담을 변수 설정 

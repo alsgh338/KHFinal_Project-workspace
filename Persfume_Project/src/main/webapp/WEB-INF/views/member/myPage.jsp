@@ -139,6 +139,15 @@
 	font-size: 15px;
 }
 
+#updatebtnDiv{
+	padding-left: 50%;
+}
+
+#btn_area{
+	padding-left: 40%;
+
+}
+
 #update_btn {
 	background-color: lightgray;
 	border-style: none;
@@ -294,14 +303,15 @@ fieldset {
 				</tr>
 			</table>
 			<br><br>
-				<button type="submit" id="update_btn">회원정보 수정</button>
+				<div id="btn_area">
+					<button type="submit" id="update_btn">회원정보 수정</button>
+					<a id="updatePwd" href="updatePwd.fo">비밀번호 변경</a>
+					<a id="deleteMem" href="" onclick="deleteMem();">회원탈퇴</a>
+				</div>
 			</form>
 			
 			
-			<div>
-                <a id="updatePwd" href="updatePwd.fo">비밀번호 변경</a>
-                <a id="deleteMem" href="" onclick="deleteMem();">회원탈퇴</a>
-			</div>
+		
 
 		<jsp:include page="../common/footer.jsp" />
 
