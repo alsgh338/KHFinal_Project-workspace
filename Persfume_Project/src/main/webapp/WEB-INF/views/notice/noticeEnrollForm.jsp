@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
-  .content-area,
+     /* 컨텐츠 영역과 그 자식 div의 공통 스타일 */
+ 		.content-area,
         .content-area>div:not(.content-main){
           display: flex;
           flex-direction: column;
@@ -15,8 +16,8 @@
           align-items: center;
         }
 
-        /* 여기서부턴 공통 스타일? (아마도) */
-
+        /* 여기서부턴 공통 스타일 (아마도) */
+		/* 컨텐츠 제목 섹션의 스타일 */
         .content-title{
             height: 320px;
             background: url(resources/images/공지사항.jpg);
@@ -62,7 +63,7 @@
             line-height: 30px;
         }
 
-        /* 단순화된 CSS 스타일 */
+        /* 다양한 요소들의 기본 스타일 초기화 */
         html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, img {
             margin: 0;
             padding: 0;
@@ -92,7 +93,7 @@
             word-break: keep-all;
         }
 
-        /* 제목과 파일 스타일 */
+        /* 폼의 테이블과 입력 필드 스타일 */
         .bbs-table-write .input_style2 {
             width: 700px;
         }
@@ -102,7 +103,7 @@
             font-size: 14px;
             font-weight: normal;
             background: #f8f8f8;
-            text-align: center; /* 가운데 정렬 추가 */
+            text-align: center; /* 텍스트 가운데 정렬 */
         }
 
         .bbs-table-write tbody th div {
@@ -188,6 +189,31 @@
             width: 228px;
             height: 58px;
         }
+        
+	        .CSSbuttonWhite, .back-button {
+	    display: inline-block;
+	    text-align: center;
+	    border: 1px solid;
+	    transition: all 0.3s ease;
+	    text-decoration: none;
+	    padding: 15px 30px;
+	    cursor: pointer;
+	    width: 228px;
+	    height: 58px;
+	}
+
+.CSSbuttonWhite {
+    color: #1d1b1b;
+    background: #fff;
+    border-color: #dbdbdb;
+}
+
+.back-button {
+    color: #1d1b1b;
+    background: #fff;
+    border-color: #dbdbdb;
+}
+        
 
         .CSSbuttonBlack {
             color: #fff;
@@ -214,7 +240,7 @@
 <body>
 <jsp:include page="../common/header.jsp" />
   <div class="content-area">
-        <div class="content-title" id="home">NOTICE</div>
+    <div class="content-title" id="home">NOTICE</div>
     <div id="contentWrapper">
         <div id="contentWrap">
             <link type="text/css" rel="stylesheet" href="/template_common/shop/basic_simple/menu.1.css?t=201711221039">
@@ -235,7 +261,7 @@
         <tbody>
             <tr>
                 <th><div>제목</div></th>
-                <td colspan="3">
+                <td colspan="13">
                     <div class="title">
                         <input id="bw_input_subject" class="MS_input_txt input_style2" type="text" name="noticeTitle" required>
                         <div class="title_select"></div>
@@ -244,7 +270,7 @@
             </tr>
             <tr>
                 <th><div>내용</div></th>
-                <td colspan="3" class="text_content">
+                <td colspan="13" class="text_content">
                     <div>
                         <textarea id="MS_text_content" name="noticeContent" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;" required></textarea>
                     </div>
@@ -252,7 +278,7 @@
             </tr>
             <tr>
                 <th><div>파일</div></th>
-                <td colspan="4">
+                <td colspan="13">
                     <div>
                         <input type="file" id="bw_input_file" class="MS_input_txt input_style2" name="upfile" value="">
                     </div>
@@ -264,7 +290,7 @@
     <dl class="bbs-link bbs-link-btm">
         <dt></dt>
         <dd>
- 			<button onclick="javascript:history.go(-1);" class="CSSbuttonWhite">뒤로가기</button>
+			<button type="button" onclick="location.href='list.no'" class="back-button">뒤로 가기</button>
             <button type="submit" class="CSSbuttonBlack">등록하기</button>
             <button type="reset" class="CSSbuttonWhite">취소하기</button>
         </dd>
@@ -288,14 +314,11 @@ function validateForm() {
 
     return true; // 폼 제출을 허용
 }
-					}
+					
 					</script>
 
-					</dl>
-
-
-                                  <br><br>
-                            </form>
+			<br><br>
+                           
                         </div>
                     </div><!-- .page-body -->
                 </div><!-- #bbsData -->

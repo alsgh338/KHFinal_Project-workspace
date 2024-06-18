@@ -235,6 +235,13 @@
     cursor: pointer; /* 호버시 커서를 손가락 모양으로 설정 */
 }
 
+.bbs-table-list tbody td img {
+    max-width: 100px; /* Adjust as necessary */
+    max-height: 100px; /* Adjust as necessary */
+    vertical-align: middle; /* Align image vertically in the cell */
+}
+
+
     </style>
 </head>
 <body>
@@ -252,23 +259,7 @@
                         <div class="bbs-tit">
                             <h3>공지사항</h3>
                             <br>
-                            <!-- 검색 기능 -->
-                           <div class="bbs-sch">
-                                <form action="list.no" method="get">
-                                    <input type="hidden" name="review_type" value="">
-                                    <label>
-                                        <input type="radio" name="searchType" value="subject" checked="checked">제목
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="searchType" value="content">내용
-                                    </label>
-                                    <span class="key-wrap">
-                                        <input type="text" name="stext" class="MS_input_txt">                                        
-                                        <button type="submit" class="search-button">검색</button>
-                                    </span>
-                                </form>
-                            </div><!-- .bbs-sch -->
-                       
+                            
                         </div>
                     </div>
 
@@ -276,7 +267,10 @@
                         <table id="noticeList" summary="No, content,Name,Data,Hits">
                             <thead>
                                 <tr>
-                                    <th scope="col"><div class="tb-center">NO.</div></th>                                                        
+                                    <th scope="col"><div class="tb-center">NO.</div></th>    
+                                   
+                                     <th scope="col"><div class="tb-center">&nbsp;</div></th>  
+                                                                                          
                                     <th scope="col"><div class="tb-center">TITLE</div></th>
                                     <th scope="col"><div class="tb-center">CONTENT</div></th>
                                     <th scope="col"><div class="tb-center">DATE</div></th>
@@ -287,7 +281,11 @@
     <c:forEach var="n" items="${requestScope.list}">
         <tr>
             <td><div class="tb-center">${n.noticeNo }</div></td>
-       
+       		   
+       		   <td><div class="tb-center">
+       		   <img src="${ requestScope.n.noticeImgChange}" alt="썸네일" width="100" height="100">
+       		   </div></td>
+       		    
             <td>
                 <div class="tb-left">
                     ${n.noticeTitle }
@@ -316,13 +314,17 @@
                         </script>
                           
             <!-- 관리자만 쓰기  -->
+             <%--<c:if test="${not empty sessionScope.loginUser and sessionScope.loginUser.memId eq 'admin01'}">
+              --%>
             <div class="bbs-btm">
         <div class="bbs-link">
+        
         <a href="enrollForm.no" class="CSSbuttonWhite">WRITE</a></div>
             
             <br>
             </div>
             </div>
+             <%-- </c:if> --%>
             </div>
             
          

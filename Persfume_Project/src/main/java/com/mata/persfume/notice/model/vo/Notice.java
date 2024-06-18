@@ -21,4 +21,5 @@ public class Notice {
 	private String noticeImgChange;
 	private String status;
 	
+	
 }

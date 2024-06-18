@@ -54,7 +54,6 @@
             word-break: keep-all;
             word-wrap: break-word;
         }
-        
         .meta {
             list-style: none;
             padding: 0;
@@ -70,31 +69,32 @@
             height: 28px;
             color: #666;
         }
-         th {
-		    padding: 18px 0;
-		    border: 2px solid #e8e8e8;
-		    border-bottom-width: 0;
-		    border-right-width: 0;
-		    color: #999;
-		    font-weight: normal;
-		    background-color: #fafafa;
-		    vertical-align: middle;
-		    width:230px;
-		    height:56.92px;
-		    border-left: 0;
-    }
-    td {
-        padding: 18px 15px;
-    border-top: 1px solid #e8e8e8;
-    color: #333;
-    vertical-align: middle;
-    word-break: keep-all;
-    word-wrap: break-word;}
+        th {
+            padding: 18px 0;
+            border: 2px solid #e8e8e8;
+            border-bottom-width: 0;
+            border-right-width: 0;
+            color: #999;
+            font-weight: normal;
+            background-color: #fafafa;
+            vertical-align: middle;
+            width: 230px;
+            height: 56.92px;
+            border-left: 0;
+        }
+        td {
+            padding: 18px 15px;
+            border-top: 1px solid #e8e8e8;
+            color: #333;
+            vertical-align: middle;
+            word-break: keep-all;
+            word-wrap: break-word;
+        }
         .content {
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #ccc;
-            margin-bottom: 20px; /* 내용 아래 여백 추가 */
+            margin-bottom: 1px; /* 내용 아래 여백 추가 */
         }
         .content p {
             font-size: 16px;
@@ -102,21 +102,25 @@
             line-height: 1.6;
             margin-bottom: 10px;
         }
+        .content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
         .center-text {
             text-align: center;
         }
-        
         .divider {
-           border-top: 1px solid #ccc; /* 구분선의 두께와 색상을 조정합니다 */
-            margin-top: 400px; /* 구분선 위 여백 추가 */
+            border-top: 1px solid #ccc; /* 구분선의 두께와 색상을 조정 */
+            margin-top: 100px; /* 구분선 위 여백 추가 */
             margin-bottom: 20px; /* 구분선 아래 여백 추가 */
-            width: 1000px; /* 가로 길이를 100%로 설정하여 전체 너비에 맞춥니다 */
+            width: 1000px; /* 가로 길이를 100%로 설정하여 전체 너비에 맞춤 */
         }
-        
         .btn-normal {
             width: 102px;
             display: inline-block;
-            padding: 10px 20px; /* 버튼 크기와 간격을 조정합니다 */
+            padding: 10px 20px; /* 버튼 크기와 간격을 조정 */
             font-size: 13px;
             line-height: 17px;
             font-weight: normal;
@@ -165,20 +169,26 @@
                                 </li>
                             </ul>
                             <div class="content">
-                                <p class="center-text">${ n.noticeContent }</p>
+                                <c:choose>
+                                    <c:when test="${ not empty requestScope.n.noticeImgChange }">
+                                        <img src="${ requestScope.n.noticeImgChange }" alt="공지사항 이미지">
+                                         <p class="center-text">${ n.noticeContent }</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p class="center-text">${ n.noticeContent }</p>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-                            <div class="divider"></div>
+            <div class="divider"></div>
             <div class="buttons">
-
                 <a href="list.no" class="btn-normal">목록</a>
                 <a onclick="postFormSubmit(1)" class="btn-normal">수정</a>
                 <a onclick="postFormSubmit(2)" class="btn-normal">삭제</a>
             </div>
-            
             <form id="postForm" action="" method="post">
                 <input type="hidden" name="nno" value="${ requestScope.n.noticeNo }">
                 <input type="hidden" name="filePath" value="${ requestScope.n.noticeImgChange }">
