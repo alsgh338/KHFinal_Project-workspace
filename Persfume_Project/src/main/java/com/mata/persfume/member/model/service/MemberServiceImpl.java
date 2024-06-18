@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mata.persfume.member.model.dao.MemberDao;
 import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.member.model.vo.PWDmember;
+import com.mata.persfume.oneClass.model.vo.OneClass;
+import com.mata.persfume.oneClass.model.vo.OneClassRegist;
 import com.mata.persfume.product.model.vo.Favorites;
 import com.mata.persfume.product.model.vo.OrderDetail;
 import com.mata.persfume.product.model.vo.ProductReview;
@@ -114,6 +116,18 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<OrderDetail> selectOrder(int memNo) {
 		
 		return memberDao.selectOrder(sqlSession,memNo);
+	}
+
+	@Override
+	public ArrayList<OneClassRegist> selectClass(int memNo) {
+		
+		return memberDao.selectClass(sqlSession,memNo);
+	}
+
+	@Override
+	public ArrayList<OneClass> selectClassAbout(int memNo) {
+		
+		return memberDao.selectClassAbout(sqlSession,memNo);
 	}
 	
 }

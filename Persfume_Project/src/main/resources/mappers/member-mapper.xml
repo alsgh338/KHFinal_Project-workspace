@@ -61,6 +61,34 @@
 	 	<result column="REFUND_DATE" property="refundDate"/>
 	 	<result column="MEM_NO" property="memNo"/>
 	 </resultMap>
+	 
+	 <resultMap id="ClassResultSet"
+	 			type="OneClassRegist">
+	 	<result column="REGIST_NO" property="registNo"/>
+	 	<result column="REGIST_PAYCODE" property="registPaycode"/>
+	 	<result column="REGIST_PRICE" property="registPrice"/>
+	 	<result column="REGIST_PERSON_NO" property="registPersonNo"/>
+	 	<result column="REGIST_DATE" property="registDate"/>
+	 	<result column="REGIST_CANCEL_DATE" property="registCancleDate"/>
+	 	<result column="STATUS" property="status"/>
+	 	<result column="CLASS_NO" property="classNo"/>
+	 	<result column="MEM_NO" property="memNo"/>
+	 </resultMap>
+	 
+ 	 <resultMap id="ClassAboutResultSet"
+ 				type="OneClass">
+	 	<result column="CLASS_NO" property="classNo"/>
+	 	<result column="CLASS_NAME" property="className"/>
+	 	<result column="CLASS_TEACHER" property="classTeacher"/>
+	 	<result column="STUDENT_MAXNO" property="studentMaxNo"/>
+	 	<result column="CLASS_DETAIL" property="classDetail"/>
+	 	<result column="PRICE" property="price"/>
+	 	<result column="START_TIME" property="startTime"/>
+	 	<result column="END_TIME" property="endTime"/>
+	 	<result column="START_DATE" property="startDate"/>
+	 	<result column="ENROLL_DATE" property="enrollDate"/>
+	 	<result column="STATUS" property="status"/>
+	 </resultMap>
 
 	<!-- 아이디 중복체크용 쿼리문 -->
 	<select id="idCheck"
@@ -202,8 +230,30 @@
 	<select id="selectOrder"
 			parameterType="_int"
 			resultMap="OrderResultSet">
-				SELECT *
+			SELECT *
 		    FROM ORDER_DETAIL
-		    WHERE MEM_NO = 23
+		    WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<!-- 클래스 예약 조회 -->
+	<select id="selectClass"
+			parameterType="_int"
+			resultMap="ClassResultSet">
+			SELECT *
+			FROM CLASS_REGIST
+			WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<!-- 예약한 클래스에 대한 정보 조회 -->
+	<select id="selectClassAbout"
+			parameterType="_int"
+			resultMap="ClassAboutResultSet">
+			SELECT *
+			FROM CLASS
+			WHERE CLASS_NO IN(
+			    SELECT CLASS_NO
+			    FROM CLASS_REGIST
+			    WHERE MEM_NO = #{memNo}
+			)
 	</select>
 </mapper>

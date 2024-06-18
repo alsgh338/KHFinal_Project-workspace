@@ -237,6 +237,12 @@ fieldset {
 					<input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
 				</form>
 			</li>
+			<li>
+				<a id="class" href="" onclick="classGo(); return false;">클래스 예약조회</a>
+				<form method="post" action="myClass.me" id="myClassForm">
+					<input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+				</form>
+			</li>
 		</ul>
 		<br>
 		<form action="update.me" method="post" id="EnrollForm">
@@ -330,6 +336,14 @@ fieldset {
 			console.log("orderGO야 실행 돼?");
 			
 			$("#myOrderForm").submit();
+
+		}
+
+		function classGo() {
+			
+			console.log("classGO야 실행 돼?");
+			
+			$("#myClassForm").submit();
 
 		}
 		

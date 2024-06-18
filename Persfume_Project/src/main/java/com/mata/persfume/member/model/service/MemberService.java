@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.member.model.vo.PWDmember;
+import com.mata.persfume.oneClass.model.vo.OneClass;
+import com.mata.persfume.oneClass.model.vo.OneClassRegist;
 import com.mata.persfume.product.model.vo.Favorites;
 import com.mata.persfume.product.model.vo.OrderDetail;
 import com.mata.persfume.product.model.vo.ProductReview;
@@ -37,4 +39,8 @@ public interface MemberService {
 	ArrayList<Favorites> selectLike(int memNo);
 	
 	ArrayList<OrderDetail> selectOrder(int memNo);
+
+	ArrayList<OneClassRegist> selectClass(int memNo);
+
+	ArrayList<OneClass> selectClassAbout(int memNo);
 }

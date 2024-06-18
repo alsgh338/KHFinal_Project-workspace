@@ -27,6 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mata.persfume.member.model.service.MemberService;
 import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.member.model.vo.PWDmember;
+import com.mata.persfume.oneClass.model.vo.Myoneclass;
+import com.mata.persfume.oneClass.model.vo.OneClass;
+import com.mata.persfume.oneClass.model.vo.OneClassRegist;
 import com.mata.persfume.product.model.vo.Favorites;
 import com.mata.persfume.product.model.vo.OrderDetail;
 import com.mata.persfume.product.model.vo.ProductReview;
@@ -609,6 +612,37 @@ public class MemberController {
 
 	
 //	여기서부터 조회 관련 
+	
+	@PostMapping(value="myClass.me")
+	public String myClass(int memNo, Model model) {
+		
+		System.out.println("클래스 예약 조회 잘 호출 되나??");
+		
+		System.out.println("현재 로그인한 회원의 회원번호도 잘 끌어오나?" + memNo);
+		 
+		ArrayList<OneClassRegist> list =  memberService.selectClass(memNo);
+		 
+		model.addAttribute("classList", list); // Model에 list를  attribute로 설정
+		
+		System.out.println(list);
+			
+		// 예약한 클래스에 대한 정보
+		ArrayList<OneClass> list2 =  memberService.selectClassAbout(memNo);
+		 
+		model.addAttribute("classAboutList", list2); // Model에 list를  attribute로 설정
+		
+		System.out.println(list2);
+			
+		return "member/myClass";
+	}
+	
+	@PostMapping("cansle.me")
+	public void cansle(int registNo) {
+		
+		System.out.println("클래스 에약 취소 컨트롤러로 예약번호 잘 끌어오나?? " + registNo);
+	}
+	
+	
 	@PostMapping(value="myReview.me")
 	public String myReview(int memNo, Model model){
 		

@@ -63,7 +63,6 @@
     <div>
     	<p>주문번호 : ${OrderDetail.orderNo} </p>
         <p>주문일자 : ${OrderDetail.orderDate} 배송상태 :   ${OrderDetail.deliveryStatus}</p>
-        
     </div>
 </c:forEach>
 </div>

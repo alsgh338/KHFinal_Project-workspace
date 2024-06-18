@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.member.model.vo.PWDmember;
+import com.mata.persfume.oneClass.model.vo.OneClass;
+import com.mata.persfume.oneClass.model.vo.OneClassRegist;
 import com.mata.persfume.product.model.vo.Favorites;
 import com.mata.persfume.product.model.vo.OrderDetail;
 import com.mata.persfume.product.model.vo.ProductReview;
@@ -82,5 +84,15 @@ public class MemberDao {
 	public ArrayList<OrderDetail> selectOrder(SqlSessionTemplate sqlSession, int memNo) {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectOrder", memNo);
+	}
+
+	public ArrayList<OneClassRegist> selectClass(SqlSessionTemplate sqlSession, int memNo) {
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectClass", memNo);
+	}
+
+	public ArrayList<OneClass> selectClassAbout(SqlSessionTemplate sqlSession, int memNo) {
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectClassAbout", memNo);
 	}
 }
