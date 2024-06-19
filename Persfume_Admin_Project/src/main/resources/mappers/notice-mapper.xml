@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+
+	<!-- 클래스 리뷰용 resultMap -->
+  <resultMap id="noticeResultSet" type="notice">
+    <result column="NOTICE_NO" property="noticeNo"/>
+    <result column="NOTICE_TITLE" property="noticeTitle"/>
+    <result column="NOTICE_CONTENT" property="noticeContent"/>
+ 	<result column="NOTICE_COUNT" property="count"/> 
+    <result column="CREATE_DATE" property="createDate"/>
+    <result column="NOTICE_IMG_ORIGIN" property="noticeImgOrigin"/>
+    <result column="NOTICE_IMG_PATH" property="noticeImgPath"/>
+    
+    <result column="NOTICE_IMG_CHANGE" property="noticeImgChange"/>
+</resultMap>
+
+
+    
+    <!-- 공지사항 목록 -->
+    <select id="selectList" 
+    		resultMap="noticeResultSet">
+        SELECT NOTICE_NO,
+         	   NOTICE_IMG_PATH,
+               NOTICE_TITLE,              
+               NOTICE_CONTENT,
+               NOTICE_COUNT,
+               TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
+               NOTICE_IMG_PATH
+        FROM NOTICE
+        WHERE STATUS = 'Y'
+        ORDER BY NOTICE_NO DESC
+    </select>
+    
+        <!-- 조회수 증가용 쿼리문 -->
+    <update id="increaseCount" parameterType="_int">
+        UPDATE NOTICE 
+        SET NOTICE_COUNT = NOTICE_COUNT + 1 
+        WHERE NOTICE_NO = #{noticeNo} 
+        AND STATUS = 'Y'
+    </update>
+    
+    <!-- 게시글 상세조회 -->
+    <select id="selectNotice" 
+		    parameterType="_int" 
+		    resultMap="noticeResultSet">
+        SELECT NOTICE_NO,
+               NOTICE_TITLE,
+               NOTICE_CONTENT,
+               NOTICE_COUNT,
+               TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
+               NOTICE_IMG_ORIGIN,
+               NOTICE_IMG_CHANGE
+        FROM NOTICE
+        WHERE NOTICE_NO = #{noticeNo} 
+        	AND STATUS = 'Y'
+    </select>
+    
+    <!-- 공지글 작성 쿼리문 -->
+    <insert id="insertNotice" 
+    		parameterType="notice">
+        INSERT INTO NOTICE(NOTICE_NO,
+                           NOTICE_TITLE,
+                           NOTICE_CONTENT,                                                 
+                           NOTICE_IMG_ORIGIN,
+                           NOTICE_IMG_CHANGE)
+			        VALUES (SEQ_NOTICE_NO.NEXTVAL,
+			                #{noticeTitle},
+			                #{noticeContent},
+			                #{noticeImgOrigin},
+			                #{noticeImgChange})
+    </insert>
+
+
+    <!-- 공지사항 수정  -->
+    <update id="updateNotice" parameterType="notice">
+        UPDATE NOTICE
+        SET NOTICE_TITLE = #{noticeTitle},
+            NOTICE_CONTENT = #{noticeContent},
+            NOTICE_IMG_ORIGIN = #{noticeImgOrigin},
+            NOTICE_IMG_CHANGE =#{noticeImgChange}
+        WHERE NOTICE_NO = #{noticeNo} 
+        AND STATUS = 'Y'
+    </update>
+    
+<!-- 공지글 삭제-->
+<update id="deleteNotice"
+		parameterType="notice">
+     UPDATE NOTICE 
+        SET STATUS = 'N' 
+        WHERE NOTICE_NO = #{noticeNo} 
+        AND STATUS = 'Y'
+</update>
+
+</mapper>

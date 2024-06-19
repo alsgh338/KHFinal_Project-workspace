@@ -17,6 +17,11 @@
 	</settings>
 	<typeAliases>
 <!-- 	<typeAlias type="com.mata.persfumeAdmin.notice.model.vo.Notice" alias="notice" />
+
+		<typeAlias type="com.mata.persfumeAdmin.notice.model.vo.Notice" alias="notice" />
+
+<!-- 	<typeAlias type="com.mata.persfumeAdmin.notice.model.vo.Notice" alias="notice" />
+
 		<typeAlias type="com.mata.persfumeAdmin.event.model.vo.Event" alias="event" />
 		<typeAlias type="com.mata.persfumeAdmin.event.model.vo.EventImg" alias="eventImg" />
 		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.ProductImg" alias="productImg" />
@@ -38,6 +43,12 @@
 	
 	<mappers>
 		<mapper resource="/mappers/oneclass-mapper.xml" />
+
+		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/product-mapper.xml" />
+
+		<mapper resource="/mappers/notice-mapper.xml" />
+
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/product-mapper.xml" />
 	</mappers>

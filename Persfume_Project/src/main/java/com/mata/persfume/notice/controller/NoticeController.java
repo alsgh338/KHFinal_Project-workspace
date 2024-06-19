@@ -70,38 +70,6 @@ public class NoticeController {
 		return "notice/noticeListView";
 	}
 	
-	// 공지글 제목 또는 내용 검색
-	@GetMapping("search.no")
-	public String searchNotice(@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
-	                           @RequestParam(value = "searchType", required = false) String searchType,
-	                           @RequestParam(value = "keyword", required = false) String keyword,
-	                           Model model) {
-
-	    // 페이징 처리용 변수들
-	    int listCount = noticeService.getSearchListCount(searchType, keyword);
-	    int pageLimit = 10;
-	    int boardLimit = 5;
-
-	    // PageInfo 객체 만들어내기
-	    PageInfo pi = Pagination.getPageInfo(listCount,
-	            currentPage,
-	            pageLimit,
-	            boardLimit);
-
-	    // 검색 결과 목록 조회
-	    ArrayList<Notice> list = noticeService.searchNoticeList(pi, searchType, keyword);
-
-	    // 응답 데이터 담기
-	    model.addAttribute("pi", pi);
-	    model.addAttribute("list", list);
-	    model.addAttribute("searchType", searchType);
-	    model.addAttribute("keyword", keyword);
-
-	    // 응답 페이지 포워딩
-	    return "notice/noticeListView";
-	}
-
-	
 	
 	//게시글 작성하기 
 	@GetMapping("enrollForm.no")

@@ -13,7 +13,6 @@
 </head>
 <body>
 
-	<%@ include file="header.jsp" %>
 	
 	<br>
 	 <br>
@@ -22,7 +21,6 @@
 		<%= errorMsg %>
 	</h1>
 	
-	<%@ include file="footer.jsp" %>
 
 </body>
 </html>
