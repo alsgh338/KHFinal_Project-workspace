@@ -138,12 +138,14 @@ public class OneClassController {
 				int result = oneClassService.insertOneClassReigst(ocr);
 				
 				if(result > 0) { // DB에 해당 결제 정보 저장 성공-> 결제 O + 데이터 O => 성공
+					System.out.println("결제 성공");
 					return "Success";
 					
 				} else { // DB에 해당 결제 정보 저장 실패 -> 결제 O + 데이터 X => 기존 결제 정보 환불 진행
 					
 					String token = oneClassService.getToken(apiKey, secretKey);
 					oneClassService.refundRequest(token, ocr.getRegistNo(), "결제 정보 저장 오류");
+					System.out.println("결제 정보 저장 오류");
 					return "Fail";
 				}
 				
@@ -151,6 +153,7 @@ public class OneClassController {
 				
 				String token = oneClassService.getToken(apiKey, secretKey);
 				oneClassService.refundRequest(token, ocr.getRegistNo(), e.getMessage());
+				System.out.println("그냥 안되는듯" + e.getMessage());
 				return "Fail";
 			}
 		}
@@ -173,4 +176,30 @@ public class OneClassController {
 		}
 
 	}
+	
+		// 클래스 예약 취소
+		@PostMapping("deleteRegist.oc")
+		public String deleteRegist(String ocrno, String refundMsg, Model model) {
+			
+			try {
+				
+				System.out.println(apiKey + "  /  " +  secretKey);
+				int result = oneClassService.deleteRegist(ocrno);
+				
+				if(result > 0) { // DB에 해당 결제 정보 수정 성공
+					String token = oneClassService.getToken(apiKey, secretKey);
+					oneClassService.refundRequest(token, ocrno, refundMsg);
+					
+					return "redirect:/";
+					
+				} else { // DB에 해당 결제 정보 수정 실패
+					return "redirect:/";
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return "redirect:/";
+				
+			}
+		}
 }

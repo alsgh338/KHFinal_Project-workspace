@@ -37,6 +37,9 @@ public interface OneClassService {
 	// 클래스 신청 정보 조회
 	OneClassRegist selectOneClassRegist(String ocrno);
 	
+	// 클래스 신청 취소
+	int deleteRegist(String ocrno);
+	
 	
 	// 결제 <-> 환불 관련 토큰 발급
 	String getToken(String apiKey, String secretKey) throws IOException;

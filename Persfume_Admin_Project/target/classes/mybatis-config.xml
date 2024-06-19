@@ -31,6 +31,7 @@
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg" alias="oneClassImg" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassReview" alias="oneClassReview" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassRegist" alias="oneClassRegist" />
+		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassTeacher" alias="oneClassTeacher" />
 		<typeAlias type="com.mata.persfumeAdmin.member.model.vo.Member" alias="member" />
 		<!-- <typeAlias type="com.mata.persfumeAdmin.product.model.vo.MemCoupon" alias="MemCoupon" />
 		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.Coupon" alias="Coupon" />

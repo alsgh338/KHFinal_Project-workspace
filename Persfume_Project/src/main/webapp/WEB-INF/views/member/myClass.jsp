@@ -147,10 +147,7 @@
         <c:forEach var="OneClassRegist" items="${classList}">
             <div id="class">
                 클래스예약번호 : <span id="registNo">${OneClassRegist.registNo}</span>
-                <a href="" class="cancel-link">예약 취소</a>
-                <form method="post" action="cansle.me" class="cansleClass">
-                    <input type="hidden" name="registNo" value="">
-                </form>
+                <a class="cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">예약 취소</a>
              </div>
          </c:forEach>
 
@@ -168,7 +165,7 @@
 
 <script>
 // 원데이 클래스 취소 버튼 스크립트
-    $(document).ready(function() {
+/*     $(document).ready(function() {
         $('.cancel-link').on('click', function(event) {
             event.preventDefault();
             // 클릭된 링크의 기본 동작(페이지 이동)을 막음
@@ -187,7 +184,7 @@
            form.submit();
            
         });
-    });
+    }); */
 
 
 //     $(document).ready(function() {
@@ -246,8 +243,46 @@
         $("#deleteMem").attr("href", url);
     }
 
+    // 예약 취소 함수
+    function deleteRegist(element){
+    	let ocrno = $(element).prev().text().trim();
+    	console.log(ocrno);
+    	$(".modal-body>.classRegistNo").attr("value", ocrno);
+    }
 
 </script>
+
+
+
+<!-- The Modal -->
+			<div class="modal" id="delete-regist">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			
+			      <!-- Modal Header -->
+			      <div class="modal-header">
+			        <h4 class="modal-title">예약 취소</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
+
+				  <form action="deleteRegist.oc" method="post">			
+			      <!-- Modal body -->
+			      <div class="modal-body" align="center">
+			      <input type="hidden" name="ocrno" class="classRegistNo">
+			        <h3>정말 예약을 취소하시겠습니까?</h1><br> 
+			       	<input type="text" name=refundMsg placeholder="취소 사유 " required> 
+			      </div>
+			
+			      <!-- Modal footer -->
+			      <div class="modal-footer">
+			        <button type="submit" class="btn btn-danger">네</button>
+			        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
+			      </div>
+				</form>
+			    </div>
+			  </div>
+			</div>
+			<!-- End of Modal-->
 
 
 </body>

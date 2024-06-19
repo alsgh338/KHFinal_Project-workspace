@@ -18,6 +18,7 @@
 		<result column="THUMBNAIL_IMG" property="thumbnailImg" />
 		<result column="CURRENT_STUDENT" property="currentStudent" />
 	</resultMap>
+	
 	<resultMap type="oneClassImg" id="oneClassImgResultSet">
 		<result column="CLASS_IMG_NO" property="classImgNo" />
 		<result column="CLASS_IMG_PATH" property="classImgPath" />
@@ -164,8 +165,14 @@
 			     , MEM_NO
 			  FROM CLASS_REGIST
 			 WHERE REGIST_NO = #{ocrno}
-	
 	</select>
+	
+	<update id="deleteRegist" parameterType="String">		
+		UPDATE CLASS_REGIST
+		   SET STATUS = 'N',
+		       REGIST_CANCEL_DATE = SYSDATE
+		 WHERE REGIST_NO = #{ocrno}
+	</update>
 
  	 
 </mapper>

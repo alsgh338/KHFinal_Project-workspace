@@ -218,7 +218,18 @@
     		if(dest == "class"){
     			location.href="list.oc";
     		} else{
-    			location.href="";
+    			var form = document.createElement("form");
+                form.setAttribute("method", "post");
+                form.setAttribute("action", "myClass.me");
+                
+                var input1 = document.createElement("input");
+                input1.setAttribute("type", "hidden");
+                input1.setAttribute("name", "memNo");
+                input1.setAttribute("value", ${sessionScope.loginMember.memNo});
+                form.appendChild(input1);
+                
+                document.body.appendChild(form);
+                form.submit();
     		}
     		
 			

@@ -51,6 +51,11 @@
 		<result column="MEM_NO" property="memNo" />
 	</resultMap>
 	
+	<!-- 클래스 강사용 resultMap -->
+	<resultMap type="oneClassTeacher" id="oneClassTeacherResultSet">
+		<result column="CLASS_TEACHER" property="classTeacher" />
+		<result column="TOTAL_CLASS" property="totalClass" />
+	</resultMap>
 	<select id="selectList"
 			resultMap="oneClassResultSet">
 		SELECT C.CLASS_NO
@@ -196,7 +201,42 @@
 			       CLASS_IMG_CHANGE = #{classImgChange}
 			 WHERE CLASS_IMG_PATH = #{prevClassImgPath}
 		</update>
-	
+		
+		<select id="selectTeacherList" resultMap="oneClassTeacherResultSet">
+				SELECT C.CLASS_TEACHER,
+					       COUNT(C.CLASS_NO) AS TOTAL_CLASS
+					FROM CLASS C
+					GROUP BY CLASS_TEACHER
+		
+		</select>
+		
+		<select id="selectReviewList" parameterType="String" resultMap="oneClassReviewResultSet">
+				SELECT CR.CLASS_REVIEW_NO,
+				       CR.CLASS_REVIEW_CONTENT, 
+				       CR.LIST_NO, 
+				       M.MEM_NAME AS REVIEW_WRITER,
+				       C.CLASS_NAME,
+				       TO_CHAR(C.START_DATE, 'YYYY-MM-DD') AS "START_DATE"
+				  FROM CLASS_REVIEW CR
+				  JOIN MEMBER M USING(MEM_NO)
+				  JOIN CLASS_REGIST CREG ON CREG.REGIST_NO = CR.LIST_NO
+				  JOIN CLASS C ON CREG.CLASS_NO = C.CLASS_NO
+				 WHERE C.CLASS_TEACHER = #{octc}
+		
+		</select>
+
+		<delete id="deleteReview" parameterType="_int" >
+			DELETE 
+			  FROM CLASS_REVIEW
+			 WHERE CLASS_REVIEW_NO = #{ocrno}
+		</delete>
+		
+  		<update id="deleteRegist" parameterType="String">
+			UPDATE CLASS_REGIST
+			   SET STATUS = 'N',
+			       REGIST_CANCEL_DATE = SYSDATE
+			 WHERE REGIST_NO = #{ocrno}
+		</update>
 
 
  	 

@@ -51,6 +51,11 @@ public class OneClassDao {
 	public OneClassRegist selectOneClassRegist(SqlSessionTemplate sqlSession, String ocrno) {
 		return sqlSession.selectOne("oneClassMapper.selectOneClassRegist", ocrno);
 	}
+	
+	public int deleteRegist(SqlSessionTemplate sqlSession ,String ocrno) {
+		return sqlSession.update("oneClassMapper.deleteRegist", ocrno);
+
+	}
 
 	
 

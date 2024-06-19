@@ -20,6 +20,8 @@ import com.mata.persfumeAdmin.oneClass.model.service.OneClassService;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClass;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassRegist;
+import com.mata.persfumeAdmin.oneClass.model.vo.OneClassReview;
+import com.mata.persfumeAdmin.oneClass.model.vo.OneClassTeacher;
 
 
 // 관리자 컨트롤러
@@ -230,18 +232,66 @@ public class OneClassController {
 	}
 	
 	
+	// 클래스 강사 목록 조회
 	
-	// 클래스 예약 취소 및 삭제
-	
-	public String deleteRegist(OneClassRegist ocr, String refundMessage) {
-
-//		String token = oneClassService.getToken(apiKey, secretKey);
-//		oneClassService.refundRequest(token, ocr.getRegistNo(), refundMessage);
+	@GetMapping("teacherList.oc")
+	public String selectTeacherList(Model model) {
 		
-		return "";
+		ArrayList<OneClassTeacher> list = oneClassService.selectTeacherList();
+		
+		model.addAttribute("list",list);
+		
+		return "oneClass/oneClassReviewListView";
 	}
 	
+	// 클래스 리뷰 목록 조회
 	
+	@GetMapping("review.oc")
+	public String selectTeacherList(String octc, Model model) {
+		
+		ArrayList<OneClassReview> list = oneClassService.selectReviewList(octc);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("octc",octc);
+		
+		return "oneClass/oneClassReviewDetailView";
+	}
+	
+	// 리뷰 삭제
+	@PostMapping("deleteReview.oc")
+	public String deleteReview(int ocrno, Model model) {
+		
+		int result = oneClassService.deleteReview(ocrno);
+		
+		
+		return "redirect:/teacherList.oc";
+	}
+	
+	// 클래스 예약 취소
+	@PostMapping("deleteRegist.oc")
+	public String deleteRegist(String ocrno, String refundMsg, Model model) {
+		
+		try {
+			
+			System.out.println(apiKey + "  /  " +  secretKey);
+			int result = oneClassService.deleteRegist(ocrno);
+			
+			if(result > 0) { // DB에 해당 결제 정보 수정 성공
+				String token = oneClassService.getToken(apiKey, secretKey);
+				oneClassService.refundRequest(token, ocrno, refundMsg);
+				
+				return "redirect:/registList.oc";
+				
+			} else { // DB에 해당 결제 정보 수정 실패
+				return "redirect:/registList.oc";
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "redirect:/registList.oc";
+			
+		}
+	}
 	
 	
 	

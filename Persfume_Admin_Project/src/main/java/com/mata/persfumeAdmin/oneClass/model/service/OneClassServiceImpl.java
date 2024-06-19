@@ -23,6 +23,7 @@ import com.mata.persfumeAdmin.oneClass.model.vo.OneClass;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassRegist;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassReview;
+import com.mata.persfumeAdmin.oneClass.model.vo.OneClassTeacher;
 
 @Service
 public class OneClassServiceImpl implements OneClassService {
@@ -79,7 +80,7 @@ public class OneClassServiceImpl implements OneClassService {
 		return oneClassDao.deleteOneClass(sqlSession, ocno);
 	}
 	
-	@Override
+	@Override	
 	public int updateOneClassImg(ArrayList<OneClassImg> ociList) {
 		return oneClassDao.updateOneClassImg(sqlSession, ociList);
 	}
@@ -89,10 +90,26 @@ public class OneClassServiceImpl implements OneClassService {
 		return oneClassDao.restoreOneClass(sqlSession, ocno);
 	}
 
+	@Override
+	public ArrayList<OneClassTeacher> selectTeacherList() {
+		return oneClassDao.selectTeacherList(sqlSession);
+	}
 
+	@Override
+	public ArrayList<OneClassReview> selectReviewList(String octc) {
+		return oneClassDao.selectReviewList(sqlSession, octc);
+	}
 	
-	
+	@Override
+	@Transactional
+	public int deleteReview(int ocrno) {
+		return oneClassDao.deleteReview(sqlSession, ocrno);
+	}
 
+	@Override
+	public int deleteRegist(String ocrno) {
+		return oneClassDao.deleteRegist(sqlSession, ocrno);
+	}
 	
 	/* 
 	 * 여기서부턴 아임 포트 통신용 메소드	 
@@ -168,6 +185,13 @@ public class OneClassServiceImpl implements OneClassService {
         br.close();
         conn.disconnect();
     }
+
+
+
+
+
+
+
 
 
 

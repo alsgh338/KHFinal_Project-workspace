@@ -228,16 +228,16 @@
                     <div class="item-content">
                         <div id="reservation-person">
                             신청자 이름:
-                            <input type="text" value="안해준">
+                            <input type="text" value="${sessionScope.loginMember.memName}">
                         </div>
                         <div id="reservation-phone">
                             전화번호 : 
-                            <input type="tel" value="010-2750-6902">
+                            <input type="tel" value="${sessionScope.loginMember.phone}">
                         </div>
                         
                         <div id="reservation-email">
                             이메일 : 
-                            <input type="email" value="hskef@naver.com">
+                            <input type="email" value="${sessionScope.loginMember.email}">
                         </div>
                     </div>
                 </div>
@@ -353,7 +353,7 @@
     						registPrice : registPrice,
     						registPersonNo : registPersonNo,
     						classNo : ${ requestScope.oc.classNo},
-    						memNo : 1//${ sessionScope.loginUser.memNo},
+    						memNo :${sessionScope.loginMember.memNo},
     					},
     					success : function(result) {
     						// 성공시 

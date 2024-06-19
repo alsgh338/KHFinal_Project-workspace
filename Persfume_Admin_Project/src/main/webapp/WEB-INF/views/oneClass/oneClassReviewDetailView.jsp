@@ -27,7 +27,7 @@
 	<style>
     	#sb-btn{
     		display: flex;
-    		justify-content: end;
+    		justify-content: center;
     	}
 
     </style>
@@ -55,54 +55,37 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">전체 클래스 예약 현황</h1>
+                    <h1 class="h3 mb-2 text-gray-800">강사 리뷰 리스트</h1>
                     <p class="mb-4"></p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">원데이 클래스 예약 리스트</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">${requestScope.octc} 강사 리뷰 리스트</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>신청 번호</th>
+	                                        <th>리뷰 등록 번호</th>
                                             <th>클래스 명</th>
-                                            <th>신청자 명</th>
-                                            <th>결제 번호</th>
-                                            <th>결제 가격</th>
-                                            <th>신청 인원</th>
-                                            <th>신청일</th>
-                                            <th>취소일</th>
-                                            <th>상태</th>
-                                            <th>예약 취소</th>
-                                            
+                                            <th>강의 일자</th>
+                                            <th>리뷰 내용</th>
+                                            <th>작성자</th>
+                                            <th width="120">리뷰 삭제</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                     	<c:forEach var="item" items="${list}">
              		                             <tr>
-		                                            <td>${item.registNo }</td>
-		                                            <td>${item.classNo }</td>
-		                                            <td>${item.memNo }</td>
-		                                            <td>${item.registPaycode }</td>
-		                                            <td>${item.registPrice }</td>
-		                                            <td>${item.registPersonNo }</td>
-		                                            <td>${item.registDate}</td>
-		                                            <c:choose>
-		                                            	<c:when test="${ not empty item.registCancleDate}">
-		                                            		<td>${item.registCancleDate }</td>
-		                                            	</c:when>
-		                                            	<c:otherwise>
-		                                            		<td>----</td>
-		                                            	</c:otherwise>
-		                                            </c:choose>
-		                                            <td>${item.status }</td>
+             		                             	<td>${item.classReviewNo}</td>
+		                                            <td>${item.className}</td>
+		                                            <td>${item.startDate}</td>
+		                                            <td>${item.classReviewContent}</td>
+		                                            <td>${item.reviewWriter}</td>
 		                                            <td>
-			                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">
+		                                            	<a class="btn btn-danger btn-sm btn-icon-split delete-class" data-toggle="modal" data-target="#delete-review" onclick="deleteReview(this);">
 					                                        <span class="icon text-white-50">
 					                                            <i class="fas fa-trash"></i>
 					                                        </span>
@@ -114,6 +97,22 @@
 		                    		    </c:forEach>
                                      
                                     </tbody>
+                                    
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="13">
+                                            	<div id="sb-btn">
+	                                            	<a href="teacherList.oc" class="btn btn-primary btn-sm btn-icon-split">
+				                                        <span class="icon text-white-50">
+				                                            <i class="fas fa-redo"></i>
+				                                        </span>
+				                                        <span class="text">강사 목록 돌아가기</span>
+				                                    </a>
+			                                    </div>
+                                            </th>
+                                            
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -135,23 +134,23 @@
             </footer>
             <!-- End of Footer -->
             
-         	<!-- The Modal -->
-			<div class="modal" id="delete-regist">
+            <!-- The Modal -->
+			<div class="modal" id="delete-review">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			
 			      <!-- Modal Header -->
 			      <div class="modal-header">
-			        <h4 class="modal-title">예약 취소</h4>
+			        <h4 class="modal-title">리뷰 삭제</h4>
 			        <button type="button" class="close" data-dismiss="modal">&times;</button>
 			      </div>
 
-				  <form action="deleteRegist.oc" method="post">			
+				  <form action="deleteReview.oc" method="post">			
 			      <!-- Modal body -->
-			      <div class="modal-body" align="center">
-			      <input type="hidden" name="ocrno" class="classRegistNo">
-			        <h3>정말 예약을 취소하시겠습니까?</h1><br>
-			       	<input type="text" name=refundMsg placeholder="취소 사유 "> 
+			      <div class="modal-body">
+			      <input type="hidden" name="ocrno" class="classReviewNo">
+
+			        정말 해당 리뷰를 삭제하시겠습니까?
 			      </div>
 			
 			      <!-- Modal footer -->
@@ -214,11 +213,10 @@
     <script src="js/demo/datatables-demo.js"></script>
     
     <script>
-    
-    	function deleteRegist(element) {
+    	function deleteReview(element) {
     		let ocrno = $(element).parent().siblings().eq(0).text().trim();
     		console.log(ocrno);
-			$(".modal-body>.classRegistNo").attr("value", ocrno);
+			$("#delete-review .modal-body>.classReviewNo").attr("value", ocrno);
 		}
     </script>
 

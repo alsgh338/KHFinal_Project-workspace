@@ -242,6 +242,7 @@
 			SELECT *
 			FROM CLASS_REGIST
 			WHERE MEM_NO = #{memNo}
+			      AND STATUS = 'Y'
 	</select>
 	
 	<!-- 예약한 클래스에 대한 정보 조회 -->
@@ -254,6 +255,7 @@
 			    SELECT CLASS_NO
 			    FROM CLASS_REGIST
 			    WHERE MEM_NO = #{memNo}
+			    AND STATUS = 'Y'
 			)
 	</select>
 </mapper>

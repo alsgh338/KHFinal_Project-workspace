@@ -76,6 +76,12 @@ public class OneClassServiceImpl implements OneClassService {
 		return oneClassDao.selectOneClassRegist(sqlSession, ocrno);
 	}
 	
+	@Override
+	public int deleteRegist(String ocrno) {
+		return oneClassDao.deleteRegist(sqlSession, ocrno);
+
+	}
+	
 	/* 
 	 * 여기서부턴 아임 포트 통신용 메소드	 
 	 */

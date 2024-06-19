@@ -2,7 +2,6 @@ package com.mata.persfumeAdmin.oneClass.model.dao;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +9,7 @@ import com.mata.persfumeAdmin.oneClass.model.vo.OneClass;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassRegist;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassReview;
+import com.mata.persfumeAdmin.oneClass.model.vo.OneClassTeacher;
 
 
 // 관리자용 DAO
@@ -75,5 +75,22 @@ public class OneClassDao {
 		return result;
 	}
 	
+	
+	public ArrayList<OneClassTeacher> selectTeacherList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("oneClassMapper.selectTeacherList");
+	}
+	
+	public ArrayList<OneClassReview> selectReviewList(SqlSessionTemplate sqlSession,String octc) {
+		return (ArrayList)sqlSession.selectList("oneClassMapper.selectReviewList", octc);
+	}
+	
+	public int deleteReview(SqlSessionTemplate sqlSession , int ocrno) {
+		return sqlSession.delete("oneClassMapper.deleteReview", ocrno);
+	}
+	
+	public int deleteRegist(SqlSessionTemplate sqlSession ,String ocrno) {
+		return sqlSession.update("oneClassMapper.deleteRegist", ocrno);
+
+	}
 
 }

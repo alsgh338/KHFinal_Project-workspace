@@ -26,7 +26,8 @@
      <style>
     	#sb-btn{
     		display: flex;
-    		justify-content: end;
+    		justify-content: center;
+    		gap:20px;
     	}
     	
     	td>div{
@@ -209,7 +210,8 @@
 	                                    
 	                                    <hr>
 	                                    <div id="sb-btn">
-		                                    <button type="submit" class="btn btn-sm btn-warning">수정하기</button>
+		                                    <button type="submit" class="btn btn-lg btn-warning">수정 하기</button>
+		                                    <button type="button" class="btn btn-lg btn-secondary" onclick="location.href='list.oc'">목록 가기</button>
 										</div>                                    
                                 	</form>
                                 </div>
