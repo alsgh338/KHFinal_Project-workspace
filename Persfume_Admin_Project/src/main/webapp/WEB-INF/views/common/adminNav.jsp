@@ -113,15 +113,15 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                커뮤니티
+                상품관리
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<%= request.getContextPath() %>/adList.bo" 
+                <a class="nav-link collapsed" href="<%= request.getContextPath() %>/proList.pr" 
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-hashtag"></i>
-                    <span>소통 마당 관리</span>
+                    <span>상품 목록</span>
                 </a>
             </li>
 
@@ -130,11 +130,10 @@
                 <a class="nav-link collapsed" href="<%= request.getContextPath() %>/adList.sh" 
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-hashtag"></i>
-                    <span>무료 나눔 관리</span>
+                    <span>상품 추가</span>
                 </a>
             </li>
-
-
+            
             <!-- Divider -->
             <hr class="sidebar-divider">
 

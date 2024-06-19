@@ -171,6 +171,11 @@ fieldset {
    	padding: 0;
    	margin: 0;
 	justify-content: space-around;
+	width: 100%;
+}
+
+#myPage a{
+	text-align: center;
 }
 
 #myPagelist li {
@@ -178,7 +183,7 @@ fieldset {
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	margin-right: 60px; /* 각 항목 간 간격 추가 */
+	margin-right: 10px; /* 각 항목 간 간격 추가 */
 	height: 50px; /* 필요에 따라 높이 조정 */
 	font-size: 20px;
 }
@@ -206,6 +211,28 @@ fieldset {
     width: 100%;
 }
 
+#header{
+	width: 100%;
+	height: 90px;
+	display: flex;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	justify-content: space-around;
+	align-items: center;
+	transition: all .5s ease-out;
+	z-index: 999;
+}
+
+#header a{
+	font-weight: 900;
+	text-decoration: none;
+	position: relative;
+	padding: 6px 12px;
+}
+
 
 
 
@@ -216,7 +243,7 @@ fieldset {
 	<div class="content-title" id="home">welcome</div>
 	<div id="outer">
 		<ul id="myPagelist">
-			<li style="padding-left: 110px;">
+			<li>
 				<a href="/persfume/myPage.me">내 정보 조회</a>
 			</li>
 			<li>
@@ -315,7 +342,7 @@ fieldset {
 					<a id="deleteMem" href="" onclick="deleteMem();">회원탈퇴</a>
 				</div>
 			</form>
-			
+		</div>	
 			
 		
 
@@ -446,7 +473,7 @@ fieldset {
 						});
 			});
 		</script>
-	</div>
+	
 	
 	
 </body>

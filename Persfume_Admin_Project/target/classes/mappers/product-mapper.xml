@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="productMapper">
+	<!-- 관리자 페이지 쿼리문  -->
+	<resultMap type="product" id="productResultSet">
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="PRODUCT_EXPLAIN" property="productExplain" />
+		<result column="PRODUCT_PRICE" property="productPrice" />
+		<result column="PRODUCT_STOCK" property="productStock" />
+		<result column="REGIST_DATE" property="registDate" />
+		<result column="CATEGORY" property="category" />
+		<result column="GENDER" property="gender" />
+		<result column="TOP_NOTE" property="topNote" />
+		<result column="MIDDLE_NOTE" property="middleNote" />
+		<result column="BASE_NOTE" property="baseNote" />
+		<result column="PRODUCT_STATUS" property="productStatus" />
+		<result column="DISCOUNT" property="discount" />
+	</resultMap>
+	
+	
+	<!--  상품조회 카운트 숫자 구하는 쿼리문 -->
+	<select id="selectListCount"
+			resultType="_int">
+		SELECT COUNT(*)
+		  FROM PRODUCT
+		 WHERE PRODUCT_STATUS = 'Y'
+	</select>
+	
+	<!-- 상품조회 기본목록을 구하는 쿼리문(등록일순) -->
+	<select id="selectList"
+			resultMap="productResultSet">
+		SELECT * 
+		  FROM PRODUCT
+		 WHERE PRODUCT_STATUS = 'Y' 
+		 ORDER BY PRODUCT_NO DESC
+	</select>
+
+	<!-- 상품상세조회 상품 정보 구하는 쿼리문 -->
+	<select id="selectProduct"
+		parameterType="_int"
+			resultMap="productResultSet">
+		SELECT * 
+		  FROM PRODUCT 
+		 WHERE PRODUCT_NO = #{pno}
+	</select>
+</mapper>

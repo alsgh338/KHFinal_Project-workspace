@@ -16,17 +16,17 @@
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 	<typeAliases>
-<!-- 		<typeAlias type="com.mata.persfumeAdmin.notice.model.vo.Notice" alias="notice" />
+<!-- 	<typeAlias type="com.mata.persfumeAdmin.notice.model.vo.Notice" alias="notice" />
 		<typeAlias type="com.mata.persfumeAdmin.event.model.vo.Event" alias="event" />
 		<typeAlias type="com.mata.persfumeAdmin.event.model.vo.EventImg" alias="eventImg" />
-		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.Product" alias="product" />
 		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.ProductImg" alias="productImg" />
-		<typeAlias type="com.mata.persfumeAdmin.member.model.vo.Member" alias="member" />
 		<typeAlias type="com.mata.persfumeAdmin.recommand.model.vo.Recommand" alias="recommand" /> -->
+		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.Product" alias="product" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClass" alias="oneClass" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg" alias="oneClassImg" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassReview" alias="oneClassReview" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassRegist" alias="oneClassRegist" />
+		<typeAlias type="com.mata.persfumeAdmin.member.model.vo.Member" alias="member" />
 		<!-- <typeAlias type="com.mata.persfumeAdmin.product.model.vo.MemCoupon" alias="MemCoupon" />
 		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.Coupon" alias="Coupon" />
 		<typeAlias type="com.mata.persfumeAdmin.chat.model.vo.ChatMem" alias="chatMem" />
@@ -38,6 +38,8 @@
 	
 	<mappers>
 		<mapper resource="/mappers/oneclass-mapper.xml" />
+		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/product-mapper.xml" />
 	</mappers>
 	
 </configuration>  

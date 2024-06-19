@@ -22,99 +22,66 @@ public class ProductServiceImpl implements ProductService {
 	private SqlSessionTemplate sqlSession;
 	@Autowired
 	private ProductDao productDao;
-	
-	
 	@Override
 	public int selectListCount() {
-	
-		return productDao.selectListCount(sqlSession);
-		
+		return 0;
 	}
-
 	@Override
 	public ArrayList<Product> selectList(PageInfo pi) {
-		
-		return productDao.selectList(sqlSession, pi);
+		return null;
 	}
-
 	@Override
 	public ArrayList<ProductImg> selectImgList(PageInfo pi) {
-
-		return productDao.selectImgList(sqlSession, pi);
+		return null;
 	}
-
 	@Override
 	public Product selectProduct(int pno) {
-		
-		return productDao.selectProduct(sqlSession, pno);
+		return null;
 	}
-
 	@Override
 	public ArrayList<ProductImg> selectProductImgList(int pno) {
-	
-		return productDao.selectProductImgList(sqlSession, pno);
+		return null;
 	}
-
 	@Override
 	public ProductImg selectProductImg(int pno) {
-		
-		return productDao.selectProductImg(sqlSession, pno);
+		return null;
 	}
-
 	@Override
 	public ArrayList<MemCoupon> searchCoupon(int mno) {
-		
-		return productDao.searchCoupon(sqlSession, mno);
+		return null;
 	}
-
 	@Override
 	public Coupon searchCouponName(int cno) {
-		
-		return productDao.searchCouponName(sqlSession, cno);
+		return null;
 	}
-
 	@Override
 	public int orderComplete(String merchant_uid, int amount, String want5, int mno) {
-	
-		return productDao.orderComplete(sqlSession, merchant_uid, amount, want5, mno);
+		return 0;
 	}
-
 	@Override
 	public OrderDetail orderview(String merchant_uid) {
-		
-		return productDao.orderview(sqlSession, merchant_uid);
+		return null;
 	}
-
 	@Override
 	public int cartAdd(int account, int quantity, int mno, int pno) {
-		
-		return productDao.cartAdd(sqlSession, account, quantity, mno, pno );
+		return 0;
 	}
-
 	@Override
 	public ArrayList<Cart> selectCartList(int mno) {
-		
-		return productDao.selectCartList(sqlSession, mno);
+		return null;
 	}
-
 	@Override
 	public int cartdelete(int deletecartNo) {
-		
-		return productDao.cartdelete(sqlSession, deletecartNo);
+		return 0;
 	}
-
 	@Override
 	public int cartUpdate(int basketNo, int quantity, int price) {
-		
-		return  productDao.cartUpdate(sqlSession, basketNo, quantity, price);
+		return 0;
 	}
-
 	@Override
 	public Cart cartSelect(int basketNo) {
-		
-		return  productDao.cartSelect(sqlSession, basketNo);
+		return null;
 	}
-
 
 
 

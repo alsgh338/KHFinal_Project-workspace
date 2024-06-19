@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+
+<mapper namespace="memberMapper">
+
+ 	<resultMap id="memberResultSet"
+	 			type="member">
+	 	<result column="MEM_NO" property="memNo"/>
+	 	<result column="MEM_ID" property="memId"/>
+	 	<result column="MEM_PWD" property="memPwd"/>
+	 	<result column="MEM_NAME" property="memName"/>
+	 	<result column="EMAIL" property="email"/>
+	 	<result column="PHONE" property="phone"/>
+	 	<result column="POSTCODE" property="postcode"/>
+	 	<result column="ADDRESS" property="address"/>
+	 	<result column="DETAILADDRESS" property="detailAddress"/>
+	 	<result column="EXTRAADDRESS" property="extraAddress"/>
+	 	<result column="GENDER" property="gender"/>
+	 	<result column="BIRTH_DATE" property="birthDate"/>
+	 	<result column="ENROLL_DATE" property="enrollDate"/>
+	 	<result column="MODIFY_DATE" property="modifyDate"/>
+	 	<result column="CHANGE_NAME" property="testDate"/>
+	 	<result column="STATUS" property="status"/>
+	 </resultMap>
+	 
+	 <!-- 전체 회원 조회 -->
+	 <select id="selectMemberAll"
+	 		 resultMap="memberResultSet">
+	 	SELECT *
+	 	FROM MEMBER
+	 </select>
+	 
+	 <!-- 회원 탈퇴  -->
+	 <update id="deleteMember"
+		parameterType="_int">
+		UPDATE MEMBER
+		SET STATUS = 'N'
+		WHERE MEM_NO = #{memNo}
+		AND STATUS = 'Y'
+</update>
+	 
+
+</mapper>
