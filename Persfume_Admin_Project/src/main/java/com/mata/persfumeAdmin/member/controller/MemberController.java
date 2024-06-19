@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class MemberController {
 		return "member/memberListView";
 	}
 	
+	@Transactional
 	@PostMapping(value="delete.me")
 	public String deleteMember(int memNo,
 							HttpSession session,
@@ -61,6 +63,35 @@ public class MemberController {
 			}
 			
 			return "redirect:/adList.me";
+		
+	}
+	
+	@Transactional
+	@PostMapping("alive.me")
+	public String aliveMember(int memNo) {
+		
+		System.out.println("회원 복구 잘 호출되나??");
+		
+		int result = memberService.aliveMember(memNo);
+		
+		if(result > 0) {
+			// 회원 복구 성공
+			
+			System.out.println("회원 복구 성공!");
+			
+			
+			// mv.setViewName("member/memberListView");
+			return "redirect:/adList.me";
+			
+		}else {
+			// 실패 
+			System.out.println("회원 복구 실패!");
+			
+			// mv.setViewName("member/memberListView");
+			return "redirect:/adList.me";
+		}
+		
+		//return mv;
 		
 		
 	}

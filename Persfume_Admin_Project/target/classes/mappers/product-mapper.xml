@@ -19,15 +19,7 @@
 	</resultMap>
 	
 	
-	<!--  상품조회 카운트 숫자 구하는 쿼리문 -->
-	<select id="selectListCount"
-			resultType="_int">
-		SELECT COUNT(*)
-		  FROM PRODUCT
-		 WHERE PRODUCT_STATUS = 'Y'
-	</select>
-	
-	<!-- 상품조회 기본목록을 구하는 쿼리문(등록일순) -->
+	<!-- 상품조회 전체조회 -->
 	<select id="selectList"
 			resultMap="productResultSet">
 		SELECT * 
@@ -36,12 +28,12 @@
 		 ORDER BY PRODUCT_NO DESC
 	</select>
 
-	<!-- 상품상세조회 상품 정보 구하는 쿼리문 -->
+	<!-- 상품상세조회  -->
 	<select id="selectProduct"
 		parameterType="_int"
 			resultMap="productResultSet">
 		SELECT * 
 		  FROM PRODUCT 
-		 WHERE PRODUCT_NO = #{pno}
+		 WHERE PRODUCT_NO = #{productNo}
 	</select>
 </mapper>

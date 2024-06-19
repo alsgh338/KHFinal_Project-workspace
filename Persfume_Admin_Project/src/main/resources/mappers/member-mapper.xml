@@ -37,7 +37,16 @@
 		SET STATUS = 'N'
 		WHERE MEM_NO = #{memNo}
 		AND STATUS = 'Y'
-</update>
+	</update>
+	
+	 <!-- 회원 복구  -->
+	 <update id="aliveMember"
+		parameterType="_int">
+		UPDATE MEMBER
+		SET STATUS = 'Y'
+		WHERE MEM_NO = #{memNo}
+		AND STATUS = 'N'
+	</update>
 	 
 
 </mapper>

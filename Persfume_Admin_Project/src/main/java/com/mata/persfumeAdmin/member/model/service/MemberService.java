@@ -10,4 +10,6 @@ public interface MemberService {
 
 	int deleteMember(int memNo);
 
+	int aliveMember(int memNo);
+
 }

@@ -7,5 +7,7 @@ import com.mata.persfumeAdmin.product.model.vo.Product;
 public interface ProductService {
 	
 	ArrayList<Product> selectAllproduct();
+	
+	ArrayList<Product> selectProduct(int productNo);
 
 }

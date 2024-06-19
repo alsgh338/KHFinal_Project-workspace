@@ -32,12 +32,19 @@ public class ProductController {
 	}
 	
 	@GetMapping("update.pr")
-	public void productUpdate(int productNo,
-							HttpSession session) {
+	public String productUpdate(int productNo,
+							HttpSession session,
+							Model model) {
 		
 		System.out.println("상품 수정하기 잘 호출되나?");
 		
-		session.setAttribute("productNo", productNo);
+		ArrayList<Product> list = productService.selectProduct(productNo);
+		
+		System.out.println(list);
+		
+		model.addAttribute("list", list); // Model에 list를  attribute로 설정
+		
+		return "Product/ProductEnrollForm";
 		
 	}
 

@@ -17,5 +17,12 @@ public class ProductDao {
 		return (ArrayList)sqlSession.selectList("productMapper.selectList");
 	}
 
+	public ArrayList<Product> selectProduct(SqlSessionTemplate sqlSession, int productNo) {
+		
+		System.out.println("상품상세조회");
+		
+		return (ArrayList)sqlSession.selectList("productMapper.selectProduct", productNo);
+	}
+
 	
 }

@@ -113,14 +113,41 @@
 		                                            <td>${item.gender}</td>
 		                                            <td>${item.birthDate}</td>
 		                                            <td>${item.enrollDate}</td>
-		                                            <td>${item.status}</td>
 		                                            <td>
-			                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check">
-					                                        <span class="icon text-white-50">
-					                                            <i class="fas fa-trash"></i>
-					                                        </span>
-					                                        <span class="text">회원 탈퇴</span>
-					                                    </a>
+		                                       		<!--  상태값에 따라 다르게 표시  -->
+													<c:choose>
+														<c:when test="${item.status eq 'Y' }">
+															<!-- 상태값이 Y 면 활동중 -->
+															활동중
+														</c:when>
+														<c:otherwise>
+															<!-- 상태값이 N 면 탈퇴 -->
+															탈퇴
+														</c:otherwise>
+													</c:choose>
+													</td>
+		                                            <td>
+                                                        <c:choose>
+                                                            <c:when test="${item.status eq 'Y' }">
+                                                            <!-- 상태값이 Y면 탈퇴-->
+                                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check">
+                                                                <span class="icon text-white-50">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </span>
+                                                                <span class="text">회원 탈퇴</span>
+                                                            </a>
+                                                            </c:when>
+                                                            <c:otherwise>
+															<!-- 상태값이 N이면 회원 복구-->
+                                                            <a class="btn btn-primary btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#alive-check">
+                                                                <span class="icon text-white-50">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </span>
+                                                                <span class="text">회원 복구</span>
+                                                            </a>
+														    </c:otherwise>
+                                                        </c:choose>
+		
 		                                            </td>
 	                                            </tr>
 				                    		   
@@ -155,7 +182,7 @@
 			
 			      <!-- Modal Header -->
 			      <div class="modal-header">
-			        <h4 class="modal-title">클래스 삭제</h4>
+			        <h4 class="modal-title">회원 탈퇴</h4>
 			        <button type="button" class="close" data-dismiss="modal">&times;</button>
 			      </div>
 
@@ -177,6 +204,37 @@
 			  </div>
 			</div>
 			<!-- End of Modal-->
+
+
+            <!-- 회원 복구 -->
+             <!-- The Modal -->
+			<div class="modal" id="alive-check">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+              
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">회원 복구</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+  
+                    <form action="alive.me" method="post">			
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                    <input type="hidden" name="memNo" class="carNo">
+                        	정말 해당 회원을 복구시키겠습니까??
+                    </div>
+              
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-danger">네</button>
+                      <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+              <!-- End of Modal-->
 
         </div>
         <!-- End of Content Wrapper -->
@@ -238,7 +296,23 @@
         // 모달의 input 요소에 memNo 값을 설정
         $(".modal-body .carNo").val(memNo);
     });
-});
+    });
+
+    $(function() {
+    $(".delete-park").click(function() {
+        // 부모 요소에서 두 번 이전의 형제 요소의 텍스트를 가져옴
+        let memNo = $(this).closest("tr").children("td:first").text().trim();
+
+        // memNo 값을 콘솔에 출력
+        console.log(memNo);
+
+        // 모달의 input 요소에 memNo 값을 설정
+        $(".modal-body .carNo").val(memNo);
+    });
+    });
+
+
+    
     </script>
 
 </body>

@@ -96,6 +96,53 @@
     #myPagelist a:hover::after {
         width: 100%;
     }
+
+    #mem_info input {
+	box-sizing: border-box;
+    }
+
+    #mem_info2 input {
+        box-sizing: border-box;
+    }
+    #mem_info2 th {
+	text-align: center;
+	padding: 20px;
+	background-color: aliceblue;
+	color: grey;
+	font-size: 15px;
+    }
+
+    .table_css {
+	width: 100%;
+	box-sizing: border-box;
+	border-spacing: 0;
+    }
+
+    #mem_info2 input {
+	box-sizing: border-box;
+    }
+
+    .table_css {
+        width: 100%;
+        box-sizing: border-box;
+        border-spacing: 0;
+    }
+
+    .table_css fieldset {
+        box-sizing: border-box;
+    }
+
+    .table_css input {
+        box-sizing: border-box;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+        padding: 5px; /* 입력 필드 안의 패딩 */
+    }
+
+    .table_css td {
+        padding: 20px;
+    }
+
     
     </style>
 
@@ -135,10 +182,23 @@
         </li>
     </ul>
 <c:forEach var="OrderDetail" items="${orderList}">
-    <div>
-    	<p>주문번호 : ${OrderDetail.orderNo} </p>
-        <p>주문일자 : ${OrderDetail.orderDate} 배송상태 :   ${OrderDetail.deliveryStatus}</p>
-    </div>
+    <table id="mem_info2" class="table_css" border="1">
+        <tr>
+            <th >주문번호</th>
+            <td>
+                ${OrderDetail.orderNo}
+            </td>
+        </tr>
+        <tr>
+            <th>주문일자</th>
+            <td>${OrderDetail.orderDate}</td>
+        </tr>
+        <tr>
+            <th>배송상태</th>
+            <td>${OrderDetail.deliveryStatus}</td>
+        </tr>
+    </table>
+    <br><br>
 </c:forEach>
 </div>
 

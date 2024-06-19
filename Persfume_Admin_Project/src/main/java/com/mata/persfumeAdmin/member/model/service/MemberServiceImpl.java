@@ -29,9 +29,18 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int deleteMember(int memNo) {
 		
-		System.out.println("회원 탈퇴시키기");
+		System.out.println("회원 탈퇴시키기 서비스");
 		
 		return memberDao.deleteMember(sqlSession, memNo);
+	}
+
+	@Override
+	public int aliveMember(int memNo) {
+		
+		System.out.println("회원 복구시키기 서비스");
+		
+		return memberDao.aliveMember(sqlSession,memNo);
+		
 	}
 
 }

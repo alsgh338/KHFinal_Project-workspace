@@ -26,5 +26,13 @@ public class ProductServiceImpl implements ProductService{
 		return productDao.selectAllproduct(sqlSession);
 	}
 
+	@Override
+	public ArrayList<Product> selectProduct(int productNo) {
+		
+		System.out.println("상품 상세조회 서비스");
+		
+		return productDao.selectProduct(sqlSession, productNo);
+	}
+
 
 }

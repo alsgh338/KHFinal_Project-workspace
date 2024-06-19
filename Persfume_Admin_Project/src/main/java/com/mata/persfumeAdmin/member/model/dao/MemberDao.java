@@ -21,6 +21,11 @@ public class MemberDao {
 		
 		return sqlSession.update("memberMapper.deleteMember", memNo);
 	}
+
+	public int aliveMember(SqlSessionTemplate sqlSession, int memNo) {
+		
+		return sqlSession.update("memberMapper.aliveMember", memNo);
+	}
 	
 	
 
