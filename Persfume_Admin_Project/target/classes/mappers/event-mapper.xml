@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="eventMapper">
+	
+	<!-- 조회 결과를 자바 event VO 타입으로 뽑아주는 resultMap -->
+	<resultMap type="event" id="eventResultSet">
+		<result column="EVENT_NO" property="eventNo" />
+		<result column="EVENT_TITLE" property="eventTitle" />
+		<result column="EVENT_COUNT" property="eventCount" />
+		<result column="START_DATE" property="startDate" />
+		<result column="DEW_DATE" property="dewDate" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="STATUS" property="status" />
+		<result column="EVENTIMG_PATH" property="eventImgPath" />
+	</resultMap>
+	
+	
+	<select id="selectEventList"
+			resultMap="eventResultSet">
+		SELECT EVENT_NO
+		     , EVENT_TITLE
+		     , EVENT_COUNT
+		     , START_DATE
+		     , DEW_DATE
+		     , CREATE_DATE
+		     , STATUS
+		  FROM EVENT
+	</select>
+	
+	<select id="selectEventDetail"
+ 			parameterType="_int"
+ 			resultMap="eventResultSet">
+	 	SELECT EVENT_TITLE
+		     , EVENT_CONTENT
+		     , EVENT_COUNT
+		     , START_DATE
+		     , DEW_DATE
+		     , EVENTIMG_PATH
+		  FROM EVENT JOIN EVENT_IMG USING (EVENT_NO)
+		 WHERE EVENT.STATUS = 'Y'
+		   AND EVENTIMG_LEVEL = 2
+		   AND EVENT_NO = #{eno}
+ 	</select>
+ 	 
+</mapper>

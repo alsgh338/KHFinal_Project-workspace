@@ -21,19 +21,21 @@
         .chat-container {
             display: flex;
             flex-direction: column;
-            width:400px;
-            height: 800px;
-            max-width: 800px;
+            width: 100%;
+            max-width: 600px;
+            height: 100vh;
             margin: auto;
             border: 1px solid #ccc;
             background-color: #fff;
         }
         .chat-header {
             padding: 10px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #ffeb3b;
+            color: #000;
             text-align: center;
             font-size: 20px;
+            position: relative;
+            cursor: pointer;
         }
         .chat-messages {
             flex: 1;
@@ -59,25 +61,41 @@
             margin-left: 10px;
         }
         
+        .chat-messages > .my-message, .chat-messages > .other-message {
+            width: 100%;
+        }
+        
         .my-message {
-        	display : flex;
+            display: flex;
+            flex-direction: column;
             justify-content: flex-end;
-            background-color: #d1ffd1;
             color: #000;
+            align-items: end;
         }
         .my-message .text {
             padding: 10px;
             border-radius: 10px;
         }
+        .my-message #chat-content {
+            background-color: #d1ffd1;
+            padding: 10px;
+        }
+        
         .other-message {
-            justify-content: flex-start;
-            background-color: #f1f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
             color: #000;
+            align-items: start;
         }
         .other-message .text {
             padding: 10px;
             border-radius: 10px;
             border: 1px solid #ccc;
+        }
+        .other-message #chat-content {
+            background-color: #f1f0f0;
+            padding: 10px;
         }
         
         .chat-input {
@@ -94,15 +112,42 @@
         .chat-input button {
             padding: 10px 15px;
             border: none;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #ffeb3b;
+            color: #000;
             border-radius: 4px;
             margin-left: 10px;
             cursor: pointer;
         }
         .chat-input button:hover {
-            background-color: #0056b3;
+            background-color: #ffd700;
         }
+        
+        .chat-header div:nth-child(2) {
+            width: 100%;
+        }
+        
+        .chat-header div:nth-child(1) {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            top: 13px;
+            left: 10px;
+            cursor: pointer;
+        }
+        
+        #chat-content {
+            border-radius: 10px;
+        }
+        
+        p {
+            font-size: 10px;
+            margin: 0;
+        }
+        
+        #back {
+            cursor: pointer;
+        }
+        
     </style>
     <script>
 		
@@ -111,14 +156,15 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <!-- 원데이클래스 명 --> 채팅방
+        	<div id="back" onclick="history.back()">&lt;</div>
+            <!-- 원데이클래스 명 --> <div>채팅방</div>
             <input type="hidden" value="${ requestScope.classNo }" id="classNo"/>
         </div>
         <div class="chat-messages" id="chat-messages">
             <!-- 채팅 메시지 여기에 표시 -->           
         </div>
         <div class="chat-input">
-            <input type="text" id="message-input" placeholder="메시지를 입력하세요...">
+            <input type="text" id="message-input" placeholder="메시지를 입력하세요..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()">전송</button>
         </div>
     </div>
@@ -141,7 +187,7 @@
 		
 		async function connectChat() {
 			
-			let url = "ws://localhost:8008/persfume/chat.do?classNo=" + classNo;
+			let url = "ws://192.168.0.71:8008/persfume/chat.do?classNo=" + classNo;
 			
 			socket = new WebSocket(url);
 			
@@ -160,7 +206,8 @@
 					
                 	// 메세지를 출력하는 함수로 대체
                 	
-                    let data = "보낸이 : " + message.memName + "<br>" + message.cmContent + "<br>" + message.createDate;
+                    let data = message.memName + "<div id='chat-content'>" + message.cmContent + "</div><p>" + message.createDate + "</p>";
+                    
 					
                     if(message.memName == '${ sessionScope.loginMember.memName }'){
                     	
@@ -171,9 +218,13 @@
                     
                 });
 
-                document.getElementById("chat-messages").innerHTML += "<div>" + "--------------------- 여기까지 읽음 ---------------------" + "</div>" + "<br>";
-		        
-			}
+                document.getElementById("chat-messages").innerHTML += "<div>" + "------------------------- 여기까지 읽음 ------------------------------" + "</div>" + "<br>";
+		      
+                document.getElementById("chat-messages").scrollTop = document.getElementById("chat-messages").scrollHeight;
+                
+			};
+			
+			
 			
 			socket.onclose = function(){
 				console.log("연결 종료");
@@ -183,26 +234,30 @@
 				
 				let obj = JSON.parse(e.data);
 				
-				let data = "보낸이 : " + obj.memName + "<br>" + obj.cmContent + "<br>" + obj.createDate + "<br>";
+				let data = obj.memName + "<div id='chat-content'>" + obj.cmContent + "</div><p>" + obj.createDate + "</p>";
 								
 				if(obj.memName == memName){
 					
-					document.getElementById("chat-messages").innerHTML += '<div class="my-message">' + data + "</div>";
+					document.getElementById("chat-messages").innerHTML += '<div class="my-message">' + data + "</div><br>";
 				} else {
 					
 					document.getElementById("chat-messages").innerHTML += '<div class="other-message">' + data + "</div>";
 				}
 				
-				
-				
-				// > css 적용하면
-				//   남의 메세지는 왼쪽에 내 메세지는 오른쪽에 배치 가능
+				document.getElementById("chat-messages").scrollTop = document.getElementById("chat-messages").scrollHeight;
 			};
 			
 		}
 		
 		window.addEventListener('load', connectChat);
 	
+		function handleKeyPress(event) {
+	        if (event.key === 'Enter') {
+	            event.preventDefault();
+	            sendMessage();
+	        }
+	    }
+		
     	function sendMessage() {
 			
 			let text = document.getElementById("message-input").value;
@@ -214,6 +269,7 @@
 				document.getElementById("message-input").value = "";
 			}
 		}
+    	
     	
     </script>
 </body>

@@ -55,7 +55,7 @@
 		resultMap="chatResultSet">
 		SELECT CM_NO
 			 , CM_CONTENT
-		     , CREATE_DATE
+		     , TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI') AS CREATE_DATE
 		     , MEM_NAME
 		  FROM CHAT_MESSAGE
 		  JOIN MEMBER USING (MEM_NO)
@@ -78,10 +78,10 @@
 		parameterType="_int"
 		resultMap="classResultSet">
 		SELECT CLASS_NAME
-			 , CLASS_NO
+		     , CLASS_NO
 		     , CLASS_TEACHER
-		     , START_TIME
-		     , END_TIME
+		     , TO_CHAR(START_TIME, 'YYYY-MM-DD HH24:MI') AS START_TIME
+		     , TO_CHAR(END_TIME, 'YYYY-MM-DD HH24:MI') AS END_TIME
 		  FROM CLASS
 		  JOIN CHAT_MEM USING (CLASS_NO)
 		 WHERE MEM_NO = #{memNo}

@@ -157,6 +157,22 @@
                     </div>
                 </div>
             </li>
+            
+            <!-- Nav Item - Pages Collapse Menu -->
+             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#event-ad-menu"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-chart-bar"></i>
+                    <span>이벤트 관리</span>
+                </a>
+                <div id="event-ad-menu" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">관리비 기능 : </h6>
+                        <a class="collapse-item" href="<%= request.getContextPath() %>/list.ev">이벤트 목록 조회</a>
+                        <a class="collapse-item" href="<%= request.getContextPath() %>/adInsertForm.ev">이벤트 추가</a>
+                    </div>
+                </div>
+            </li>
 
              <!-- Nav Item - Pages Collapse Menu -->
              <li class="nav-item">
