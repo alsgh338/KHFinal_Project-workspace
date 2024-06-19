@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClass;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg;
+import com.mata.persfumeAdmin.oneClass.model.vo.OneClassRegist;
 
 
 public interface OneClassService {
@@ -21,6 +22,12 @@ public interface OneClassService {
 	
 	int updateOneClass(OneClass oc);
 
+	int updateOneClassImg(ArrayList<OneClassImg> ociList);
+
+	ArrayList<OneClassRegist> selectRegistList();
+	
+	int deleteOneClass(int ocno);
+	int restoreOneClass(int ocno);
 	
 	
 	

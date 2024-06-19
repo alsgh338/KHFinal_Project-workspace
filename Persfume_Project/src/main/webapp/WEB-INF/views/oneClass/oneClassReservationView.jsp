@@ -202,7 +202,7 @@
         <div class="content-main">
             <div id="reservation-class">
                 <div id="class-img">
-                    <img src="${ requestScope.oc.thumbnailImg }" alt="썸네일 이미지">
+                	<img src="${pageContext.request.contextPath}/../persfumeAdmin/${oc.thumbnailImg}" alt="썸네일 이미지">
                 </div>
                 <div class="class-data">
                     <h1>Class Reservation</h1>

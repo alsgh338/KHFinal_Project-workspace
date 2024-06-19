@@ -347,7 +347,7 @@
            <div class="main-wrap">
                <div class="class-data">
                    <div class="class-img">
-                   		<img src="${ requestScope.oc.thumbnailImg }" alt="썸네일 이미지">
+                   		<img src="${pageContext.request.contextPath}/../persfumeAdmin/${oc.thumbnailImg}" alt="썸네일 이미지">
                        
                    </div>
                    <div class="class-simple-data">
@@ -390,6 +390,7 @@
                </div>
                <div class="class-detail-area activate" id="class-data">
                		<h1>클래스 정보</h1>
+               		<img src="${pageContext.request.contextPath}/../persfumeAdmin/${oci[0].classImgPath}" alt="썸네일 이미지">
                    ${ requestScope.oc.classDetail}
                </div>
 

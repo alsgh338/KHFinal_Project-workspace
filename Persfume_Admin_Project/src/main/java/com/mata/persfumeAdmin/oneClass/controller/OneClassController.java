@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mata.persfumeAdmin.oneClass.model.service.OneClassService;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClass;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg;
+import com.mata.persfumeAdmin.oneClass.model.vo.OneClassRegist;
 
 
 // 관리자 컨트롤러
@@ -25,6 +27,14 @@ import com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg;
 public class OneClassController {
 	
 	
+	@Value("${key.imp}")
+    private String impApiKey;
+	
+    @Value("${key.impKey}")
+    private String apiKey;
+ 
+    @Value("${key.impSecretkey}")
+    private String secretKey;
 	
 	@Autowired
 	private OneClassService oneClassService;
@@ -34,6 +44,8 @@ public class OneClassController {
 	public String selectList(Model model) {
 		
 		ArrayList<OneClass> list = oneClassService.selectList();
+		
+		System.out.println(list);
 		
 		model.addAttribute("list",list);
 		
@@ -46,10 +58,10 @@ public class OneClassController {
 		OneClass oc = oneClassService.selectOneClass(ocno);
 				
 		if(oc != null) {
-			ArrayList<OneClassImg> ociList = oneClassService.selectOneClassImgList(ocno);			
-
-			System.out.println(oc);
+			ArrayList<OneClassImg> ociList = oneClassService.selectOneClassImgList(ocno);
+			
 			model.addAttribute("oc",oc);
+			model.addAttribute("ociList",ociList);
 			
 		}
 		
@@ -71,8 +83,6 @@ public class OneClassController {
 									HttpSession session,
 									Model model) {
 		
-		System.out.println(oc.getStartTime());
-		
 		ArrayList<OneClassImg> ociList = new ArrayList();
 		
 		if(!upThumbnail.getOriginalFilename().equals("")) {
@@ -80,7 +90,7 @@ public class OneClassController {
 			OneClassImg oci = new OneClassImg();
 			oci.setClassImgOrigin(upThumbnail.getOriginalFilename());
 			oci.setClassImgChange(changeName);
-			oci.setClassImgPath("resources\\classUploadFiles\\" + changeName);
+			oci.setClassImgPath("resources/uploadFiles/oneClass/" + changeName);
 			oci.setImgType(1);
 			ociList.add(oci);
 		}
@@ -93,7 +103,7 @@ public class OneClassController {
 				OneClassImg oci = new OneClassImg();
 				oci.setClassImgOrigin(mf.getOriginalFilename());
 				oci.setClassImgChange(changeName);
-				oci.setClassImgPath("resources\\classUploadFiles\\" + changeName);
+				oci.setClassImgPath("resources/uploadFiles/oneClass/" + changeName);
 				oci.setImgType(2);
 				ociList.add(oci);
 			}
@@ -109,27 +119,73 @@ public class OneClassController {
 			
 			
 			if(imgResult > 0) {
-				System.out.println("전부 성공");
 				return "redirect:/list.oc";
 			} else {
-				System.out.println("사진 실패  클래스 성공");
 				return "redirect:/list.oc";
 			}
 		}
 		
-		System.out.println("전부 실패");
 		return "redirect:/list.oc";
 		
 	}
 	
 	@PostMapping("update.oc")
-	public String updateOneClass(OneClass oc, Model model) {
+	public String updateOneClass(OneClass oc,
+								String prevThumb,
+								String classImgPath,
+								MultipartFile upThumbnail,
+								MultipartFile[] upFiles,
+								HttpSession session,
+								Model model) {
 		
 		System.out.println(oc);
+		System.out.println(upThumbnail);
+		System.out.println(upFiles);
+		System.out.println(classImgPath);
+		System.out.println(prevThumb);
+		
+		ArrayList<OneClassImg> ociList = new ArrayList();
+			
+		if(upThumbnail.getSize() != 0) { // 썸네일 변경 사항이 있다면
+			
+			// 서버에서 이미지 삭제			
+			String thumbnailRealPath = session.getServletContext().getRealPath(prevThumb);
+			new File(thumbnailRealPath).delete();
+			
+			// 새로운 이미지 저장 및 경로 받아오기
+			String changeName = savePath(upThumbnail, session);
+			OneClassImg oci = new OneClassImg();
+			oci.setClassImgOrigin(upThumbnail.getOriginalFilename());
+			oci.setClassImgChange(changeName);
+			oci.setClassImgPath("resources/uploadFiles/oneClass/" + changeName);
+			oci.setPrevClassImgPath(prevThumb);
+			oci.setImgType(1);
+			
+			ociList.add(oci);
+		}
+		
+		
+		for(int i = 0; i < upFiles.length; i++) {
+			
+			if(upFiles[i].getSize() != 0) { // 썸네일 변경 사항이 있다면
+				String thumbnailRealPath = session.getServletContext().getRealPath(classImgPath);
+				new File(thumbnailRealPath).delete();
+				String changeName = savePath(upFiles[i], session);
+				OneClassImg oci = new OneClassImg();
+				oci.setClassImgOrigin(upFiles[i].getOriginalFilename());
+				oci.setClassImgChange(changeName);
+				oci.setClassImgPath("resources/uploadFiles/oneClass/" + changeName);
+				oci.setPrevClassImgPath(classImgPath);
+				oci.setImgType(1);
+				ociList.add(oci);
+			}
+		}
 		
 		int result = oneClassService.updateOneClass(oc);
-		System.out.println(result);
+		
 		if(result > 0) {
+			
+			oneClassService.updateOneClassImg(ociList);
 			
 			return "redirect:/list.oc";
 		}
@@ -137,6 +193,53 @@ public class OneClassController {
 		return "redirect:/list.oc";
 	}
 	
+	// 클래스 폐강
+	@PostMapping("delete.oc")
+	public String deleteOneClass(int ocno, Model model) {
+		
+		int result = oneClassService.deleteOneClass(ocno);;
+		
+		if(result > 0) {
+			
+		}
+		
+		return "redirect:/list.oc";
+	}
+	
+	// 폐강 클래스 복구
+	@PostMapping("restore.oc")
+	public String restoreOneClass(int ocno, Model model) {
+		
+		int result = oneClassService.restoreOneClass(ocno);;
+		
+		return "redirect:/list.oc";
+	}
+	
+	
+	
+	
+	//클래스 예약 목록 조회 컨트롤러 
+	@GetMapping("registList.oc")
+	public String selectRegistList(Model model) {
+		
+		ArrayList<OneClassRegist> list = oneClassService.selectRegistList();
+		
+		model.addAttribute("list",list);
+		
+		return "oneClass/oneClassRegistListView";
+	}
+	
+	
+	
+	// 클래스 예약 취소 및 삭제
+	
+	public String deleteRegist(OneClassRegist ocr, String refundMessage) {
+
+//		String token = oneClassService.getToken(apiKey, secretKey);
+//		oneClassService.refundRequest(token, ocr.getRegistNo(), refundMessage);
+		
+		return "";
+	}
 	
 	
 	
@@ -181,15 +284,16 @@ public class OneClassController {
 			// (webapp/resources/uploadFiles/~~)
 			// 컨텍스트 경로를 절대 경로로 변환하기
 			
-			String realPath = "C:\\KHFinal_Project-workspace\\Persfume_Project\\src\\main\\webapp\\resources\\classUploadFiles\\";
-			System.out.println(realPath);
+			String savePath = session.getServletContext()
+					 .getRealPath("/resources/uploadFiles/oneClass/");
+			System.out.println(savePath);
 			
 			// 7. 경로와 수정파일명 합체 후 파일을 업로드해주기
 			// > MultipartFile 객체가 제공하는
 			//   transferTo 메소드를 이용함
 			try {
 				
-				upfile.transferTo(new File(realPath + changeName));
+				upfile.transferTo(new File(savePath + changeName));
 			
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();

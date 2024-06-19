@@ -27,6 +27,7 @@ public class OneClassDao {
 		
 		int result = 1;
 		for(OneClassImg oci : ociList) {
+			System.out.println(oci);
 			result *= sqlSession.insert("oneClassMapper.insertOneClassImg", oci);
 		}
 		
@@ -49,7 +50,30 @@ public class OneClassDao {
 	public int updateOneClass(SqlSessionTemplate sqlSession, OneClass oc) {
 		return sqlSession.update("oneClassMapper.updateOneClass",oc);
 	}
+	
+	public ArrayList<OneClassRegist> selectRegistList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("oneClassMapper.selectRegistList");
+	}
 
+	public int deleteOneClass(SqlSessionTemplate sqlSession, int ocno) {
+		return sqlSession.update("oneClassMapper.deleteOneClass",ocno);
+	}
+	
+	public int restoreOneClass(SqlSessionTemplate sqlSession, int ocno) {
+		return sqlSession.update("oneClassMapper.restoreOneClass",ocno);
+	}
+	
+	public int updateOneClassImg(SqlSessionTemplate sqlSession, ArrayList<OneClassImg> ociList) {
+		int result = 1;
+		for(int i = 0 ; i < ociList.size(); i++) {
+			System.out.println("히히" + ociList.get(i));
+			result *= sqlSession.update("oneClassMapper.updateOneClassImg", ociList.get(i));
+			
+			System.out.println("킥킥" + result);
+		}
+		
+		return result;
+	}
 	
 
 }

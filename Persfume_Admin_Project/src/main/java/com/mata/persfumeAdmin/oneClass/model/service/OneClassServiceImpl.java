@@ -69,6 +69,28 @@ public class OneClassServiceImpl implements OneClassService {
 		return oneClassDao.updateOneClass(sqlSession, oc);
 	}
 	
+	@Override
+	public ArrayList<OneClassRegist> selectRegistList() {
+		return oneClassDao.selectRegistList(sqlSession);
+	}
+	
+	@Override
+	public int deleteOneClass(int ocno) {
+		return oneClassDao.deleteOneClass(sqlSession, ocno);
+	}
+	
+	@Override
+	public int updateOneClassImg(ArrayList<OneClassImg> ociList) {
+		return oneClassDao.updateOneClassImg(sqlSession, ociList);
+	}
+	
+	@Override
+	public int restoreOneClass(int ocno) {
+		return oneClassDao.restoreOneClass(sqlSession, ocno);
+	}
+
+
+	
 	
 
 	
@@ -146,6 +168,12 @@ public class OneClassServiceImpl implements OneClassService {
         br.close();
         conn.disconnect();
     }
+
+
+
+
+
+
 
 
 

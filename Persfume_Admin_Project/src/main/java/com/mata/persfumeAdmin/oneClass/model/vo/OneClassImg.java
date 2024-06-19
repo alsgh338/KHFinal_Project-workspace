@@ -18,4 +18,7 @@ public class OneClassImg {
 	private int imgType;
 	private String status;
 	private int refCno;
+	
+	
+	private String prevClassImgPath;
 }

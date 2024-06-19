@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +48,7 @@
             background-color: transparent;
     	}
     	
-    	td>div>div{
+    	.uploadImg>div>.delete-btn{
  	        background-color: transparent;
    			margin : 0;
    			padding : 0;
@@ -61,8 +62,13 @@
     		z-index: 999;
     	}
     	
-    	td>div>div:hover{
+    	.uploadImg>div>.delete-btn:hover{
     		background-color:lightgray;
+    	}
+    	
+    	.uploadImg>div{
+    		width: 100%;
+    		height: 100%;
     	}
     	
 	   	.uploadImg>img{
@@ -73,7 +79,7 @@
             border: none;
         }
         
-        .uploadImg:hover{
+        .uploadImg>img:hover{
         	background-color: lightgray;
         }
         
@@ -114,46 +120,91 @@
                                 </div>
                                 <div class="card-body">
 	                                <form action="update.oc" method="post" enctype="multipart/form-data">
-	                                	<input type="hidden" name="classNo" value="${oc.classNo}">
+	                                	<input type="hidden" name="classNo" value="${requestScope.oc.classNo}">
 	                                	<table class="table">
 	                                		<tr>
 	                                			<th colspan="2">클래스 명</th>
 	                                			<td colspan="4">
-	                                				<input type="text" class="form-control form-control-user"  value="${oc.className}" name="className" placeholder="클래스명" required >
+	                                				<input type="text" class="form-control form-control-user"  value="${requestScope.oc.className}" name="className" placeholder="클래스명" required >
 	                               				</td>
 	                               				<th>강사명</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" value="${oc.classTeacher}" name="classTeacher" placeholder="강사명" required >
+	                                				<input type="text" class="form-control form-control-user" value="${requestScope.oc.classTeacher}" name="classTeacher" placeholder="강사명" required >
 	                               				</td>
 	                               				<th>최대 수강 인원</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" value="${oc.studentMaxNo}" name="studentMaxNo" placeholder="최대 수강 인원" required >
+	                                				<input type="text" class="form-control form-control-user" value="${requestScope.oc.studentMaxNo}" name="studentMaxNo" placeholder="최대 수강 인원" required >
 	                               				</td>
 	                                		</tr>
 	                                		<tr rowspan="3">
 	                                			<th colspan="2">클래스 설명</th>
 	                                			<td colspan="10">
-	                                				<textarea class="form-control" rows="20" name="classDetail" required style="resize: none;">${oc.classDetail}</textarea>
+	                                				<textarea class="form-control" rows="20" name="classDetail" required style="resize: none;">${requestScope.oc.classDetail}</textarea>
 	                               				</td>
 	                                		</tr>
 	                                		<tr>
 	                                			<th colspan="2">가격</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" value="${oc.price}" name="price" placeholder="클래스 가격" required >
+	                                				<input type="text" class="form-control form-control-user" value="${requestScope.oc.price}" name="price" placeholder="클래스 가격" required >
 	                               				</td>
 	                               				<th colspan="2">개강일자</th>
 	                                			<td>
-	                                				<input type="date" class="form-control form-control-user" value="${oc.startDate}" name="startDate" required >
+	                                				<input type="date" class="form-control form-control-user" value="${requestScope.oc.startDate}" name="startDate" required >
 	                               				</td>
 	                                			<th colspan="1">시작 시간</th>
 	                                			<td>
-	                                				<input type="time" class="form-control form-control-user" value="${oc.startTime}" name="startTime" required >
+	                                				<input type="time" class="form-control form-control-user" value="${requestScope.oc.startTime}" name="startTime" required >
 	                               				</td>
 	                               				<th colspan="1">종료 시간</th>
 	                                			<td>
-	                                				<input type="time" class="form-control form-control-user" value="${oc.endTime}" name="endTime" required >
+	                                				<input type="time" class="form-control form-control-user" value="${requestScope.oc.endTime}" name="endTime" required >
 	                               				</td>
 	                                		</tr>
+	                                		<tr>
+		                                		<th colspan="2">첨부파일(썸네일)</th>
+	                                			<td colspan="8">
+	                                				<input type="hidden" name="prevThumb" value="${requestScope.oc.thumbnailImg}">
+													<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name=upThumbnail placeholder="첨부파일" style="display:none">
+	                                				<div class="uploadImg">
+	                                					<c:choose>
+	                                						<c:when test="${not empty requestScope.oc.thumbnailImg }">
+	                                							<div>
+																	<img src="${requestScope.oc.thumbnailImg }" alt="${requestScope.oc.thumbnailImg }">
+																	<div class="delete-btn">
+							    		                				<img src="resources/img/x-circle.svg" alt="x-circle" onclick="deleteImg(this);">
+																	</div>
+																</div>
+	                                						</c:when>
+	                                						<c:otherwise>
+	                                							<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
+	                                						</c:otherwise>
+	                                					</c:choose>
+													</div>	                               				
+                                				</td>
+	                                		</tr>
+	                                		<tr>
+		                                		<th colspan="2">첨부파일</th>
+	                                			<td colspan="8">
+	                                				<input type="hidden" name="classImgPath" value="${ requestScope.ociList[0].classImgPath}">
+	                                				<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upFiles" placeholder="첨부파일" style="display:none">
+	                                				<div class="uploadImg">
+	                                					<c:choose>
+	                                						<c:when test="${ not empty requestScope.ociList}">
+	                                							<div>
+																	<img src="${ requestScope.ociList[0].classImgPath}" alt="${ requestScope.ociList[0].classImgPath}">
+																	<div class="delete-btn">
+							    		                				<img src="resources/img/x-circle.svg" alt="x-circle" onclick="deleteImg(this);">
+																	</div>
+																</div>
+	                                						</c:when>
+	                                						<c:otherwise>
+	                                							<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
+	                                						</c:otherwise>
+	                                					</c:choose>
+													</div>
+	                               				</td>
+	                                		</tr>
+	                                		
 	                                	</table>
 	                                    
 	                                    <hr>
@@ -175,23 +226,7 @@
             
  			  <script>
 			   
-			   $(function() {
-			   	
-				   	/* $(".uploadImg>img").on('click', function(){
-				   		const imgInput = $(this).parent().prev();
-				   		const imgType = imgInput.attr("name");
-				   		imgInput.click();
-				   		
-				   		imgInput.on('change', function(e) {
-				   			getImageFiles(e, imgType);
-				   		});
-				   			
-				   	}); */
-				   	
-				   	
-				});
-			   
-			   function uploadImg(element){
+ 			 function uploadImg(element){
 				   const imgInput = $(element).parent().prev();
 			   		const imgType = imgInput.attr("name");
 			   		

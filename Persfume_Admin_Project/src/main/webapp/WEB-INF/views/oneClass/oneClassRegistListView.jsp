@@ -55,92 +55,59 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">전체 클래스 리스트</h1>
+                    <h1 class="h3 mb-2 text-gray-800">전체 클래스 예약 현황</h1>
                     <p class="mb-4"></p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">원데이 클래스 리스트</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">원데이 클래스 예약 리스트</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>클래스 번호</th>
+                                            <th>신청 번호</th>
                                             <th>클래스 명</th>
-                                            <th>강사명</th>
-                                            <th>최대 수강 인원</th>
-                                            <th>현재 강의 신청 인원</th>
-                                            <th>가격</th>
-                                            <th>시작시간</th>
-                                            <th>종료시간</th>
-                                            <th>개강일자</th>
-                                            <th>등록일</th>
-                                            <th>폐강여부</th>
-                                            <th>정보 수정</th>
-                                            <th>Toggle</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="13">
-                                            	<div id="sb-btn">
-	                                            	<a href="enrollForm.oc" class="btn btn-primary btn-sm btn-icon-split">
-				                                        <span class="icon text-white-50">
-				                                            <i class="fas fa-flag"></i>
-				                                        </span>
-				                                        <span class="text">신규 클래스 등록</span>
-				                                    </a>
-			                                    </div>
-                                            </th>
+                                            <th>신청자 명</th>
+                                            <th>결제 번호</th>
+                                            <th>결제 가격</th>
+                                            <th>신청 인원</th>
+                                            <th>신청일</th>
+                                            <th>취소일</th>
+                                            <th>상태</th>
+                                            <th>예약 취소</th>
                                             
                                         </tr>
-                                    </tfoot>
+                                    </thead>
+
                                     <tbody>
                                     	<c:forEach var="item" items="${list}">
              		                             <tr>
-		                                            <td>${item.classNo}</td>
-		                                            <td>${item.className}</td>
-		                                            <td>${item.classTeacher}</td>
-		                                            <td>${item.studentMaxNo}</td>
-		                                            <td>${item.currentStudent}</td>
-		                                            <td>${item.price}</td>
-		                                            <td>${item.startTime}</td>
-		                                            <td>${item.endTime}</td>
-		                                            <td>${item.startDate}</td>
-		                                            <td>${item.enrollDate}</td>
-		                                            <td>${item.status}</td>
+		                                            <td>${item.registNo }</td>
+		                                            <td>${item.classNo }</td>
+		                                            <td>${item.memNo }</td>
+		                                            <td>${item.registPaycode }</td>
+		                                            <td>${item.registPrice }</td>
+		                                            <td>${item.registPersonNo }</td>
+		                                            <td>${item.registDate}</td>
+		                                            <c:choose>
+		                                            	<c:when test="${ not empty item.registCancleDate}">
+		                                            		<td>${item.registCancleDate }</td>
+		                                            	</c:when>
+		                                            	<c:otherwise>
+		                                            		<td>----</td>
+		                                            	</c:otherwise>
+		                                            </c:choose>
+		                                            <td>${item.status }</td>
 		                                            <td>
-		                                            	<a href="detail.oc?ocno=${item.classNo}"+ class="btn btn-info btn-sm btn-icon-split">
+			                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check">
 					                                        <span class="icon text-white-50">
-					                                            <i class="fas fa-info-circle"></i>
+					                                            <i class="fas fa-trash"></i>
 					                                        </span>
-					                                        <span class="text">수정</span>
+					                                        <span class="text">삭제</span>
 					                                    </a>
-		                                            </td>
-		                                            <td>
-		                                            	<c:choose>
-		                                            		<c:when test="${item.status eq 'Y'}">
-			                                            		<a class="btn btn-danger btn-sm btn-icon-split delete-class" data-toggle="modal" data-target="#delete-check" onclick="deleteClass(this);">
-							                                        <span class="icon text-white-50">
-							                                            <i class="fas fa-trash"></i>
-							                                        </span>
-							                                        <span class="text">삭제</span>
-							                                    </a>
-		                                            		</c:when>
-		                                            		<c:otherwise>
-			                                            		<a class="btn btn-success btn-sm btn-icon-split delete-class" data-toggle="modal" data-target="#restore-check" onclick="reStoreClass(this);">
-							                                        <span class="icon text-white-50">
-							                                            <i class="fas fa-redo"></i>
-							                                        </span>
-							                                        <span class="text">복구</span>
-							                                    </a>
-		                                            		</c:otherwise>
-		                                            	
-		                                            	</c:choose>
-			                                            
 		                                            </td>
 	                                            </tr>
 				                    		   
@@ -179,43 +146,12 @@
 			        <button type="button" class="close" data-dismiss="modal">&times;</button>
 			      </div>
 
-				  <form action="delete.oc" method="post">			
+				  <form action="adDelete.pk" method="post">			
 			      <!-- Modal body -->
 			      <div class="modal-body">
-			      <input type="hidden" name="ocno" class="classNo">
+			      <input type="hidden" name="classNo" class="classNo">
 
 			        정말 해당 클래스를 삭제하시겠습니까?
-			      </div>
-			
-			      <!-- Modal footer -->
-			      <div class="modal-footer">
-			        <button type="submit" class="btn btn-danger">네</button>
-			        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
-			      </div>
-				</form>
-			    </div>
-			  </div>
-			</div>
-			<!-- End of Modal-->
-			
-			
-            <!-- The Modal -->
-			<div class="modal" id="restore-check">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			
-			      <!-- Modal Header -->
-			      <div class="modal-header">
-			        <h4 class="modal-title">클래스 복구</h4>
-			        <button type="button" class="close" data-dismiss="modal">&times;</button>
-			      </div>
-
-				  <form action="restore.oc" method="post">			
-			      <!-- Modal body -->
-			      <div class="modal-body">
-			      <input type="hidden" name="ocno" class="classNo">
-
-			        정말 해당 클래스를 복구하시겠습니까?
 			      </div>
 			
 			      <!-- Modal footer -->
@@ -278,17 +214,14 @@
     <script src="js/demo/datatables-demo.js"></script>
     
     <script>
-    
-    	function deleteClass(element) {
-    		let ocno = $(element).parent().siblings().eq(0).text().trim();
-			$("#delete-check .modal-body>.classNo").attr("value", ocno);
-		}
-    	
-    	function reStoreClass(element) {
-    		let ocno = $(element).parent().siblings().eq(0).text().trim();
-			$("#restore-check .modal-body>.classNo").attr("value", ocno);
-		}
-    	
+    	$(function(){
+    		$(".delete-parking").click(function () {
+    			let classNo = $(this).parent().prev().prev().children().text().trim();
+    			$(".modal-body>.classNo").attr("value", ClassNo);
+				
+			});
+    		
+    	});
     </script>
 
 </body>

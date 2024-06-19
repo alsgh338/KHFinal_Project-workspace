@@ -69,7 +69,7 @@
 	         , C.STATUS
                          
 		  FROM CLASS C
-		 WHERE C.STATUS = 'Y'
+		  ORDER BY C.CLASS_NO DESC
 	</select>
 	
 	
@@ -145,6 +145,7 @@
 			  FROM CLASS_IMG
 			 WHERE REF_CNO = #{ocno}
 			   AND STATUS = 'Y'
+			   AND CLASS_IMG_TYPE = 2
 	</select>
 	
 	<update id="updateOneClass"
@@ -161,6 +162,40 @@
 			WHERE CLASS_NO = #{classNo}
 	
 	</update>
+
+	<update id="deleteOneClass"
+		parameterType="int">
+		 UPDATE CLASS
+		    SET STATUS = 'N'
+		WHERE CLASS_NO = #{ocno}
+	</update>
+	
+	<update id="restoreOneClass"
+		parameterType="int">
+		 UPDATE CLASS
+		    SET STATUS = 'Y'
+		WHERE CLASS_NO = #{ocno}
+	</update>
+	
+	<select id="selectRegistList"
+		resultMap="oneClassRegistResultSet">
+			SELECT CR.REGIST_NO , CR.REGIST_PAYCODE 
+			        , CR.REGIST_PRICE , CR.REGIST_PERSON_NO
+			        ,TO_CHAR(CR.REGIST_DATE, 'YYYY-MM-DD') AS "REGIST_DATE" ,TO_CHAR(CR.REGIST_CANCEL_DATE, 'YYYY-MM-DD') AS "REGIST_CANCEL_DATE"
+			        ,CR.STATUS , M.MEM_NAME AS MEM_NO, C.CLASS_NAME AS CLASS_NO
+			  FROM CLASS_REGIST CR
+			  JOIN MEMBER M ON (M.MEM_NO = CR.MEM_NO) 
+			  JOIN CLASS C ON(C.CLASS_NO = CR.CLASS_NO)
+  	</select>
+  	
+  	
+  		<update id="updateOneClassImg" parameterType="oneClassImg">
+		    UPDATE CLASS_IMG
+			   SET CLASS_IMG_PATH = #{classImgPath},
+			       CLASS_IMG_ORIGIN = #{classImgOrigin},
+			       CLASS_IMG_CHANGE = #{classImgChange}
+			 WHERE CLASS_IMG_PATH = #{prevClassImgPath}
+		</update>
 	
 
 

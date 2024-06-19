@@ -18,7 +18,7 @@ public class OneClassRegist {
 	private String registDate;
 	private String registCancleDate;
 	private String status;
-	private int classNo;
-	private int memNo;
+	private String classNo;
+	private String memNo;
 	
 }

@@ -66,8 +66,8 @@
              , C.CLASS_DETAIL
              , C.PRICE
              , CIMG.CLASS_IMG_PATH AS THUMBNAIL_IMG
-		     , TO_CHAR(C.START_TIME, 'YYYY-MM-DD') AS "START_TIME"
-             , TO_CHAR(C.END_TIME, 'YYYY-MM-DD') AS "END_TIME"
+		     , TO_CHAR(C.START_TIME, 'HH24:MI') AS "START_TIME"
+             , TO_CHAR(C.END_TIME, 'HH24:MI') AS "END_TIME"
              , TO_CHAR(C.START_DATE, 'YYYY-MM-DD') AS "START_DATE"
              , TO_CHAR(C.ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
              , (SELECT COUNT(*) 
@@ -89,8 +89,8 @@
              , C.STUDENT_MAXNO
              , C.CLASS_DETAIL
              , C.PRICE
-		     , TO_CHAR(C.START_TIME, 'HH:MI') AS "START_TIME"
-             , TO_CHAR(C.END_TIME, 'HH:MI') AS "END_TIME"
+		     , TO_CHAR(C.START_TIME, 'HH24:MI') AS "START_TIME"
+             , TO_CHAR(C.END_TIME, 'HH24:MI') AS "END_TIME"
              , TO_CHAR(C.START_DATE, 'YYYY-MM-DD') AS "START_DATE"
              , TO_CHAR(C.ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
 			 , CIMG.CLASS_IMG_PATH AS THUMBNAIL_IMG

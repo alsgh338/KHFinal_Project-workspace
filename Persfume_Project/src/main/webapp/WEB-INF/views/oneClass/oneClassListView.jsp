@@ -187,7 +187,7 @@
 			            <div class="oneday-class">
 				            <input type="hidden" value="${ oc.classNo }">
 			                <div class="class-img">
-			                    <img src= ${oc.thumbnailImg } alt="쌈네일">
+			                    <img src= "${pageContext.request.contextPath}/../persfumeAdmin/${oc.thumbnailImg}" alt="쌈네일">
 			                </div>
 			
 			                <div class="class-data">

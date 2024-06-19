@@ -170,7 +170,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">원데이 클래스 관리 기능 :</h6>
                         <a class="collapse-item" href="list.oc">원데이 클래스 조회</a>
-                        <a class="collapse-item" href="adEnrollForm.pk">예약 현황 확인</a>
+                        <a class="collapse-item" href="registList.oc">예약 현황 조회</a>
+                        <a class="collapse-item" href="">클래스 후기 조회</a>
                     </div>
                 </div>
             </li>
