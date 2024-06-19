@@ -274,11 +274,8 @@
         </div>
     </div>
 
-    <div style="background-color: lightblue;">
-        <br><br><br><br><br>
-        푸터다 
-        <br><br><br><br><br>
-    </div>
+   	<jsp:include page="../common/footer.jsp"/>
+
 
     <script>
         $(function(){
@@ -361,14 +358,15 @@
     					success : function(result) {
     						// 성공시 
     						console.log("일단1");
-    						if(result == 1){
+    						if(result === "Success"){
     							const message = "결제에 성공하였습니다. 감사합니다.";
   	    	    		        window.alert(message);
   	    	    				location.href = 'complete.oc?ocrno='+merchant_uid;
     						} else {
-    							console.log("일단2");
+    							console.log(result);
     							const message2 = "결제에 실패하였습니다. 다시 시도해주세요.";
    	    		            	window.alert(message2);
+   	    		            	location.href = "detail.oc?ocno="+${ requestScope.oc.classNo};
     						}
     	    				 
     					},

@@ -174,7 +174,7 @@
             width: 300px;
         }
 
-        .content-main>.main-wrap>.class-reservation>.class-reservation-btn>button{
+        .content-main>.main-wrap>.class-reservation>.class-reservation-btn>button:not(:disabled){
             font-size: 50px;
             border: none;
             border-radius: 15px;
@@ -182,7 +182,15 @@
             background-color: #072f57;
         }
         
-        .content-main>.main-wrap>.class-reservation>.class-reservation-btn>button:hover,
+        .content-main>.main-wrap>.class-reservation>.class-reservation-btn>button[disabled]{
+            font-size: 50px;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            background-color: lightgray;
+        }
+        
+        .content-main>.main-wrap>.class-reservation>.class-reservation-btn>button:not(:disabled):hover,
         .content-main>.class-detail-data>.class-detail-menu>button:hover{
         	background-color: #134b83;
         }
@@ -360,8 +368,15 @@
                        <div class="class-price" id="origin"><fmt:formatNumber value="${requestScope.oc.price}" type="number" groupingUsed="true" /></div>
                        <div class="class-price" id="change"><fmt:formatNumber value="${requestScope.oc.price*(9/10)}" type="number" groupingUsed="true" /></div>
                    </div>
-                   <div class="class-reservation-btn"> 
-                       <button type="button"">예약하기</button>
+                   <div class="class-reservation-btn">
+                   		<c:choose>
+                   			<c:when test="${ requestScope.oc.currentStudent} >= ${ requestScope.oc.studentMaxNo}">
+                       			<button disabled>예약 종료</button>
+                   			</c:when>
+                   			<c:otherwise>
+                       			<button type="button">예약하기</button>
+                   			</c:otherwise>
+                   		</c:choose>
                    </div>
                </div>
            </div>

@@ -50,7 +50,7 @@
 		  id="multipartResolver">
 		<property name="defaultEncoding" value="UTF-8"/>
 		
-		<property name="maxUploadSize" value="10000000" />
+		<property name="maxUploadSize" value="55000000" />
 	</bean>
 	
 	<!-- CASE 1. 단일 property 파일 사용 시, 간단하게 사용하는 방법 -->

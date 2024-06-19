@@ -1,10 +1,9 @@
 package com.mata.persfume.oneClass.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-import org.json.simple.JSONObject;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -36,6 +35,12 @@ public class OneClassController {
 	@Value("${key.imp}")
     private String impApiKey;
 	
+    @Value("${key.impKey}")
+    private String apiKey;
+ 
+    @Value("${key.impSecretkey}")
+    private String secretKey;
+	
 	//클래스 목록 조회 컨트롤러 
 	@GetMapping("list.oc")
 	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
@@ -62,7 +67,7 @@ public class OneClassController {
 	
 	// 클래스 상세 조회 컨트롤러
 	@GetMapping("detail.oc")
-	public String selectOneClass(int ocno,
+	public String selectOneClass(int ocno,HttpSession session,
 									Model model) {
 		
 		OneClass oc = oneClassService.selectOneClass(ocno);
@@ -80,7 +85,8 @@ public class OneClassController {
 			return "oneClass/oneClassDetailView";
 		} else {
 			// 클래스 정보를 찾지 못했을 경우 에러페이지 or alert 메세지
-			return "oneClass/oneClassDetailView";
+			session.setAttribute("alertMsg", "해당 클래스의 정보를 찾지 못했습니다.");
+			return "redirect:/list.oc";
 		}
 
 	}
@@ -99,23 +105,56 @@ public class OneClassController {
 	
 	// 클래스 예약 화면 컨트롤러
 	@GetMapping("reservation.oc")
-	public String reservationClass(int ocno,Model model) {
+	public String reservationClass(int ocno,HttpSession session,Model model) {
 
 		OneClass oc = oneClassService.selectOneClass(ocno);
-		model.addAttribute("oc",oc);
-		model.addAttribute("impApiKey",impApiKey);
 		
-	
-		return "oneClass/oneClassReservationView";
+		if( oc.getCurrentStudent() >= oc.getStudentMaxNo()) {
+			session.setAttribute("alertMsg", "클래스 정원이 모두 찼습니다.");
+			return "redirect:/list.oc";
+			
+		} else {
+			model.addAttribute("oc",oc);
+			model.addAttribute("impApiKey",impApiKey);
+			return "oneClass/oneClassReservationView";
+		}
+		
+		
+
 	}
 	
 	@ResponseBody
 	@PostMapping(value="regist.oc", produces="text/html; charset=UTF-8")
 	public String insertOneClassReigst(OneClassRegist ocr)  throws Exception{
-				
-		int result = oneClassService.insertOneClassReigst(ocr);		
 		
-		return String.valueOf(result);
+		OneClass oc = oneClassService.selectOneClass(ocr.getClassNo());
+				
+		if( oc.getCurrentStudent() >= oc.getStudentMaxNo()) {
+			return "Fail";
+			
+		} else {
+			try {
+				
+				int result = oneClassService.insertOneClassReigst(ocr);
+				
+				if(result > 0) { // DB에 해당 결제 정보 저장 성공-> 결제 O + 데이터 O => 성공
+					return "Success";
+					
+				} else { // DB에 해당 결제 정보 저장 실패 -> 결제 O + 데이터 X => 기존 결제 정보 환불 진행
+					
+					String token = oneClassService.getToken(apiKey, secretKey);
+					oneClassService.refundRequest(token, ocr.getRegistNo(), "결제 정보 저장 오류");
+					return "Fail";
+				}
+				
+			} catch (Exception e) {
+				
+				String token = oneClassService.getToken(apiKey, secretKey);
+				oneClassService.refundRequest(token, ocr.getRegistNo(), e.getMessage());
+				return "Fail";
+			}
+		}
+		
 	}
 	
 	

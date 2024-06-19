@@ -1,5 +1,6 @@
 package com.mata.persfume.oneClass.model.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.mata.persfume.common.model.vo.PageInfo;
@@ -35,6 +36,13 @@ public interface OneClassService {
 	
 	// 클래스 신청 정보 조회
 	OneClassRegist selectOneClassRegist(String ocrno);
+	
+	
+	// 결제 <-> 환불 관련 토큰 발급
+	String getToken(String apiKey, String secretKey) throws IOException;
+	
+	// 토큰 및 주문 번호로 활불 진행
+	void refundRequest(String access_token, String merchant_uid, String reason) throws IOException;
 	
 	
 }

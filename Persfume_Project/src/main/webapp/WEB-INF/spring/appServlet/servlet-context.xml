@@ -79,7 +79,8 @@
 			<mapping path="/delete.fo" />
 			<mapping path="/delete.me" />
 			<mapping path="/update.me" />
-			<beans:bean class="com.mata.persfume.common.interceptor.LoginInterceptor"
+<!-- 			<mapping path="/reservation.oc" />
+ -->			<beans:bean class="com.mata.persfume.common.interceptor.LoginInterceptor"
 						id="loginInterceptor"/>
 		</interceptor>
 	</interceptors>
