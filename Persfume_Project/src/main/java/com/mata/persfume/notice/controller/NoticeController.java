@@ -77,7 +77,6 @@ public class NoticeController {
 	public ArrayList<Notice> showMainNotice(Model model){
 		
 		ArrayList<Notice> list = noticeService.showMainNotice();
-		
 		return list;
 	}
 	

@@ -117,7 +117,6 @@ public class ProductController {
 			mv.addObject("errorMsg", "상품 등록에 실패하였습니다. 다시 시도해주세요").setViewName("common/errorPage");
 		}
 		
-		
 		return "redirect:/proList.pr";
 	}
 	
@@ -225,7 +224,7 @@ public class ProductController {
 			// 컨텍스트 경로를 절대 경로로 변환하기
 			
 			String savePath = session.getServletContext()
-					 .getRealPath("/resources/uploadFiles/oneClass/");
+					 .getRealPath("/resources/uploadFiles/product/");
 			System.out.println(savePath);
 			
 			// 7. 경로와 수정파일명 합체 후 파일을 업로드해주기

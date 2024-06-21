@@ -218,5 +218,10 @@ public class ProductDao {
 		return sqlSession.update("productMapper.orderDelivery", ono);
 	}
 	
+	// 메인페이지 썸네일 12개 출력용 - 2024-06-21 윤민호
+	public ArrayList<ProductImg> getProductThumbnail(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.getProductThumbnail");
+	}
+	
 	
 }// 클래스종료

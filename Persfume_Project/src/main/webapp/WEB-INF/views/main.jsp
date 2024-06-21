@@ -486,26 +486,7 @@
                 <div id="content_1">
                     <div class="swiper">
                         <div class="swiper-wrapper" id="productList">
-                            <div class="swiper-slide">
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                                <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                            </div>
+                            
                         </div>
                     
                         <div class="swiper-pagination"></div>
@@ -664,6 +645,7 @@
             // 페이지가 로드될 때 이벤트 목록을 가져오는 함수 호출
             getEventList();
             getNoticeList();
+            getProductThumbnail();
         });
         
          function getEventList() {
@@ -720,8 +702,8 @@
                  					 	'<img src="../persfumeAdmin/' + event.eventImgPath + '" alt="' + event.eventTitle + '">' +
                  					 '</div>' +
                                  '</div>';
-                 eventListDiv.append(eventHtml);
              }
+             eventListDiv.append(eventHtml);
          }
         
          function displayNoticeList(noticeList) {
@@ -735,26 +717,24 @@
                  					'<td>' + notice.noticeTitle + '</td>' +
                  					'<td>' + notice.createDate + '</td>' +
                  				  '</tr>';
-                	 
-                 noticeListDiv.append(noticeHtml);
              }
+             noticeListDiv.append(noticeHtml);
          }
+         
          
          function displayProductThumbnail(productList){
         	 var productListDiv = $("#productList");
-        	 
+        	 var productHtml = ""; 
         	 // 받아온 상품 목록 반복하여 표시
-        	 for(var i=0; i<productList.length; i+=3)
-        		 // <div class="swiper-slide">
-        		 for(var j=i; j<i+3; j++)
-        			 //<div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                     //<div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-                     //<div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
-        	 
-        			 i가 0일때 j는 0 1 2 
-        			 i가 3일때 j는 3 4 5
-        			    6       6 7 8
-        			    9       9 10 11
+        	 for(var i=0; i<productList.length; i+=3){
+        		  productHtml += "<div class='swiper-slide'>";
+        		 for(var j=i; j<i+3; j++){
+        			 var jImg = productList[j].productImgPath;
+        			 productHtml += "<div class='swiper-img'><img src='../persfumeAdmin/" + jImg + "' alt='test'></div>";
+        		 }
+        		 productHtml += "</div>";
+        	 }
+        	 productListDiv.append(productHtml);	 
          }
                   
          $(function(){

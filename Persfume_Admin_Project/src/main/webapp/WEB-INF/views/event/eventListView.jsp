@@ -89,7 +89,7 @@
 							                                        <span class="icon text-white-50">
 							                                            <i class="fas fa-trash"></i>
 							                                        </span>
-							                                        <span>삭제</span>
+							                                        <span class="text">삭제</span>
 							                                    </a>
 		                                           	 		</td>
 		                                            	</c:when>
@@ -99,7 +99,7 @@
 							                                        <span class="icon text-white-50">
 							                                            <i class="fas fa-redo"></i>
 							                                        </span>
-							                                        <span>복구</span>
+							                                        <span class="text">복구</span>
 							                                    </a>
 		                                           	 		</td>
 		                                            	</c:otherwise>
@@ -166,7 +166,7 @@
 			
 			      <!-- Modal Header -->
 			      <div class="modal-header">
-			        <h4 class="modal-title">클래스 삭제</h4>
+			        <h4 class="modal-title">클래스 복구</h4>
 			        <button type="button" class="close" data-dismiss="modal">&times;</button>
 			      </div>
 

@@ -518,5 +518,15 @@
 			WHERE ORDER_NO = #{orderNo}  
     	</update>
 	
-	
+	<select id="getProductThumbnail" resultMap="productImgResultSet">
+	    SELECT PRODUCT_IMG_PATH
+	      FROM (
+	          SELECT PRODUCT_IMG_PATH,
+	                 ROW_NUMBER() OVER (ORDER BY DBMS_RANDOM.VALUE) AS RNUM
+	          FROM PRODUCT_IMG
+	          JOIN PRODUCT USING (PRODUCT_NO)
+	          WHERE IMG_TYPE = '1'
+	      )
+	      WHERE RNUM &lt;= 3
+	</select>
 </mapper>

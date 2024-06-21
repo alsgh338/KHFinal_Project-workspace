@@ -129,9 +129,6 @@
 		ORDER BY rn ASC
 	</select>
 	
-	
-	
-	
 	<insert id="insertEvent"
 			parameterType="event">
 		INSERT INTO EVENT(EVENT_NO

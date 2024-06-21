@@ -910,4 +910,15 @@ return changeName;
 		
 	}
 	
+	// 메인페이지 썸네일 12개 출력용 - 2024-06-21 윤민호
+	@GetMapping("getProductThumbnail")
+	@ResponseBody
+	public ArrayList<ProductImg> getProductThumbnail(Model model) {
+		
+		ArrayList<ProductImg> list = productService.getProductThumbnail();
+		
+		return list;
+	}
+	
+	
 }// 클래스종료

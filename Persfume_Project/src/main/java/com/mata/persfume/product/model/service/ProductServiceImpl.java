@@ -265,6 +265,12 @@ public class ProductServiceImpl implements ProductService {
 	public int orderDelivery(int ono) {
 		return  productDao.orderDelivery(sqlSession, ono);
 	}
+
+	// 메인페이지 썸네일 12개 출력용 - 2024-06-21 윤민호
+	@Override
+	public ArrayList<ProductImg> getProductThumbnail() {
+		return productDao.getProductThumbnail(sqlSession);
+	}
 	
 
 

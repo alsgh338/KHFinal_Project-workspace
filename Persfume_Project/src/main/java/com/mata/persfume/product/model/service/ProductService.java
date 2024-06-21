@@ -103,6 +103,8 @@ public interface ProductService {
 		int updateProductImg2(ProductImg pi);
 		// 상품 배송 출발 버튼 클릭 
 		int orderDelivery(int ono);
+		// 메인페이지 썸네일 12개 출력용 - 2024-06-21 윤민호
+		ArrayList<ProductImg> getProductThumbnail();
 		
 		
 		
