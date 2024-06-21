@@ -225,4 +225,28 @@ public class OneClassController {
 				
 			}
 		}
+		
+	// 클래스 리뷰 작성
+	@PostMapping("insertReview.oc")
+	public String insertReview(OneClassReview ocr, HttpSession session, Model model) {
+		
+		System.out.println(ocr);
+		
+		int result = oneClassService.insertReview(ocr);
+		
+		if(result >= 0) { // 리뷰 작성 성공
+			session.setAttribute("alertMsg", "리뷰를 성공적으로 작성하였습니다.");
+		} else { // 리뷰 작성 실패
+			session.setAttribute("alertMsg", "리뷰 작성에 실패했습니다.");
+			
+		}
+		
+		return "redirect:/myPage.me";
+		
+	}
+		
+		
+		
+		
+		
 }

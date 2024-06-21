@@ -188,14 +188,18 @@
 
         
         #sub-btns>#sub-btn1{
+            --animate-delay: 1.5s; 
+            --animate-duration: 2.0s;
+        }
+        #sub-btns>#sub-btn2{
             --animate-delay: 1.0s; 
             --animate-duration: 1.5s;
         }
-        #sub-btns>#sub-btn2{
-            --animate-delay: 0.5s; 
-            --animate-duration: 1s;
-        }
         #sub-btns>#sub-btn3{
+            --animate-delay: 0.5s; 
+            --animate-duration: 1.0s;
+        }
+        #sub-btns>#sub-btn4{
             --animate-delay: 0.0s; 
             --animate-duration: .5s;
         }
@@ -267,14 +271,17 @@
 
     <div id="sub-btns" class="hidden">
     	<c:if test="${ not empty sessionScope.loginMember }">
-    	        <div class="side-btn animate__animated animate__fast" id="sub-btn1" >
-            <img src="resources/images/Chat.png" alt="dpgpdl dksskdhsp" onclick="openChatList();">
-        </div>
+	    	<div class="side-btn animate__animated animate__fast" id="sub-btn1" >
+	            <img src="resources/images/Chat.png" alt="dpgpdl dksskdhsp" onclick="openChatList();">
+	        </div>
     	</c:if>
         <div class="side-btn animate__animated animate__fast" id="sub-btn2">
-            <img src="resources/images/chatbot_white.png" alt="dpgpdl dksskdhsp">
+            <img src="resources/images/chatbot_white.png" alt="챗봇 연결">
         </div>
         <div class="side-btn animate__animated animate__fast" id="sub-btn3">
+            <img src="resources/images/infoIcon.png" alt="상담 연결" style="transform: scale(0.8);" onclick="openTawkTo();">
+        </div>
+        <div class="side-btn animate__animated animate__fast" id="sub-btn4">
             <img src="resources/images/chav-up.png" alt="페이지 상단 이동 키" style="transform: rotate(180deg);" onclick="moveTop();">
         </div>
         <div class="side-btn" id="toggle-btn">
@@ -294,6 +301,15 @@
 		    chatWindow.resizeTo(width, height);
 			
 		}
+	    
+	    function openTawkTo(){
+	    	let width = 600;
+	        let height = 800;
+	        let chatWindow = window.open('https://tawk.to/chat/6617a7fb1ec1082f04e12b98/1hr66gbrk', 'chat room', `width=${width}, height=${height}, resizable=no, location=no, status=no, scrollbars=no`);
+	        
+	     // 창의 크기를 고정시키기
+		    chatWindow.resizeTo(width, height);
+	    }
     
     
         $(function(){
@@ -320,7 +336,36 @@
                 });
                 document.querySelector("#toggle-btn").classList.toggle("close");
             });
+            
+            
+    		if(!document.cookie.includes("visit='Y'")) {
+    			
+    			var todayMidnight = new Date().setHours(0,0,0,0);
+    			
+    			var expireTime = new Date(new Date().setHours(0,0,0,0) + 24* 60 * 60 * 1000);
+
+    			document.cookie = "visit='Y'; expires=" + expireTime.toUTCString();
+    			
+    			visitCount();
+    		} else{
+    			console.log("쿠키쿠키");
+    		}
+    		console.log(document.cookie.includes("visit='Y'"));
         });
+        
+        function visitCount() {
+        	$.ajax({
+        		url : "visitcnt.me",
+        		type : "post",
+        		success : function (result) {
+        			console.log(result);
+    			} ,
+        		error : function () {
+    				
+    			} 
+        	});
+    		
+    	}
     </script>
     
      <!-- 네비게이션 바 스타일 스크립트 -->

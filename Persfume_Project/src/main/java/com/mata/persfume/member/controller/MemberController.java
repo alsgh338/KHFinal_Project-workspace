@@ -27,11 +27,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.mata.persfume.member.model.service.MemberService;
 import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.member.model.vo.PWDmember;
 import com.mata.persfume.oneClass.model.vo.OneClass;
 import com.mata.persfume.oneClass.model.vo.OneClassRegist;
+import com.mata.persfume.oneClass.model.vo.OneClassReview;
 import com.mata.persfume.product.model.vo.Favorites;
 import com.mata.persfume.product.model.vo.OrderDetail;
 import com.mata.persfume.product.model.vo.ProductReview;
@@ -722,6 +724,18 @@ public class MemberController {
 		return "member/myOrder";
 		
 		
+		
+	}
+	
+	
+	@ResponseBody
+	@PostMapping(value="visitcnt.me", produces="text/html; charset=UTF-8")
+	public String insertVisitCount() {
+		
+		Date today = new Date(System.currentTimeMillis());
+		
+		String result = String.valueOf(memberService.insertVisitCount(today));		
+		return result;
 		
 	}
 	

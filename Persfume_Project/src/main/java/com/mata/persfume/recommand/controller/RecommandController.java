@@ -31,14 +31,14 @@ public class RecommandController {
 		
 		
 		if(p != null) {
+			int countCoupon = recommandService.selectCoupon(memNo);
 			
-			int result = recommandService.insertCoupone(memNo);
-			
-			if(result > 0) {
+			if(countCoupon <= 0) {
+				recommandService.insertCoupone(memNo);
+			}
 				return new Gson().toJson(p);
-			} 
-			
-		} 
+		}
+		
 		return null;
 		
 	}

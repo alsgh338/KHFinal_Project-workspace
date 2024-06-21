@@ -73,6 +73,7 @@
 	 	<result column="STATUS" property="status"/>
 	 	<result column="CLASS_NO" property="classNo"/>
 	 	<result column="MEM_NO" property="memNo"/>
+	 	<result column="WRITE_REVIEW" property="writeReview"/>
 	 </resultMap>
 	 
  	 <resultMap id="ClassAboutResultSet"
@@ -239,10 +240,13 @@
 	<select id="selectClass"
 			parameterType="_int"
 			resultMap="ClassResultSet">
-			SELECT *
-			FROM CLASS_REGIST
-			WHERE MEM_NO = #{memNo}
-			      AND STATUS = 'Y'
+				SELECT C.*,
+				       CASE WHEN CR.CLASS_REVIEW_CONTENT IS NOT NULL THEN 1 ELSE 0 END AS WRITE_REVIEW
+				FROM CLASS_REGIST C
+				LEFT JOIN CLASS_REVIEW CR ON C.REGIST_NO = CR.LIST_NO
+				WHERE C.MEM_NO = 2
+				      AND C.REGIST_NO = 'B17189472585401027506902'
+				      AND C.STATUS = 'Y'
 	</select>
 	
 	<!-- 예약한 클래스에 대한 정보 조회 -->
@@ -253,4 +257,13 @@
 			FROM CLASS C
 			WHERE C.CLASS_NO = #{classNo}
 	</select>
+	
+	<!-- 접속 시 접속 기록 쿠키 데이터 저장 -->
+	<insert id="insertVisitCount" parameterType="java.util.Date">
+		INSERT INTO VISIT_COUNT(VISIT_DATE) VALUES(#{today})
+	</insert>
+	
+	
+	
+	
 </mapper>

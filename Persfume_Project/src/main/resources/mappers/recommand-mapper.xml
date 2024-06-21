@@ -66,8 +66,35 @@
 	
 	<insert id="insertCoupone"
 			parameterType = "_int">
+			
+			INSERT INTO MEM_COUPON (MEM_COUPON_NO ,
+                         REGIST_DATE,
+                         STATUS,
+                         MEM_NO,
+                         COUPON_NO)
+                  VALUES(SEQ_MEM_COUPON_NO.NEXTVAL,
+                         SYSDATE,
+                         'Y',
+                         #{memNo},
+                         2)
+			
 		
 	</insert>
+	
+	<select id="selectCoupon"
+			parameterType = "_int"
+			resultType="_int">
+			
+			SELECT COUNT(MEM_COUPON_NO)
+			  FROM MEM_COUPON
+			 WHERE MEM_NO = #{memNo}
+			   AND COUPON_NO = 2
+			
+		
+	</select>
+	
+	
+	
 
  	 
 </mapper>

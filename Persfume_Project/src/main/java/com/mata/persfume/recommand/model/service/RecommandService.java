@@ -11,5 +11,7 @@ public interface RecommandService {
 	
 	// 테스트 실행 시 해당 유저에게 쿠폰 증정
 	int insertCoupone(int memeNo);
+	
+	int selectCoupon(int memNo);
 
 }

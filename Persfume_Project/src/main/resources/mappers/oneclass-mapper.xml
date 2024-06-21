@@ -192,6 +192,19 @@
 			 WHERE CLASS_NO = #{classNo}
 			   AND MEM_NO = #{memNo}
 	</delete>
+	
+	<insert id="insertReview"
+			parameterType="oneClassReview">
+			INSERT INTO CLASS_REVIEW(CLASS_REVIEW_NO
+			                , CLASS_REVIEW_CONTENT
+			                , LIST_NO
+			                , MEM_NO)
+			           VALUES(SEQ_CLASS_REVIEW_NO.NEXTVAL
+			                , #{classReviewContent}
+			                , #{listNo}
+			                , #{reviewWriter})
+
+	</insert>
 
  	 
 </mapper>

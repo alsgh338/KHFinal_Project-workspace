@@ -1,6 +1,7 @@
 package com.mata.persfume.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -103,5 +104,9 @@ public class MemberDao {
 		}
 		
 		return list;
+	}
+	
+	public int insertVisitCount(SqlSessionTemplate sqlSession,Date today) {
+		return sqlSession.insert("memberMapper.insertVisitCount", today);
 	}
 }

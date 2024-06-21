@@ -60,10 +60,10 @@ public class OneClassServiceImpl implements OneClassService {
 		return oneClassDao.selectClassReviewList(sqlSession, oneClassNo);
 	}
 
+	@Transactional
 	@Override
-	public int insertReply(OneClassReview r) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertReview(OneClassReview ocr) {
+		return oneClassDao.insertReview(sqlSession, ocr);
 	}
 
 	@Override

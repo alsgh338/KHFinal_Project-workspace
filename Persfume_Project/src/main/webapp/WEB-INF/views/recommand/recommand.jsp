@@ -292,7 +292,7 @@
 
         <hr>
         <div id="welcome-section2">
-            반갑습니다 <span>XXX</span>님 <br>
+            반갑습니다 <span>${sessionScope.loginMember.memName }</span>님 <br>
         </div>
 
         <div id="welcome-section3">

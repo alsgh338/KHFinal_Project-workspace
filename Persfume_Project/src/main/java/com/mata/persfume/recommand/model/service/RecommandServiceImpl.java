@@ -31,6 +31,13 @@ public class RecommandServiceImpl implements RecommandService {
 	public int insertCoupone(int memNo) {
 		return recommandDao.insertCoupone(sqlSession, memNo);
 	}
+
+	@Override
+	@Transactional
+	public int selectCoupon(int memNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 
 }

@@ -152,55 +152,73 @@
 	    
 	    
 	    <div id="classList">
-	    
-	    	    <table>
-			    	<tr>
-			    		<th>번호</th>
-			    		<th width="300">클래스 예약 번호</th>
-			    		<th width="200">클래스 이름</th>
-			    		<th width="150">클래스 일자</th>
-			    		<th width="100">취소</th>
-			    		<th width="100">기능</th>
-			    	</tr>
-			    	<tr>
-						<c:forEach var="i" begin="0" end="${fn:length(registlist) - 1}">
-						    <td>
-						        ${i + 1}
-						    </td>
-						    <td>
-						        ${registlist[i].registNo}
-						    </td>
-						    <td>
-						        ${classList[i].className}
-						    </td>
-						    <td>
-						        ${classList[i].startTime}
-						    </td>
-					    	<c:choose>
-						    	<c:when test="${classList[i].isFuture eq 'Y'}">
-						    		<td>
-						    			<button class="btn btn-sm btn-warning cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">예약 취소</button>
-						    		</td>
-						    		<td>
-						    			<button class="btn btn-sm btn-info cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="enrollChat(this);">채팅방 입장</button>
-						    		</td>
+	    	<c:choose>
+	    		<c:when test="${empty requestScope.registlist}">
+	    			<h1>예약된 클래스가 없습니다.</h1>
+	    		</c:when>
+	    		<c:otherwise>
+		    		<table>
+				    	<tr>
+				    		<th>번호</th>
+				    		<th width="300">클래스 예약 번호</th>
+				    		<th width="200">클래스 이름</th>
+				    		<th width="150">클래스 일자</th>
+				    		<th width="100">취소</th>
+				    		<th width="100">기능</th>
+				    	</tr>
+				    	<tr>
+							<c:forEach var="i" begin="0" end="${fn:length(registlist) - 1}">
+							    <td>
+							        ${i + 1}
+							    </td>
+							    <td>
+							        ${registlist[i].registNo}
+							    </td>
+							    <td>
+							        ${classList[i].className}
+							    </td>
+							    <td>
+							        ${classList[i].startTime}
+							    </td>
+						    	<c:choose>
+							    	<c:when test="${classList[i].isFuture eq 'N'}">
+							    		<td>
+							    			<button class="btn btn-sm btn-danger cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">예약 취소</button>
+							    		</td>
+							    		<td>
+							    			<button class="btn btn-sm btn-info" onclick="enrollChat(this);">채팅방 입장</button>
+							    		</td>
+							    	
+							    	</c:when>
+							    	<c:otherwise>
+							    		<td>
+							    			<button class="btn btn-sm btn-secondary cancel-link" data-toggle="modal" data-target="#delete-regist" disabled>기간 만료</button>
+							    		</td>
+							    		<td>
+							    			<c:choose>
+							    				<c:when test="${ requestScope.registlist[i].writeReview == 0}">
+							    					<button class="btn btn-sm btn-info cancel-link" data-toggle="modal" data-target="#insert-review" onclick="insertReview(this);">리뷰 작성</button>
+							    				</c:when>
+							    				<c:otherwise>
+							    					<button class="btn btn-sm btn-info cancel-link" data-toggle="modal" data-target="#insert-review" onclick="insertReview(this);" disabled>리뷰 작성</button>
+							    				</c:otherwise>
+							    			
+							    			</c:choose>
+							    			<input type="hidden">
+							    		</td>
+							    	</c:otherwise>
 						    	
-						    	</c:when>
-						    	<c:otherwise>
-						    		<td>
-						    			<button class="btn btn-sm btn-secondary cancel-link" data-toggle="modal" data-target="#delete-regist" disabled>기간 만료</button>
-						    		</td>
-						    		<td>
-						    			<button class="btn btn-sm btn-info cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="enrollChat(this);">리뷰 작성</button>
-						    		</td>
-						    	</c:otherwise>
-					    	
-					    	</c:choose>
-						    
-						</c:forEach>
-			    	</tr>
-			    
-			    </table>
+						    	</c:choose>
+							    
+							</c:forEach>
+				    	</tr>
+				    
+				    </table>
+	    		
+	    		</c:otherwise>
+	    	</c:choose>
+	    
+	    	    
 <%-- 	        <c:forEach var="OneClassRegist" items="${classList}">
 	            <div id="class">
 	                클래스예약번호 : <span id="registNo">${OneClassRegist.registNo}</span>
@@ -303,9 +321,49 @@
 	
 	    // 예약 취소 함수
 	    function deleteRegist(element){
-	    	let ocrno = $(element).prev().text().trim();
+	    	let ocrno = $(element).parent().siblings().eq(1).text().trim();
 	    	console.log(ocrno);
-	    	$(".modal-body>.classRegistNo").attr("value", ocrno);
+	    	$("#delete-regist .modal-body>.classRegistNo").attr("value", ocrno);
+	    }
+	    
+	    function insertReview(element) {
+	    	let ocrno = $(element).parent().siblings().eq(1).text().trim();
+	    	console.log(ocrno);
+	    	$("#insert-review .modal-body>.classRegistNo").attr("value", ocrno);
+	    	
+		}
+	    
+	    function enrollChat(element){
+	    	
+	    	let ocrno = $(element).parent().siblings().eq(1).text().trim();
+	    	
+	    	if(confirm("클래스 단체 채팅방에 참여하시겠습니까?")){
+    			$.ajax({
+					url : "enrollChat.ct",
+					type : "post",
+					data : {
+						ocrno : ocrno
+					},
+					success : function(result) {
+						// 성공시 
+						console.log("일단1");
+						if(result == "success"){
+							const message = "채팅방 입장하였습니다.";
+	    	    		        window.alert(message);
+						} else {
+							const message2 = "채팅방 입장에 실패하였습니다. 관리자에게 문의해주세요.";
+			            	window.alert(message2);
+						}
+	    				 
+					},
+					error : function() {
+						const message2 = "채팅방 입장에 실패하였습니다. 관리자에게 문의해주세요.";
+		            	window.alert(message2);
+					}
+				});
+    		}
+
+	    	
 	    }
 	
 	</script>
@@ -341,6 +399,38 @@
 				  </div>
 				</div>
 				<!-- End of Modal-->
+				
+			<!-- The Modal -->
+			<div class="modal" id="insert-review">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			
+			      <!-- Modal Header -->
+			      <div class="modal-header">
+			        <h4 class="modal-title">리뷰 작성</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
+
+				  <form action="insertReview.oc" method="post">			
+			      <!-- Modal body -->
+			      <div class="modal-body" align="center">
+			      <input type="hidden" name="listNo" class="classRegistNo">
+			      <input type="hidden" name="reviewWriter" value="${sessionScope.loginMember.memNo}">
+			      
+			        <h3>해당 클래스에 대한 리뷰를 작성해주세요</h1><br> 
+			       	<input type="text" name="classReviewContent" placeholder="리뷰를 작성해주세요 " required> 
+			      </div>
+			
+			      <!-- Modal footer -->
+			      <div class="modal-footer">
+			        <button type="submit" class="btn btn-danger">네</button>
+			        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
+			      </div>
+				</form>
+			    </div>
+			  </div>
+			</div>
+			<!-- End of Modal-->
 
 
 </body>

@@ -21,4 +21,7 @@ public class OneClassRegist {
 	private int classNo;
 	private int memNo;
 	
+	
+	private int writeReview;
+	
 }

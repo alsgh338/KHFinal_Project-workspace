@@ -1,6 +1,7 @@
 package com.mata.persfume.member.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.member.model.vo.PWDmember;
@@ -43,4 +44,7 @@ public interface MemberService {
 	ArrayList<OneClassRegist> selectClass(int memNo);
 
 	ArrayList<OneClass> selectClassAbout(ArrayList<OneClassRegist> registlist);
+
+	int insertVisitCount(Date today);
+
 }

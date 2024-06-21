@@ -19,6 +19,11 @@ public class RecommandDao {
 	public int insertCoupone(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.insert("recommandMapper.insertCoupone", memNo);
 	}
+	
+	
+	public int selectCoupon(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("recommandMapper.selectCoupon", memNo);
+	}
 
 	
 

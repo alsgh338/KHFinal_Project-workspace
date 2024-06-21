@@ -1,6 +1,7 @@
 package com.mata.persfume.member.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,6 +129,14 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<OneClass> selectClassAbout(ArrayList<OneClassRegist> registlist) {
 		
 		return memberDao.selectClassAbout(sqlSession,registlist);
+	}
+	
+	@Transactional
+	@Override
+	public int insertVisitCount(Date today) {
+		
+		return memberDao.insertVisitCount(sqlSession, today);
+		
 	}
 	
 }

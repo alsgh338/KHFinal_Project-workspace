@@ -65,6 +65,10 @@ public class OneClassDao {
 	public int deleteChatMem(SqlSessionTemplate sqlSession ,OneClassRegist oc) {
 		return sqlSession.delete("oneClassMapper.deleteChatMem", oc);
 	}
+	
+	public int insertReview(SqlSessionTemplate sqlSession ,OneClassReview ocr) {
+		return sqlSession.insert("oneClassMapper.insertReview", ocr);
+	}
 
 	
 

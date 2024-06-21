@@ -32,7 +32,7 @@ public interface OneClassService {
 	ArrayList<OneClassReview> selectClassReviewList(int oneClassNo);
 	
 	// 댓글 작성 서비스 - ajax
-	int insertReply(OneClassReview r);
+	int insertReview(OneClassReview ocr);
 	
 	// 결제 완료 후 결제 정보 Insert
 	int insertOneClassReigst(OneClassRegist orc);
