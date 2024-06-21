@@ -286,8 +286,7 @@
                             <h3>공지글 작성하기</h3>
                         </div>
                         <div class="bbs-table-write">
-            <form name="boardForm" action="insert.no" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off" onsubmit="return validateForm();">
-    <div id="passimg" style="position:absolute; visibility:hidden; z-index:999;"></div>
+           <form name="boardForm" action="insert.no" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off" onsubmit="return validateForm();">
     <table summary="">
         <colgroup>
             <col width="135">
@@ -321,16 +320,16 @@
             </tr>
         </tbody>
     </table>
-    
     <dl class="bbs-link bbs-link-btm">
         <dt></dt>
         <dd>
-			<button type="button" onclick="location.href='adList.no'" class="back-button">뒤로 가기</button>
+            <button type="button" onclick="location.href='adList.no'" class="back-button">뒤로 가기</button>
             <button type="submit" class="CSSbuttonBlack">등록하기</button>
             <button type="reset" class="CSSbuttonWhite">취소하기</button>
         </dd>
     </dl>
 </form>
+
 
 <script>
 function validateForm() {

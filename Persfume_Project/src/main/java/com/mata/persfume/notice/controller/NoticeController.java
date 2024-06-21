@@ -96,11 +96,11 @@ public class NoticeController {
 			// 파일명 수정 작업 후 서버에 업로드 시키기
 			// > 기존에는 cos.jar 에서 제공하는 FileRenamePolicy 이용
 			//   스프링에서는 기본적으로 제공되는게 없기 때문에 내가 직접 짜야함
-			String changeName = savePath(upfile, session);
+			String noticeImgChange = savePath(upfile, session);
 			
 		
 			n.setNoticeImgOrigin(upfile.getOriginalFilename());
-			n.setNoticeImgChange("resources/uploadFiles/" + changeName);
+			n.setNoticeImgChange("resources/uploadFiles/" + noticeImgChange);
 			
 		}
 		
@@ -238,8 +238,8 @@ public class NoticeController {
 							  HttpSession session,
 							  Model model) {
 		
-		// System.out.println(b);
-		// System.out.println(reupfile);
+		 //System.out.println(n);
+		 //System.out.println(reupfile);
 		
 		// 새로 넘어온 첨부파일이 있을 경우
 		if(!reupfile.getOriginalFilename().equals("")) {
@@ -270,11 +270,11 @@ public class NoticeController {
 			}
 			
 			// 새로 넘어온 첨부파일 파일명을 수정작업 후 서버로 업로드
-			String changeName = savePath(reupfile, session);
+			String noticeImgChange = savePath(reupfile, session);
 			
 			// b 에 새로 넘어온 첨부파일의 원본파일명, 수정파일명 필드값 담기
 			n.setNoticeImgOrigin(reupfile.getOriginalFilename());
-			n.setNoticeImgChange("resources/uploadFiles/" + changeName);
+			n.setNoticeImgChange("resources/uploadFiles/" + noticeImgChange);
 			
 		}
 		
@@ -304,7 +304,7 @@ public String savePath(MultipartFile upfile,
 	
 	// 예) "bono.jpg" --> "2024052116143012345.jpg"
 	// 1. 원본파일명 뽑아오기
-	String originName = upfile.getOriginalFilename(); 
+	String noticeImgOrigin = upfile.getOriginalFilename(); 
 									// "bono.jpg"
 	
 	// 2. 시간 형식으로 문자열로 뽑아내기 (년월일시분초)
@@ -319,11 +319,11 @@ public String savePath(MultipartFile upfile,
 	
 	// 4. 원본파일명으로부터 확장자명 뽑기
 	String ext 
-		= originName.substring(originName.lastIndexOf("."));
+		= noticeImgOrigin.substring(noticeImgOrigin.lastIndexOf("."));
 									// ".jpg"
 	
 	// 5. 2 ~ 4 까지 모두 이어 붙이기
-	String changeName = currentTime + ranNum + ext;
+	String noticeImgChange = currentTime + ranNum + ext;
 	
 	// 6. 업로드하고자 하는 물리적인 서버의 경로 알아내기
 	// > application 객체로부터
@@ -337,14 +337,15 @@ public String savePath(MultipartFile upfile,
 	//   transferTo 메소드를 이용함
 	try {
 		
-		upfile.transferTo(new File(savePath + changeName));
+		upfile.transferTo(new File(savePath + noticeImgChange));
 	
 	} catch (IllegalStateException | IOException e) {
 		e.printStackTrace();
 	}
 	
 	// 수정파일명 문자열을 리턴
-	return changeName;
+	   //System.out.println("저장된 파일 경로: " + savePath + noticeImgChange);
+	return noticeImgChange;
 }
 
 

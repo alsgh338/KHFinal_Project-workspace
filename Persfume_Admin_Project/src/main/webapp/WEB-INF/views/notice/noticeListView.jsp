@@ -70,8 +70,22 @@
                                     <tbody>
                                         <c:forEach var="n" items="${requestScope.list}">
                                             <tr>
+                                            	
                                                 <td>${n.noticeNo}</td>
-                                                <td>${n.noticeImgChange }</td>
+                                           <td>
+                                           	<c:if test="${not empty requestScope.n.noticeImgOrigin}">
+														★
+													</c:if>
+                                                    <c:choose>
+													    <c:when test="${empty n.noticeImgChange}">
+													        첨부 파일 없음
+													    </c:when>
+													    <c:otherwise>
+													       <a href="${ pageContext.request.contextPath }/${ n.noticeImgChange }" download="${ n.noticeImgOrigin }">${ n.noticeImgOrigin }</a>
+													    </c:otherwise>
+													</c:choose>
+
+                                                </td>
                                                 <td>${n.noticeTitle}</td>
                                                 <td>${n.noticeContent}</td>
                                                 <td>${n.createDate}</td>
@@ -85,12 +99,14 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-danger btn-sm btn-icon-split delete-notice" data-toggle="modal" data-target="#delete-check" data-notice-no="${n.noticeNo}">
-                                                        <span class="icon text-white-50">
-                                                            <i class="fas fa-trash"></i>
-                                                        </span>
-                                                        <span class="text">삭제</span>
-                                                    </a>
+                                             <a href="javascript:void(0);" class="btn btn-danger btn-sm btn-icon-split delete-notice"
+											    data-toggle="modal" data-target="#delete-check" data-notice-no="${n.noticeNo}" data-file-path="${n.noticeImgChange}">
+											    <span class="icon text-white-50">
+											        <i class="fas fa-trash"></i>
+											    </span>
+											    <span class="text">삭제</span>
+											</a>
+
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -100,6 +116,12 @@
                         </div>
                     </div>
                 </div>
+                  <script>
+                    <c:if test="${not empty sessionScope.alertMsg}">
+                        alert("${sessionScope.alertMsg}");
+                        <c:remove var="alertMsg" scope="session" />
+                    </c:if>
+                </script>
                 <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
@@ -125,19 +147,21 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
-                        <form action="adDelete.no" method="post">
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <input type="hidden" name="noticeNo" class="noticeNo">
-                                정말 해당 공지글을 삭제하시겠습니까?
-                            </div>
+                       <form action="adDelete.no" method="post">
+				    <!-- Modal body -->
+				    <div class="modal-body">
+				        <input type="hidden" name="noticeNo" class="noticeNo">
+				        <input type="hidden" name="filePath" class="filePath">
+				        정말 해당 공지글을 삭제하시겠습니까?
+				    </div>
+				
+				    <!-- Modal footer -->
+				    <div class="modal-footer">
+				        <button type="submit" class="btn btn-danger">네</button>
+				        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
+				    </div>
+				</form>
 
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger">네</button>
-                                <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -187,14 +211,17 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(".delete-notice").click(function() {
-                let noticeNo = $(this).data('notice-no');
-                $(".modal-body>.noticeNo").val(noticeNo);
-            });
+
+<script>
+    $(document).ready(function() {
+        $(".delete-notice").click(function() {
+            let noticeNo = $(this).data('notice-no');
+            let filePath = $(this).data('file-path'); // 추가
+            $(".modal-body>.noticeNo").val(noticeNo);
+            $(".modal-body>.filePath").val(filePath); // 추가
         });
-    </script>
+    });
+</script>
 
 </body>
 

@@ -6,19 +6,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-      <style>
+    <style>
+        /* 컨텐츠 영역과 그 자식 div의 공통 스타일 */
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
 
         .content-area,
-        .content-area>div:not(.content-main) {
+        .content-area > div:not(.content-main) {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            flex: 1; /* Ensure this area grows to fill available space */
         }
 
         .content-title {
             height: 320px;
-             background: url(resources/images/공지사항.jpg);
+            background: url(resources/images/공지사항.jpg);
             background-size: cover;
             background-position: center;
             object-fit: cover;
@@ -33,7 +47,6 @@
         .content-subtitle,
         .content-main {
             width: 1400px;
-            
         }
 
         .content-subtitle {
@@ -55,8 +68,9 @@
             line-height: 30px;
             padding: 20px; /* 내용과 화면 가장자리 사이의 여백을 조정합니다 */
         }
+
         .bbs-sch {
-        padding: 20px; /* 내용과 화면 가장자리 사이의 여백을 조정합니다 */
+            padding: 20px; /* 내용과 화면 가장자리 사이의 여백을 조정합니다 */
             float: right; /* 검색 폼을 오른쪽으로 배치 */
             margin-top: 10px; /* 위쪽 여백 추가 */
         }
@@ -74,44 +88,45 @@
             line-height: 1.25;
             font-family: 'Pretendard', 'Poppins', 'Noto Sans KR', sans-serif, Dotum, "돋움", DotumChe, "돋움체", Verdana, monospace, Corbel, AppleGothic, Helvetica;
         }
-   .bbs-table-list{
-   padding: 20px; /* 내용과 화면 가장자리 사이의 여백을 조정합니다 */
-   }
+
+        .bbs-table-list {
+            padding: 20px; /* 내용과 화면 가장자리 사이의 여백을 조정합니다 */
+        }
+
         /* 테이블 스타일링 */
         table {
             border-collapse: collapse;
             margin: 0 auto;
             width: 100%; /* 테이블이 100% 너비를 차지하도록 설정합니다 */
-        	border-collapse: collapse; /* 테두리가 겹치도록 설정합니다 */            
+            border-collapse: collapse; /* 테두리가 겹치도록 설정합니다 */            
             table-layout: fixed; /* 이 속성을 추가하여 테이블의 너비를 고정합니다 */
         }
 
-	  
-	th.title{
-  padding: 18px 0;
-    border: 1px solid #e8e8e8;
-    border-bottom-width: 0;
-    border-right-width: 0;
-    color: #999;
-    text-align: center;
-    font-weight: normal;
-    background-color: #fafafa;
-    vertical-align: middle;
-}
+        th.title {
+            padding: 18px 0;
+            border: 1px solid #e8e8e8;
+            border-bottom-width: 0;
+            border-right-width: 0;
+            color: #999;
+            text-align: center;
+            font-weight: normal;
+            background-color: #fafafa;
+            vertical-align: middle;
+        }
 
-    td.subject {
-        padding: 10px; /* 셀 안의 여백을 설정합니다 */
-        border-top: 1px solid #e8e8e8; /* 위쪽 테두리를 추가합니다 */
-        color: #333; /* 글자색을 설정합니다 */
-        vertical-align: middle; /* 수직 정렬을 가운데로 설정합니다 */
-        word-break: keep-all; /* 단어가 길어질 경우 줄바꿈을 방지합니다 */
-        word-wrap: break-word; /* 긴 단어의 경우 줄바꿈을 처리합니다 */
-    }
+        td.subject {
+            padding: 10px; /* 셀 안의 여백을 설정합니다 */
+            border-top: 1px solid #e8e8e8; /* 위쪽 테두리를 추가합니다 */
+            color: #333; /* 글자색을 설정합니다 */
+            vertical-align: middle; /* 수직 정렬을 가운데로 설정합니다 */
+            word-break: keep-all; /* 단어가 길어질 경우 줄바꿈을 방지합니다 */
+            word-wrap: break-word; /* 긴 단어의 경우 줄바꿈을 처리합니다 */
+        }
+
         .tb-center {
             text-align: center;
         }
 
-                            
         /* 테이블 헤더 스타일링 */
         .bbs-table-list thead th {
             font-size: 13px;
@@ -179,18 +194,16 @@
             padding: 15px 0;
             position: relative;
         }
+
         .bbs-btm .bbs-link {
             float: right;
         }
+
         .bbs-btm .bbs-paging .paging {
             margin: 0 130px;
             padding: 10px 0;
         }
-        
-        
-    
 
-     
         .pagination li {
             display: inline;
             margin: 0 5px;
@@ -209,39 +222,39 @@
             background-color: #f2f2f2;
         }
 
-
-	
         /* 수정된 스타일 */
         .bbs-table-list tbody tr:nth-child(even) {
             background-color: #aliceblue; /* 짝수 행 배경색 */
         }
 
-       
-         #pagingArea {
+        #pagingArea {
             text-align: center;
-            margin-left: 45% /* 필요한 경우 위 여백 추가 */
+            margin-left: 45%; /* 필요한 경우 위 여백 추가 */
         }
-        
-/* 공지사항 리스트 끝 */
-/* 게시글 리스트 시작 (한 페이지당 게시글 수) */
-/* 짝수형 색 설정
-.bbs-table-list tbody tr:nth-child(even) {
-    background-color: #; 
-}
-*/
 
-.bbs-table-list tbody tr:hover {
-    background-color: #aab9c6; /* 호버시 배경색 변경 */
-    cursor: pointer; /* 호버시 커서를 손가락 모양으로 설정 */
-}
+        /* 공지사항 리스트 끝 */
+        /* 게시글 리스트 시작 (한 페이지당 게시글 수) */
+        /* 짝수형 색 설정
+        .bbs-table-list tbody tr:nth-child(even) {
+            background-color: #; 
+        }
+        */
 
-.bbs-table-list tbody td img {
-    max-width: 100px; /* Adjust as necessary */
-    max-height: 100px; /* Adjust as necessary */
-    vertical-align: middle; /* Align image vertically in the cell */
-}
+        .bbs-table-list tbody tr:hover {
+            background-color: #aab9c6; /* 호버시 배경색 변경 */
+            cursor: pointer; /* 호버시 커서를 손가락 모양으로 설정 */
+        }
 
+        .bbs-table-list tbody td img {
+            max-width: 100px; /* Adjust as necessary */
+            max-height: 100px; /* Adjust as necessary */
+            vertical-align: middle; /* Align image vertically in the cell */
+        }
 
+        footer {
+            background-color: #f1f1f1;       
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -269,8 +282,9 @@
                                 <tr>
                                     <th scope="col"><div class="tb-center">NO.</div></th>    
                                    
+                                    <%--
                                      <th scope="col"><div class="tb-center">&nbsp;</div></th>  
-                                                                                          
+                                     --%>                                                      
                                     <th scope="col"><div class="tb-center">TITLE</div></th>
                                     <th scope="col"><div class="tb-center">CONTENT</div></th>
                                     <th scope="col"><div class="tb-center">DATE</div></th>
@@ -281,11 +295,13 @@
     <c:forEach var="n" items="${requestScope.list}">
         <tr>
             <td><div class="tb-center">${n.noticeNo }</div></td>
-       		   
-       		   <td><div class="tb-center">
+       		
+       		    <%--  
+       		    <td><div class="tb-center">
        		   <img src="${ requestScope.n.noticeImgChange}" alt="썸네일" width="100" height="100">
-       		   </div></td>
-       		    
+       		   </div></td> 
+       		   --%> 
+       		   
             <td>
                 <div class="tb-left">
                     ${n.noticeTitle }
@@ -315,19 +331,24 @@
                           
             <!-- 관리자만 쓰기  -->
              <%--<c:if test="${not empty sessionScope.loginUser and sessionScope.loginUser.memId eq 'admin01'}">
-              --%>
+              
             <div class="bbs-btm">
         <div class="bbs-link">
         
         <a href="enrollForm.no" class="CSSbuttonWhite">WRITE</a></div>
             
+       
             <br>
+               
             </div>
-            </div>
-             <%-- </c:if> --%>
+         --%>
+         	
             </div>
             
-         
+              
+            </div>
+           
+       
                     <!-- 페이징바 -->
                     <div id="pagingArea">
                         <ul class="pagination">
@@ -378,7 +399,7 @@
                 </div>
             </div>
         </div>
-    </div>
+ 
     
     <%-- 푸터 include --%>
     <jsp:include page="../common/footer.jsp" />

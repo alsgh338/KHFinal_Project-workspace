@@ -1,11 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Persfume Admin - Notice</title>
+    <link rel="icon" href="resources/vendor/fontawesome-free/svgs/solid/cogs.svg">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     <style>
      .content-area,
         .content-area>div:not(.content-main){
@@ -13,6 +24,7 @@
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          background-color:white;
         }
 
         /* 여기서부턴 공통 스타일? (아마도) */
@@ -206,124 +218,106 @@
         
     </style>
 </head>
-<body>
 
-  <div class="content-area">
-        <div class="content-title" id="home">NOTICE</div>
-    <div id="contentWrapper">
-        <div id="contentWrap">
-            <link type="text/css" rel="stylesheet" href="/template_common/shop/basic_simple/menu.1.css?t=201711221039">
+<body id="page-top">
+    <div id="wrapper">
+        <%@ include file="../common/adminNav.jsp" %>
+        <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <div id="bbsData">
-                    <div class="page-body">
-                        <div class="bbs-tit">
-                            <h3>공지글 수정하기</h3>
-                        </div>
-                        
-                        
-                        <div class="bbs-table-write">
-                            <form name="adUpdateForm" action="adUpdate.no" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off">
-                                   <!-- 해당 게시글의 글번호 (PK) 도 같이 넘기기 -->
-                					<input type="hidden" name="noticeNo" value="${ requestScope.n.noticeNo }">
-                
-                                <div id="passimg" style="position:absolute; visibility:hidden; z-index:999;"></div>
-                                <table align="center">
-                                    <colgroup>
-                                        <col width="135">
-                                        <col width="*">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th><div>제목</div></th>
-                                            <td colspan="3">
-                                                <div class="title">
-                                                    <input id="bw_input_subject" class="MS_input_txt input_style2" value="${requestScope.n.noticeTitle }" type="text" name="noticeTitle" required>
-                                                    <div class="title_select"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                      <tr>
-							    <th><div>내용</div></th>
-							    <td colspan="3" class="text_content">
-							        <div>
-							            <textarea id="MS_text_content" name="noticeContent" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;"
-							            style="resize:none;" required>${requestScope.n.noticeContent}</textarea>
-							        </div>
-							    </td>
-							</tr>
-						
-						<tr>
-						    <th><div>파일</div></th>
-						    <td colspan="4">
-						        <div>
-						            <input type="file" id="bw_input_file" class="MS_input_txt input_style2" name="reupfile">
-						       </div>     
-							<c:if test="${not empty requestScope.n.noticeImgOrigin}">
-						    현재 업로드된 파일 :
-						    <a href="${requestScope.n.noticeImgChange}" 
-						    	download="${requestScope.n.noticeImgOrigin}">
-						        ${requestScope.n.noticeImgOrigin}
-						    </a>
-
-				    <input type="hidden" 
-				    		name="noticeImgOrigin" 
-				    		value="${requestScope.n.noticeImgOrigin}">
-				    <input type="hidden" 
-				    		name="noticeImgChange" 
-				    		value="${requestScope.n.noticeImgChange}">
-					</c:if>
-   
-    </td>
-</tr>
-        </table>                                   
-</div>
-                                               
-                                
-                            
-                              
-                       <dl class="bbs-link bbs-link-btm">
-					    <dt></dt>
-					    <dd>
-<a href="javascript:void(0);" class="CSSbuttonBlack" onclick="submitForm();">수정하기</a>
-<a onclick="javascript:history.go(-1);" class="CSSbuttonWhite">뒤로가기</a>
-
-					    </dd>
-					</dl>
-					  </form>
-					  <script>
-function submitForm() {
-    var title = document.getElementById('bw_input_subject').value.trim();
-    var content = document.getElementById('MS_text_content').value.trim();
-
-    if (title === '') {
-        alert('제목을 입력해주세요.');
-        return;
-    }
-
-    if (content === '') {
-        alert('내용을 입력해주세요.');
-        return;
-    }
-
-    // 추가적인 유효성 검사를 원한다면 여기에 추가
-
-    document.adUpdateForm.submit(); // 폼 제출
-}
-</script>
-					  
-				
-	
-
-                                  <br><br>
-                          
-                        </div>
-                    </div><!-- .page-body -->
-                </div><!-- #bbsData -->
+                <%@ include file="../common/adminTop.jsp" %>
+                <div class="content-area">
+                    <div id="contentWrapper">
+                        <div id="contentWrap">
+                            <div id="content">
+                                <div id="bbsData">
+                                    <div class="page-body">
+                                        <div class="bbs-tit">
+                                            <h3>공지글 수정하기</h3>
+                                        </div>
+                                        <div class="bbs-table-write">
+                                            <form name="adUpdateForm" action="adUpdate.no" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off">
+                                                <input type="hidden" name="noticeNo" value="${ requestScope.n.noticeNo }">
+                                                <table align="center">
+                                                    <colgroup>
+                                                        <col width="135">
+                                                        <col width="*">
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th><div>제목</div></th>
+                                                            <td colspan="3">
+                                                                <div class="title">
+                                                                    <input id="bw_input_subject" class="MS_input_txt input_style2" value="${requestScope.n.noticeTitle }" type="text" name="noticeTitle" required>
+                                                                    <div class="title_select"></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><div>내용</div></th>
+                                                            <td colspan="3" class="text_content">
+                                                                <div>
+                                                                    <textarea id="MS_text_content" name="noticeContent" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;" style="resize:none;" required>${requestScope.n.noticeContent}</textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><div>파일</div></th>
+                                                            <td colspan="4">
+                                                                <div>
+                                                                    <input type="file" id="bw_input_file" class="MS_input_txt input_style2" name="reupfile">
+                                                                </div>     
+                                                                <c:if test="${not empty requestScope.n.noticeImgOrigin}">
+                                                                    현재 업로드된 파일 :
+                                                                    <a href="${requestScope.n.noticeImgChange}" download="${requestScope.n.noticeImgOrigin}">
+                                                                        ${requestScope.n.noticeImgOrigin}
+                                                                    </a>
+                                                                    <input type="hidden" name="noticeImgOrigin" value="${requestScope.n.noticeImgOrigin}">
+                                                                    <input type="hidden" name="noticeImgChange" value="${requestScope.n.noticeImgChange}">
+                                                                </c:if>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <dl class="bbs-link bbs-link-btm">
+                                                    <dt></dt>
+                                                    <dd>
+                                                        <a href="javascript:void(0);" class="CSSbuttonBlack" onclick="submitForm();">수정하기</a>
+                                                        <a href="/persfumeAdmin/adList.no" class="CSSbuttonWhite">뒤로가기</a>
+                                                    </dd>
+                                                </dl>
+                                            </form>
+                                        </div><!-- .bbs-table-write -->
+                                    </div><!-- .page-body -->
+                                </div><!-- #bbsData -->
+                            </div><!-- #content -->
+                        </div><!-- #contentWrap -->
+                    </div><!-- #contentWrapper -->
+                </div><!-- .content-area -->
             </div><!-- #content -->
-        </div><!-- #contentWrap -->
-    </div><!-- #contentWrapper -->
-    
-   
-</body>
+        </div><!-- #content-wrapper -->
+    </div><!-- #wrapper -->
 
+    <!-- JavaScript Section -->
+   <script>
+        function submitForm() {
+            var title = document.getElementById('bw_input_subject').value.trim();
+            var content = document.getElementById('MS_text_content').value.trim();
+
+            if (title === '') {
+                alert('제목을 입력해주세요.');
+                return;
+            }
+
+            if (content === '') {
+                alert('내용을 입력해주세요.');
+                return;
+            }
+
+            // 폼 제출
+            document.adUpdateForm.submit();
+
+           
+        }
+    </script>
+</body>
 </html>

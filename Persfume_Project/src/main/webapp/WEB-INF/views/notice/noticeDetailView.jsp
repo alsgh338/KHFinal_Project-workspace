@@ -158,12 +158,12 @@
                                 <li><strong>작성일:</strong> <span>${ n.createDate }</span></li>
                                 <li><strong>조회수:</strong> <span>${ n.count }</span></li>
                                 <li><strong>첨부파일:</strong>
-                                    <c:choose>
+                                        <c:choose>
                                         <c:when test="${ empty requestScope.n.noticeImgOrigin }">
                                             첨부파일이 없습니다.
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="${ requestScope.b.changeName }" download="${ requestScope.n.noticeImgOrigin }">${ requestScope.n.noticeImgOrigin }</a>
+                                            <a href="${ requestScope.n.noticeImgChange }" download="${ requestScope.n.noticeImgOrigin }">${ requestScope.n.noticeImgOrigin }</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </li>
@@ -171,7 +171,7 @@
                             <div class="content">
                                 <c:choose>
                                     <c:when test="${ not empty requestScope.n.noticeImgChange }">
-                                        <img src="${ requestScope.n.noticeImgChange }" alt="공지사항 이미지">
+                                      <img src="${ requestScope.n.noticeImgChange }" alt="공지사항 이미지">
                                          <p class="center-text">${ n.noticeContent }</p>
                                     </c:when>
                                     <c:otherwise>
@@ -186,8 +186,10 @@
             <div class="divider"></div>
             <div class="buttons">
                 <a href="list.no" class="btn-normal">목록</a>
+                <%-- 
                 <a onclick="postFormSubmit(1)" class="btn-normal">수정</a>
                 <a onclick="postFormSubmit(2)" class="btn-normal">삭제</a>
+                --%>
             </div>
             <form id="postForm" action="" method="post">
                 <input type="hidden" name="nno" value="${ requestScope.n.noticeNo }">
