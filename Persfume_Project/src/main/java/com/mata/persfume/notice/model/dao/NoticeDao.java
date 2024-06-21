@@ -89,6 +89,12 @@ public class NoticeDao {
         return (ArrayList) sqlSession.selectList("noticeMapper.searchNoticeList", map, rowBounds);
     }
 
+
+	// 메인화면에 표시할 공지 (최신순 5개) - 2024-06-21 윤민호
+	public ArrayList<Notice> showMainNotice(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("noticeMapper.showMainNotice");
+	}
+
 	
 }
 

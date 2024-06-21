@@ -22,21 +22,10 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     
-     <style>
+    <style>
     	#sb-btn{
     		display: flex;
     		justify-content: end;
-    	}
-    	
-    	td>div{
-    		position : relative;
-    		width:100%;
-    		height: 400px;
-    		border-radius: 10px;
-    		border: 3px dashed gray;
-    		display: flex;
-    		justify-content: center;
-    		align-items: center;
     	}
     	
     	td img{
@@ -47,35 +36,6 @@
             background-color: transparent;
     	}
     	
-    	td>div>div{
- 	        background-color: transparent;
-   			margin : 0;
-   			padding : 0;
-    		border : none;
-    		border-radius : 50%;
-    		width: 30px;
-    		height: 30px;
-    		position : absolute;
-    		right: 0;
-    		top: 0;
-    		z-index: 999;
-    	}
-    	
-    	td>div>div:hover{
-    		background-color:lightgray;
-    	}
-    	
-	   	.uploadImg>img{
-            width: 60px;
-            height: 60px;
-            background-color: transparent;
-            border-radius: 50px;
-            border: none;
-        }
-        
-        .uploadImg:hover{
-        	background-color: lightgray;
-        }
         
     </style>
 
@@ -100,7 +60,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">이벤트 정보 수정</h1>
+                    <h1 class="h3 mb-4 text-gray-800">이벤트 신규 등록</h1>
 
 					<!-- Content Row -->
                     <div class="row">
@@ -113,46 +73,43 @@
                                     <h6 class="m-0 font-weight-bold text-primary">EnrollForm</h6>
                                 </div>
                                 <div class="card-body">
-	                                <form action="update.oc" method="post" enctype="multipart/form-data">
-	                                	<input type="hidden" name="classNo" value="${ev.eventNo}">
-	                                	<table class="table">
-	                                		<tr>
-	                                			<th colspan="2">이벤트 명</th>
-	                                			<td colspan="4">
-	                                				<input type="text" class="form-control form-control-user"  value="${ev.eventTitle}" name="eventTitle" placeholder="이벤트명" required >
-	                               				</td>
-	                               				<th>조회수</th>
-	                                			<td>
-	                                				<span>${ev.eventCount}</span>
-	                               				</td>
-	                               				<th>이벤트 기간</th>
-	                                			<td>
-	                                				<input type="date" value="${ev.startDate}">&nbsp;~&nbsp;<input type="date" value="${ev.dewDate}">
-	                               				</td>
-	                                		</tr>
-	                                		<tr>
-	                                			<th colspan="2">이벤트 썸네일</th>
-	                                			<td colspan="5">
-	                                				<textarea class="form-control" name="classDetail" required style="resize: none;">여기다가는 썸네일 쏴서 올리기</textarea>
-	                               				</td>
-	                               				<th colspan="1">이벤트 썸네일</th>
-	                                			<td colspan="5">
-	                                				<a class="form-control" name="classDetail" required style="resize: none;" href="../persfume/${ev.eventImgPath}">${ev.eventImgPath}</a>
-	                               				</td>
-	                                		</tr>
-	                                		<tr rowspan="2">
-	                                			<th colspan="2">이벤트 내용</th>
-	                                			<td colspan="10">
-	                                				<textarea class="form-control" rows="20" name="classDetail" required style="resize: none;">${oc.classDetail}</textarea>
-	                               				</td>
-	                                		</tr>
-	                                	</table>
-	                                    
-	                                    <hr>
-	                                    <div id="sb-btn">
-		                                    <button type="submit" class="btn btn-sm btn-warning">수정하기</button>
-										</div>                                    
-                                	</form>
+									<form id="enrollForm" method="post" action="insert.ev" enctype="multipart/form-data">
+						                <table class="table">
+						                    <tr>
+						                        <th><label for="title">제목</label></th>
+						                        <td colspan="4"><input type="text" id="title" class="form-control" name="eventTitle" required></td>
+						                    </tr>
+						                    <tr>
+						                        <th><label for="date">기간</label></th>
+						                        <td>
+						                        	<input type="date" id="startDate" class="form-control" name="startDate" style="margin-right: 10px;">
+						                        </td>
+						                        <td style="text-align:center">
+					                                <label for="dewDate" style="line-height: 38px;">~</label>
+					                            </td> 
+				                            	<td>
+				                            		<input type="date" id="dewDate" class="form-control" name="dewDate">
+						                        </td>
+						                    </tr>
+						                    <tr>
+						                        <th><label for="upfileThumbnail">썸네일</label></th>
+						                        <td colspan="4"><input type="file" id="upfileThumbnail" class="form-control-file" name="upfiles" required></td>
+						                    </tr>
+						                    <tr>
+						                        <th><label for="upfileMain">본문 사진</label></th>
+						                        <td colspan="4"><input type="file" id="upfileMain" class="form-control-file" name="upfiles" required></td>
+						                    </tr>
+						                    <tr>
+						                        <th><label for="content">내용</label></th>
+						                        <td colspan="4"><textarea id="content" class="form-control" rows="10" style="resize:none;" name="eventContent" placeholder="미입력시 이미지만 업로드 됩니다."></textarea></td>
+						                    </tr>
+						                </table>
+						
+						                <div class="text-center">
+						                    <button type="submit" class="btn btn-primary">등록하기</button>
+						                    <a class="btn btn-secondary" href="list.ev?condition=onGoing">목록으로</a>
+						                </div>
+						            </form>
                                 </div>
                             </div>
 
@@ -165,8 +122,6 @@
             </div>
             <!-- End of Main Content -->
             
- 			  
-
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -209,6 +164,7 @@
     </div>
 
 
+
 </body>
 
-</html>/html>
+</html>

@@ -52,25 +52,10 @@
                                             <th>Toggle</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="13">
-                                            	<div id="sb-btn">
-	                                            	<a href="" class="btn btn-primary btn-sm btn-icon-split">
-				                                        <span class="icon text-white-50">
-				                                            <i class="fas fa-flag"></i>
-				                                        </span>
-				                                        <span class="text">신규  등록</span>
-				                                    </a>
-			                                    </div>
-                                            </th>
-                                            
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                     	<c:forEach var="item" items="${list}">
              		                             <tr>
-		                                            <td>${item.eventNo}</td>
+		                                            <td id="eno">${item.eventNo}</td>
 		                                            <td>${item.eventTitle}</td>
 		                                            <td>${item.eventCount}</td>
 		                                            <td>${item.startDate}</td>
@@ -87,23 +72,39 @@
 			                                            </c:choose>
 		                                            </td>
 		                                            <td>
-		                                            	<a href="detail.ev?eno=${item.eventNo}"+ class="btn btn-info btn-sm btn-icon-split">
+		                                            	<a href="detail.ev?eno=${item.eventNo}" class="btn btn-info btn-sm btn-icon-split">
 					                                        <span class="icon text-white-50">
 					                                            <i class="fas fa-info-circle"></i>
 					                                        </span>
 					                                        <span class="text">수정</span>
 					                                    </a>
 		                                            </td>
-		                                            <td>
-			                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check">
-					                                        <span class="icon text-white-50">
-					                                            <i class="fas fa-trash"></i>
-					                                        </span>
-					                                        <span class="text">삭제</span>
-					                                    </a>
-		                                            </td>
+		                                            
+		                                            
+		                                            
+		                                            <c:choose>
+		                                            	<c:when test="${ item.status eq 'Y' }">
+		                                            		<td>
+					                                            <a class="btn btn-danger btn-sm btn-icon-split delete-event" data-toggle="modal" data-target="#delete-check" onclick="deleteEvent(this);">
+							                                        <span class="icon text-white-50">
+							                                            <i class="fas fa-trash"></i>
+							                                        </span>
+							                                        <span>삭제</span>
+							                                    </a>
+		                                           	 		</td>
+		                                            	</c:when>
+		                                            	<c:otherwise>
+		                                            		<td>
+					                                            <a class="btn btn-success btn-sm btn-icon-split restore-event" data-toggle="modal" data-target="#restore-check" onclick="restoreEvent(this);">
+							                                        <span class="icon text-white-50">
+							                                            <i class="fas fa-redo"></i>
+							                                        </span>
+							                                        <span>복구</span>
+							                                    </a>
+		                                           	 		</td>
+		                                            	</c:otherwise>
+		                                            </c:choose>
 	                                            </tr>
-				                    		   
 		                    		    </c:forEach>
                                      
                                     </tbody>
@@ -139,17 +140,17 @@
 			        <button type="button" class="close" data-dismiss="modal">&times;</button>
 			      </div>
 
-				  <form action="adDelete.pk" method="post">			
+				  <form action="delete.ev" method="post">			
 			      <!-- Modal body -->
 			      <div class="modal-body">
-			      <input type="hidden" name="carNo" class="carNo">
+			      	<input type="hidden" name="eno" class="eventNo">
 
-			        정말 해당 클래스를 삭제하시겠습니까?
+			        	정말 해당 클래스를 삭제하시겠습니까?
 			      </div>
 			
 			      <!-- Modal footer -->
 			      <div class="modal-footer">
-			        <button type="submit" class="btn btn-danger">네</button>
+			        <button type="submit" class="btn btn-danger deleteEvent">네</button>
 			        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
 			      </div>
 				</form>
@@ -157,7 +158,37 @@
 			  </div>
 			</div>
 			<!-- End of Modal-->
+			
+			<!-- The Modal -->
+			<div class="modal" id="restore-check">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			
+			      <!-- Modal Header -->
+			      <div class="modal-header">
+			        <h4 class="modal-title">클래스 삭제</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
 
+				  <form action="restore.ev" method="post">			
+			      <!-- Modal body -->
+			      <div class="modal-body">
+			      	<input type="hidden" name="eno" class="eventNo">
+
+			        	정말 해당 클래스를 복구하시겠습니까?
+			      </div>
+			
+			      <!-- Modal footer -->
+			      <div class="modal-footer">
+			        <button type="submit" class="btn btn-danger restoreEvent">네</button>
+			        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
+			      </div>
+				</form>
+			    </div>
+			  </div>
+			</div>
+			<!-- End of Modal-->
+			
         </div>
         <!-- End of Content Wrapper -->
 
@@ -207,14 +238,15 @@
     <script src="js/demo/datatables-demo.js"></script>
     
     <script>
-    	$(function(){
-    		$(".delete-parking").click(function () {
-    			let carNo = $(this).parent().prev().prev().children().text().trim();
-    			$(".modal-body>.carNo").attr("value", carNo);
-				
-			});
-    		
-    	});
+	    function deleteEvent(element) {
+			let eno = $(element).parent().siblings().eq(0).text().trim();
+			$("#delete-check .modal-body>.eventNo").attr("value", eno);
+		}
+		
+		function restoreEvent(element) {
+			let eno = $(element).parent().siblings().eq(0).text().trim();
+			$("#restore-check .modal-body>.eventNo").attr("value", eno);
+		}
     </script>
 
 </body>

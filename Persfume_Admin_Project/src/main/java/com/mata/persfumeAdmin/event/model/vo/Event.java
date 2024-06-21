@@ -23,4 +23,5 @@ public class Event {
 	private String status;
 
 	private String eventImgPath;
+	private String eventImgOrigin;
 }

@@ -454,27 +454,14 @@
             </div>
 
             <div class="main-section-content">
-                <table class="table table-striped">
+                <table class="table table-striped" id="noticeList">
                     <tr>
-                        <th>1</th>
-                        <th>1</th>
-                        <th>1</th>
+                        <th width=100>번호</th>
+                        <th width=500>제목</th>
+                        <th width=100>날짜</th>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                    </tr>
+					<!-- 여기에 공지사항 띄우기 -->
+
 
                 </table>
             </div>
@@ -498,7 +485,7 @@
             <div class="main-section-content">
                 <div id="content_1">
                     <div class="swiper">
-                        <div class="swiper-wrapper">
+                        <div class="swiper-wrapper" id="productList">
                             <div class="swiper-slide">
                                 <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
                                 <div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
@@ -670,6 +657,7 @@
          $(document).ready(function() {
             // 페이지가 로드될 때 이벤트 목록을 가져오는 함수 호출
             getEventList();
+            getNoticeList();
         });
         
          function getEventList() {
@@ -686,6 +674,33 @@
              });
          }
          
+         function getNoticeList(){
+        	 $.ajax({
+        		 type: "GET",
+                 url: "noticeList", // 데이터를 가져올 엔드포인트 URL
+                 success: function(result) {
+                     // 서버로부터 받은 데이터를 처리하여 이벤트 목록을 표시하는 함수 호출
+                     displayNoticeList(result);
+                 },
+                 error: function(xhr, status, error) {
+                     console.log("공지사항 리스트 조회 실패", error);
+                 }
+        	 });
+         }
+         
+         function getProductThumbnail(){
+        	 $.ajax({
+        		type:"get",
+        		url: "getProductThumbnail",
+        		success: function(result){
+        			displayProductThumbnail(result);
+        		},
+        		error: function(xhr, status, error) {
+                    console.log("상품 썸네일 조회 실패", error);
+                }
+        	 });
+         }
+         
          function displayEventList(eventList) {
              var eventListDiv = $("#eventList");
              eventListDiv.empty(); // 기존 목록을 비웁니다.
@@ -696,18 +711,61 @@
                  var eventHtml = '<div class="event">' +
                  					 '<div class="event-img">' +
                  					 	'<input type="hidden" value="' + event.eventNo +'">' +
-                 					 	'<img src="' + event.eventImgPath + '" alt="' + event.eventTitle + '">' +
+                 					 	'<img src="../persfumeAdmin/' + event.eventImgPath + '" alt="' + event.eventTitle + '">' +
                  					 '</div>' +
                                  '</div>';
                  eventListDiv.append(eventHtml);
              }
          }
         
+         function displayNoticeList(noticeList) {
+             var noticeListDiv = $("#noticeList");
+
+             // 받아온 이벤트 목록을 반복하여 표시합니다.
+             for (var i = 0; i < noticeList.length; i++) {
+                 var notice = noticeList[i];
+                 var noticeHtml = '<tr>' +
+                 					'<td>' + notice.noticeNo + '</td>' +
+                 					'<td>' + notice.noticeTitle + '</td>' +
+                 					'<td>' + notice.createDate + '</td>' +
+                 				  '</tr>';
+                	 
+                 noticeListDiv.append(noticeHtml);
+             }
+         }
+         
+         function displayProductThumbnail(productList){
+        	 var productListDiv = $("#productList");
+        	 
+        	 // 받아온 상품 목록 반복하여 표시
+        	 for(var i=0; i<productList.length; i+=3)
+        		 // <div class="swiper-slide">
+        		 for(var j=i; j<i+3; j++)
+        			 //<div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
+                     //<div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
+                     //<div class="swiper-img"><img src="resources/images/bg.png" alt=""></div>
+        	 
+        			 i가 0일때 j는 0 1 2 
+        			 i가 3일때 j는 3 4 5
+        			    6       6 7 8
+        			    9       9 10 11
+         }
+                  
          $(function(){
              $(document).on("click", ".event" , function(){
                  let eventNo = $(this).find('input[type="hidden"]').val();
                  location.href = "detail.ev?eno=" + eventNo;
              });
+         });
+         
+         $(function(){
+        	$(document).on("click", "#noticeList tr", function(){
+        		let noticeNo = $(this).children().eq(0).text();
+        		
+        		console.log(noticeNo);
+        		
+        		location.href = "detail.no?nno=" + noticeNo;
+        	});
          });
     </script>
 

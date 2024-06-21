@@ -132,6 +132,23 @@
         WHERE NOTICE_NO = #{noticeNo} 
         AND STATUS = 'Y'
     </update>
+    
+    <!-- 메인화면에 띄울 공지사항 5개 리스트 -->
+    <select id="showMainNotice"
+    		resultMap="noticeResultSet">
+    	SELECT NOTICE_NO,
+		       NOTICE_TITLE,
+		       CREATE_DATE
+		  FROM (
+		        SELECT NOTICE_NO,
+		               NOTICE_TITLE,
+		               TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE
+		          FROM NOTICE
+		         WHERE STATUS = 'Y'
+		         ORDER BY CREATE_DATE DESC
+		       )
+		 WHERE ROWNUM &lt; 6
+    </select>
 	
 
 </mapper>

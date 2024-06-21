@@ -129,7 +129,7 @@
         
         <div class="content-main">
             <div id="event-detail">
-                <img src="${ requestScope.e.eventImgPath }" alt="${ requestScope.e.eventTitle }">
+                <img src="../persfumeAdmin/${ requestScope.e.eventImgPath }" alt="${ requestScope.e.eventTitle }">
                 <div id="hidden"></div>
             </div>
         </div>

@@ -79,5 +79,11 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeDao.searchNoticeList(sqlSession,pi, searchType, keyword);
     }
 
+	// 메인화면에 표시할 공지 (최신순 5개) - 2024-06-21 윤민호
+	@Override
+	public ArrayList<Notice> showMainNotice() {
+		return noticeDao.showMainNotice(sqlSession);
+	}
+
 
 }

@@ -170,9 +170,9 @@
                 </a>
                 <div id="event-ad-menu" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">관리비 기능 : </h6>
+                        <h6 class="collapse-header">이벤트 : </h6>
                         <a class="collapse-item" href="<%= request.getContextPath() %>/list.ev">이벤트 목록 조회</a>
-                        <a class="collapse-item" href="<%= request.getContextPath() %>/adInsertForm.ev">이벤트 추가</a>
+                        <a class="collapse-item" href="<%= request.getContextPath() %>/insertForm.ev">이벤트 추가</a>
                     </div>
                 </div>
             </li>

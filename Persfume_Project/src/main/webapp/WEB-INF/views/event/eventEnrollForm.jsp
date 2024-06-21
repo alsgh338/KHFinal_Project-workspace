@@ -142,7 +142,6 @@
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">등록하기</button>
-                    <button type="reset" class="btn btn-danger">취소하기</button>
                     <a class="btn btn-secondary" href="list.ev?condition=onGoing">목록으로</a>
                 </div>
             </form>

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -70,6 +71,15 @@ public class NoticeController {
 		return "notice/noticeListView";
 	}
 	
+	// 메인 페이지에 띄울 공지사항 리스트
+	@GetMapping("noticeList")
+	@ResponseBody
+	public ArrayList<Notice> showMainNotice(Model model){
+		
+		ArrayList<Notice> list = noticeService.showMainNotice();
+		
+		return list;
+	}
 	
 	//게시글 작성하기 
 	@GetMapping("enrollForm.no")

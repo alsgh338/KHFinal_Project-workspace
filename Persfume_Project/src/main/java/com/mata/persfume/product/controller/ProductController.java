@@ -632,7 +632,7 @@ return changeName;
 			
 					if((result5 + result6 + result7) >2) { // 성공
 						session.setAttribute("alertMsg", "성공적으로 상품이 등록되었습니다.");
-						mv.setViewName("list.po");
+						mv.setViewName("product/productListView");
 					}else {//실패
 						mv.addObject("errorMsg", "게시글 등록 실패")
 						  .setViewName("common/errorPage");

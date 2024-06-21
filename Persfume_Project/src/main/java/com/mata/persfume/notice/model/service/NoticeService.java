@@ -42,6 +42,9 @@ public  interface NoticeService {
 	//공지글 검색 리스트 조회
 	ArrayList<Notice> searchNoticeList(PageInfo pi, String searchType, String keyword);
 
+	// 메인화면에 표시할 공지 (최신순 5개) - 2024-06-21 윤민호
+	ArrayList<Notice> showMainNotice();
+
 
 }
 

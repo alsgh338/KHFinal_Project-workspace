@@ -200,15 +200,13 @@
             <a id="onGoing" href="list.ev?condition=onGoing" class="${ param.condition == 'onGoing' ? 'selected' : '' }">진행중인 이벤트</a>
             <a id="scheduled" href="list.ev?condition=scheduled" class="${ param.condition == 'scheduled' ? 'selected' : '' }">진행예정 이벤트</a>
         </div>
-        <div id="toEnroll">
-            <a href="enrollForm.ev">이벤트 작성</a>
-        </div>
+        <br>
         <div class="content-main">
         <c:forEach var="event" items="${ requestScope.list }">
             <div class="event">
                 <div class="event-img ${ param.condition == 'expired' ? 'expired' : '' }"> <!-- condition이 '종료된 이벤트'일 때 클래스 추가 -->
                     <input type="hidden" value="${ event.eventNo }">
-                    <img src="${ event.eventImgPath }" alt="${ event.eventTitle }">
+                    <img src="../persfumeAdmin/${ event.eventImgPath }" alt="${ event.eventTitle }">
                 </div>
                 <div class="event-title">${ event.eventTitle }</div>
                 <div class="event-duration">기간: ${ event.startDate } ~ ${ event.dewDate }</div>
