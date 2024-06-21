@@ -26,4 +26,5 @@ public class Product {
 	private String middleNote;
 	private String baseNote;
 	private String productStatus;
+	private String thumbnailImg;
 }

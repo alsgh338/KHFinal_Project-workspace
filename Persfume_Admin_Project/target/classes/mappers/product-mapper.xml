@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="productMapper">
-	<!-- 관리자 페이지 쿼리문  -->
+	<!-- 상품 테이블  -->
 	<resultMap type="product" id="productResultSet">
 		<result column="PRODUCT_NO" property="productNo" />
 		<result column="PRODUCT_NAME" property="productName" />
@@ -16,6 +16,18 @@
 		<result column="BASE_NOTE" property="baseNote" />
 		<result column="PRODUCT_STATUS" property="productStatus" />
 		<result column="DISCOUNT" property="discount" />
+		<result column="THUMBNAIL_IMG" property="thumbnailImg" />
+	</resultMap>
+	
+	<!-- 상품 이미지 테이블  -->
+	<resultMap type="productImg" id="productImgResultSet">
+		<result column="PRODUCT_IMG_NO" property="productNo" />
+		<result column="PRODUCT_IMG_PATH" property="productImgPath" />
+		<result column="PRODUCT_IMG_ORIGIN" property="productImgOrigin" />
+		<result column="PRODUCT_IMG_CHANGE" property="productImgChange" />
+		<result column="IMG_TYPE" property="imgType" />
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="STATUS" property="status" />
 	</resultMap>
 	
 	
@@ -24,16 +36,79 @@
 			resultMap="productResultSet">
 		SELECT * 
 		  FROM PRODUCT
-		 WHERE PRODUCT_STATUS = 'Y' 
+		 WHERE PRODUCT_STATUS = 'Y'
 		 ORDER BY PRODUCT_NO DESC
 	</select>
-
+	
+	<!-- 상품이미지 조회 -->
+	<select id="selectProductpi"
+			resultMap="productImgResultSet">
+		SELECT * 
+		  FROM PRODUCT_IMG 
+		 WHERE PRODUCT_NO = #{productNo}
+		   AND STATUS = 'Y'
+		   AND IMG_TYPE = 2
+	</select>
+	
 	<!-- 상품상세조회  -->
 	<select id="selectProduct"
-		parameterType="_int"
+			parameterType="_int"
 			resultMap="productResultSet">
-		SELECT * 
-		  FROM PRODUCT 
-		 WHERE PRODUCT_NO = #{productNo}
+			SELECT P.* , PI.PRODUCT_IMG_PATH AS THUMBNAIL_IMG
+			  FROM PRODUCT P
+			  JOIN PRODUCT_IMG PI ON P.PRODUCT_NO = PI.PRODUCT_NO
+			 WHERE P.PRODUCT_NO = #{productNo}
+			  AND PI.IMG_TYPE = 1
 	</select>
+	
+	<!-- 상품 추가 -->
+	<insert id="insertProduct"
+			parameterType="product">
+			INSERT INTO PRODUCT (PRODUCT_NO,
+						PRODUCT_NAME,
+						PRODUCT_EXPLAIN,
+						PRODUCT_PRICE,
+						PRODUCT_STOCK,
+						CATEGORY,
+						DISCOUNT,
+						GENDER,
+						TOP_NOTE,
+						MIDDLE_NOTE,
+						BASE_NOTE,
+						PRODUCT_STATUS)
+					VALUES(SEQ_PRODUCT_NO.NEXTVAL,
+					#{productName},
+					#{productExplain},
+					#{productPrice},
+					#{productStock},
+					#{category},
+					#{discount},
+					#{gender},
+					#{topNote},
+					#{middleNote},
+					#{baseNote},
+					default) 
+	</insert>
+	
+	<!-- 상품 이미지 추가  -->
+		<insert id="insertProductImg" 
+				parameterType="productImg">
+			INSERT INTO PRODUCT_IMG (PRODUCT_IMG_NO,
+			                       PRODUCT_IMG_PATH,
+			                       PRODUCT_IMG_ORIGIN,
+			                       PRODUCT_IMG_CHANGE,
+			                       IMG_TYPE,
+			                       PRODUCT_NO,
+			                       STATUS)
+			               VALUES (SEQ_IMG_NO.NEXTVAL,
+			                       #{productImgPath},
+			                       #{productImgOrigin},
+			                       #{productImgChange},
+			                       #{imgType},
+			                       SEQ_PRODUCT_NO.CURRVAL,
+			                       'Y')
+	</insert>
+	
+	<!--  상품 정보 수정  -->
+		
 </mapper>

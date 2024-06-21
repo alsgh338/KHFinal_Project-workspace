@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mata.persfumeAdmin.product.model.vo.Product;
+import com.mata.persfumeAdmin.product.model.vo.ProductImg;
 
 @Repository
 public class ProductDao {
@@ -22,6 +23,28 @@ public class ProductDao {
 		System.out.println("상품상세조회");
 		
 		return (ArrayList)sqlSession.selectList("productMapper.selectProduct", productNo);
+	}
+
+	public int insertProduct(SqlSessionTemplate sqlSession, Product p) {
+		
+		System.out.println("상품추가");
+		
+		return sqlSession.insert("productMapper.insertProduct", p);
+		
+	}
+
+	public int insertProductImg(SqlSessionTemplate sqlSession, ProductImg pi) {
+		
+		System.out.println("상품 사진 추가");
+		
+		return sqlSession.insert("productMapper.insertProductImg",pi);
+	}
+
+	public ArrayList<ProductImg> selectProductpi(SqlSessionTemplate sqlSession, int productNo) {
+		
+		System.out.println("상품 사진 조회");
+		
+		return (ArrayList)sqlSession.selectList("productMapper.selectProductpi",productNo);
 	}
 
 	

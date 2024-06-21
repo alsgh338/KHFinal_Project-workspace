@@ -127,12 +127,15 @@
 
              <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<%= request.getContextPath() %>/adList.sh" 
+                <a class="nav-link collapsed" href="<%= request.getContextPath() %>/proEnroll.pr" 
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-hashtag"></i>
                     <span>상품 추가</span>
                 </a>
             </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
             
             <!-- Divider -->
             <hr class="sidebar-divider">

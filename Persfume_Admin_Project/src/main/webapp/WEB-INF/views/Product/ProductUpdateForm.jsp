@@ -106,7 +106,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">상품 추가</h1>
+                    <h1 class="h3 mb-4 text-gray-800">상품 수정</h1>
 
 					<!-- Content Row -->
                     <div class="row">
@@ -119,76 +119,110 @@
                                     <h6 class="m-0 font-weight-bold text-primary">EnrollForm</h6>
                                 </div>
                                 <div class="card-body">
-	                                <form action="insert.po" method="post" enctype="multipart/form-data">
+	                                <form action="update.po" method="post" enctype="multipart/form-data">
 	                                	<table class="table" border="1px">
+	                                	<c:forEach var="item" items="${list}">
 	                                		<tr>
 	                                			<th colspan="2">상품 이름</th>
 	                                			<td colspan="2">
-	                                				<input type="text" class="form-control form-control-user" name="productName">
+	                                				<input type="text" class="form-control form-control-user" name="productName" value="${item.productName}">
 	                               				</td>
 	                               				<th style="width: 100px;">상품가격</th>
 	                               				<td >
-	                               					<input type="text" class="form-control form-control-user" name="productPrice">
+	                               					<input type="text" class="form-control form-control-user" name="productPrice" value="${item.productPrice}">
 	                               				</td>
-												   <th style="width: 100px;">할인율</th>
-												<td >
-													<input type="text" class="form-control form-control-user" name="discount">
-												</td>
-												<th>재고</th>
-												<td><input type="text" class="form-control form-control-user" name="productStock"></td>
-	                                		</tr>
-											
-	                                		<tr rowspan="3">
+											</td>
+											<th style="width: 100px;">할인율</th>
+										 <td >
+											 <input type="text" class="form-control form-control-user" name="discount" value="${item.discount}">
+										 </td>
+										 <th>재고</th>
+										 <td><input type="text" class="form-control form-control-user" name="productStock" value="${item.productStock}"></td>
+	                                		
+											<tr rowspan="3">
 	                                			<th colspan="2">상품 설명</th>
 	                                			<td colspan="10">
-	                                				<textarea class="form-control" rows="20" name="productExplain" style="resize: none;"></textarea>
+	                                				<textarea class="form-control" rows="20" name="productExplain" style="resize: none;">${item.productExplain} </textarea>
 	                               				</td>
 	                                		</tr>
 	                                		<tr>
 												<th colspan="2">노트</th>
 	                                			<th>탑노트</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" name="topNote">
+	                                				<input type="text" class="form-control form-control-user" name="topNote" value="${item.topNote}">
 	                               				</td>
 	                                			<th>미들노트</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" name="middleNote">
+	                                				<input type="text" class="form-control form-control-user" name="middleNote" value="${item.middleNote}">
 	                               				</td>
 	                               				<th>베이스노트</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" name="baseNote">
+	                                				<input type="text" class="form-control form-control-user" name="baseNote" value="${item.baseNote}">
 	                               				</td>
 	                                		</tr>
 											<tr>
 												<th colspan="2">분류</th>
 												<th>카테고리</th>
 												<td>
-													<input type="text" class="form-control form-control-user"  name="category">
+													<input type="text" class="form-control form-control-user"  name="category" value="${item.category}">
 												</td>
 												<th>성별</th>
 												<td>
-													<input type="text" class="form-control form-control-user"  name="gender">
+													<input type="text" class="form-control form-control-user"  name="gender"  value="${item.gender}">
 												</td>
 											</tr>
-	                                		<tr>
+
+											<!--  기존 첨부파일이 있었을 경우 : 기존 파일을 삭제해줘야함 (해당 파일의 원본파일명, 수정파일명 넘기기) -->
+	                                		
+											<tr>
 		                                		<th colspan="2">첨부파일(썸네일)</th>
 	                                			<td colspan="8">
-													<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name=thumbnailPr placeholder="첨부파일" style="display:none">
+	                                				<input type="hidden" name="prevThumb" value="${requestScope.list[0].thumbnailImg }">
+													<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name=upThumbnail placeholder="첨부파일" style="display:none">
 	                                				<div class="uploadImg">
-							    		                <img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
-	                                				</div>	                               				
+	                                					<c:choose>
+	                                						<c:when test="${not empty requestScope.list[0].thumbnailImg }">
+	                                							<div>
+																	<img src="${requestScope.list[0].thumbnailImg }" alt="${requestScope.list[0].thumbnailImg}">
+																	<div class="delete-btn">
+							    		                				<img src="resources/img/x-circle.svg" alt="x-circle" onclick="deleteImg(this);">
+																	</div>
+																</div>
+	                                						</c:when>
+	                                						<c:otherwise>
+	                                							<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
+	                                						</c:otherwise>
+	                                					</c:choose>
+													</div>	                               				
                                 				</td>
 	                                		</tr>
 	                                		<tr>
+												<c:forEach var="item" items="${list2}">
 		                                		<th colspan="2">첨부파일</th>
 	                                			<td colspan="8">
-	                                				<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" multiple name="upFilePr" placeholder="첨부파일" style="display:none">
+	                                				<input type="hidden" name="classImgPath" value="${item.productImgPath}">
+	                                				<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upFiles" placeholder="첨부파일" style="display:none">
 	                                				<div class="uploadImg">
-							    		                <img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
-	                                				</div>
+	                                					<c:choose>
+	                                						<c:when test="${not empty item.productImgPath}">
+	                                							<div>
+																	<img src="${item.productImgPath}" alt="${item.productImgPath}">
+																	<div class="delete-btn">
+							    		                				<img src="resources/img/x-circle.svg" alt="x-circle" onclick="deleteImg(this);">
+																	</div>
+																</div>
+	                                						</c:when>
+	                                						<c:otherwise>
+	                                							<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
+	                                						</c:otherwise>
+	                                					</c:choose>
+													</div>
 	                               				</td>
+												</c:forEach>
 	                                		</tr>
+											</c:forEach>
 	                                	</table>
+	                                    
 	                                    <hr>
 	                                    <div id="sb-btn">
 		                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mata.persfumeAdmin.product.model.dao.ProductDao;
 import com.mata.persfumeAdmin.product.model.vo.Product;
+import com.mata.persfumeAdmin.product.model.vo.ProductImg;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -32,6 +33,28 @@ public class ProductServiceImpl implements ProductService{
 		System.out.println("상품 상세조회 서비스");
 		
 		return productDao.selectProduct(sqlSession, productNo);
+	}
+
+	@Override
+	public int insertProduct(Product p) {
+		
+		System.out.println("상품 추가 서비스 ");
+		
+		return productDao.insertProduct(sqlSession, p);
+	}
+
+	@Override
+	public int insertProductImg(ProductImg pi) {
+		
+		System.out.println("상품 이미지 추가 서비스");
+		
+		return  productDao.insertProductImg(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<ProductImg> selectProductpi(int productNo) {
+		
+		return  productDao.selectProductpi(sqlSession, productNo);
 	}
 
 
