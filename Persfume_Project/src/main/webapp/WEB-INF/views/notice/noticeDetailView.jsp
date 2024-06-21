@@ -171,7 +171,7 @@
                             <div class="content">
                                 <c:choose>
                                     <c:when test="${ not empty requestScope.n.noticeImgChange }">
-                                      <img src="${ requestScope.n.noticeImgChange }" alt="공지사항 이미지">
+                                      <img src="${pageContext.request.contextPath}/../persfumeAdmin/${requestScope.n.noticeImgChange }" alt="${ requestScope.n.noticeImgChange }">
                                          <p class="center-text">${ n.noticeContent }</p>
                                     </c:when>
                                     <c:otherwise>

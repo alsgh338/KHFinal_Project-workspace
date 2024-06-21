@@ -67,23 +67,20 @@
                                             </th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
+                                                           <tbody>
                                         <c:forEach var="n" items="${requestScope.list}">
                                             <tr>
-                                            	
                                                 <td>${n.noticeNo}</td>
-                                           <td>
-                                           	<c:if test="${not empty requestScope.n.noticeImgOrigin}">
-														★
-													</c:if>
+                                                <td>
                                                     <c:choose>
-													    <c:when test="${empty n.noticeImgChange}">
-													        첨부 파일 없음
-													    </c:when>
-													    <c:otherwise>
-													       <a href="${ pageContext.request.contextPath }/${ n.noticeImgChange }" download="${ n.noticeImgOrigin }">${ n.noticeImgOrigin }</a>
-													    </c:otherwise>
-													</c:choose>
+                                                        <c:when test="${empty n.noticeImgOrigin}">
+                                                            첨부파일이 없습니다
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="${n.noticeImgChange}" download="${n.noticeImgOrigin}">${n.noticeImgOrigin}</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                  
 
                                                 </td>
                                                 <td>${n.noticeTitle}</td>

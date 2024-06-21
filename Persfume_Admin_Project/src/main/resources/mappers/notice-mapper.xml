@@ -11,7 +11,6 @@
     <result column="CREATE_DATE" property="createDate"/>
     <result column="NOTICE_IMG_ORIGIN" property="noticeImgOrigin"/>
     <result column="NOTICE_IMG_PATH" property="noticeImgPath"/>
-    
     <result column="NOTICE_IMG_CHANGE" property="noticeImgChange"/>
 </resultMap>
 
@@ -26,7 +25,7 @@
                NOTICE_CONTENT,
                NOTICE_COUNT,
                TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
-               NOTICE_IMG_PATH
+               NOTICE_IMG_ORIGIN
         FROM NOTICE
         WHERE STATUS = 'Y'
         ORDER BY NOTICE_NO DESC

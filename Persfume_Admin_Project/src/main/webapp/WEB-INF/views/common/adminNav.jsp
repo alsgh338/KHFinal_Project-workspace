@@ -77,6 +77,21 @@
                 </a>
             </li>
             <!-- 새로운 네비게이션 바 (Toggle X version)를 추가하고 싶다면 여기까지 선택  -->
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            
+ 			<!-- Heading -->
+            <div class="sidebar-heading">
+                      	쿠폰 관리
+            </div>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="adCoupon.me">
+                    <i class="fas fa-fw fa-laugh-beam"></i>
+                    <span>쿠폰 관리</span>
+                </a>
+            </li>
 
 
 
