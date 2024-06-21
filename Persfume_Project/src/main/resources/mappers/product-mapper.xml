@@ -20,8 +20,10 @@
 	</resultMap>
 	
 	<resultMap type="productImg" id="productImgResultSet">
-		<result column="IMG_NO" property="productImgNo" />
-		<result column="IMG_NAME" property="productImgPath" />
+		<result column="PRODUCT_IMG_NO" property="productImgNo" />
+		<result column="PRODUCT_IMG_PATH" property="productImgPath" />
+		<result column="PRODUCT_IMG_ORIGIN" property="productImgOrigin" />
+		<result column="PRODUCT_IMG_CHANGE" property="productImgChange" />
 		<result column="IMG_TYPE" property="imgType" />
 		<result column="PRODUCT_NO" property="productNo" />
 	</resultMap>
