@@ -25,67 +25,97 @@ public class ProductServiceImpl implements ProductService {
 	private SqlSessionTemplate sqlSession;
 	@Autowired
 	private ProductDao productDao;
+	
+	
 	@Override
 	public int selectListCount() {
-		return 0;
-	}
-	@Override
-	public ArrayList<Product> selectList(PageInfo pi) {
-		return null;
-	}
-	@Override
-	public ArrayList<ProductImg> selectImgList(PageInfo pi) {
-		return null;
-	}
-	@Override
-	public Product selectProduct(int pno) {
-		return null;
-	}
-	@Override
-	public ArrayList<ProductImg> selectProductImgList(int pno) {
-		return null;
-	}
-	@Override
-	public ProductImg selectProductImg(int pno) {
-		return null;
-	}
-	@Override
-	public ArrayList<MemCoupon> searchCoupon(int mno) {
-		return null;
-	}
-	@Override
-	public Coupon searchCouponName(int cno) {
-		return null;
+	
+		return productDao.selectListCount(sqlSession);
+		
 	}
 
+	@Override
+	public ArrayList<Product> selectList(PageInfo pi) {
+		
+		return productDao.selectList(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<ProductImg> selectImgList(PageInfo pi) {
+
+		return productDao.selectImgList(sqlSession, pi);
+	}
+
+	@Override
+	public Product selectProduct(int pno) {
+		
+		return productDao.selectProduct(sqlSession, pno);
+	}
+
+	@Override
+	public ArrayList<ProductImg> selectProductImgList(int pno) {
+	
+		return productDao.selectProductImgList(sqlSession, pno);
+	}
+
+	@Override
+	public ProductImg selectProductImg(int pno) {
+		
+		return productDao.selectProductImg(sqlSession, pno);
+	}
+
+	@Override
+	public ArrayList<MemCoupon> searchCoupon(int mno) {
+		
+		return productDao.searchCoupon(sqlSession, mno);
+	}
+
+	@Override
+	public Coupon searchCouponName(int cno) {
+		
+		return productDao.searchCouponName(sqlSession, cno);
+	}
+
+	@Override
 	public int orderComplete(String merchant_uid, int amount, String want5, int mno, int adno, String address, String phone) {
 	
 		return productDao.orderComplete(sqlSession, merchant_uid, amount, want5, mno, adno, address, phone);
-
 	}
+
 	@Override
 	public OrderDetail orderview(String merchant_uid) {
-		return null;
+		
+		return productDao.orderview(sqlSession, merchant_uid);
 	}
+
 	@Override
 	public int cartAdd(int account, int quantity, int mno, int pno) {
-		return 0;
+		
+		return productDao.cartAdd(sqlSession, account, quantity, mno, pno );
 	}
+
 	@Override
 	public ArrayList<Cart> selectCartList(int mno) {
-		return null;
+		
+		return productDao.selectCartList(sqlSession, mno);
 	}
+
 	@Override
 	public int cartdelete(int deletecartNo) {
-		return 0;
+		
+		return productDao.cartdelete(sqlSession, deletecartNo);
 	}
+
 	@Override
 	public int cartUpdate(int basketNo, int quantity, int price) {
-		return 0;
+		
+		return  productDao.cartUpdate(sqlSession, basketNo, quantity, price);
 	}
+
 	@Override
 	public Cart cartSelect(int basketNo) {
-		return null;
+		
+		return  productDao.cartSelect(sqlSession, basketNo);
 	}
 
 	@Override
@@ -236,6 +266,7 @@ public class ProductServiceImpl implements ProductService {
 		return  productDao.orderDelivery(sqlSession, ono);
 	}
 	
+
 
 
 
