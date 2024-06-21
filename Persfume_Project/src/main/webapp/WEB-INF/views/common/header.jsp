@@ -239,7 +239,7 @@
             <div><a href="list.ev?condition=onGoing">EVENT</a></div>
             <div><a href="list.po">PERFUME</a></div>
             <div><a href="list.oc">ONEDAY CLASS</a></div>
-            <div><a href="detail.oc?ocno=1">SCENT RECOMMAND</a></div>
+            <div><a href="test.rc">SCENT RECOMMAND</a></div>
         </div>
         <c:choose>
             <c:when test="${ empty sessionScope.loginMember }">
@@ -266,14 +266,16 @@
     </div>
 
     <div id="sub-btns" class="hidden">
-        <div class="side-btn animate__animated animate__fast" id="sub-btn1" >
-            <img src="resources/images/chatbot_white.png" alt="dpgpdl dksskdhsp" onclick="openChatList();">
+    	<c:if test="${ not empty sessionScope.loginMember }">
+    	        <div class="side-btn animate__animated animate__fast" id="sub-btn1" >
+            <img src="resources/images/Chat.png" alt="dpgpdl dksskdhsp" onclick="openChatList();">
         </div>
+    	</c:if>
         <div class="side-btn animate__animated animate__fast" id="sub-btn2">
             <img src="resources/images/chatbot_white.png" alt="dpgpdl dksskdhsp">
         </div>
         <div class="side-btn animate__animated animate__fast" id="sub-btn3">
-            <img src="" alt="페이지 상단 이동 키">
+            <img src="resources/images/chav-up.png" alt="페이지 상단 이동 키" style="transform: rotate(180deg);" onclick="moveTop();">
         </div>
         <div class="side-btn" id="toggle-btn">
             <div class="stick"></div>
@@ -343,6 +345,13 @@
                 $('#header').removeClass('jbFixed-after');
             });
         });
+        
+        
+        function moveTop(){
+        	
+        	$(window).scrollTop(0);
+			
+		}
     </script>
     
     

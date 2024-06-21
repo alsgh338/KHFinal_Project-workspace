@@ -14,6 +14,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -43,6 +44,10 @@ public class OneClassServiceImpl implements OneClassService {
 		return oneClassDao.selectList(sqlSession, pi);
 	}
 
+	@Override
+	public int countReservation(int memNo) {
+		return oneClassDao.countReservation(sqlSession,memNo);
+	}
 
 	@Override
 	public OneClass selectOneClass(int oneClassNo) {
@@ -80,6 +85,12 @@ public class OneClassServiceImpl implements OneClassService {
 	public int deleteRegist(String ocrno) {
 		return oneClassDao.deleteRegist(sqlSession, ocrno);
 
+	}
+	
+	@Transactional
+	@Override
+	public int deleteChatMem(OneClassRegist oc) {
+		return oneClassDao.deleteChatMem(sqlSession, oc);
 	}
 	
 	/* 
@@ -156,6 +167,8 @@ public class OneClassServiceImpl implements OneClassService {
         br.close();
         conn.disconnect();
     }
+
+
 	
 
 

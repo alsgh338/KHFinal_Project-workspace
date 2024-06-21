@@ -533,7 +533,7 @@
             
             <div class="main-section-text animate__animated animate__slow">
                 <h1 class="animate__animated animate__slower">Oneday <br> Class</h1>
-                <button onclick="location.href=''"> > List</button>
+                <button onclick="location.href='list.oc'"> > List</button>
             </div>
             <div id="four-bg"></div>
 
@@ -583,17 +583,23 @@
                 findPosition();
             });
 
-            function findPosition(){
-                $('.main-section').each(function(){
-                    if( ($(this).offset().top - $(window).scrollTop() ) < 20){
-                        link.removeClass('active');
-                        $('#nav-bar').find('[data-scroll="'+ $(this).attr('id') +'"]').addClass('active');
-                    }
-                });
-            }
-
             findPosition();
+            
+            
+            
+            
+            
+            
         });
+        
+        function findPosition(){
+            $('.main-section').each(function(){
+                if( ($(this).offset().top - $(window).scrollTop() ) < 20){
+                    link.removeClass('active');
+                    $('#nav-bar').find('[data-scroll="'+ $(this).attr('id') +'"]').addClass('active');
+                }
+            });
+        }
 
         // 슬라이더 동작 정의
         const swiper = new Swiper('.swiper', {

@@ -87,6 +87,10 @@ public class OneClassController {
 		
 		ArrayList<OneClassImg> ociList = new ArrayList();
 		
+		oc.setClassDetail(oc.getClassDetail().replaceAll("<hr>", "\\r\\n").replaceAll("<hr>", "\\r").replaceAll("<hr>", "\\n"));
+
+		
+		
 		if(!upThumbnail.getOriginalFilename().equals("")) {
 			String changeName = savePath(upThumbnail, session);
 			OneClassImg oci = new OneClassImg();

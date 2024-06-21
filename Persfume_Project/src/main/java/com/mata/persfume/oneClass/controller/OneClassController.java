@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.mata.persfume.common.model.vo.PageInfo;
 import com.mata.persfume.common.template.Pagination;
+import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.oneClass.model.service.OneClassService;
 import com.mata.persfume.oneClass.model.vo.OneClass;
 import com.mata.persfume.oneClass.model.vo.OneClassImg;
@@ -105,19 +106,32 @@ public class OneClassController {
 	
 	// 클래스 예약 화면 컨트롤러
 	@GetMapping("reservation.oc")
-	public String reservationClass(int ocno,HttpSession session,Model model) {
+	public String reservationClass(int ocno, HttpSession session, Model model) {
 
 		OneClass oc = oneClassService.selectOneClass(ocno);
+		
+		int rimitReservation = oneClassService.countReservation(((Member)session.getAttribute("loginMember")).getMemNo());
+		
 		
 		if( oc.getCurrentStudent() >= oc.getStudentMaxNo()) {
 			session.setAttribute("alertMsg", "클래스 정원이 모두 찼습니다.");
 			return "redirect:/list.oc";
 			
 		} else {
-			model.addAttribute("oc",oc);
-			model.addAttribute("impApiKey",impApiKey);
-			return "oneClass/oneClassReservationView";
+			
+			if(rimitReservation >= 4){
+				session.setAttribute("alertMsg", "한 클래스에는 한 계정 당 최대 4명까지 예약 가능합니다 (현재 예약 내역 : 4/4)");
+				return "redirect:/list.oc";
+			}else {
+				model.addAttribute("oc",oc);
+				model.addAttribute("rimitReservation",rimitReservation);
+				model.addAttribute("impApiKey",impApiKey);
+				return "oneClass/oneClassReservationView";
+			}
+			
 		}
+		
+
 		
 		
 
@@ -179,9 +193,11 @@ public class OneClassController {
 	
 		// 클래스 예약 취소
 		@PostMapping("deleteRegist.oc")
-		public String deleteRegist(String ocrno, String refundMsg, Model model) {
+		public String deleteRegist(String ocrno, String refundMsg, HttpSession session, Model model) {
 			
 			try {
+				
+				OneClassRegist oc = oneClassService.selectOneClassRegist(ocrno);
 				
 				System.out.println(apiKey + "  /  " +  secretKey);
 				int result = oneClassService.deleteRegist(ocrno);
@@ -190,7 +206,14 @@ public class OneClassController {
 					String token = oneClassService.getToken(apiKey, secretKey);
 					oneClassService.refundRequest(token, ocrno, refundMsg);
 					
+					int rimitReservation = oneClassService.countReservation(((Member)session.getAttribute("loginMember")).getMemNo());
+					
+					if(rimitReservation <= 0 ) {
+						oneClassService.deleteChatMem(oc);
+					} 
 					return "redirect:/";
+					
+
 					
 				} else { // DB에 해당 결제 정보 수정 실패
 					return "redirect:/";

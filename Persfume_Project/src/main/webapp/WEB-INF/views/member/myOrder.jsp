@@ -59,10 +59,11 @@
         justify-content: space-around;
         width: 100%;
     }
-
-    #myPage a{
-        text-align: center;
-    }
+    
+	#myPagelist a{
+		text-align: center;
+		text-decoration: none;
+	}
 
     #myPagelist li {
         display: flex;
@@ -72,6 +73,8 @@
         margin-right: 10px; /* 각 항목 간 간격 추가 */
         height: 50px; /* 필요에 따라 높이 조정 */
         font-size: 20px;
+        position:relative;
+        
     }
 
 
@@ -150,7 +153,8 @@
 <body>
 
 <jsp:include page="../common/header.jsp" />
-<div class="content-title" id="home"></div>
+<div class="content-area">
+	<div class="content-title" id="home">WELCOME</div>
 <div id="outer">
     <ul id="myPagelist">
         <li>
@@ -200,6 +204,7 @@
     </table>
     <br><br>
 </c:forEach>
+</div>
 </div>
 
 <jsp:include page="../common/footer.jsp" />

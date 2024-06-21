@@ -59,11 +59,13 @@
         width: 100%;
     }
 
-    #myPage a{
-        text-align: center;
-    }
+	#myPagelist a{
+		text-align: center;
+		text-decoration: none;
+	}
 
     #myPagelist li {
+      	position:relative;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -101,7 +103,9 @@
 <body>
 
 <jsp:include page="../common/header.jsp" />
-<div class="content-title" id="home"></div>
+
+<div class="content-area">
+	<div class="content-title" id="home">WELCOME</div>
 <div id="outer">
     <ul id="myPagelist">
         <li>
@@ -137,6 +141,8 @@
         <p>제품 이름 : ${product.productName} | 가격 : ${product.productPrice}</p>
     </div>
 </c:forEach>
+</div>
+
 </div>
 
 <jsp:include page="../common/footer.jsp" />

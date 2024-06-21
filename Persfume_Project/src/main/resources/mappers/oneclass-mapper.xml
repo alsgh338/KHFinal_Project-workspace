@@ -79,7 +79,19 @@
           JOIN CLASS_IMG CIMG ON C.CLASS_NO = CIMG.REF_CNO
 		 WHERE C.STATUS = 'Y'
            AND CIMG.CLASS_IMG_TYPE = 1
+         ORDER BY C.CLASS_NO DESC
 	</select>
+	
+	<select id="countReservation"
+			parameterType="_int"
+			resultType="_int">
+			SELECT COALESCE(SUM(REGIST_PERSON_NO), 0)
+			  FROM CLASS_REGIST
+			 WHERE MEM_NO = #{memNo}
+			   AND STATUS = 'Y'
+
+	</select>
+	
 	
 	<select id="selectOneClass"
 			parameterType="_int"
@@ -173,6 +185,13 @@
 		       REGIST_CANCEL_DATE = SYSDATE
 		 WHERE REGIST_NO = #{ocrno}
 	</update>
+	
+	<delete id="deleteChatMem" parameterType="oneClassRegist">
+			DELETE 
+			  FROM CHAT_MEM
+			 WHERE CLASS_NO = #{classNo}
+			   AND MEM_NO = #{memNo}
+	</delete>
 
  	 
 </mapper>

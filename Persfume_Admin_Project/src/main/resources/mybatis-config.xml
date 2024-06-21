@@ -5,44 +5,21 @@
   
 <configuration>
 	
-	<!-- 
-		기존 : settings, typeAliases, environments, mappers 영역 작성
-		스프링 마이바티스 연동 후 : settings, typeAliases, mappers 영역만 작성
-		(environments 영역에 작성했었던 DB 접속 정보는 이미
-		 root-context.xml 에 적었기 때문에)
-	-->
-	
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 	<typeAliases>
  	<typeAlias type="com.mata.persfumeAdmin.notice.model.vo.Notice" alias="notice" />
- 	<!--
 		<typeAlias type="com.mata.persfumeAdmin.event.model.vo.Event" alias="event" />
 		<typeAlias type="com.mata.persfumeAdmin.event.model.vo.EventImg" alias="eventImg" />
 		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.ProductImg" alias="productImg" />
-		<typeAlias type="com.mata.persfumeAdmin.recommand.model.vo.Recommand" alias="recommand" /> -->
 		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.Product" alias="product" />
-<!-- 		<typeAlias type="com.mata.persfumeAdmin.notice.model.vo.Notice" alias="notice" /> -->
-		<typeAlias type="com.mata.persfumeAdmin.event.model.vo.Event" alias="event" />
-		<typeAlias type="com.mata.persfumeAdmin.event.model.vo.EventImg" alias="eventImg" />
-<!-- 	<typeAlias type="com.mata.persfumeAdmin.product.model.vo.Product" alias="product" />
-		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.ProductImg" alias="productImg" />
-		<typeAlias type="com.mata.persfumeAdmin.member.model.vo.Member" alias="member" />
-		<typeAlias type="com.mata.persfumeAdmin.recommand.model.vo.Recommand" alias="recommand" />  --> 
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClass" alias="oneClass" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg" alias="oneClassImg" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassReview" alias="oneClassReview" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassRegist" alias="oneClassRegist" />
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassTeacher" alias="oneClassTeacher" />
 		<typeAlias type="com.mata.persfumeAdmin.member.model.vo.Member" alias="member" />
-		<!-- <typeAlias type="com.mata.persfumeAdmin.product.model.vo.MemCoupon" alias="MemCoupon" />
-		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.Coupon" alias="Coupon" />
-		<typeAlias type="com.mata.persfumeAdmin.chat.model.vo.ChatMem" alias="chatMem" />
-		<typeAlias type="com.mata.persfumeAdmin.chat.model.vo.ChatMessage" alias="chatMessage" />
-		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.OrderDetail" alias="OrderDetail" />
-		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.Cart" alias="Cart" />
-		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.ProductReview" alias="productReview" /> -->
 	</typeAliases>
 	
 	<mappers>

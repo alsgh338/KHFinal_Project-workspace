@@ -30,4 +30,5 @@ public class OneClass {
 	private int currentStudent;
 	
 	private int memNo;
+	private String isFuture;
 }

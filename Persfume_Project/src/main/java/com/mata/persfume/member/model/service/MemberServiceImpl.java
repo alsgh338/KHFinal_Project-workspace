@@ -125,9 +125,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public ArrayList<OneClass> selectClassAbout(int memNo) {
+	public ArrayList<OneClass> selectClassAbout(ArrayList<OneClassRegist> registlist) {
 		
-		return memberDao.selectClassAbout(sqlSession,memNo);
+		return memberDao.selectClassAbout(sqlSession,registlist);
 	}
 	
 }

@@ -91,8 +91,17 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectClass", memNo);
 	}
 
-	public ArrayList<OneClass> selectClassAbout(SqlSessionTemplate sqlSession, int memNo) {
+	public ArrayList<OneClass> selectClassAbout(SqlSessionTemplate sqlSession, ArrayList<OneClassRegist> registlist) {
 		
-		return (ArrayList)sqlSession.selectList("memberMapper.selectClassAbout", memNo);
+		ArrayList<OneClass> list = new ArrayList<>();
+		
+		for(int i = 0; i < registlist.size(); i++) {
+			
+			int classNo = registlist.get(i).getClassNo();
+			
+			list.add(sqlSession.selectOne("memberMapper.selectClassAbout", classNo));
+		}
+		
+		return list;
 	}
 }

@@ -31,6 +31,11 @@ public class OneClassDao {
 		
 	}
 	
+	public int countReservation(SqlSessionTemplate sqlSession, int memNo) {
+		System.out.println(memNo);
+		return sqlSession.selectOne("oneClassMapper.countReservation", memNo);
+	}
+	
 	public OneClass selectOneClass(SqlSessionTemplate sqlSession, int oneClassNo) {
 		return sqlSession.selectOne("oneClassMapper.selectOneClass", oneClassNo);
 	}
@@ -55,6 +60,10 @@ public class OneClassDao {
 	public int deleteRegist(SqlSessionTemplate sqlSession ,String ocrno) {
 		return sqlSession.update("oneClassMapper.deleteRegist", ocrno);
 
+	}
+
+	public int deleteChatMem(SqlSessionTemplate sqlSession ,OneClassRegist oc) {
+		return sqlSession.delete("oneClassMapper.deleteChatMem", oc);
 	}
 
 	

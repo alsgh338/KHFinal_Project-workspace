@@ -278,7 +278,7 @@
         </div>
 
         <div class="top-btn" id="btn2">
-            <a href="">
+            <a href="myPage.me">
                 <img src="resources/images/person-circle.svg" alt="마이페이지 버튼">
             </a>
         </div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,12 +52,14 @@
         text-align: center; /* 버튼을 가운데로 정렬하기 위한 설정 */
     }
 
-    #classList, #classAboutList {
-        float: left;
-        width: 50%; /* 좌우로 반씩 나누기 */
-        padding: 10px; /* 내부 여백 설정 */
-        box-sizing: border-box; /* 내부 여백을 포함한 전체 너비 설정 */
-    }
+
+	#classList{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+    
+    
 
         /* 여기서 부터 MypageList css */
     
@@ -69,11 +72,13 @@
         width: 100%;
     }
 
-    #myPage a{
-        text-align: center;
-    }
+	#myPagelist a{
+		text-align: center;
+		text-decoration: none;
+	}
 
     #myPagelist li {
+    	position:relative;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -110,179 +115,232 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />
-<div class="content-title" id="home"></div>
 
-<div id="outer">
-    <ul id="myPagelist">
-        <li>
-            <a href="/persfume/myPage.me">내 정보 조회</a>
-        </li>
-        <li>
-            <a id="Review" href="" onclick="reviewGo(); return false;">내 리뷰 조회</a>
-            <form method="post" action="myReview.me" id="myReviewForm">
-                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
-            </form>
-        </li>
-        <li>
-            <a id="Like" href="" onclick="likeGo(); return false;">내 찜목록 조회</a>
-            <form method="post" action="myLike.me" id="myLikeForm">
-                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
-            </form>
-        </li>
-        <li>
-            <a id="order" href="" onclick="orderGo(); return false;">내 주문목록(배송상태)</a>
-            <form method="post" action="myOrder.me" id="myOrderForm">
-                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
-            </form>
-        </li>
-        <li>
-            <a id="class" href="" onclick="classGo(); return false;">클래스 예약조회</a>
-            <form method="post" action="myClass.me" id="myClassForm">
-                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
-            </form>
-        </li>
-    </ul>
-    <div id="classList">
-        
-        <c:forEach var="OneClassRegist" items="${classList}">
-            <div id="class">
-                클래스예약번호 : <span id="registNo">${OneClassRegist.registNo}</span>
-                <a class="cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">예약 취소</a>
-             </div>
-         </c:forEach>
-
-    </div>
-    <div id="classAboutList">
-        <c:forEach var="OneClass" items="${classAboutList}">
-            <span>${OneClass.className}</span> | 
-            <span>${OneClass.startTime}</span>    
-         <br>
-         </c:forEach>
-    </div>
-</div>
-
-</div>
-
-<script>
-// 원데이 클래스 취소 버튼 스크립트
-/*     $(document).ready(function() {
-        $('.cancel-link').on('click', function(event) {
-            event.preventDefault();
-            // 클릭된 링크의 기본 동작(페이지 이동)을 막음
-
-            let registNo = $(this).parent().find("#registNo").text().trim();
-            // 클릭된 요소의 부모 요소 내의 #registNo 요소의 텍스트 값 가져와서 공백 제거 후 registNo 변수에 저장
-
-            let form = $(this).parent().find(".cansleClass");
-            // 클릭된 요소의 부모 요소 내의 .cansleClass 폼을 찾음
-
-            form.find('input[name="registNo"]').val(registNo);
-            // 폼의 hidden input 요소에 registNo 값을 설정
-
-            console.log(registNo);
-
-           form.submit();
-           
-        });
-    }); */
-
-
-//     $(document).ready(function() {
-//     $('.cancel-link').on('click', function(event) {
-//         event.preventDefault();
-//         // 클릭된 링크의 기본 동작(페이지 이동)을 막음
-
-//         // 클릭된 링크에 해당하는 클래스 예약 번호 가져오기
-//         let registNo = $(this).siblings("#registNo").text().trim();
-
-//         let form = $(this).siblings(".cansleClass");
-//         // 클릭된 링크의 형제 요소 중에서 .cansleClass 폼을 찾음
-
-//         form.find('input[name="registNo"]').val(registNo);
-//         // 폼의 hidden input 요소에 registNo 값을 설정
-
-//         console.log(registNo);
-
-//         // form.submit();
-//     });
-// });
-
-    function likeGo() {
-                
-                console.log("likeGO야 실행 돼?");
-                
-                $("#myLikeForm").submit();
-
-            }
-		
-    function orderGo() {
-        
-        console.log("orderGO야 실행 돼?");
-        
-        $("#myOrderForm").submit();
-
-    }
-
-    function classGo() {
-        
-        console.log("classGO야 실행 돼?");
-        
-        $("#myClassForm").submit();
-
-    }
-		
-		
-    function reviewGo() {
-        $("#myReviewForm").submit();
-    }
-    
-    function deleteMem() {
-
-        let url = "delete.fo"
-
-        $("#deleteMem").attr("href", url);
-    }
-
-    // 예약 취소 함수
-    function deleteRegist(element){
-    	let ocrno = $(element).prev().text().trim();
-    	console.log(ocrno);
-    	$(".modal-body>.classRegistNo").attr("value", ocrno);
-    }
-
-</script>
-
-
-
-<!-- The Modal -->
-			<div class="modal" id="delete-regist">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
+<div class="content-area">
+	<div class="content-title" id="home">WELCOME</div>
+	
+	<div id="outer">
+	    <ul id="myPagelist">
+	        <li>
+	            <a href="/persfume/myPage.me">내 정보 조회</a>
+	        </li>
+	        <li>
+	            <a id="Review" href="" onclick="reviewGo(); return false;">내 리뷰 조회</a>
+	            <form method="post" action="myReview.me" id="myReviewForm">
+	                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+	            </form>
+	        </li>
+	        <li>
+	            <a id="Like" href="" onclick="likeGo(); return false;">내 찜목록 조회</a>
+	            <form method="post" action="myLike.me" id="myLikeForm">
+	                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+	            </form>
+	        </li>
+	        <li>
+	            <a id="order" href="" onclick="orderGo(); return false;">내 주문목록(배송상태)</a>
+	            <form method="post" action="myOrder.me" id="myOrderForm">
+	                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+	            </form>
+	        </li>
+	        <li>
+	            <a id="class" href="" onclick="classGo(); return false;">클래스 예약조회</a>
+	            <form method="post" action="myClass.me" id="myClassForm">
+	                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+	            </form>
+	        </li>
+	    </ul>
+	    
+	    
+	    <div id="classList">
+	    
+	    	    <table>
+			    	<tr>
+			    		<th>번호</th>
+			    		<th width="300">클래스 예약 번호</th>
+			    		<th width="200">클래스 이름</th>
+			    		<th width="150">클래스 일자</th>
+			    		<th width="100">취소</th>
+			    		<th width="100">기능</th>
+			    	</tr>
+			    	<tr>
+						<c:forEach var="i" begin="0" end="${fn:length(registlist) - 1}">
+						    <td>
+						        ${i + 1}
+						    </td>
+						    <td>
+						        ${registlist[i].registNo}
+						    </td>
+						    <td>
+						        ${classList[i].className}
+						    </td>
+						    <td>
+						        ${classList[i].startTime}
+						    </td>
+					    	<c:choose>
+						    	<c:when test="${classList[i].isFuture eq 'Y'}">
+						    		<td>
+						    			<button class="btn btn-sm btn-warning cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">예약 취소</button>
+						    		</td>
+						    		<td>
+						    			<button class="btn btn-sm btn-info cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="enrollChat(this);">채팅방 입장</button>
+						    		</td>
+						    	
+						    	</c:when>
+						    	<c:otherwise>
+						    		<td>
+						    			<button class="btn btn-sm btn-secondary cancel-link" data-toggle="modal" data-target="#delete-regist" disabled>기간 만료</button>
+						    		</td>
+						    		<td>
+						    			<button class="btn btn-sm btn-info cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="enrollChat(this);">리뷰 작성</button>
+						    		</td>
+						    	</c:otherwise>
+					    	
+					    	</c:choose>
+						    
+						</c:forEach>
+			    	</tr>
+			    
+			    </table>
+<%-- 	        <c:forEach var="OneClassRegist" items="${classList}">
+	            <div id="class">
+	                클래스예약번호 : <span id="registNo">${OneClassRegist.registNo}</span>
+	                <a class="cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">예약 취소</a>
+	             </div>
+	         </c:forEach>
+	
+	    </div>
+	    <div id="classAboutList">
+	        <c:forEach var="OneClass" items="${classAboutList}">
+	            <span>${OneClass.className}</span> | 
+	            <span>${OneClass.startTime}</span>    
+	         <br>
+	         </c:forEach>
+	    </div> --%>
+	    </div>
+		</div>
+	</div>
+	
+	
+	<script>
+	// 원데이 클래스 취소 버튼 스크립트
+	/*     $(document).ready(function() {
+	        $('.cancel-link').on('click', function(event) {
+	            event.preventDefault();
+	            // 클릭된 링크의 기본 동작(페이지 이동)을 막음
+	
+	            let registNo = $(this).parent().find("#registNo").text().trim();
+	            // 클릭된 요소의 부모 요소 내의 #registNo 요소의 텍스트 값 가져와서 공백 제거 후 registNo 변수에 저장
+	
+	            let form = $(this).parent().find(".cansleClass");
+	            // 클릭된 요소의 부모 요소 내의 .cansleClass 폼을 찾음
+	
+	            form.find('input[name="registNo"]').val(registNo);
+	            // 폼의 hidden input 요소에 registNo 값을 설정
+	
+	            console.log(registNo);
+	
+	           form.submit();
+	           
+	        });
+	    }); */
+	
+	
+	//     $(document).ready(function() {
+	//     $('.cancel-link').on('click', function(event) {
+	//         event.preventDefault();
+	//         // 클릭된 링크의 기본 동작(페이지 이동)을 막음
+	
+	//         // 클릭된 링크에 해당하는 클래스 예약 번호 가져오기
+	//         let registNo = $(this).siblings("#registNo").text().trim();
+	
+	//         let form = $(this).siblings(".cansleClass");
+	//         // 클릭된 링크의 형제 요소 중에서 .cansleClass 폼을 찾음
+	
+	//         form.find('input[name="registNo"]').val(registNo);
+	//         // 폼의 hidden input 요소에 registNo 값을 설정
+	
+	//         console.log(registNo);
+	
+	//         // form.submit();
+	//     });
+	// });
+	
+	    function likeGo() {
+	                
+	                console.log("likeGO야 실행 돼?");
+	                
+	                $("#myLikeForm").submit();
+	
+	            }
 			
-			      <!-- Modal Header -->
-			      <div class="modal-header">
-			        <h4 class="modal-title">예약 취소</h4>
-			        <button type="button" class="close" data-dismiss="modal">&times;</button>
-			      </div>
-
-				  <form action="deleteRegist.oc" method="post">			
-			      <!-- Modal body -->
-			      <div class="modal-body" align="center">
-			      <input type="hidden" name="ocrno" class="classRegistNo">
-			        <h3>정말 예약을 취소하시겠습니까?</h1><br> 
-			       	<input type="text" name=refundMsg placeholder="취소 사유 " required> 
-			      </div>
+	    function orderGo() {
+	        
+	        console.log("orderGO야 실행 돼?");
+	        
+	        $("#myOrderForm").submit();
+	
+	    }
+	
+	    function classGo() {
+	        
+	        console.log("classGO야 실행 돼?");
+	        
+	        $("#myClassForm").submit();
+	
+	    }
 			
-			      <!-- Modal footer -->
-			      <div class="modal-footer">
-			        <button type="submit" class="btn btn-danger">네</button>
-			        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
-			      </div>
-				</form>
-			    </div>
-			  </div>
-			</div>
-			<!-- End of Modal-->
+			
+	    function reviewGo() {
+	        $("#myReviewForm").submit();
+	    }
+	    
+	    function deleteMem() {
+	
+	        let url = "delete.fo"
+	
+	        $("#deleteMem").attr("href", url);
+	    }
+	
+	    // 예약 취소 함수
+	    function deleteRegist(element){
+	    	let ocrno = $(element).prev().text().trim();
+	    	console.log(ocrno);
+	    	$(".modal-body>.classRegistNo").attr("value", ocrno);
+	    }
+	
+	</script>
+	
+	
+	
+	<!-- The Modal -->
+				<div class="modal" id="delete-regist">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				
+				      <!-- Modal Header -->
+				      <div class="modal-header">
+				        <h4 class="modal-title">예약 취소</h4>
+				        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				      </div>
+	
+					  <form action="deleteRegist.oc" method="post">			
+				      <!-- Modal body -->
+				      <div class="modal-body" align="center">
+				      <input type="hidden" name="ocrno" class="classRegistNo">
+				        <h3>정말 예약을 취소하시겠습니까?</h1><br> 
+				       	<input type="text" name=refundMsg placeholder="취소 사유 " required> 
+				      </div>
+				
+				      <!-- Modal footer -->
+				      <div class="modal-footer">
+				        <button type="submit" class="btn btn-danger">네</button>
+				        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
+				      </div>
+					</form>
+				    </div>
+				  </div>
+				</div>
+				<!-- End of Modal-->
 
 
 </body>

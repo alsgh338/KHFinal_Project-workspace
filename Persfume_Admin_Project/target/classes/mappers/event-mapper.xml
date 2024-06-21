@@ -12,6 +12,7 @@
 		<result column="CREATE_DATE" property="createDate" />
 		<result column="STATUS" property="status" />
 		<result column="EVENTIMG_PATH" property="eventImgPath" />
+		<result column="EVENTIMG_ORIGIN" property="eventImgOrigin" />
 	</resultMap>
 	
 	
@@ -25,21 +26,106 @@
 		     , CREATE_DATE
 		     , STATUS
 		  FROM EVENT
+		  ORDER BY EVENT_NO DESC
 	</select>
 	
 	<select id="selectEventDetail"
  			parameterType="_int"
  			resultMap="eventResultSet">
-	 	SELECT EVENT_TITLE
+	 	SELECT EVENT_NO
+	 		 , EVENT_TITLE
 		     , EVENT_CONTENT
 		     , EVENT_COUNT
 		     , START_DATE
 		     , DEW_DATE
 		     , EVENTIMG_PATH
+		     , EVENTIMG_ORIGIN
 		  FROM EVENT JOIN EVENT_IMG USING (EVENT_NO)
 		 WHERE EVENT.STATUS = 'Y'
 		   AND EVENTIMG_LEVEL = 2
 		   AND EVENT_NO = #{eno}
  	</select>
- 	 
+ 	
+ 	<select id="selectEventThumbnail"
+ 			parameterType="_int"
+ 			resultMap="eventResultSet">
+		SELECT EVENTIMG_PATH
+     		 , EVENTIMG_ORIGIN
+		  FROM EVENT JOIN EVENT_IMG USING (EVENT_NO)
+		 WHERE EVENT.STATUS = 'Y'
+		   AND EVENTIMG_LEVEL = 1
+		   AND EVENT_NO = #{eno}
+ 	</select>
+ 	
+ 	<update id="modifyEvent"
+ 			parameterType="event">
+ 		UPDATE EVENT
+		   SET EVENT_TITLE = #{eventTitle}
+		     , EVENT_CONTENT = #{eventContent}
+		     , START_DATE = #{startDate}
+		     , DEW_DATE = #{dewDate}
+		 WHERE EVENT_NO = #{eventNo}
+ 	</update>
+ 	
+ 	<update id="modifyEventImg"
+ 			parameterType="eventImg">
+ 		UPDATE EVENT_IMG
+		   SET EVENTIMG_PATH = #{eventImgPath}
+		     , EVENTIMG_ORIGIN = #{eventImgOrigin} 
+		     , EVENTIMG_CHANGE = #{eventImgChange}
+		 WHERE EVENTIMG_LEVEL = #{eventImgLevel}
+		   AND EVENT_NO = #{eventNo}
+ 	</update>
+ 	
+ 	<insert id="insertEvent"
+			parameterType="event">
+		INSERT INTO EVENT(EVENT_NO
+		                , EVENT_TITLE
+		                , EVENT_CONTENT
+		                , START_DATE
+		                , DEW_DATE
+		                , CREATE_DATE)
+		           VALUES(SEQ_EVENT_NO.NEXTVAL
+		                , #{eventTitle}
+		                , #{eventContent}
+		                , #{startDate}
+		                , #{dewDate}
+		                , SYSDATE)
+	</insert>
+ 	
+ 	<insert id="insertEventImg"
+			parameterType="eventImg">
+		INSERT INTO EVENT_IMG(EVENTIMG_NO
+							, EVENT_NO
+		                    , EVENTIMG_LEVEL
+		                	, EVENTIMG_PATH
+		                	, EVENTIMG_ORIGIN
+		                	, EVENTIMG_CHANGE
+		                	, STATUS)
+		           	   VALUES(SEQ_EVENTIMG_NO.NEXTVAL
+		           	   		, SEQ_EVENT_NO.CURRVAL
+		               	    , #{eventImgLevel}
+		                    , #{eventImgPath}
+		                    , #{eventImgOrigin}
+		                    , #{eventImgChange}
+		            		, #{status})
+	</insert>
+	
+	<update id="deleteEvent"
+			parameterType="_int">
+		UPDATE EVENT
+	   SET STATUS = 'N'
+	 WHERE EVENT_NO = #{eventNo}
+	   AND STATUS = 'Y'
+	</update>
+	
+	<update id="restoreEvent"
+			parameterType="_int">
+		UPDATE EVENT
+	   SET STATUS = 'Y'
+	 WHERE EVENT_NO = #{eventNo}
+	   AND STATUS = 'N'
+	</update>
+	
+	
 </mapper>

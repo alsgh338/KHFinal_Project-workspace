@@ -129,6 +129,14 @@
             height: 90%;
             border-radius: 15px;
         }
+        
+        #class-data img{
+        	width: 90%;
+        	height: 400px;
+        	object-fit:cover;
+        	
+        		
+        }
 
 
 
@@ -373,6 +381,11 @@
                    			<c:when test="${ requestScope.oc.currentStudent} >= ${ requestScope.oc.studentMaxNo}">
                        			<button disabled>예약 종료</button>
                    			</c:when>
+                   			
+                   			<c:when test="${ empty sessionScope.loginMember}">
+                       			<button style="font-size : 30px;" disabled> 로그인 후 이용 가능</button>
+                   			</c:when>
+                   			
                    			<c:otherwise>
                        			<button type="button">예약하기</button>
                    			</c:otherwise>

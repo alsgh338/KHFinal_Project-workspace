@@ -42,5 +42,5 @@ public interface MemberService {
 
 	ArrayList<OneClassRegist> selectClass(int memNo);
 
-	ArrayList<OneClass> selectClassAbout(int memNo);
+	ArrayList<OneClass> selectClassAbout(ArrayList<OneClassRegist> registlist);
 }

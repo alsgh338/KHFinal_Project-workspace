@@ -87,8 +87,9 @@
             height: 100%;
         }
 
-        .content-main>#reservation-class img{
+        .content-main>#reservation-class>#class-img>img{
             width: 90%;
+            height : 100%;
             object-fit: cover;
         }
 
@@ -138,10 +139,6 @@
             border-bottom: 2px dotted lightslategray;
         }
 
-        /* #reservation-user>.reservation-item>.item-var{
-            font-size: 30px;
-            font-weight: 800;
-        } */
 
         
         #reservation-user>#headcount>.item-content>.activate{
@@ -156,6 +153,10 @@
             color: #072f57;
             border: 1px solid #072f57;
         }
+        
+         #reservation-user>.reservation-item#headcount>.item-content{
+         	justify-content: space-around;
+         }
 
         #reservation-user>#person>.item-content>div{
             display: flex;
@@ -216,10 +217,22 @@
                 <div class="reservation-item" id="headcount">
                     <div class="item-var">인원 선택(명)</div>
                     <div class="item-content">
-                        <div class="reservation-headCount activate">1</div>
+
+					    <c:forEach var="i" begin="1" end="${ 4- requestScope.rimitReservation}">
+					    	<c:choose>
+					    		<c:when test="${i eq 1}">
+					    			<div class="reservation-headCount activate">${i}</div>
+					    		</c:when>
+					    		<c:otherwise>
+					    			<div class="reservation-headCount">${i}</div>
+					    		</c:otherwise>
+					    	</c:choose>
+					    </c:forEach>                    
+                    
+<!--                         <div class="reservation-headCount activate">1</div>
                         <div class="reservation-headCount">2</div>
                         <div class="reservation-headCount">3</div>
-                        <div class="reservation-headCount">4</div>
+                        <div class="reservation-headCount">4</div> -->
                     </div>
                 </div>
 
@@ -278,7 +291,8 @@
 
 
     <script>
-        $(function(){
+        $(function(){        	
+        	
             $(".item-content>.reservation-headCount").click(function(){
                 // console.log($(this).text());
                 $(".activate").removeClass("activate");
@@ -297,11 +311,7 @@
                 $("#Pay>.item-content>#section-headCnt>.pay-num").text(reservPeople);
                 let formattedTotalPay = totalPay.toLocaleString();
                 $("#Pay>.item-content>#section-final>.pay-num").text(formattedTotalPay);
-                
 
-                
-                
-                
                 
             });
         });

@@ -63,7 +63,7 @@
 	 </resultMap>
 	 
 	 <resultMap id="ClassResultSet"
-	 			type="OneClassRegist">
+	 			type="oneClassRegist">
 	 	<result column="REGIST_NO" property="registNo"/>
 	 	<result column="REGIST_PAYCODE" property="registPaycode"/>
 	 	<result column="REGIST_PRICE" property="registPrice"/>
@@ -76,7 +76,7 @@
 	 </resultMap>
 	 
  	 <resultMap id="ClassAboutResultSet"
- 				type="OneClass">
+ 				type="oneClass">
 	 	<result column="CLASS_NO" property="classNo"/>
 	 	<result column="CLASS_NAME" property="className"/>
 	 	<result column="CLASS_TEACHER" property="classTeacher"/>
@@ -249,13 +249,8 @@
 	<select id="selectClassAbout"
 			parameterType="_int"
 			resultMap="ClassAboutResultSet">
-			SELECT *
-			FROM CLASS
-			WHERE CLASS_NO IN(
-			    SELECT CLASS_NO
-			    FROM CLASS_REGIST
-			    WHERE MEM_NO = #{memNo}
-			    AND STATUS = 'Y'
-			)
+			SELECT C.CLASS_NO, C.CLASS_NAME, TO_CHAR(C.START_DATE, 'YY/MM/DD') "START_TIME"
+			FROM CLASS C
+			WHERE C.CLASS_NO = #{classNo}
 	</select>
 </mapper>

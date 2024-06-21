@@ -180,9 +180,7 @@
 	            	</div>
             	</c:when>
             	
-            	<c:otherwise>
-            	
-  			        <div class="">정렬이나 검색바 들어갈 자리</div>            
+            	<c:otherwise>        
 		            <c:forEach var="oc" items="${ requestScope.list }">
 			            <div class="oneday-class">
 				            <input type="hidden" value="${ oc.classNo }">

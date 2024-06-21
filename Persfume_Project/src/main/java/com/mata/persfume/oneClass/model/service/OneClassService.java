@@ -19,6 +19,9 @@ public interface OneClassService {
 	ArrayList<OneClass> selectList(PageInfo pi);
 	
 	// 게시글 상세조회 서비스
+	
+	int countReservation(int memNo);
+	
 	// 게시글 상세 조회
 	OneClass selectOneClass(int oneClassNo);
 	
@@ -39,6 +42,8 @@ public interface OneClassService {
 	
 	// 클래스 신청 취소
 	int deleteRegist(String ocrno);
+	
+	int deleteChatMem(OneClassRegist oc);
 	
 	
 	// 결제 <-> 환불 관련 토큰 발급

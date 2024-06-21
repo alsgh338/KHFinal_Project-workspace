@@ -106,34 +106,34 @@
                 </div>
             </li>
             
-            <!-- 새로운 네비게이션 바 (Toggle O version)를 추가하고 싶다면 여기까지 선택  -->
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            
+            
+          <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">
                 상품관리
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<%= request.getContextPath() %>/proList.pr" 
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-hashtag"></i>
-                    <span>상품 목록</span>
+                <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>공지사항 관리</span>
                 </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="<%= request.getContextPath()%>/proList.pr">상품 목록</a>
+                        <a class="collapse-item" href="<%= request.getContextPath()%>/proEnroll.pr">상품추가</a>
+                    </div>
+                </div>
             </li>
 
-             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="<%= request.getContextPath() %>/proEnroll.pr" 
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-hashtag"></i>
-                    <span>상품 추가</span>
-                </a>
-            </li>
             
+            <!-- 새로운 네비게이션 바 (Toggle O version)를 추가하고 싶다면 여기까지 선택  -->
             <!-- Divider -->
             <hr class="sidebar-divider">
             
