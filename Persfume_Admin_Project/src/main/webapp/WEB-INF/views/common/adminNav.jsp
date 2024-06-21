@@ -117,12 +117,12 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseProduct"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>공지사항 관리</span>
+                    <span>상품 관리</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapseProduct" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
@@ -134,8 +134,6 @@
 
             
             <!-- 새로운 네비게이션 바 (Toggle O version)를 추가하고 싶다면 여기까지 선택  -->
-            <!-- Divider -->
-            <hr class="sidebar-divider">
             
             <!-- Divider -->
             <hr class="sidebar-divider">
