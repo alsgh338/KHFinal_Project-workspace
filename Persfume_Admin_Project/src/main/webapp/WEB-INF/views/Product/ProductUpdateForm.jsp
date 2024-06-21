@@ -119,9 +119,10 @@
                                     <h6 class="m-0 font-weight-bold text-primary">EnrollForm</h6>
                                 </div>
                                 <div class="card-body">
-	                                <form action="update.po" method="post" enctype="multipart/form-data">
+	                                <form action="updatePr.pr" method="post" enctype="multipart/form-data">
 	                                	<table class="table" border="1px">
 	                                	<c:forEach var="item" items="${list}">
+										<input type="hidden" name="productNo" value="${item.productNo}">
 	                                		<tr>
 	                                			<th colspan="2">상품 이름</th>
 	                                			<td colspan="2">
@@ -173,12 +174,11 @@
 											</tr>
 
 											<!--  기존 첨부파일이 있었을 경우 : 기존 파일을 삭제해줘야함 (해당 파일의 원본파일명, 수정파일명 넘기기) -->
-	                                		
 											<tr>
 		                                		<th colspan="2">첨부파일(썸네일)</th>
 	                                			<td colspan="8">
 	                                				<input type="hidden" name="prevThumb" value="${requestScope.list[0].thumbnailImg }">
-													<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name=upThumbnail placeholder="첨부파일" style="display:none">
+													<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upThumbnail" placeholder="첨부파일" style="display:none">
 	                                				<div class="uploadImg">
 	                                					<c:choose>
 	                                						<c:when test="${not empty requestScope.list[0].thumbnailImg }">
@@ -268,7 +268,7 @@
 			   		imgInput.click();
 			   		
 			   		imgInput.on('change', function(e) {
-			   			getImageFiles(e, imgType);
+			   			getImageFiles(e, imgType, imgInput);
 				   		console.log(imgInput.val());
 
 			   		});
@@ -298,7 +298,7 @@
 			    }
 			   
 			   
-			   function getImageFiles(e, imgType) {
+			   function getImageFiles(e, imgType, imgInput) {
 				   
 				   if(e.currentTarget.files.length == 1) {
 				   
@@ -309,7 +309,7 @@
 				      if(imgType == 'upThumbnail'){
 				    	  imagePreview = $('input[name="upThumbnail"]').next();
 				      } else{
-				    	  imagePreview = $('input[name="upFiles"]').next();
+				    	  imagePreview = imgInput.next();
 				      }
 				      
 				      console.log(imagePreview.attr('class'));

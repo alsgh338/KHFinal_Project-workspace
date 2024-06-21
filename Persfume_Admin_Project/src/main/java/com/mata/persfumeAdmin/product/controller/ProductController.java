@@ -11,9 +11,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mata.persfumeAdmin.product.model.service.ProductService;
 import com.mata.persfumeAdmin.product.model.vo.Product;
@@ -47,7 +49,8 @@ public class ProductController {
 	public String productEnroll(Product p,
 							MultipartFile thumbnailPr,
 							MultipartFile[] upFilePr,
-							HttpSession session) {
+							HttpSession session,
+							ModelAndView mv) {
 		
 		int result = productService.insertProduct(p);
 		
@@ -98,6 +101,11 @@ public class ProductController {
             
             if(result1 > 0) {
             	System.out.println("썸네일 넣기 성공!");
+            	
+				session.setAttribute("alertMsg", "상품이 등록되었습니다.");
+				
+				mv.setViewName("redirect:/proList.pr?condition=onGoing");
+            	
             }else {
             	System.out.println("썸네일 넣기 실패!");
             }
@@ -105,6 +113,8 @@ public class ProductController {
             
 		} else {
 			System.out.println("상품 추가 실패 ㅠㅠ");
+			
+			mv.addObject("errorMsg", "상품 등록에 실패하였습니다. 다시 시도해주세요").setViewName("common/errorPage");
 		}
 		
 		
@@ -117,11 +127,16 @@ public class ProductController {
 							HttpSession session,
 							Model model) {
 		
-		System.out.println("상품 수정하기 폼 잘 호출되나?");
+		System.out.println("상품 수정 폼  잘 호출되나?");
 		
 		ArrayList<Product> list = productService.selectProduct(productNo);
 		
 		ArrayList<ProductImg> pilist = productService.selectProductpi(productNo);
+		
+		// 상품 수정하기 페이지용 - 한개의 제품만 보여져야함
+		// Product p = productService.selectProduct(productNo);
+		// model.addAttribute("p", p);
+		// 
 		
 		System.out.println(list);
 		
@@ -135,10 +150,29 @@ public class ProductController {
 		
 	}
 	
-	@PostMapping("updatePr.po")
-	public String productUpdate() {
+	@PostMapping("updatePr.pr")
+	public String productUpdate(Product p,
+						String[] classImgPath,
+						MultipartFile upThumbnail, MultipartFile[] upFiles) {
+
 		
 		System.out.println("삼풍 수정하기 잘 호출 되나??");
+		
+		System.out.println("상품 수정하기 에서 p : " + p);
+		
+		System.out.println("상품 수정하기 에서 upTh :  " + upThumbnail);
+		// 썸네일 정보
+		
+		System.out.println("상품 수정하기에서 upfiles" + upFiles);
+		// 그냥 첨부파일 정보
+		
+		
+//		이 시점부터는 새로 첨부된 이미지나 이미 있는 이미지의 정보가 담겨 있다.
+		
+		
+		
+		
+		
 		
 		return "";
 	}

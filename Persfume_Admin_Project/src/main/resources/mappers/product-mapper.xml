@@ -21,7 +21,7 @@
 	
 	<!-- 상품 이미지 테이블  -->
 	<resultMap type="productImg" id="productImgResultSet">
-		<result column="PRODUCT_IMG_NO" property="productNo" />
+		<result column="PRODUCT_IMG_NO" property="productImgNo" />
 		<result column="PRODUCT_IMG_PATH" property="productImgPath" />
 		<result column="PRODUCT_IMG_ORIGIN" property="productImgOrigin" />
 		<result column="PRODUCT_IMG_CHANGE" property="productImgChange" />
@@ -110,5 +110,22 @@
 	</insert>
 	
 	<!--  상품 정보 수정  -->
+	<update id="udpateProduct"
+			parameterType="product">
+				UPDATE PRODUCT 
+					SET(SEQ_PRODUCT_NO.NEXTVAL,
+					#{productName},
+					#{productExplain},
+					#{productPrice},
+					#{productStock},
+					#{category},
+					#{discount},
+					#{gender},
+					#{topNote},
+					#{middleNote},
+					#{baseNote},
+					#{productStatus}) 
+			WHERE PRODUCT_NO = #{productNo};
+	</update>
 		
 </mapper>
