@@ -48,6 +48,9 @@
 		<result column="ORDER_DATE" property="orderDate" />
 		<result column="REFUND_DATE" property="refundDate" />
 		<result column="MEM_NO" property="memNo" />
+		<result column="ADDRESS_NO" property="addressNo" />
+		<result column="ADDRESS" property="address" />
+		<result column="PHONE" property="phone" />
 	</resultMap>
 	<!--  장바구니 테이블  -->
 	<resultMap type="Cart" id="CartResultSet">
@@ -57,6 +60,31 @@
 		<result column="MEM_NO" property="memNo" />
 		<result column="PRODUCT_NO" property="productNo" />
 	</resultMap>
+	<!--  주문상품(오더지) 테이블 -->
+		<resultMap type="OrderProduct" id="OrderProductResultSet">
+		<result column="OD_ID" property="odId" />
+		<result column="QUANTITY" property="quantity" />
+		<result column="PRICE" property="price" />
+		<result column="ORDER_NO" property="orderNo" />
+		<result column="PRODUCT_NO" property="productNo" />
+	</resultMap>
+	<!--  상품리뷰  테이블 -->
+			<resultMap type="ProductReview" id="ProductReviewResultSet">
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="REVIEW_CONTENT" property="reviewContent" />
+		<result column="REVIEW_IMG" property="reviewImgPath" />
+		<result column="REVIEW_DATE" property="reviewDate" />
+		<result column="REVIEW_RATING" property="reviewRating" />
+		<result column="REVIEW_STATUS" property="reviewStatus" />
+		<result column="OD_ID" property="odId" />
+		<result column="MEM_NO" property="memNo" />
+		<result column="PRODUCT_NO" property="productNo" />
+			</resultMap>
+				<!--  찜 테이블 -->
+		<resultMap type="Favorites" id="FavoritesResultSet">
+		<result column="MEM_NO" property="productNo" />
+		<result column="PRODUCT_NO" property="memNo" />
+	   </resultMap>
 	
 	
 	<!--  상품조회 카운트 숫자 구하는 쿼리문 -->
@@ -137,7 +165,10 @@
 		                , DELIVERY_STATUS
 		                , ORDER_DATE
 		                , REFUND_DATE
-		                , MEM_NO) 
+		                , MEM_NO
+		                , ADDRESS_NO
+		                , ADDRESS
+		                , PHONE) 
 		           VALUES(SEQ_ORDER_NO.NEXTVAL
 		                , #{payCode}
 		                , #{totalPrice}
@@ -145,7 +176,10 @@
 		                , 'N'
 		                , SYSDATE
 		                , SYSDATE+3
-		                , #{memNo}) 
+		                , #{memNo}
+		                , #{addressNo}
+		                , #{address}
+		                , #{phone})   
 	</insert>
 	<!-- 주문완료 후 고객에게 보여주기 -->
  	 	 <select id="orderview"
@@ -199,5 +233,288 @@
 		     , QUANTITY = #{quantity}
 		 WHERE CART_NO = #{cartNo} 
 	</update>
+	 	<!--  주문상품 테이블에 주문넣기  -->
+ 	  		<insert id="insertOrderProduct"
+			parameterType="OrderProduct">
+		INSERT INTO ORDER_PRODUCT(OD_ID
+		                , QUANTITY
+		                , PRICE
+		                , ORDER_NO
+		                , PRODUCT_NO) 
+		           VALUES(SEQ_OD_ID.NEXTVAL
+		                , #{quantity}
+		                , #{price}
+		                , #{orderNo}
+		                , #{productNo})  
+	</insert>
+		<!-- 구매수량 만큼 재고량 업데이트  -->
+		<update id="minusQuantity"
+			parameterType="product">
+		UPDATE PRODUCT 
+		   SET PRODUCT_STOCK = #{productStock} 
+		 WHERE PRODUCT_NO = #{productNo}  
+	</update>
+		<!-- 장바구니 결제 완료 하면 담겨있는 상품들 삭제 -->
+		<delete id="completeCart" parameterType="_int">
+		DELETE  
+		FROM CART 
+		WHERE MEM_NO = #{mno} 
+		</delete>
+		<!--  주문번호로 주문정보 긁어오기 -->
+		 <select id="selectOrder"
+ 	 	parameterType="_int"
+		resultMap="OrderDetailResultSet">
+		SELECT * 
+		 FROM ORDER_DETAIL 
+		WHERE ORDER_NO = #{ono} 
+		</select>
+		<!--  주문번호로 오더지 긁어오기 -->
+		<select id="selectOrderProduct"
+		parameterType="_int"
+			resultMap="OrderProductResultSet">
+		SELECT * 
+		  FROM ORDER_PRODUCT 
+		 WHERE ORDER_NO = #{ono} 
+	</select>
+		 	<!--  상품 테이블에 상품넣기  -->
+ 	  		<insert id="insertProduct"
+			parameterType="product">
+		INSERT INTO PRODUCT(PRODUCT_NO
+		                , PRODUCT_NAME
+		                , PRODUCT_EXPLAIN
+		                , PRODUCT_PRICE
+		                , PRODUCT_STOCK
+		                , REGIST_DATE
+		                , CATEGORY
+		                , GENDER
+		                , TOP_NOTE
+		                , MIDDLE_NOTE
+		                , BASE_NOTE
+		                , PRODUCT_STATUS
+		                , DISCOUNT) 
+		           VALUES(SEQ_PRODUCT_NO.NEXTVAL
+		                , #{productName}
+		                , #{productExplain}
+		                , #{productPrice}
+		                , #{productStock}
+		                , SYSDATE
+		                , #{category}
+		                , #{gender}
+		                , #{topNote}
+		                , #{middleNote}
+		                , #{baseNote}
+		                , 'Y'
+		                , #{discount})  
+	</insert>
+	<!--  상품이미지테이블에 이미지 넣기 썸네일 -->
+ 	  		<insert id="insertProductImg"
+			parameterType="productImg">
+		INSERT INTO PRODUCT_IMG(IMG_NO
+		                , IMG_NAME
+		                , IMG_TYPE
+		                , PRODUCT_NO
+		                , STATUS) 
+		           VALUES(SEQ_IMG_NO.NEXTVAL
+		                , #{productImgPath}
+		                , 1
+		                , #{productNo}
+		                , 'Y')  
+	</insert>
+		<!--  상품이미지테이블에 이미지 넣기 썸네일 아닌 -->
+ 	  		<insert id="insertProductImg2"
+			parameterType="productImg">
+		INSERT INTO PRODUCT_IMG(IMG_NO
+		                , IMG_NAME
+		                , IMG_TYPE
+		                , PRODUCT_NO
+		                , STATUS) 
+		           VALUES(SEQ_IMG_NO.NEXTVAL
+		                , #{productImgPath}
+		                , 2
+		                , #{productNo}
+		                , 'Y')  
+	</insert>
+	<!-- 상품명을 이용해서 상품번호 가져오기 -->
+		<select id="selectProductNo"
+		parameterType="String"
+			resultMap="productResultSet">
+		SELECT * 
+		  FROM PRODUCT
+		 WHERE PRODUCT_NAME = #{productName} 
+	</select>
+			<!--  회원번호로 오더지 긁어오기 -->
+		<select id="selectOrderDetail"
+		parameterType="_int"
+			resultMap="OrderDetailResultSet">
+		SELECT * 
+		  FROM ORDER_DETAIL 
+		 WHERE MEM_NO = #{mno} 
+	</select>
+		<!-- 주문번호을 이용해서 오더지 가져오기 -->
+		<select id="selectOrderProduct1"
+		parameterType="_int"
+			resultMap="OrderProductResultSet">
+		SELECT * 
+		  FROM ORDER_PRODUCT 
+		 WHERE ORDER_NO = #{ono}  
+	</select>
+			<!--  상품리뷰테이블에 리뷰 넣기 -->
+ 	  		<insert id="insertProductReview"
+			parameterType="ProductReview">
+		INSERT INTO PRODUCT_REVIEW(REVIEW_NO
+		                , REVIEW_CONTENT
+		                , REVIEW_IMG
+		                , REVIEW_DATE
+		                , REVIEW_RATING
+		                , REVIEW_STATUS
+		                , OD_ID
+		                , MEM_NO
+		                , PRODUCT_NO) 
+		           VALUES(SEQ_REVIEW_NO.NEXTVAL
+		                , #{reviewContent}
+		                , #{reviewImgPath}
+		                , SYSDATE
+		                , #{reviewRating}
+		                , 'Y'
+		                , #{odId}
+		                , #{memNo}
+		                , #{productNo})   
+	   </insert>
+	   <!--  상품번호를 이용해 상품리뷰 리스트 긁어가기 -->
+			<!-- 주문번호을 이용해서 오더지 가져오기 -->
+		<select id="selectProductReviewList"
+		parameterType="_int"
+			resultMap="ProductReviewResultSet">
+		SELECT * 
+		  FROM PRODUCT_REVIEW  
+		 WHERE PRODUCT_NO = #{pno} 
+		 AND REVIEW_STATUS = 'Y'    
+	</select>
+				<!--  찜테이블에 찜 추가 -->
+ 	  		<insert id="favoriteAdd"
+			parameterType="Favorites">
+		INSERT INTO FAVORITES(MEM_NO
+		                , PRODUCT_NO)  
+		           VALUES(#{memNo}
+		                , #{productNo})    
+	   </insert>
+	   <!--  찜테이블에 있는지 확인  -->
+		<select id="selectFavorites"
+		parameterType="Favorites"
+			resultMap="FavoritesResultSet">
+		SELECT * 
+		  FROM FAVORITES 
+		 WHERE MEM_NO = #{memNo} 
+		 AND PRODUCT_NO = #{productNo}     
+	    </select>
+	<!--  찜 삭제  -->
+		<delete id="favoriteDel" parameterType="Favorites">
+	    DELETE FROM FAVORITES  
+		WHERE PRODUCT_NO = #{productNo} 
+		AND MEM_NO = #{memNo}  
+		</delete>
+		<!-- 상품조회 검색을 통해 구하는 쿼리문(등록일순) -->
+	<select id="searchselectList"
+			resultMap="productResultSet">
+		SELECT * 
+		  FROM PRODUCT 
+		 WHERE PRODUCT_NAME LIKE '%'||#{text}||'%' 
+		 OR TOP_NOTE LIKE '%'||#{text}||'%'
+		 OR MIDDLE_NOTE LIKE '%'||#{text}||'%' 
+		 OR BASE_NOTE LIKE '%'||#{text}||'%' 
+		 AND PRODUCT_STATUS = 'Y' 
+		 ORDER BY PRODUCT_NO DESC 
+	</select>
+			<!-- 탑노트 리스트 조회 -->
+	<select id="selectTopNoteList"
+			resultMap="productResultSet">
+	SELECT DISTINCT TOP_NOTE 
+	FROM PRODUCT 
+	</select>
+				<!-- 미들노트 리스트 조회 -->
+	<select id="selectMiddleNoteList"
+			resultMap="productResultSet">
+	SELECT DISTINCT MIDDLE_NOTE 
+	FROM PRODUCT 
+	</select>
+				<!-- 베이스노트 리스트 조회 -->
+	<select id="selectBaseNoteList"
+			resultMap="productResultSet">
+	SELECT DISTINCT BASE_NOTE 
+	FROM PRODUCT 
+	</select>
+		<!-- 상품조회 기본목록을 구하는 쿼리문(가격낮은순) -->
+	<select id="selectAscList"
+			resultMap="productResultSet">
+		   SELECT * 
+		  FROM PRODUCT
+		 WHERE PRODUCT_STATUS = 'Y' 
+		 ORDER BY (PRODUCT_PRICE *(100-DISCOUNT) /100) ASC
+	</select>
+		<!-- 상품조회 기본목록을 구하는 쿼리문(가격높은순) -->
+	<select id="selectDescList"
+			resultMap="productResultSet">
+		   SELECT * 
+		  FROM PRODUCT
+		 WHERE PRODUCT_STATUS = 'Y' 
+		 ORDER BY (PRODUCT_PRICE *(100-DISCOUNT) /100) DESC 
+	</select>
+			<!-- 상품조회 기본목록을 구하는 쿼리문(판매순) -->
+	<select id="selectPopList"
+			resultMap="productResultSet">
+         SELECT * 
+		  FROM PRODUCT
+		 WHERE PRODUCT_STATUS = 'Y' 
+		 ORDER BY PRODUCT_STOCK ASC
+	</select>
+				<!-- 상품조회  관리자용 판매상품 리스트 긁어가기) -->
+	<select id="saleProductList"
+			resultMap="productResultSet">
+  		SELECT * 
+		  FROM PRODUCT 
+		 WHERE PRODUCT_STATUS = 'Y' 
+		 ORDER BY PRODUCT_NO DESC 
+	</select>
+	<!--  관리자 상품 정보 변경 -->
+		<update id="updatepro"
+			parameterType="product">
+		UPDATE PRODUCT  
+		 	 SET PRODUCT_NAME = #{productName}, 
+		         PRODUCT_EXPLAIN = #{productExplain}, 
+		         PRODUCT_PRICE = #{productPrice}, 
+		         PRODUCT_STOCK = #{productStock}, 
+		         REGIST_DATE = SYSDATE,
+		         CATEGORY = #{category}, 
+		         GENDER = #{gender}, 
+		         TOP_NOTE = #{topNote}, 
+		         MIDDLE_NOTE = #{middleNote}, 
+		         BASE_NOTE = #{baseNote}, 
+		         PRODUCT_STATUS = #{productStatus}, 
+		         DISCOUNT = #{discount} 
+				 WHERE PRODUCT_NO = #{productNo} 
+	</update>
+		<!--  관리자 상품 정보 변경 이미지(썸네일) -->
+		<update id="updateProductImg"
+			parameterType="productImg">
+		UPDATE PRODUCT_IMG  
+		 	 SET IMG_NAME = #{productImgPath} 
+			WHERE PRODUCT_NO = #{productNo} 
+			AND IMG_TYPE = '1' 
+	</update>
+			<!--  관리자 상품 정보 변경 이미지 보조사진-->
+		<update id="updateProductImg2"
+			parameterType="productImg">
+		UPDATE PRODUCT_IMG  
+		 	 SET IMG_NAME = #{productImgPath} 
+			WHERE IMG_No = #{productImgNo}  
+    	</update>
+    	<!--  관리자 배송시스템에서  배송 보내주면 배송상태 바꾸는 쿼리 -->
+			<update id="orderDelivery"
+			parameterType="_int">
+		UPDATE ORDER_DETAIL   
+		 	 SET DELIVERY_STATUS = 'N' 
+			WHERE ORDER_NO = #{orderNo}  
+    	</update>
+	
 	
 </mapper>

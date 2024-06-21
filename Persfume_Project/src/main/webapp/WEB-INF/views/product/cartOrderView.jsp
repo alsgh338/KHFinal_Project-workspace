@@ -332,7 +332,7 @@
            </c:forEach>
  			<hr>
             <div id="content_3">
-                <div id="c3_d1">총 상품금액<br></div>
+                <div id="c3_d1">총 상품금액<br><b id="buyprice4" style="font-weight: 400;"></b></div>
                 <div id="c3_d2">-</div>
                 <div id="c3_d3">총 할인금액<br><b id="buyprice3" style="font-weight: 400;"></b>원</div>
                 <div id="c3_d4">+</div>
@@ -342,8 +342,7 @@
              <b id="buyprice2"></b><b>원</b></div>
             </div>
        <hr>     
-       
-      
+           
             <div id="content_5">
 		            <div id="c5_d1">  <div id="c5_d1L">배송정보</div> <div id="c5_d1R"></div>
 		            </div>
@@ -459,24 +458,16 @@
              </div>
              
              <div id="content_8" style=" font-size: 20px; font-weight: 600;">
-	              <p  name="buyPrice"> <b id="buyprice1">최종결제금액 :</b>
+	              <p  name="buyPrice">최종결제금액 : <b id="buyprice1"></b>
 	               원<br>
 	                <input type="checkbox" required><b style="font-size: 13px; color: red;" >(필수)</b>
 	                <b style="font-size: 13px;">구매하실 상품의 결제정보 및 배송지를 확인하였으며, 구매진행에 동의합니다.</b>
 	             </p>
-            
-           <input type="number" id="result1" name="pno" value="2" style="display:none;">
-           <input type="number" id="result2" name="buyCount" value="2" style="display:none;">
-           <input type="number" id="result3" name="memberNo" value="2" style="display:none;">
-              	
-           
+                   
             <button id="buy" type="button" style="background-color: rgb(150, 214, 177); border:0px; color: white; width: 150px;"  onclick="payment()">결제하기</button>
              
            </div>
-          
 
-        
-  
      </div>        
 </div>
              <jsp:include page="../common/footer.jsp" />
@@ -576,8 +567,6 @@ function selectAll(selectAll)  {
           
        <script>
 		function test1() {
-			
-			
 		
 			// 사용자가 위에서 입력한 이름, 나이를 서버로 전달 (ajax)
 			$.ajax({
@@ -612,20 +601,53 @@ function selectAll(selectAll)  {
 		}
 	</script>
      <script>
-     function test2(){
-    let str1 = "최종 결제금액 : <fmt:formatNumber value='${requestScope.p.productPrice*(1-(20/100)) * requestScope.pCount +3000-10000}' type='number'/>";
-    	 $("#buyprice1").html(str1);
-    	 let str2 =  "<fmt:formatNumber value='${requestScope.p.productPrice*(1-(20/100)) * requestScope.pCount +3000-10000}' type='number'/>";
-    	 $("#buyprice2").html(str2);
-     	let str3 = "<fmt:formatNumber value='${ (requestScope.p.productPrice * requestScope.pCount)-(requestScope.p.productPrice*(1-(20/100))* requestScope.pCount)+10000}' type='number'/>";
-     	$("#buyprice3").html(str3);
-  
-     
-     }
-   
-     
+
+    let count = 0;
+    let count1 = 0;
+    <c:forEach items="${requestScope.clist}" var="c"  varStatus="status">
+       count += ${c.price}
+    	count1 += ${c.quantity * plist[status.index].productPrice}  
+    	
+    </c:forEach>
+    
+    count2 = count1 - count;
+    count += 3000;
+    
+    $("#buyprice1").html(count.toLocaleString('ko-KR'));
+    $("#buyprice2").html(count.toLocaleString('ko-KR'));
+    $("#buyprice4").html(count1.toLocaleString('ko-KR'));
+    $("#buyprice3").html(count2.toLocaleString('ko-KR'));
+    
+    
+    function test2() {
+    	count6 = count2 + 10000;
+    	count5 = count -= 7000;
+        
+        $("#buyprice1").html(count5.toLocaleString('ko-KR'));
+        $("#buyprice2").html(count5.toLocaleString('ko-KR'));
+        $("#buyprice3").html(count6.toLocaleString('ko-KR'));
+    }
      </script>     
-     <script>
+<script>
+var selectedItems = [];
+<c:forEach items="${requestScope.clist}" var="c"  varStatus="status">
+var basketNo = ${c.productNo}; 
+selectedItems.push(basketNo);
+</c:forEach>
+
+
+var selectedpno = [];
+	<c:forEach items="${requestScope.clist}" var="c"  varStatus="status">	
+	var basketCount = ${c.quantity};  
+	selectedpno.push(basketCount);	
+</c:forEach>
+
+
+console.log(selectedItems);
+console.log(selectedpno);
+</script>
+     
+         <script>
      function printName()  {
     	  var want1 = document.getElementById('want').value;
     console.log(want1);
@@ -634,6 +656,8 @@ function selectAll(selectAll)  {
      </script>
      
 <script>
+
+
 
  var merchant_uid = "A" + new Date().getTime();
 
@@ -653,21 +677,22 @@ function selectAll(selectAll)  {
     			if(rsp.success == true){
     				  const message = "결제에 성공하였습니다. 감사합니다."
     		            	window.alert(message);
-    				 location.href = 'complete.po?'
-    			
-    			}else{
-    				  const message2 = "결제에 실패하였습니다. 다시 시도해주세요."
-    		            	window.alert(message2);
-    				
-    				 jQuery.ajax({
-                          url: "complete.po",
+    				  jQuery.ajax({
+                          url: "completeCart.po",
                           method: "GET",
+                          traditional: true, //  배열 넘기는 속성
+                          dataType: "text", // 배열 넘기는 속성 
                           data: {
                               merchant_uid: rsp.merchant_uid,
                               imp_uid: rsp.imp_uid,
                               amount : 100,
     				 		  mno: ${ requestScope.memNo },
-    				 		  want5 : document.getElementById('want').value
+    				 		  want5 : document.getElementById('want').value,
+    				 		  pno: JSON.stringify(selectedItems),
+    				 		  pcount: JSON.stringify(selectedpno),
+    				 	      adno:  document.getElementById('sample6_postcode').value,
+   				 			  address: document.getElementById("sample6_address").value,
+   				 		 	  phone: document.getElementById("sitephone").value
                         		 },
                         success:  function(result) {
         				if(result > 0){
@@ -678,16 +703,44 @@ function selectAll(selectAll)  {
         				console.log("ajax 통신 실패!");
         												}	
 
-        				})
+        				})   
+	
+    			}else{
+    				  const message2 = "결제에 실패하였습니다. 다시 시도해주세요."
+    		            	window.alert(message2);
+    				
+    				  jQuery.ajax({
+                          url: "completeCart.po",
+                          method: "GET",
+                          dataType : "json",
+                          data: {
+                              merchant_uid: rsp.merchant_uid,
+                              imp_uid: rsp.imp_uid,
+                              amount : 100,
+    				 		  mno: ${ requestScope.memNo },
+    				 		  want5 : document.getElementById('want').value,
+    				 		  pno: JSON.stringify(selectedItems),
+    				 		  pcount: JSON.stringify(selectedpno),
+    				 	      adno:  document.getElementById('sample6_postcode').value,
+   				 			  address: document.getElementById("sample6_address").value,
+   				 		 	  phone: document.getElementById("sitephone").value
+                       	
+                        		 },
+                        success:  function(result) {
+        				if(result > 0){
+        					window.location.href = "orderComp.or?ono=" + result;
+        				}
+        												},
+        				error : function() {
+        				console.log("ajax 통신 실패!");
+        												}	
+
+        				});   
+    				  
                     }// else문 종료
     			});
                      
-                      }
-    		           
-    				
-    		
-    	
-        
+                      }	      
 </script>
      
           

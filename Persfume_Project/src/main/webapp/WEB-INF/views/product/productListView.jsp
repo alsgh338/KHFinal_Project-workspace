@@ -284,7 +284,7 @@
         
             <div class="swiper-wrapper">
          
-                <div class="swiper-slide"><img src="/04_Frontend-workspace/2_css-workspace/resources/image/bono.jpg"></div>
+                <div class="swiper-slide"><img src="resources/images/banner1.jpg"></div>
                 <div class="swiper-slide"><img src="/04_Frontend-workspace/2_css-workspace/resources/image/bono.jpg"></div>
                 <div class="swiper-slide"><img src="/04_Frontend-workspace/2_css-workspace/resources/image/bono.jpg"></div>
                 <div class="swiper-slide"><img src="/04_Frontend-workspace/2_css-workspace/resources/image/bono.jpg"></div>
@@ -311,11 +311,11 @@
                 <div  style="font-size: 18px; font-weight: 600; text-align: center;" > 성별 검색 </div>
                 <ul class="gender">
                     <li class="gender-li">
-                        <input name="search_form[option_data][]" id="man" value="" type="checkbox"> 
+                        <input name="search_form[option_data][]" id="man" value="man" type="checkbox"> 
                             <label for="man">남성</label>
                     </li>
                     <li class="gender-li">
-                        <input name="search_form[option_data][]" id="woman" value="" type="checkbox"> 
+                        <input name="search_form[option_data][]" id="woman" value="woman" type="checkbox"> 
                             <label for="woman">여성</label>
                     </li>
                 </ul>
@@ -327,58 +327,27 @@
                          <div class="note-check">
                                  <ul class="note-element-li">                                   
                                         <li class="topnote" style="font-size: 16px; font-weight: 600; text-align: center;">탑노트</li>
+                                         <c:forEach var="t" items="${ requestScope.topN }" varStatus="status">
                                             <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">레몬</label>
+                                                <input name="search_form[option_data][]" id="${t.topNote}" value="${t.topNote}" type="checkbox"> 
+                                                <label for="${t.topNote}">${t.topNote}</label>
                                             </li>
-                                            <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">오렌지</label>
-                                            </li>
-                                            <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">베르가못</label>
-                                            </li>
-                                            <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">장미</label>
-                                            </li>
+                                            	</c:forEach>
+                                      
                                         <li class="middlenote"  style="font-size: 16px; font-weight: 600; text-align: center;">미들노트</li>
+                                              <c:forEach var="m" items="${ requestScope.midN }" varStatus="status">
                                             <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">자스민</label>
+                                                <input name="search_form[option_data][]" id="${m.middleNote}" value="${m.middleNote}" type="checkbox"> 
+                                                <label for="${m.middleNote}">${m.middleNote}</label>
                                             </li>
-                                            <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">일랑일랑</label>
-                                            </li>
-                                            <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">시나몬</label>
-                                            </li>
-                                            <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">페퍼</label>
-                                            </li>
+                                            	</c:forEach>
                                         <li class="basenote"  style="font-size: 16px; font-weight: 600; text-align: center;">베이스노트</li>
+                                               <c:forEach var="b" items="${ requestScope.BaseN }" varStatus="status">
                                             <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">바닐라</label>
+                                                <input name="search_form[option_data][]" id="${b.baseNote}" value="${b.baseNote}" type="checkbox"> 
+                                                <label for="${b.baseNote}">${b.baseNote}</label>
                                             </li>
-                                            <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">머스크</label>
-                                            </li>
-                                            <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">우드</label>
-                                            </li>
-                                            <li>
-                                                <input name="search_form[option_data][]" id="" value="" type="checkbox"> 
-                                                <label for="">시더</label>
-                                            </li>
-
-                                   
+                                            	</c:forEach>       
 
                                  </ul>
                          </div>
@@ -388,16 +357,17 @@
                <div id="header_2">
                 <form id="search_form" action="search.do" method="get">
                     <div class="search">
-                        <input type="text" placeholder=" 검색어 입력">
-                        <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-                             id="search_button" style="color: black">
+                        <input type="text" name="text" id="searchtext" placeholder=" 검색어 입력">
+                        <button type="submit">
+                     <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="searching();"
+                             id="search_button" style="color: black"></button>
                     </div>
                 </form>
             </div>
                 <!-- 검색창 클릭 기능 구현 JS 스크립트-->
                 <script> 
                 document.getElementById("search_button").addEventListener("click", function() {
-                document.getElementById("search_form").submit();  });
+                document.getElementById("search_form").submit(); });
                 </script>
            
              </div>
@@ -406,16 +376,17 @@
                <div class="content-sort" style="display: block;" >
            
                     <p>
-                        <a href="">신상순</a>
-                        <a href="">판매순</a>
-                        <a href="">고가순</a>
-                        <a href="">저가순</a>
+                        <a href="list.po">신상순</a>
+                        <a href="poplist.po">판매순</a>
+                        <a href="desclist.po">고가순</a>
+                        <a href="asclist.po">저가순</a>
                     </p>
               </div>
 
            
-            
-               
+          
+	
+               <c:if test="${ requestScope.list == null }"> <div>검색결과가 없습니다.</div> </c:if>
 		<c:forEach var="p" items="${ requestScope.list }" varStatus="status">
 		
             <div class="oneday-class" name="${p.productNo}">
@@ -432,12 +403,74 @@
                 <div class="class-title">  ${p.productExplain}
                 </div>
                 <div class="class-data">
-                    <div class="class-location"><s>${p.productPrice}</s></div>
-                    <div class="class-discount">30%</div>
-                    <div class="class-price">190,000원</div>
+                    <div class="class-location"><s> <fmt:formatNumber value="${p.productPrice}" type="number" />원</s></div>
+                    <div class="class-discount">${p.discount}%</div>
+                    <div class="class-price"><fmt:formatNumber value="${p.productPrice * (100-(p.discount))/100}" type="number" />원</div>
                 </div>
             </div>
                    </c:forEach>   
+        
+
+                      <div id="pagingArea" style="text-align:center;">
+                <ul class="pagination">
+                
+                	<c:choose>
+                	<c:when test="${ requestScope.pi.currentPage eq 1 }">	
+                    	<li class="page-item disabled">
+                    		<a class="page-link" href="#">Previous</a>
+                    	</li>
+                    </c:when>
+                    <c:otherwise>
+                    	<li class="page-item">
+                    		<a class="page-link" 
+                    		   href="list.bo?cpage=${ requestScope.pi.currentPage - 1 }">
+                    			Previous
+                    		</a>
+                    	</li>
+                    </c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${ requestScope.pi.startPage }"
+                    		   end="${ requestScope.pi.endPage }"
+                    		   step="1">
+                    	
+                    	<c:choose>	   
+                    	<c:when test="${ requestScope.pi.currentPage ne p }">
+                    		<li class="page-item">
+		                    	<a class="page-link" href="list.bo?cpage=${ p }">
+									${ p }
+								</a>
+		                    </li>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<li class="page-item active">
+		                    	<a class="page-link">
+									${ p }
+								</a>
+		                    </li>
+                    	</c:otherwise>
+	                    </c:choose>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+	                    <li class="page-item disabled">
+	                    	<a class="page-link" href="#">
+	                    		Next
+	                    	</a>
+	                    </li>
+                    </c:when>
+                    <c:otherwise>
+	                    <li class="page-item">
+	                    	<a class="page-link" 
+	                    	   href="list.bo?cpage=${ requestScope.pi.currentPage + 1 }">
+	                    		Next
+	                    	</a>
+	                    </li>
+	                </c:otherwise>
+                    </c:choose>
+                </ul>
+            </div>
         </div>
     </div>
  </div>
@@ -486,7 +519,12 @@
 		});
 	});
 </script>
-
+<script>
+function searching(){
+	var searchtext =  document.getElementById('searchtext').value;
+	location.href = "search.do?text="+searchtext;
+}
+</script>
 
 </body>
 </html>

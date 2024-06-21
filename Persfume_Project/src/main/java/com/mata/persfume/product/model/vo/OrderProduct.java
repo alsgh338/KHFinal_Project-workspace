@@ -16,5 +16,14 @@ public class OrderProduct {
 	private int price;
 	private int orderNo;
 	private int productNo;
+	public OrderProduct(int quantity, int price, int orderNo, int productNo) {
+		super();
+		this.quantity = quantity;
+		this.price = price;
+		this.orderNo = orderNo;
+		this.productNo = productNo;
+	}
+	
+	
 	
 }

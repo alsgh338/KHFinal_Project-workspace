@@ -22,7 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>   
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-
+ 
     <style>
  
      /* 구글 이모지 css*/
@@ -203,12 +203,88 @@
         #about_salade>img{
             width: 100%;
         }
-  
+  .review-section {
+    margin-top: 20px;
+}
+
+.review-section h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-item h3 {
+    margin: 0 0 5px;
+    color: #007bff;
+}
+
+.review-rating {
+    margin: 0;
+    color: #ff9900;
+}
+
+.review-text {
+    margin: 10px 0;
+    color: #555;
+}
+
+.review-image {
+    width: 130px;
+    height: 120px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#heart-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    transition: background-image 0.3s ease-in-out;
+    color: red;
+}
+    .content-area {
+		text-align: center;
+		}
+        .content-title{
+            height: 190px;
+            background: url(resources/images/class_title.jpg);
+            background-size: cover;
+            background-position: center;
+            object-fit: cover;
+            text-align: center;
+            line-height: 230px;
+            font-size: 50px;
+            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+            color: white;
+            width: 100%;
+        }
      </style>
     </head>
     <body>
        <jsp:include page="../common/header.jsp" />
-
+       <div class="content-area">
+        <div class="content-title" id="home"></div>
+        <div class="content-subtitle"></div>
+        <div class="content-main">
+        </div>
+        
+    </div>
         <div class="wrap">
          
         <div id="content">
@@ -218,9 +294,11 @@
                         <img id="img4" src="${ requestScope.pi.productImgPath }" alt="이미지">
                     </div>
                     <div id="c2">
+                          
                        <c:forEach var="i" items="${ requestScope.pilist }" varStatus="status">
                			     <img id="img${status.count}" src="${i.productImgPath}" alt="이미지">
                    	   </c:forEach>
+                   	   		 <img id="img3"  src="${ requestScope.pi.productImgPath }" alt="이미지">
                     </div>               
                 </div>
                <div id="content_1R">
@@ -265,7 +343,7 @@
                              <b style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400;">원</b>   &nbsp;&nbsp;             
                             <b style="font-size: 20px;"> → </b>  
                             <p id="total_acount" name='total_account' style="font-size: 20px; color: red; font-weight:600;">
-                 			 <fmt:formatNumber value="${ requestScope.p.productPrice * (1-(20/100))}" type="number" /> </p>
+                 			 <fmt:formatNumber value="${ requestScope.p.productPrice * (100-(requestScope.p.discount))/100}" type="number" /> </p>
                 		      <b style="font-size: 20px; margin: 0px; color:red; font-weight:600;">원</b>
                    
                             <input type="text" id="result1" name="result1" style="display:none;">
@@ -275,11 +353,15 @@
                         <div id="cb" >                  
                             <a id="cart" href="" onclick = 'sendit();' style="width: 250px; margin-bottom: 5px;">장바구니</a>   
                             <button id="buy" type="submit" style="width: 250px;">바로구매</button>
+                            <c:choose>
+                            <c:when test="${requestScope.fa != null}"> <img src="resources/images/redheart.jpg"  id="heart-button" onclick="favorite();"/></c:when>
+                            <c:when test="${requestScope.fa == null}"> <img src="resources/images/heart.jpg"  id="heart-button" onclick="favorite();"/></c:when>
+                            
+                              </c:choose>
                         </div>
                     </form>
     
                 </div>
-         
                </div>
            
                  <div id="content_2">
@@ -362,33 +444,33 @@
             </div>
             </div>
             
+            <div class="review-section">
+            <h2>리뷰</h2>
+            <div class="review-list">
+            	 <c:forEach var="pr" items="${ requestScope.prlist }" varStatus="status">
+                   
+                <div class="review-item">
+                    <h3>사용자1</h3>
+                  <c:if test="${pr.reviewRating == 10}"> <p class="review-rating">★★★★★</p></c:if>    
+                   <c:if test="${pr.reviewRating == 9}"> <p class="review-rating">★★★★☆</p></c:if>
+                    <c:if test="${pr.reviewRating == 8}"> <p class="review-rating">★★★★</p></c:if>
+                     <c:if test="${pr.reviewRating == 7}"> <p class="review-rating">★★★☆</p></c:if>
+                      <c:if test="${pr.reviewRating == 6}"> <p class="review-rating">★★★</p></c:if>
+                       <c:if test="${pr.reviewRating == 5}"> <p class="review-rating">★★☆</p></c:if>
+                        <c:if test="${pr.reviewRating == 4}"> <p class="review-rating">★★</p></c:if>
+                         <c:if test="${pr.reviewRating == 3}"> <p class="review-rating">★☆</p></c:if>
+                          <c:if test="${pr.reviewRating == 2}"> <p class="review-rating">★</p></c:if>
+                           <c:if test="${pr.reviewRating == 1}"> <p class="review-rating">☆</p></c:if>
+                    <p class="review-text">${pr.reviewContent}</p>
+                    <img src="${pr.reviewImgPath}" class="review-image">
+                </div>
+                </c:forEach>
+                
+               
+            </div>
+        </div>
             
-            <div id="review_area">
-                    <p style="border: solid 1px;
-                            text-align: center;
-                            font-size: 25px;
-                            color: white;
-                            background-color: navy ;">구매후기</p>
-                    <a id="review_insert" href="">후기작성</a> 
-                    <!--  <button id="testButton">구매후기 조회 시험용</button> -->
-                    <div class="review" id="">
-                        <div class="review_id" style="display: inline-block;">
-                            회원번호 :
-                            <p id="review_memerNo" style="display: inline-block;">
-                                
-                            </p>
-                        </div>
-                        <div class="review_title" style="font-size: 20px; font-weight: 700;">
-                            
-                        </div>
-                        <img width="200px" height="150px" id="review_img">
-                        <br>
-                        <div class="review_content">
-                            
-                        </div>
-                        <hr>    
-                    </div>   
-                    <td><a id="review" href="#review_area">구매후기</a></td>
+          
             </div>
       
            <jsp:include page="../common/footer.jsp" />
@@ -398,6 +480,7 @@
 
 let img1 = document.getElementById("img1");
 let img2 = document.getElementById("img2");
+let img3 = document.getElementById("img3");
 
 img1.onclick = function() {
 	$("#img4").attr("src", img1.src);
@@ -406,6 +489,11 @@ img1.onclick = function() {
 
 img2.onclick = function() {
 	$("#img4").attr("src", img2.src);
+	
+};
+
+img3.onclick = function() {
+	$("#img4").attr("src", img3.src);
 	
 };
   
@@ -470,6 +558,33 @@ $("#cart").attr("href", url);
 
 
 
+</script>
+<script>
+function favorite(){
+    $.ajax({
+        url: "favorite.fa",
+        type: "get", 
+        data: {
+            "mno" : ${requestScope.memNo},
+            "pno" :  ${requestScope.p.productNo}
+        },
+        success: function(result) {
+        	
+       	 if(result >0){
+       		 
+       		 console.log("찜 등록 성공");
+       	    window.location.reload(true);
+       	 }else{
+       		console.log("찜 등록 실패");
+       	    window.location.reload(true);
+       	 }
+        },
+        error: function() {
+            console.log("찜 통신 실패");
+        }
+    })
+	
+}
 </script>
 
 

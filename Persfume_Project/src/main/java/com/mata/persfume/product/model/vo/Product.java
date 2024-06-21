@@ -26,4 +26,26 @@ public class Product {
 	private String middleNote;
 	private String baseNote;
 	private String productStatus;
+	public Product(int productNo, int productStock) {
+		super();
+		this.productNo = productNo;
+		this.productStock = productStock;
+	}
+	public Product(String productName, String productExplain, int productPrice, int productStock, int discount,
+			String category, String gender, String topNote, String middleNote, String baseNote) {
+		super();
+		this.productName = productName;
+		this.productExplain = productExplain;
+		this.productPrice = productPrice;
+		this.productStock = productStock;
+		this.discount = discount;
+		this.category = category;
+		this.gender = gender;
+		this.topNote = topNote;
+		this.middleNote = middleNote;
+		this.baseNote = baseNote;
+	}
+	
+	
+	
 }

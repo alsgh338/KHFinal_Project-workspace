@@ -35,6 +35,9 @@
 		<typeAlias type="com.mata.persfume.product.model.vo.Cart" alias="Cart" />
 		<typeAlias type="com.mata.persfume.product.model.vo.ProductReview" alias="productReview" />
 		<typeAlias type="com.mata.persfume.member.model.vo.PWDmember" alias="PWDmember" />
+		<typeAlias type="com.mata.persfume.product.model.vo.OrderProduct" alias="OrderProduct" />
+		<typeAlias type="com.mata.persfume.product.model.vo.ProductReview" alias="ProductReview" />
+		<typeAlias type="com.mata.persfume.product.model.vo.Favorites" alias="Favorites" />
 	</typeAliases>
 	
 	<mappers>

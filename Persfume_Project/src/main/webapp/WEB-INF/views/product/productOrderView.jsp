@@ -356,7 +356,7 @@
 		                <input type="text" id="sample6_detailAddress"  name="sample6_detailAddress" placeholder="상세주소">
 		                <input type="text" id="sample6_extraAddress"  name="sample6_extraAddress" placeholder="지역구명" style="margin-top:5px;" readonly></div> 
 		            </div>
-		            <div id="c5_d5"> <div id="c5_d5L">연락처</div>  <div id="c5_d5R"><input type="text" id="sitephone" name="sitephone" placeholder="연락처를 입력해주세요."   required></div>
+		            <div id="c5_d5"> <div id="c5_d5L">연락처</div>  <div id="c5_d5R"><input type="text" id="sitephone" name="sitephone" placeholder="연락처를 입력해주세요." oninput="hypenTel(this)" required></div>
 		            </div>
 		            <div id="c5_d6"><div id="c5_d6L">요청사항 </div>  <div id="c5_d6R"><input type="text" id="want" name="want" placeholder="배송관련 요청사항을 입력해주세요." style="width:350px;" onkeyup='printName()' />
 		            </div>
@@ -463,9 +463,8 @@
 	                <b style="font-size: 13px;">구매하실 상품의 결제정보 및 배송지를 확인하였으며, 구매진행에 동의합니다.</b>
 	             </p>
             
-           <input type="number" id="result1" name="pno" value="2" style="display:none;">
-           <input type="number" id="result2" name="buyCount" value="2" style="display:none;">
-           <input type="number" id="result3" name="memberNo" value="2" style="display:none;">
+           <input type="text" id="result1" name="pno" value="2" style="display:none;">
+
               	
            
             <button id="buy" type="button" style="background-color: rgb(150, 214, 177); border:0px; color: white; width: 150px;"  onclick="payment()">결제하기</button>
@@ -473,11 +472,14 @@
            </div>
           
 
-        
+             <input type="text" id="combined_address" name="combined_address" placeholder="전체 주소" readonly style="display:none;">
+   
   
      </div>        
 </div>
              <jsp:include page="../common/footer.jsp" />
+  
+
          
 
 <script>	
@@ -617,6 +619,12 @@ function selectAll(selectAll)  {
     	 $("#buyprice2").html(str2);
      	let str3 = "<fmt:formatNumber value='${ (requestScope.p.productPrice * requestScope.pCount)-(requestScope.p.productPrice*(1-(20/100))* requestScope.pCount)+10000}' type='number'/>";
      	$("#buyprice3").html(str3);
+    
+     	 const hypenTel = (target) => {
+     		 target.value = target.value
+     		   .replace(/[^0-9]/g, '')
+     		   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+     		}
      }
    
      
@@ -661,9 +669,14 @@ function selectAll(selectAll)  {
                           data: {
                               merchant_uid: rsp.merchant_uid,
                               imp_uid: rsp.imp_uid,
-                              amount : ${ requestScope.p.productPrice },
+                              amount : 100,
     				 		  mno: ${ requestScope.memNo },
-    				 		  want5 : document.getElementById('want').value
+    				 		  want5 : document.getElementById('want').value,
+    				 		  pno: ${ requestScope.p.productNo },
+    				 		  pcount: ${ requestScope.pCount},
+    				 		  adno:  document.getElementById('sample6_postcode').value,
+    				 		  address: document.getElementById("sample6_address").value,
+    				 		  phone: document.getElementById("sitephone").value
                         		 },
                         success:  function(result) {
         				if(result > 0){

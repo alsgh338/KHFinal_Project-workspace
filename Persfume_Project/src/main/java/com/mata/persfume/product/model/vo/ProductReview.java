@@ -19,7 +19,11 @@ public class ProductReview {
 	private String reviewImgOrigin;
 	private String reviewImgChange;
 	private Date reviewDate;
+	private int reviewRating;
 	private String reviewStatus;
+	private int odId;
 	private int memNo;
 	private int productNo;
+	//생성자
+	
 }

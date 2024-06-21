@@ -14,4 +14,11 @@ public class Favorites {
 
 	private int productNo;
 	private int memNo;
+	public Favorites(int productNo, int memNo) {
+		super();
+		this.productNo = productNo;
+		this.memNo = memNo;
+	}
+	
+	
 }

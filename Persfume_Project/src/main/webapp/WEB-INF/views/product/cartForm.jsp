@@ -143,13 +143,37 @@
         width: 100%;
         height: 100%;
     }
+    .content-area {
+		text-align: center;
+		}
+        .content-title{
+            height: 190px;
+            background: url(resources/images/class_title.jpg);
+            background-size: cover;
+            background-position: center;
+            object-fit: cover;
+            text-align: center;
+            line-height: 230px;
+            font-size: 50px;
+            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+            color: white;
+            width: 100%;
+        }
 </style>
 
 </head>
-    <jsp:include page="../common/header.jsp" />   
- 
-      <c:if test="${requestScope.memNo != null}">
+<body>
+    <jsp:include page="../common/header.jsp" />
+        <div class="content-area">
+        <div class="content-title" id="home"></div>
+        <div class="content-subtitle">장바구니</div>
+        <div class="content-main">
+        </div>
+        
+    </div>
     
+      <c:if test="${requestScope.memNo != null}">
+
  <div class="wrap">
     
             <div id="left">
@@ -427,7 +451,9 @@
         }
        
     </script>
+  
  
+
   <jsp:include page="../common/footer.jsp" />
   
 </body>
