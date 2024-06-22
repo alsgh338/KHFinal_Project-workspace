@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="noticeMapper">
 
-	<!-- 클래스 리뷰용 resultMap -->
+	<!-- 공지사항용 resultMap -->
   <resultMap id="noticeResultSet" type="notice">
     <result column="NOTICE_NO" property="noticeNo"/>
     <result column="NOTICE_TITLE" property="noticeTitle"/>

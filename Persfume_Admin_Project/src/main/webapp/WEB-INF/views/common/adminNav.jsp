@@ -87,7 +87,7 @@
             </div>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="adCoupon.me">
+                <a class="nav-link collapsed" href="list.co">
                     <i class="fas fa-fw fa-laugh-beam"></i>
                     <span>쿠폰 관리</span>
                 </a>

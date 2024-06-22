@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="couponMapper">
+
+<resultMap id="couponResultSet" type="coupon">
+    <result column="COUPON_NO" property="couponNo"/>
+    <result column="COUPON_NAME" property="couponName"/>
+    <result column="MEM_COUPON_COUNT" property="memCouponCount"/>
+</resultMap>
+
+<resultMap id="memCouponResultSet" type="memCoupon">
+    <result column="MEM_COUPON_NO" property="memCouponNo"  />
+    <result column="REGIST_DATE" property="registDate"  />
+    <result column="STATUS" property="status" />
+    <result column="MEM_NO" property="memNo"/>
+    <result column="COUPON_NO" property="couponNo" />
+</resultMap>
+
+ 
+ <!-- 쿠폰 목록 -->
+<!-- coupon-mapper.xml -->
+<select id="selectList" resultMap="couponResultSet">
+    SELECT
+            c.COUPON_NO,
+            c.COUPON_NAME,
+            COUNT(mc.MEM_COUPON_NO) AS MEM_COUPON_COUNT
+        FROM
+            COUPON c
+            LEFT JOIN MEM_COUPON mc ON c.COUPON_NO = mc.COUPON_NO
+        GROUP BY
+            c.COUPON_NO, c.COUPON_NAME
+        ORDER BY
+            c.COUPON_NO
+</select>
+
+  <!-- 쿠폰 상세 조회 -->
+    <select id="selectMemberCoupons" resultMap="memCouponResultSet">
+        SELECT
+            mc.MEM_COUPON_NO,
+            mc.REGIST_DATE,
+            mc.STATUS,
+            mc.MEM_NO,
+            mc.COUPON_NO
+        FROM
+            MEM_COUPON mc
+        WHERE
+            mc.COUPON_NO = #{couponNo}
+    </select>
+
+    
+    
+
+</mapper>
