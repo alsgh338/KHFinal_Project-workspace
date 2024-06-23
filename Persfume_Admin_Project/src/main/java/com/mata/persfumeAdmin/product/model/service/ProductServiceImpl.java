@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.mata.persfumeAdmin.product.model.dao.ProductDao;
 import com.mata.persfumeAdmin.product.model.vo.Product;
 import com.mata.persfumeAdmin.product.model.vo.ProductImg;
+import com.mata.persfumeAdmin.product.model.vo.ProductReview;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -69,6 +70,18 @@ public class ProductServiceImpl implements ProductService{
 	public int productUpdate(Product p) {
 		
 		return productDao.productUpdate(sqlSession, p);
+	}
+
+	@Override
+	public int productImgUpdate(ProductImg pi) {
+		
+		return productDao.productImgUpdate(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<ProductReview> selectAllreview() {
+		
+		return productDao.selectAllreview(sqlSession);
 	}
 
 

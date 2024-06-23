@@ -147,6 +147,30 @@
                 </div>
             </li>
 
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                상품리뷰관리
+            </div>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseProductReview"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>상품 리뷰관리</span>
+                </a>
+                <div id="collapseProductReview" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="<%= request.getContextPath()%>/reviewList.re">상품 리뷰 목록</a>
+                        <a class="collapse-item" href="<%= request.getContextPath()%>/proEnroll.pr">상품추가</a>
+                    </div>
+                </div>
+            </li>
+
             
             <!-- 새로운 네비게이션 바 (Toggle O version)를 추가하고 싶다면 여기까지 선택  -->
             

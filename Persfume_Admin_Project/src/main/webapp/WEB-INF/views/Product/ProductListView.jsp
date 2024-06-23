@@ -89,7 +89,7 @@
                                         <tr>
                                             <th colspan="15">
                                             	<div id="sb-btn">
-	                                            	<a href="enrollForm.oc" class="btn btn-primary btn-sm btn-icon-split">
+	                                            	<a href="proEnroll.pr" class="btn btn-primary btn-sm btn-icon-split">
 				                                        <span class="icon text-white-50">
 				                                            <i class="fas fa-flag"></i>
 				                                        </span>
