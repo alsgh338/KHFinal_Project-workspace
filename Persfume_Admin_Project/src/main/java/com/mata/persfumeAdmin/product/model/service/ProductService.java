@@ -16,5 +16,9 @@ public interface ProductService {
 	int insertProductImg(ProductImg pi1);
 
 	ArrayList<ProductImg> selectProductpi(int productNo);
+	
+	int deleteProduct(int productNo);
+
+	int productUpdate(Product p);
 
 }

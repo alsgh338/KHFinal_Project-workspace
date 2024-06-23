@@ -165,15 +165,42 @@ public class ProductController {
 		System.out.println("상품 수정하기에서 upfiles" + upFiles);
 		// 그냥 첨부파일 정보
 		
+		// 상품 정보 수정
+		
+		int result1 = productService.productUpdate(p);
+		
+		if(result1 > 0) {
+			System.out.println("상품 수정 성공 ");
+		}
+		
 		
 //		이 시점부터는 새로 첨부된 이미지나 이미 있는 이미지의 정보가 담겨 있다.
 		
 		
+		return "";
+	}
+	
+	
+	@PostMapping("delete.pr")
+	public String deleteProduct(int productNo) {
 		
+		System.out.println("상품 삭제하기 잘 호출되나?");
 		
+		System.out.println("상품 삭제하기 서블릿에서 상품번호 : " + productNo);
 		
+		int result = productService.deleteProduct(productNo);
+		
+		if(result > 0) {
+			// 삭제 성공
+			
+			System.out.println("삭제성공");
+		}else {
+			// 삭제 실패
+			System.out.println("삭제 실패");
+		}
 		
 		return "";
+	
 	}
 	
 	

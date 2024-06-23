@@ -169,7 +169,7 @@
 			        <button type="button" class="close" data-dismiss="modal">&times;</button>
 			      </div>
 
-				  <form action="delete.me" method="post">			
+				  <form action="delete.pr" method="post">			
 			      <!-- Modal body -->
 			      <div class="modal-body">
 			      <input type="hidden" name="productNo" class="carNo">

@@ -57,5 +57,19 @@ public class ProductServiceImpl implements ProductService{
 		return  productDao.selectProductpi(sqlSession, productNo);
 	}
 
+	@Override
+	public int deleteProduct(int productNo) {
+		
+		System.out.println("상품 삭제 서비스");
+		
+		return productDao.deleteProduct(sqlSession, productNo);
+	}
+
+	@Override
+	public int productUpdate(Product p) {
+		
+		return productDao.productUpdate(sqlSession, p);
+	}
+
 
 }

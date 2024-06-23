@@ -113,19 +113,27 @@
 	<update id="udpateProduct"
 			parameterType="product">
 				UPDATE PRODUCT 
-					SET(SEQ_PRODUCT_NO.NEXTVAL,
-					#{productName},
-					#{productExplain},
-					#{productPrice},
-					#{productStock},
-					#{category},
-					#{discount},
-					#{gender},
-					#{topNote},
-					#{middleNote},
-					#{baseNote},
-					#{productStatus}) 
-			WHERE PRODUCT_NO = #{productNo};
+					SET
+					PRODUCT_NAME = #{productName},
+					PRODUCT_EXPLAIN = #{productExplain},
+					PRODUCT_PRICE = #{productPrice},
+					PRODUCT_STOCK = #{productStock},
+					DISCOUNT = #{discount},
+					CATEGORY = #{category},
+					GENDER = #{gender},
+					TOP_NOTE = #{topNote},
+					MIDDLE_NOTE = #{middleNote},
+					BASE_NOTE = #{baseNote},
+					PRODUCT_STATUS = #{productStatus} 
+			WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<!-- 상품 삭제  -->
+	<update id="deleteProduct"
+			parameterType="_int">
+			UPDATE product
+			SET PRODUCT_STATUS = 'Y'
+			WHERE PRODUCT_NO = #{productNo}
 	</update>
 		
 </mapper>

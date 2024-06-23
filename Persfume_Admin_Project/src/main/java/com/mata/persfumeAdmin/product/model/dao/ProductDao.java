@@ -47,5 +47,18 @@ public class ProductDao {
 		return (ArrayList)sqlSession.selectList("productMapper.selectProductpi",productNo);
 	}
 
+	public int deleteProduct(SqlSessionTemplate sqlSession, int productNo) {
+	
+		System.out.println("상품 삭제 DAO ");
+		return sqlSession.update("productMapper.deleteProduct",productNo);
+	}
+
+	public int productUpdate(SqlSessionTemplate sqlSession, Product p) {
+	
+		System.out.println("상품 정보 수정하기 DAO");
+		
+		return sqlSession.update("productMapper.udpateProduct", p);
+	}
+
 	
 }
