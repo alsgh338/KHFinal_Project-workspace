@@ -308,6 +308,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+<<<<<<< Updated upstream
 	@Transactional
 	public int deleteFavorite(Favorites f) {
 		
@@ -319,6 +320,21 @@ public class ProductServiceImpl implements ProductService {
 	public Favorites countFavorite(int pno) {
 		// TODO Auto-generated method stub
 		return null;
+=======
+	public String countFavorite(int pno) {
+		return productDao.countFavorite(sqlSession, pno);
+>>>>>>> Stashed changes
+	}
+
+	@Override
+	public ArrayList<ProductReview> myReview(int mno) {
+		return productDao.myReview(sqlSession, mno);
+	}
+
+	@Override
+	public ProductReview selectReview(int pno) {
+		
+		return productDao.selectReview(sqlSession, pno);
 	}
 
 

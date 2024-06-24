@@ -267,11 +267,21 @@
                         <h3>결제예정금액</h3> <p id="total_amount"></p>
                    
                 </div>
-                <button type="submit">결제</button>
+                <button id="go" type="submit">결제</button>
             </div>
     </form>
     </div>
     </c:if>
+    <script>
+   
+    function(){
+    if( ${ requestScope.clist } == null){
+    	$('#go').attr("disabled", true);
+    }
+    }
+    
+    </script>
+    
     <script>
         // 서버에서 받아온 장바구니 항목들의 정보를 JavaScript 배열로 저장
   var cartItems = [

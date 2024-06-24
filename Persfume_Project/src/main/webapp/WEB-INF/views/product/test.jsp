@@ -30,6 +30,7 @@
                     <div class="class-teacher"> 
                       ${p.productName}
                     </div>
+                       <div class="wishlist-badge">LIKE: <span>${falist[status.index]}</span></div>
                 </div>
                 
                 <div class="class-title">  ${p.productExplain}

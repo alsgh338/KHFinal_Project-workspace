@@ -242,11 +242,23 @@ public class ProductDao {
 	public Coupon CouponName(SqlSessionTemplate sqlSession, int CouponNo){
 		return sqlSession.selectOne("productMapper.CouponName", CouponNo);
 	}
+<<<<<<< Updated upstream
 	
 	public int deleteFavorite(SqlSessionTemplate sqlSession,Favorites f) {
 
 		return sqlSession.delete("productMapper.deleteFavorite", f);
 	}
 
+=======
+	public String countFavorite(SqlSessionTemplate sqlSession, int pno){
+		return sqlSession.selectOne("productMapper.countFavorite", pno);
+	}
+	public ArrayList<ProductReview> myReview(SqlSessionTemplate sqlSession, int mno){
+		return (ArrayList)sqlSession.selectList("productMapper.myReview", mno);
+	}
+	public ProductReview selectReview(SqlSessionTemplate sqlSession, int pno){
+		return sqlSession.selectOne("productMapper.selectReview", pno);
+	}
+>>>>>>> Stashed changes
 	
 }// 클래스종료

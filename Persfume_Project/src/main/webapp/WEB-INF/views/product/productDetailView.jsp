@@ -369,7 +369,13 @@
                  </div>
     
                 <div id="content_3">
-            
+  
+                <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/gogo.gif">
+                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/gogo1.gif">
+                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/gogo3.jpg">
+                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/go.gif">
+                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/go2.gif">
+                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/go5.jpg">
                 
                 </div>
             </div>
@@ -416,9 +422,7 @@
             </div>
         </div>
             
-          
-            </div>
-      
+         
            <jsp:include page="../common/footer.jsp" />
       
     <!-- 사진 클릭시 큰 화면으로 바꿔주는 JS -->

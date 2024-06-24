@@ -118,10 +118,18 @@ public interface ProductService {
 				 // 나의 쿠폰리스트에 쓸 쿠폰 이름 가져오기
 				 Coupon CouponName(int CouponNo);
 				 // 찜 개수 가져가기 
+<<<<<<< Updated upstream
 				 Favorites countFavorite(int pno);
 				 
 				 
 	 int deleteFavorite(Favorites f);
 		
+=======
+				 String countFavorite(int pno);
+				 // 리뷰리스트 가져오기
+				 ArrayList<ProductReview> myReview(int mno);
+				 // 상품번호로 리뷰 가져오기 (나의 주문내역에서 리뷰 중복 작성 불가 위해서)
+				 ProductReview selectReview(int pno);
+>>>>>>> Stashed changes
 		
 }//인터페이스 종료

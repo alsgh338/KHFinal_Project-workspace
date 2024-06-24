@@ -99,7 +99,7 @@ return changeName;
 		
 		
 		int listCount = productService.selectListCount();
-		int pageLimit = 10;
+		int pageLimit = 5;
 		int boardLimit = 5;
 
 		PageInfo pi 
@@ -111,9 +111,14 @@ return changeName;
 		= productService.selectList(pi);
 	
 		ArrayList<ProductImg> ilist = new ArrayList<>();
+		ArrayList<String> falist = new ArrayList<>();
+		
 		for(int i = 0 ; i<list.size(); i++) {
 		ProductImg pImg = productService.selectProductImg(list.get(i).getProductNo());
 		ilist.add(pImg);
+		String fa = productService.countFavorite(list.get(i).getProductNo());
+		falist.add(fa);
+	
 		}
 		// 노트 종류 별 뽑아오기
 		ArrayList<Product> topN = productService.selectTopNoteList();
@@ -123,7 +128,8 @@ return changeName;
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("ilist", ilist);
-	
+		model.addAttribute("falist", falist);
+		
 		model.addAttribute("topN", topN);
 		model.addAttribute("midN", midN);
 		model.addAttribute("BaseN", BaseN);
@@ -148,11 +154,14 @@ return changeName;
 		= productService.searchselectList(pi, text);
 	
 		ArrayList<ProductImg> ilist = new ArrayList<>();
+		ArrayList<String> falist = new ArrayList<>();
 		
 		for(int i = 0 ; i<list.size() ; i++) {
 			ProductImg pmg = productService.selectProductImg(list.get(i).getProductNo());
 			
 			ilist.add(pmg);
+			String fa = productService.countFavorite(list.get(i).getProductNo());
+			falist.add(fa);
 		}
 		
 		// 노트 종류 별 뽑아오기
@@ -163,7 +172,7 @@ return changeName;
 				model.addAttribute("pi", pi);
 				model.addAttribute("list", list);
 				model.addAttribute("ilist", ilist);
-			
+				model.addAttribute("falist", falist);
 				model.addAttribute("topN", topN);
 				model.addAttribute("midN", midN);
 				model.addAttribute("BaseN", BaseN);
@@ -190,11 +199,13 @@ return changeName;
 		= productService.selectAscList(pi);
 	
 		ArrayList<ProductImg> ilist = new ArrayList<>();
-		
+		ArrayList<String> falist = new ArrayList<>();
 		for(int i = 0 ; i<list.size() ; i++) {
 			ProductImg pmg = productService.selectProductImg(list.get(i).getProductNo());
 			
 			ilist.add(pmg);
+			String fa = productService.countFavorite(list.get(i).getProductNo());
+			falist.add(fa);
 		}
 		
 		
@@ -206,7 +217,7 @@ return changeName;
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("ilist", ilist);
-	
+		model.addAttribute("falist", falist);
 		model.addAttribute("topN", topN);
 		model.addAttribute("midN", midN);
 		model.addAttribute("BaseN", BaseN);
@@ -231,11 +242,14 @@ return changeName;
 		= productService.selectDescList(pi);
 	
 		ArrayList<ProductImg> ilist = new ArrayList<>();
+		ArrayList<String> falist = new ArrayList<>();
 		
 		for(int i = 0 ; i<list.size() ; i++) {
 			ProductImg pmg = productService.selectProductImg(list.get(i).getProductNo());
 			
 			ilist.add(pmg);
+			String fa = productService.countFavorite(list.get(i).getProductNo());
+			falist.add(fa);
 		}
 		
 		
@@ -247,7 +261,7 @@ return changeName;
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("ilist", ilist);
-	
+		model.addAttribute("falist", falist);
 		model.addAttribute("topN", topN);
 		model.addAttribute("midN", midN);
 		model.addAttribute("BaseN", BaseN);
@@ -272,11 +286,13 @@ return changeName;
 		= productService.selectPopList(pi);
 	
 		ArrayList<ProductImg> ilist = new ArrayList<>();
-		
+		ArrayList<String> falist = new ArrayList<>();
 		for(int i = 0 ; i<list.size() ; i++) {
 			ProductImg pmg = productService.selectProductImg(list.get(i).getProductNo());
 			
 			ilist.add(pmg);
+			String fa = productService.countFavorite(list.get(i).getProductNo());
+			falist.add(fa);
 		}
 		
 		
@@ -288,7 +304,7 @@ return changeName;
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("ilist", ilist);
-	
+		model.addAttribute("falist", falist);
 		model.addAttribute("topN", topN);
 		model.addAttribute("midN", midN);
 		model.addAttribute("BaseN", BaseN);
@@ -432,6 +448,8 @@ return changeName;
 		}
 	
 	}
+	
+	
 	
 	@PostMapping("CartForm")
 	public String cartForm( Model model, int mno) {
@@ -603,15 +621,17 @@ return changeName;
 			ProductImg pi = new ProductImg();
 			pi.setProductImgOrigin(upfile.getOriginalFilename());
 			pi.setProductImgPath("resources/uploadFiles/" + changeName);
+			pi.setProductImgChange(changeName);
 			
 			ProductImg pi2 = new ProductImg();
 			pi2.setProductImgOrigin(upfile.getOriginalFilename());
 			pi2.setProductImgPath("resources/uploadFiles/" + changeName2);
+			pi2.setProductImgChange(changeName2);
 			
 			ProductImg pi3 = new ProductImg();
 			pi3.setProductImgOrigin(upfile.getOriginalFilename());
 			pi3.setProductImgPath("resources/uploadFiles/" + changeName3);
-		
+			pi3.setProductImgChange(changeName3);
 
 			
 			String productExplain = productDetail; int productStock = productQuantity; 
@@ -683,7 +703,7 @@ return changeName;
 		ArrayList<OrderProduct> oplist = new ArrayList<>();
 		ArrayList<OrderProduct> oplist2 = new ArrayList<>();
 		ArrayList<Product> plist = new ArrayList<>();
-		
+		ArrayList<ProductReview> relist = new ArrayList<>();
 		for(int i =0; i<odlist.size(); i++) {
 			if(i == 0) {
 			 oplist = productService.selectOrderProduct1(odlist.get(i).getOrderNo());
@@ -696,7 +716,10 @@ return changeName;
 		for(int i = 0; i<oplist.size(); i++) {
 			Product p = productService.selectProduct(oplist.get(i).getProductNo());
 		plist.add(p);
+		ProductReview re = productService.selectReview(oplist.get(i).getOdId());
+		relist.add(re);
 		}
+		mv.addObject("relist", relist);
 		mv.addObject("odlist", odlist);
 		mv.addObject("oplist", oplist);
 		mv.addObject("plist", plist).setViewName("product/myOrderList");
@@ -964,9 +987,9 @@ return changeName;
 		Product p = productService.selectProduct(flist.get(i).getProductNo());
 		plist.add(p);
 		
-		Favorites fa = productService.countFavorite(p.getProductNo());
 		
-		falist.add(fa);
+		
+	
 		}
 		
 	
@@ -1018,11 +1041,13 @@ return changeName;
 	        
 
 			ArrayList<ProductImg> ilist = new ArrayList<>();
-		
+			ArrayList<String> falist = new ArrayList<>();
 		for(int i = 0 ; i<list.size() ; i++) {
 			ProductImg pmg = productService.selectProductImg(list.get(i).getProductNo());
 		
 			ilist.add(pmg);
+			String fa = productService.countFavorite(list.get(i).getProductNo());
+			falist.add(fa);
 		}
 		
 		
@@ -1036,7 +1061,7 @@ return changeName;
 				mv.addObject("pi", pi);
 				mv.addObject("list", list);
 				mv.addObject("ilist", ilist);
-			
+				mv.addObject("falist", falist);
 				mv.addObject("topN", topN);
 				mv.addObject("midN", midN);
 				mv.addObject("BaseN", BaseN).setViewName("product/test");
@@ -1068,6 +1093,21 @@ return changeName;
 		return mv;
 	
 	}
+	@GetMapping("myReview.re")
+	public ModelAndView myReview(ModelAndView mv) {
+		
+		int mno = 1;
+		
+		ArrayList<ProductReview> relist = productService.myReview(mno);
+	
+	
+		
+		mv.addObject("relist", relist).setViewName("product/myReviewList");
+		
+		return mv;
+	
+	}
+	
 	
 	@PostMapping("delFavorite.me")
 	public String deleteFavorite(Favorites f, Model model, HttpSession session) {

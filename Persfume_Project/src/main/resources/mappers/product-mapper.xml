@@ -311,13 +311,17 @@
 	<!--  상품이미지테이블에 이미지 넣기 썸네일 -->
  	  		<insert id="insertProductImg"
 			parameterType="productImg">
-		INSERT INTO PRODUCT_IMG(IMG_NO
-		                , IMG_NAME
+		INSERT INTO PRODUCT_IMG(PRODUCT_IMG_NO
+		                , PRODUCT_IMG_PATH
+		                , PRODUCT_IMG_ORIGIN
+		                , PRODUCT_IMG_CHANGE
 		                , IMG_TYPE
 		                , PRODUCT_NO
 		                , STATUS) 
 		           VALUES(SEQ_IMG_NO.NEXTVAL
 		                , #{productImgPath}
+		                , #{productImgOrigin}
+		                , #{productImgChange}
 		                , 1
 		                , #{productNo}
 		                , 'Y')  
@@ -325,13 +329,17 @@
 		<!--  상품이미지테이블에 이미지 넣기 썸네일 아닌 -->
  	  		<insert id="insertProductImg2"
 			parameterType="productImg">
-		INSERT INTO PRODUCT_IMG(IMG_NO
-		                , IMG_NAME
+		INSERT INTO PRODUCT_IMG(PRODUCT_IMG_NO
+		                , PRODUCT_IMG_PATH
+		                , PRODUCT_IMG_ORIGIN
+		                , PRODUCT_IMG_CHANGE
 		                , IMG_TYPE
 		                , PRODUCT_NO
 		                , STATUS) 
 		           VALUES(SEQ_IMG_NO.NEXTVAL
 		                , #{productImgPath}
+		                , #{productImgOrigin}
+		                , #{productImgChange}
 		                , 2
 		                , #{productNo}
 		                , 'Y')  
@@ -423,7 +431,8 @@
 		 WHERE PRODUCT_NAME LIKE '%'||#{text}||'%' 
 		 OR TOP_NOTE LIKE '%'||#{text}||'%'
 		 OR MIDDLE_NOTE LIKE '%'||#{text}||'%' 
-		 OR BASE_NOTE LIKE '%'||#{text}||'%' 
+		 OR BASE_NOTE LIKE '%'||#{text}||'%'
+		 OR GENDER LIKE  '%'||#{text}||'%' 
 		 AND PRODUCT_STATUS = 'Y' 
 		 ORDER BY PRODUCT_NO DESC 
 	</select>
@@ -581,6 +590,7 @@
 		  FROM COUPON 
 		 WHERE COUPON_NO = #{CouponNo}  
 	</select>
+<<<<<<< Updated upstream
 	<!--  나의 쿠폰 리스트에서 이름 가져오기-->
 	<delete id="deleteFavorite"
 		parameterType="Favorites">
@@ -591,4 +601,31 @@
 	</delete>
 
 	
+=======
+	<!--  찜 갯수 구하기 -->
+			<!--  나의 쿠폰 리스트에서 이름 가져오기-->
+		<select id="countFavorite"
+		parameterType="_int"
+			resultType="String">
+	     SELECT COUNT(*) 
+         FROM FAVORITES 
+         WHERE PRODUCT_NO = #{pno} 
+	</select>
+	<!--  리뷰리스트 가져오기 -->
+			<select id="myReview"
+		parameterType="_int"
+			resultMap="ProductReviewResultSet">
+	     SELECT *
+         FROM PRODUCT_REVIEW  
+         WHERE MEM_NO = #{mno} 
+	</select>
+			<!-- 상품번호로 리뷰긁어가기-->
+		<select id="selectReview"
+		parameterType="_int"
+			resultMap="ProductReviewResultSet">
+		SELECT * 
+		  FROM PRODUCT_REVIEW
+		 WHERE PRODUCT_NO = #{pno}  
+	</select>
+>>>>>>> Stashed changes
 </mapper>

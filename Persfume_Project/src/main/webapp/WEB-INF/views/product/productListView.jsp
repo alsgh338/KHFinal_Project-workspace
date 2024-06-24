@@ -78,6 +78,7 @@
 		text-align: center;
 		
 		}
+	
         .content-title{
             height: 190px;
             background: url(resources/images/class_title.jpg);
@@ -101,6 +102,7 @@
         display: block;
            float: left;
         }
+ 
         .content-left{
             height: 700px;
             width: 17%;
@@ -114,6 +116,9 @@
             float: left;
            
         }
+        .content-right #pagingArea {
+        
+        margin-left:500px;} 
    
 
        .content-sort{
@@ -273,6 +278,22 @@
         color : white;
          display : none; 
     }
+    .wishlist-badge {
+    display: inline-block;
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.wishlist-badge span {
+    font-size: 16px;
+    color: #fff;
+}
+    
     </style>
 </head>
 <body>
@@ -309,7 +330,7 @@
 
     
 </div>
-        <div class="content-main" style="border: 2px solid blue;">
+        <div class="content-main" style="border: 2px solid blue; text-align:center;">
 
             <div class="content-left"> 
                 <div  style="font-size: 18px; font-weight: 600; text-align: center;" > 성별 검색 </div>
@@ -402,6 +423,7 @@
                     <div class="class-teacher"> 
                       ${p.productName}
                     </div>
+                      <div class="wishlist-badge">LIKE: <span>${falist[status.index]}</span></div>
                 </div>
                 
                 <div class="class-title">  ${p.productExplain}
@@ -417,13 +439,8 @@
         </div>
 
                      
-            
-            
-        </div>
-       
-    </div>
-      <div id="pagingArea" style="text-align:center;  display:block; margin-left: 800px;" >
-                <ul class="pagination">
+             <div id="pagingArea" style="text-align:center;  " >
+                <ul class="pagination" style="text-align:center;">
                 
                 	<c:choose>
                 	<c:when test="${ requestScope.pi.currentPage eq 1 }">	
@@ -434,7 +451,7 @@
                     <c:otherwise>
                     	<li class="page-item">
                     		<a class="page-link" 
-                    		   href="list.bo?cpage=${ requestScope.pi.currentPage - 1 }">
+                    		   href="list.po?cpage=${ requestScope.pi.currentPage - 1 }">
                     			Previous
                     		</a>
                     	</li>
@@ -448,7 +465,7 @@
                     	<c:choose>	   
                     	<c:when test="${ requestScope.pi.currentPage ne p }">
                     		<li class="page-item">
-		                    	<a class="page-link" href="list.bo?cpage=${ p }">
+		                    	<a class="page-link" href="list.po?cpage=${ p }">
 									${ p }
 								</a>
 		                    </li>
@@ -482,6 +499,11 @@
                     </c:choose>
                 </ul>
             </div>
+            
+        </div>
+          
+    </div>
+  
    
  </div>
 
