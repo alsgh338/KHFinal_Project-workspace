@@ -93,11 +93,11 @@
 						                    </tr>
 						                    <tr>
 						                        <th><label for="upfileThumbnail">썸네일</label></th>
-						                        <td colspan="4"><input type="file" id="upfileThumbnail" class="form-control-file" name="upfiles" required></td>
+						                        <td colspan="4"><input type="file" accept="image/png, image/jpeg" id="upfileThumbnail" class="form-control-file" name="upfiles" required></td>
 						                    </tr>
 						                    <tr>
 						                        <th><label for="upfileMain">본문 사진</label></th>
-						                        <td colspan="4"><input type="file" id="upfileMain" class="form-control-file" name="upfiles" required></td>
+						                        <td colspan="4"><input type="file" accept="image/png, image/jpeg" id="upfileMain" class="form-control-file" name="upfiles" required></td>
 						                    </tr>
 						                    <tr>
 						                        <th><label for="content">내용</label></th>

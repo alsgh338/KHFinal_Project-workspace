@@ -140,14 +140,14 @@
 	                                				<a class="form-control" name="eventThumbnail" required style="resize: none;" href="${evTh.eventImgPath}">${evTh.eventImgOrigin}</a>
 	                                			</td>
 	                                			<td>
-	                                				<input type="file" id="upfileThumbnail" class="form-control-file" name="upfiles" required>
+	                                				<input type="file" accept="image/png, image/jpeg" id="upfileThumbnail" class="form-control-file" name="upfiles" required>
 	                               				</td>
 	                               				<th>이벤트 본문 이미지</th>
 	                                			<td colspan="3">
 	                                				<a class="form-control" name="eventImgContent" required style="resize: none;" href="${ev.eventImgPath}">${ev.eventImgOrigin}</a>
 	                                			</td>
 	                                			<td>
-	                                				<input type="file" id="upfileMain" class="form-control-file" name="upfiles" required>
+	                                				<input type="file" accept="image/png, image/jpeg" id="upfileMain" class="form-control-file" name="upfiles" required>
 	                               				</td>
 	                                		</tr>
 	                                		<tr>

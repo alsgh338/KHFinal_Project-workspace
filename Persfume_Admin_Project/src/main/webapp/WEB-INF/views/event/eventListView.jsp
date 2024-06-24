@@ -72,12 +72,19 @@
 			                                            </c:choose>
 		                                            </td>
 		                                            <td>
-		                                            	<a href="detail.ev?eno=${item.eventNo}" class="btn btn-info btn-sm btn-icon-split">
-					                                        <span class="icon text-white-50">
-					                                            <i class="fas fa-info-circle"></i>
-					                                        </span>
-					                                        <span class="text">수정</span>
-					                                    </a>
+		                                            <c:choose>
+		                                            	<c:when test="${ item.status eq 'Y' }">
+			                                            	<a href="detail.ev?eno=${item.eventNo}" class="btn btn-info btn-sm btn-icon-split">
+						                                        <span class="icon text-white-50">
+						                                            <i class="fas fa-info-circle"></i>
+						                                        </span>
+						                                        <span class="text">수정</span>
+						                                    </a>
+		                                            	</c:when>
+		                                            	<c:otherwise>
+		                                            	
+		                                            	</c:otherwise>
+		                                            </c:choose>
 		                                            </td>
 		                                            
 		                                            

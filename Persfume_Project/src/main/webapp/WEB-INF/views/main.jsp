@@ -489,11 +489,6 @@
                             
                         </div>
                     
-                        <div class="swiper-pagination"></div>
-                    
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                    
                         <div class="swiper-scrollbar"></div>
                     </div>
                 </div>
@@ -540,112 +535,12 @@
     
     <!-- Main Page 관련 스크립트 -->
     <script>
-        $(function(){
-
-            var link = $('#nav-bar a.dot');
-            link.on('click',function(e){
-                
-                //href 속성을 통해, section id 타겟을 잡음
-                var target = $($(this).attr('href')); 
-                
-                //target section의 좌표를 통해 꼭대기로 이동
-                $('html, body').animate({
-                    scrollTop: target.offset().top
-                },600);
-                
-                //active 클래스 부여
-                $(this).addClass('active');
-
-                //앵커를 통해 이동할때, URL에 #id가 붙지 않도록 함.
-                e.preventDefault();
-            });
-
-            $(window).on('scroll',function(){
-                findPosition();
-            });
-
-            findPosition();
-            
-            
-            
-            
-            
-            
-        });
-        
-        function findPosition(){
-            $('.main-section').each(function(){
-                if( ($(this).offset().top - $(window).scrollTop() ) < 20){
-                    link.removeClass('active');
-                    $('#nav-bar').find('[data-scroll="'+ $(this).attr('id') +'"]').addClass('active');
-                }
-            });
-        }
-
-        // 슬라이더 동작 정의
-        const swiper = new Swiper('.swiper', {
-            autoplay : {
-                delay : 8000 // 3초마다 이미지 변경
-            },
-            loop : true, //반복 재생 여부
-            slidesPerView : 1, // 이전, 이후 사진 미리보기 갯수
-            pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
-                el: '.swiper-pagination',
-                clickable: true
-            },
-            navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
-                prevEl: '.swiper-button-prev',
-                nextEl: '.swiper-button-next'
-            }
-        }); 
-
-
-        let observer = new IntersectionObserver(
-            (e)=>{
-                e.forEach((entry)=>{
-                    if(entry.isIntersecting){
-                        if(entry.target.classList.contains('down')){
-                            entry.target.querySelector('.main-section-text').classList.remove('animate__fadeOutDown');
-                            entry.target.querySelector('.main-section-text').classList.add('animate__fadeInDown');
-
-                        } else{
-                            entry.target.querySelector('.main-section-text').classList.remove('animate__fadeOutLeft');
-                            entry.target.querySelector('.main-section-text').classList.add('animate__fadeInLeft');
-                        }
-
-                    } else{
-
-                        if(entry.target.classList.contains('down')){
-                            entry.target.querySelector('.main-section-text').classList.remove('animate__fadeInDown');
-                            entry.target.querySelector('.main-section-text').classList.add('animate__fadeOutDown');
-
-                        } else{
-                            entry.target.querySelector('.main-section-text').classList.remove('animate__fadeInLeft');
-                            entry.target.querySelector('.main-section-text').classList.add('animate__fadeOutLeft');
-                        }
-                    }
-                })
-            }
-
-        );
-
-        let mainSection = document.querySelectorAll('.main-section:not(#home)');
-
-        observer.observe(mainSection[0]);
-        observer.observe(mainSection[1]);
-        observer.observe(mainSection[2]);
-        observer.observe(mainSection[3]);
-        observer.observe(mainSection[4]);
-
-        
-        
         
         // 이벤트 상위 2개 노출 ajax 사용 - 민호 2024/06/10
          $(document).ready(function() {
             // 페이지가 로드될 때 이벤트 목록을 가져오는 함수 호출
             getEventList();
             getNoticeList();
-            getProductThumbnail();
         });
         
          function getEventList() {
@@ -722,20 +617,7 @@
          }
          
          
-         function displayProductThumbnail(productList){
-        	 var productListDiv = $("#productList");
-        	 var productHtml = ""; 
-        	 // 받아온 상품 목록 반복하여 표시
-        	 for(var i=0; i<productList.length; i+=3){
-        		  productHtml += "<div class='swiper-slide'>";
-        		 for(var j=i; j<i+3; j++){
-        			 var jImg = productList[j].productImgPath;
-        			 productHtml += "<div class='swiper-img'><img src='../persfumeAdmin/" + jImg + "' alt='test'></div>";
-        		 }
-        		 productHtml += "</div>";
-        	 }
-        	 productListDiv.append(productHtml);	 
-         }
+         
                   
          $(function(){
              $(document).on("click", ".event" , function(){
@@ -753,6 +635,132 @@
         		location.href = "detail.no?nno=" + noticeNo;
         	});
          });
+         
+         $(function(){
+
+             var link = $('#nav-bar a.dot');
+             link.on('click',function(e){
+                 
+                 //href 속성을 통해, section id 타겟을 잡음
+                 var target = $($(this).attr('href')); 
+                 
+                 //target section의 좌표를 통해 꼭대기로 이동
+                 $('html, body').animate({
+                     scrollTop: target.offset().top
+                 },600);
+                 
+                 //active 클래스 부여
+                 $(this).addClass('active');
+
+                 //앵커를 통해 이동할때, URL에 #id가 붙지 않도록 함.
+                 e.preventDefault();
+             });
+
+             $(window).on('scroll',function(){
+                 findPosition();
+             });
+
+             findPosition();
+             
+         });
+         
+         function findPosition(){
+             $('.main-section').each(function(){
+                 if( ($(this).offset().top - $(window).scrollTop() ) < 20){
+                     link.removeClass('active');
+                     $('#nav-bar').find('[data-scroll="'+ $(this).attr('id') +'"]').addClass('active');
+                 }
+             });
+         }
+		
+         
+         
+         $(function(){
+        	 
+        	 $.ajax({
+       	        url: 'getProductThumbnail', // 데이터를 가져올 URL
+       	        method: 'GET', // 요청 방식 (GET, POST 등)
+       	        success: function(productList) {
+       	        	
+       	        	 var productListDiv = $("#productList");
+	               	 var productHtml = ""; 
+	               	 // 받아온 상품 목록 반복하여 표시
+	               	 for(var i=0; i<productList.length; i+=3){
+	               		  productHtml += "<div class='swiper-slide'>";
+	               		 for(var j=i; j<i+3 && j < productList.length; j++){
+	               			 var pImg = productList[j].productImgPath;
+	               			 productHtml += "<div class='swiper-img'><img src='../persfumeAdmin/" + pImg + "' alt='test'></div>";
+	               		 }
+	               		 productHtml += "</div>";
+	               	 }
+	               	 productListDiv.append(productHtml);       	            
+		               	 
+		            // 슬라이더 동작 정의
+       	            const swiper = new Swiper('.swiper', {
+       	                autoplay: {
+       	                    delay: 800 // 8초마다 이미지 변경
+       	                },
+       	                loop: true, // 반복 재생 여부
+       	                slidesPerView: 1, // 이전, 이후 사진 미리보기 갯수
+       	                pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
+       	                    el: '.swiper-pagination',
+       	                    clickable: true
+       	                },
+       	                navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
+       	                    prevEl: '.swiper-button-prev',
+       	                    nextEl: '.swiper-button-next'
+       	                }
+       	            });
+       	        },
+       	        error: function(xhr, status, error) {
+       	            // 요청이 실패했을 때 처리하는 코드
+       	            console.error('Ajax 요청 실패:', status, error);
+       	        }
+       	    });
+         })
+         
+         
+		
+         
+
+         let observer = new IntersectionObserver(
+             (e)=>{
+                 e.forEach((entry)=>{
+                     if(entry.isIntersecting){
+                         if(entry.target.classList.contains('down')){
+                             entry.target.querySelector('.main-section-text').classList.remove('animate__fadeOutDown');
+                             entry.target.querySelector('.main-section-text').classList.add('animate__fadeInDown');
+
+                         } else{
+                             entry.target.querySelector('.main-section-text').classList.remove('animate__fadeOutLeft');
+                             entry.target.querySelector('.main-section-text').classList.add('animate__fadeInLeft');
+                         }
+
+                     } else{
+
+                         if(entry.target.classList.contains('down')){
+                             entry.target.querySelector('.main-section-text').classList.remove('animate__fadeInDown');
+                             entry.target.querySelector('.main-section-text').classList.add('animate__fadeOutDown');
+
+                         } else{
+                             entry.target.querySelector('.main-section-text').classList.remove('animate__fadeInLeft');
+                             entry.target.querySelector('.main-section-text').classList.add('animate__fadeOutLeft');
+                         }
+                     }
+                 })
+             }
+
+         );
+
+         let mainSection = document.querySelectorAll('.main-section:not(#home)');
+
+         observer.observe(mainSection[0]);
+         observer.observe(mainSection[1]);
+         observer.observe(mainSection[2]);
+         observer.observe(mainSection[3]);
+         observer.observe(mainSection[4]);
+         
+         
     </script>
 
 	<jsp:include page="common/footer.jsp"></jsp:include>

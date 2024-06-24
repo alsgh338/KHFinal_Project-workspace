@@ -527,6 +527,6 @@
 	          JOIN PRODUCT USING (PRODUCT_NO)
 	          WHERE IMG_TYPE = '1'
 	      )
-	      WHERE RNUM &lt;= 3
+	      WHERE RNUM &lt;= 12
 	</select>
 </mapper>
