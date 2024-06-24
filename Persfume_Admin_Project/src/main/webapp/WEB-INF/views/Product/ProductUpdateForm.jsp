@@ -81,7 +81,8 @@
         
         .uploadImg>img:hover{
         	background-color: lightgray;
-        }
+		}
+
         
     </style>
 
@@ -202,28 +203,43 @@
                                 				</td>
 	                                		</tr>
 	                                		<tr>
-												<c:forEach var="item" items="${list2}">
-		                                		<th colspan="2">첨부파일</th>
-	                                			<td colspan="8">
-	                                				<input type="hidden" name="classImgPath" value="${item.productImgPath}">
-	                                				<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upFiles" placeholder="첨부파일" style="display:none">
-	                                				<div class="uploadImg">
-	                                					<c:choose>
-	                                						<c:when test="${not empty item.productImgPath}">
-	                                							<div>
-																	<img src="${item.productImgPath}" alt="${item.productImgPath}">
-																	<div class="delete-btn">
-							    		                				<img src="resources/img/x-circle.svg" alt="x-circle" onclick="deleteImg(this);">
+	                                			<c:choose>
+	                                			<c:when test="${ list2.size() ne 0}">
+													<c:forEach var="item" items="${list2}">
+			                                		<th colspan="2">첨부파일</th>
+		                                			<td colspan="8">
+		                                				<input type="hidden" name="classImgPath" value="${item.productImgPath}">
+		                                				<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upFiles" placeholder="첨부파일" style="display:none">
+		                                				<div class="uploadImg">
+		                                					<c:choose>
+		                                						<c:when test="${not empty item.productImgPath}">
+		                                							<div class="image-container">
+																		<img src="${item.productImgPath}" alt="${item.productImgPath}">
+																		<div class="delete-btn">
+								    		                				<img src="resources/img/x-circle.svg" alt="x-circle" onclick="deleteImg(this);">
+																		</div>
 																	</div>
-																</div>
-	                                						</c:when>
-	                                						<c:otherwise>
-	                                							<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
-	                                						</c:otherwise>
-	                                					</c:choose>
-													</div>
-	                               				</td>
-												</c:forEach>
+		                                						</c:when>
+		                                						<c:otherwise>
+		                                							<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
+		                                						</c:otherwise>
+		                                					</c:choose>
+														</div>
+		                               				</td>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<tr>
+				                                		<th colspan="2">첨부파일</th>
+			                                			<td colspan="8">
+		                                					<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" multiple name="upFiles" placeholder="첨부파일" style="display:none">
+			                                				<div class="uploadImg">
+									    		                <img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
+			                                				</div>
+			                               				</td>
+			                                		</tr>
+												</c:otherwise>
+												</c:choose>
 	                                		</tr>
 	                                		</c:if>
 											</c:forEach>
@@ -265,11 +281,11 @@
 				   	
 				});
 			   
-			   function uploadImg(element, num){
+			   function uploadImg(element){
 				   const imgInput = $(element).parent().prev();
 				   console.log("----")
-				   alert(num)
-				   console.log(num, imgInput);
+				   alert()
+				   console.log(imgInput);
 				   console.log("----")
 				   
 			   		const imgType = imgInput.attr("name");
@@ -334,6 +350,30 @@
 				      }
 
 				      reader.readAsDataURL(file);
+				   } else{
+						const file = e.currentTarget.files[0];
+						var imagePreview;
+
+						console.log(imgType);
+
+						
+						if(imgType == 'thumbnailPr'){
+							imagePreview = $('input[name="thumbnailPr"]').next();
+						} else{
+							imagePreview = $('input[name="upFiles"]').next();
+						}
+						
+						//   console.log(imagePreview.attr('class'));
+						
+						var reader = new FileReader(); 
+						reader.onload = function(e) {
+							var div = createElement(e, file);
+							//   console.log(div.innerHTML);
+							imagePreview.html(div.innerHTML);
+						}
+
+						reader.readAsDataURL(file);
+
 				   }
 		      }
 			   
@@ -356,7 +396,28 @@
 					  	delElement.before('<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upFiles" placeholder="첨부파일" style="display:none">');
 
 				  	}
-				  
+
+
+					  const $memPwdConfirm = $("#EnrollForm input[name=memPwdConfirm]");
+					
+					$.ajax({
+					url : "imgdelte.pr",
+					type : "post",
+					data : {
+						upFiles : $("").val(),
+					},
+					success : function(result) {
+						
+						
+						
+						
+						
+						
+					}, 
+					error : function() {
+						console.log("사진 삭제용 ajax 통신 실패!");	
+					}
+				});
 				  	
 			  }
 			   

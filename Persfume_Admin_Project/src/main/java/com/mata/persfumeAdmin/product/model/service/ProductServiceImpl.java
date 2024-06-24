@@ -90,5 +90,25 @@ public class ProductServiceImpl implements ProductService{
 		return productDao.reviewDelete(sqlSession,reviewNo);
 	}
 
+	@Override
+	public int productImgdele(ProductImg pi) {
+		
+		return productDao.productImgdele(sqlSession, pi);
+	}
+	
+	@Override
+	public int productImgdele2(ProductImg pi) {
+		
+		return productDao.productImgdele(sqlSession, pi);
+	}
+
+	@Override
+	public int productImgdele3(String delimgPath) {
+		
+		return productDao.productImgdele3(sqlSession, delimgPath);
+	}
+	
+
+
 
 }

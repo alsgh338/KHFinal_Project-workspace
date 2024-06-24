@@ -79,5 +79,20 @@ public class ProductDao {
 		return sqlSession.update("productMapper.reviewDelete",reviewNo);
 	}
 
+	public int productImgdele(SqlSessionTemplate sqlSession, ProductImg pi) {
+		
+		return sqlSession.update("productMapper.productImgdele",pi);
+	}
+	
+	public int productImgdele2(SqlSessionTemplate sqlSession, ProductImg pi) {
+		
+		return sqlSession.update("productMapper.productImgdele2",pi);
+	}
+
+	public int productImgdele3(SqlSessionTemplate sqlSession, String delimgPath) {
+		
+		return sqlSession.delete("productMapper.productImgdele3",delimgPath);
+	}
+
 	
 }

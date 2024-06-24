@@ -23,9 +23,15 @@ public interface ProductService {
 	int productUpdate(Product p);
 
 	int productImgUpdate(ProductImg pi);
+	
+	int productImgdele(ProductImg pi);
+	
+	int productImgdele2(ProductImg pi);
 
 	ArrayList<ProductReview> selectAllreview();
 	
 	int reviewDelete(int reviewNo);
+	
+	int productImgdele3(String delimgPath);
 
 }

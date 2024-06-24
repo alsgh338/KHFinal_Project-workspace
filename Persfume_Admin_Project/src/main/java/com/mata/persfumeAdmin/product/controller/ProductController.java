@@ -192,7 +192,6 @@ public class ProductController {
 			pi1.setProductImgPath("resources/uploadFiles/product/" + upThumbnailchangeName); // 저장경로 만들어서 객체에 넣기
 			pi1.setProductNo(p.getProductNo());
             pi1.setPrevImgPath(prevThumb);
-
 			
 			System.out.println();
 			System.out.println(pi1);
@@ -201,9 +200,11 @@ public class ProductController {
 			result2 = productService.productImgUpdate(pi1);
 			
 			System.out.println("result2 " + result2);
-			}else{
+			
+		    }else{
 				System.out.println("썸네일 수정 X");// 여기까지가 썸네일 수정
 			}
+
 			
 			// 여기서부터 본문사진들 수정
 	
@@ -211,14 +212,16 @@ public class ProductController {
 			// 업로드된 파일들을 반복문을 통해 저장하고, ProductImg 객체 설정
 				if(upFiles != null) {
 					// upFiles null 이 아니면  수정작업 시작하기
-					for (int i = 0; i < upFiles.length;i++) {
+					for (int i = 0; i < upFiles.length; i++) {
 						
 						System.out.println("반복 1");
+						
+						
 						
 		                if (!upFiles[i].isEmpty()) { // 파일이 비어있지 않다면!
 		                    String upFileschangeName = savePath(upFiles[i], session); // 파일 저장 및 이름 변경
 		            		
-		            		System.out.println("2번 이미지" + upFileschangeName);
+//		            		System.out.println("2번 이미지" + upFileschangeName);
 		                    
 		                    ProductImg pi2 = new ProductImg();
 		                    
@@ -236,25 +239,50 @@ public class ProductController {
 		                    // 서비스단으로 pi2 넘기면서 결과값 보기
 		                    int result3 = productService.productImgUpdate(pi2);
 		              
-		                    System.out.println("result3!!" + result3);
+//		                    System.out.println("result3!!" + result3);
+//		                    
+//		                    System.out.println(pi2);
 		                    
-		                    System.out.println(pi2);
-		                    
+		                }else {
+		                	System.out.println("이미지 수정작업 실패");
 		                }
 		            }
 					
 					  return "redirect:/proList.pr";
 					  
 				}else {
-					// upFiles 가 비었으면
+					
+					}
 					
 					System.out.println("upFiles 가 비었으면");
+					
 					 return "redirect:/proList.pr";
 				}
-	            
-		}
+		
+		
+		
+		
+		
+		
+		
+		
+	           
 		// 여기까지가 상품텍스트정보 수정 if 문 
 		 return "redirect:/proList.pr";
+	}
+	
+	
+	@PostMapping("imgdelte.pr")
+	public int imgdelte(String delimgPath) {
+		
+		System.out.println("사진 삭제 잘 호출되나?");
+		
+		System.out.println("이미지 파일 경로 잘 가져오나??" + delimgPath);
+		
+		int result = productService.productImgdele3(delimgPath);
+		
+		return result;
+		
 	}
 	
 	
@@ -276,7 +304,7 @@ public class ProductController {
 			System.out.println("삭제 실패");
 		}
 		
-		return "";
+		 return "redirect:/proList.pr";
 	
 	}
 	

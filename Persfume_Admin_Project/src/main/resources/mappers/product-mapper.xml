@@ -123,6 +123,29 @@
 			                       'Y')
 	</insert>
 	
+	<!-- 이미지 삭제  -->
+	<delete id="productImgdele"
+			parameterType="productImg">
+		  DELETE FROM PRODUCT_IMG
+			WHERE PRODUCT_NO = #{productNo}
+				AND IMG_TYPE = #{imgType} 
+	</delete>
+	
+	<delete id="productImgdele2"
+		 parameterType="productImg">
+		  DELETE FROM PRODUCT_IMG
+			WHERE PRODUCT_NO = #{productNo}
+				AND IMG_TYPE = #{imgType} 
+				AND PRODUCT_IMG_PATH = #{prevImgPath}
+	</delete>
+	
+
+	<delete id="productImgdele3"
+			parameterType="string">
+		  DELETE FROM PRODUCT_IMG
+			WHERE PRODUCT_IMG_PATH = #{delimgPath}
+	</delete>
+	
 	<!--  상품 정보 수정  -->
 	<update id="updateProduct"
 			parameterType="product">
@@ -150,7 +173,7 @@
 			WHERE PRODUCT_NO = #{productNo}
 	</update>
 	
-		<!-- 상품 사진 수정  -->
+	<!-- 상품 사진 수정  -->
 	<update id="updateProductImg" 
 			parameterType="productImg">
 			   UPDATE PRODUCT_IMG
