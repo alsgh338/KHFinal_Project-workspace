@@ -222,6 +222,27 @@ public class ProductDao {
 	public ArrayList<ProductImg> getProductThumbnail(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("productMapper.getProductThumbnail");
 	}
+	public int wantRefund(SqlSessionTemplate sqlSession, int odId) {
+		return sqlSession.update("productMapper.wantRefund", odId);
+	}
+	public int doRefund(SqlSessionTemplate sqlSession, int odId) {
+		return sqlSession.update("productMapper.doRefund", odId);
+	}
+	public ArrayList<Favorites> myFavoriteList(SqlSessionTemplate sqlSession, int mno){
+		return (ArrayList)sqlSession.selectList("productMapper.myFavoriteList", mno);
+	}
+	public Product searchNote(SqlSessionTemplate sqlSession, String array) {
 	
+		return sqlSession.selectOne("productMapper.searchNote", array);
+	}
+	public ArrayList<MemCoupon> myCoupon(SqlSessionTemplate sqlSession, int mno){
+		return (ArrayList)sqlSession.selectList("productMapper.myCoupon", mno);
+	}
+	public Coupon CouponName(SqlSessionTemplate sqlSession, int CouponNo){
+		return sqlSession.selectOne("productMapper.CouponName", CouponNo);
+	}
+	public Favorites countFavorite(SqlSessionTemplate sqlSession, int pno){
+		return sqlSession.selectOne("productMapper.countFavorite", pno);
+	}
 	
 }// 클래스종료

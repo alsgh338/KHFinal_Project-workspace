@@ -529,4 +529,66 @@
 	      )
 	      WHERE RNUM &lt;= 12
 	</select>
+	
+	<!--  환불 요청 쿼리문  -->
+		<update id="wantRefund"
+			parameterType="_int">
+		UPDATE ORDER_PRODUCT    
+		 	 SET REFUND_REQUEST = '환불심사중'   
+			WHERE OD_ID = #{odId}   
+    	</update>
+    	  	<!--  환불 요청 들어온 것 승인해주는 쿼리문  -->
+		<update id="doRefund"
+			parameterType="_int">
+		UPDATE ORDER_PRODUCT    
+		 	 SET REFUND_REQUEST = '환불승인완료'   
+			WHERE OD_ID = #{odId}   
+    	</update>
+	<!--  이용객 마이페이지에서 찜한 목록 보기 -->
+		<select id="myFavoriteList" 
+		parameterType="_int"
+			resultMap="FavoritesResultSet">
+  		SELECT * 
+		  FROM FAVORITES  
+		 WHERE MEM_NO = #{mno}  
+		 ORDER BY PRODUCT_NO DESC 
+	  </select>
+	<!--  노트를 가지고 상품 정보 가져가기(검색) -->
+		<!-- 상품명을 이용해서 상품번호 가져오기 -->
+		<select id="searchNote"
+		parameterType="String"
+			resultMap="productResultSet">
+		SELECT * 
+		  FROM PRODUCT
+		 WHERE TOP_NOTE = #{array} 
+		 OR MIDDLE_NOTE = #{array} 
+		 OR BASE_NOTE = #{array}  
+	</select>
+	<!--  나의 쿠폰 리스트 긁어오기 -->
+		<select id="myCoupon"
+		parameterType="_int"
+			resultMap="MemCouponResultSet">
+		SELECT * 
+		  FROM MEM_COUPON 
+		 WHERE MEM_NO = #{mno} 
+		 AND STATUS = 'Y'  
+	</select>
+		<!--  나의 쿠폰 리스트에서 이름 가져오기-->
+		<select id="CouponName"
+		parameterType="_int"
+			resultMap="CouponResultSet">
+		SELECT * 
+		  FROM COUPON 
+		 WHERE COUPON_NO = #{CouponNo}  
+	</select>
+	<!--  찜 갯수 구하기 -->
+			<!--  나의 쿠폰 리스트에서 이름 가져오기-->
+		<select id="countFavorite"
+		parameterType="_int"
+			resultMap="FavoritesResultSet">
+	     SELECT COUNT(*) AS "MEM_NO"  
+         FROM FAVORITES 
+         WHERE PRODUCT_NO = #{pno} 
+	</select>
+	
 </mapper>

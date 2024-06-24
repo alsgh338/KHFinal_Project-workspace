@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -918,6 +920,152 @@ return changeName;
 		ArrayList<ProductImg> list = productService.getProductThumbnail();
 		
 		return list;
+	}
+
+	@PostMapping("wantRefund.po")
+	public ModelAndView wantRefund(int odId , ModelAndView mv) {
+		
+		int result = productService.wantRefund(odId);
+		
+		myProductList(mv);
+		
+		return mv;
+	
+	}
+
+	@PostMapping("doRefund.po")
+	public ModelAndView doRefund(int odId , ModelAndView mv) {
+		
+		int result = productService.doRefund(odId);
+		
+		productDelivery(mv);
+		
+		return mv;
+	
+	}
+	
+	@GetMapping("myFavorite.li")
+	public ModelAndView myFavoriteList( ModelAndView mv) {
+		
+		int mno = 1;
+		
+		ArrayList<Favorites> flist  =  productService.myFavoriteList(mno);
+		
+		ArrayList<ProductImg> pilist = new ArrayList<>();
+		ArrayList<Product> plist = new ArrayList<>();
+		ArrayList<Favorites> falist = new ArrayList<>();
+		
+		for(int i =0 ; i<flist.size() ; i++) {
+			
+			ProductImg pi = productService.selectProductImg(flist.get(i).getProductNo());
+		pilist.add(pi);
+		
+		Product p = productService.selectProduct(flist.get(i).getProductNo());
+		plist.add(p);
+		
+		Favorites fa = productService.countFavorite(p.getProductNo());
+		
+		falist.add(fa);
+		}
+		
+	
+		
+		
+		mv.addObject("plist", plist);
+		mv.addObject("pilist", pilist);
+		mv.addObject("falist", falist);
+		mv.addObject("flist", flist).setViewName("product/myFavorite");
+
+		return mv;
+	}
+	
+	@GetMapping("searchNote.no")
+	public ModelAndView searchNote(String notes, @RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+		
+	
+		
+		int listCount = productService.selectListCount();
+		int pageLimit = 10;
+		int boardLimit = 5;
+
+		PageInfo pi 
+		= Pagination.getPageInfo(listCount, 
+							 	 currentPage, 
+							 	 pageLimit, 
+							 	 boardLimit);
+		String[] array = notes.split(",");
+		
+	
+		Set<String> productNoSet = new HashSet<>();
+		 Set<Product> resultSet = new HashSet<>();
+	
+	        
+	        // 나머지 검색 결과를 순회하며 Set에 추가합니다.
+	        for (int i = 0; i < array.length; i++) {
+	            ArrayList<Product> list2 = productService.searchselectList(pi, array[i]);
+	          
+	            resultSet.addAll(list2);
+	            for (Product product : list2) {
+	            	  productNoSet.add(String.valueOf(product.getProductNo()));
+	            }
+	        }
+	        
+	        // 최종 결과를 ArrayList로 변환합니다.
+	        ArrayList<Product> list = new ArrayList<>(resultSet);
+		 
+	        mv.addObject("productNoSet", productNoSet);
+	        
+
+			ArrayList<ProductImg> ilist = new ArrayList<>();
+		
+		for(int i = 0 ; i<list.size() ; i++) {
+			ProductImg pmg = productService.selectProductImg(list.get(i).getProductNo());
+		
+			ilist.add(pmg);
+		}
+		
+		
+	    
+		
+		// 노트 종류 별 뽑아오기
+				ArrayList<Product> topN = productService.selectTopNoteList();
+				ArrayList<Product> midN = productService.selectMiddleNoteList();
+				ArrayList<Product> BaseN = productService.selectBaseNoteList();
+				
+				mv.addObject("pi", pi);
+				mv.addObject("list", list);
+				mv.addObject("ilist", ilist);
+			
+				mv.addObject("topN", topN);
+				mv.addObject("midN", midN);
+				mv.addObject("BaseN", BaseN).setViewName("product/test");
+
+	//  result == 0 이면 삭제된것   1이면 찜 넣기 성공한 것임 
+
+		return mv;
+	
+	
+	}
+	@GetMapping("myCoupon.li")
+	public ModelAndView myCoupon( ModelAndView mv) {
+		
+		int mno = 1;
+		
+		ArrayList<MemCoupon> clist = productService.myCoupon(mno);
+		
+		ArrayList<Coupon> cclist = new ArrayList<>();
+		
+		for(int i = 0 ; i<clist.size() ; i++) {
+			Coupon c = productService.CouponName(clist.get(i).getCouponNo());
+			cclist.add(c);
+			
+		}
+		
+		mv.addObject("cclist", cclist);
+		mv.addObject("clist", clist).setViewName("product/myCouponList");
+		
+		return mv;
+	
 	}
 	
 	

@@ -272,7 +272,42 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.getProductThumbnail(sqlSession);
 	}
 	
+	@Override
+	public int wantRefund(int odId) {
+		return productDao.wantRefund(sqlSession, odId);
 
+	}
+
+	@Override
+	public int doRefund(int odId) {
+		return productDao.doRefund(sqlSession, odId);
+	}
+
+	@Override
+	public ArrayList<Favorites> myFavoriteList(int mno) {
+		return productDao.myFavoriteList(sqlSession, mno);
+	}
+
+	@Override
+	public Product searchNote(String array) {
+		return productDao.searchNote(sqlSession, array);
+	}
+
+	@Override
+	public ArrayList<MemCoupon> myCoupon(int mno) {
+		return productDao.myCoupon(sqlSession, mno);
+	}
+
+	@Override
+	public Coupon CouponName(int CouponNo) {
+
+		return productDao.CouponName(sqlSession, CouponNo);
+	}
+
+	@Override
+	public Favorites countFavorite(int pno) {
+		return productDao.countFavorite(sqlSession, pno);
+	}
 
 
 

@@ -105,7 +105,20 @@ public interface ProductService {
 		int orderDelivery(int ono);
 		// 메인페이지 썸네일 12개 출력용 - 2024-06-21 윤민호
 		ArrayList<ProductImg> getProductThumbnail();
-		
+		// 환불요청 시 환불요청 텍스트 변경
+				int wantRefund(int odId);
+				// 환불요청 시 관리자가 환불 승인 
+				int doRefund(int odId);
+				// 나의 찜 목록 조회에서 찜한 상품 목록 
+				 ArrayList<Favorites> myFavoriteList(int mno);
+				 // 상품리스트에서 체크박스 클릭 시 검색 기능 
+				 Product searchNote(String array);
+				 // 나의 쿠폰리스트 가져오기 
+				 ArrayList<MemCoupon> myCoupon(int mno);
+				 // 나의 쿠폰리스트에 쓸 쿠폰 이름 가져오기
+				 Coupon CouponName(int CouponNo);
+				 // 찜 개수 가져가기 
+				 Favorites countFavorite(int pno);
 		
 		
 }//인터페이스 종료
