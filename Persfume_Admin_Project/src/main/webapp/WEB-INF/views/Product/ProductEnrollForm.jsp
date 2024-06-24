@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Persfume Admin - OneClass</title>
+    <title></title>
 <link rel="icon" href="resources/vendor/fontawesome-free/svgs/solid/cogs.svg">
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -116,7 +116,7 @@
                             <!-- Area Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">EnrollForm</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary"></h6>
                                 </div>
                                 <div class="card-body">
 	                                <form action="insert.po" method="post" enctype="multipart/form-data">
@@ -124,50 +124,50 @@
 	                                		<tr>
 	                                			<th colspan="2">상품 이름</th>
 	                                			<td colspan="2">
-	                                				<input type="text" class="form-control form-control-user" name="productName">
+	                                				<input type="text" class="form-control form-control-user" name="productName" required>
 	                               				</td>
 	                               				<th style="width: 100px;">상품가격</th>
 	                               				<td >
-	                               					<input type="text" class="form-control form-control-user" name="productPrice">
+	                               					<input type="number" class="form-control form-control-user" name="productPrice" required>
 	                               				</td>
 												   <th style="width: 100px;">할인율</th>
 												<td >
-													<input type="text" class="form-control form-control-user" name="discount">
+													<input type="number" class="form-control form-control-user" name="discount">
 												</td>
 												<th>재고</th>
-												<td><input type="text" class="form-control form-control-user" name="productStock"></td>
+												<td><input type="text" class="form-control form-control-user" name="productStock" required></td>
 	                                		</tr>
 											
 	                                		<tr rowspan="3">
 	                                			<th colspan="2">상품 설명</th>
 	                                			<td colspan="10">
-	                                				<textarea class="form-control" rows="20" name="productExplain" style="resize: none;"></textarea>
+	                                				<textarea class="form-control" rows="20" name="productExplain" style="resize: none;" required> </textarea>
 	                               				</td>
 	                                		</tr>
 	                                		<tr>
 												<th colspan="2">노트</th>
 	                                			<th>탑노트</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" name="topNote">
+	                                				<input type="text" class="form-control form-control-user" name="topNote" required>
 	                               				</td>
 	                                			<th>미들노트</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" name="middleNote">
+	                                				<input type="text" class="form-control form-control-user" name="middleNote" required>
 	                               				</td>
 	                               				<th>베이스노트</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" name="baseNote">
+	                                				<input type="text" class="form-control form-control-user" name="baseNote" required>
 	                               				</td>
 	                                		</tr>
 											<tr>
 												<th colspan="2">분류</th>
 												<th>카테고리</th>
 												<td>
-													<input type="text" class="form-control form-control-user"  name="category">
+													<input type="text" class="form-control form-control-user"  name="category" required>
 												</td>
 												<th>성별</th>
 												<td>
-													<input type="text" class="form-control form-control-user"  name="gender">
+													<input type="text" class="form-control form-control-user"  name="gender" required>
 												</td>
 											</tr>
 	                                		<tr>
@@ -182,7 +182,7 @@
 	                                		<tr>
 		                                		<th colspan="2">첨부파일</th>
 	                                			<td colspan="8">
-	                                				<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" multiple name="upFilePr" placeholder="첨부파일" style="display:none">
+	                                				<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" multiple name="upFilePr"   placeholder="첨부파일" style="display:none">
 	                                				<div class="uploadImg">
 							    		                <img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
 	                                				</div>
@@ -229,13 +229,32 @@
 				   const imgInput = $(element).parent().prev();
 			   		const imgType = imgInput.attr("name");
 			   		
-			   		console.log(imgInput);
+			   		// console.log(imgInput);
 			   		
 			   		imgInput.click();
-			   		
+
+	
 			   		imgInput.on('change', function(e) {
+
+						var files = e.target.files;
+						var maxFiles = 2;
+
+						 // 최대 두 개의 파일만 허용
+						 if (files.length > maxFiles) {
+							alert('최대 두 개의 파일만 첨부할 수 있습니다.');
+							imgInput.val(''); // 파일 선택 초기화
+							return;
+						}
+
+						  // 선택된 파일들의 정보를 출력
+						  for (var i = 0; i < files.length; i++) {
+							console.log('파일명:', files[i].name);
+							console.log('파일 크기:', files[i].size);
+							console.log('파일 타입:', files[i].type);
+						}
+
 			   			getImageFiles(e, imgType);
-				   		console.log(imgInput.val());
+				   		// console.log(imgInput.val());
 
 			   		});
 			   		
@@ -271,22 +290,49 @@
 	  			      const file = e.currentTarget.files[0];
 				      var imagePreview;
 
+					  console.log(imgType);
+
 				      
-				      if(imgType == 'upThumbnail'){
-				    	  imagePreview = $('input[name="upThumbnail"]').next();
+				      if(imgType == 'thumbnailPr'){
+				    	  imagePreview = $('input[name="thumbnailPr"]').next();
 				      } else{
-				    	  imagePreview = $('input[name="upFiles"]').next();
+				    	  imagePreview = $('input[name="upFilePr"]').next();
 				      }
 				      
-				      console.log(imagePreview.attr('class'));
+				    //   console.log(imagePreview.attr('class'));
 				      
 				      var reader = new FileReader(); 
 				      reader.onload = function(e) {
 				    	  var div = createElement(e, file);
+						//   console.log(div.innerHTML);
 				    	  imagePreview.html(div.innerHTML);
 				      }
 
 				      reader.readAsDataURL(file);
+				   } else{
+						const file = e.currentTarget.files[0];
+						var imagePreview;
+
+						console.log(imgType);
+
+						
+						if(imgType == 'thumbnailPr'){
+							imagePreview = $('input[name="thumbnailPr"]').next();
+						} else{
+							imagePreview = $('input[name="upFilePr"]').next();
+						}
+						
+						//   console.log(imagePreview.attr('class'));
+						
+						var reader = new FileReader(); 
+						reader.onload = function(e) {
+							var div = createElement(e, file);
+							//   console.log(div.innerHTML);
+							imagePreview.html(div.innerHTML);
+						}
+
+						reader.readAsDataURL(file);
+
 				   }
 		      }
 			   
@@ -294,19 +340,19 @@
 			  function deleteImg(element){
 				  	let delElement = $(element).parents('.uploadImg');
 				  	const imgType = delElement.prev().attr("name");
+
+					console.log(imgType);
 				  	
 				  	
 				  	delElement.html('<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">');
 				  	delElement.prev().remove();
 				  	
 				  	
-				  	if(imgType == 'upThumbnail'){
-					  	delElement.before('<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name=upThumbnail placeholder="첨부파일" style="display:none">');
+				  	if(imgType == 'thumbnailPr'){
+					  	delElement.before('<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name=thumbnailPr placeholder="첨부파일" style="display:none">');
 	
 				  	} else{
-				  		
-					  	delElement.before('<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upFiles" placeholder="첨부파일" style="display:none">');
-
+					  	delElement.before('<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" multiple name=upFilePr placeholder="첨부파일" style="display:none">');
 				  	}
 				  
 				  	

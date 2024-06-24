@@ -166,7 +166,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="<%= request.getContextPath()%>/reviewList.re">상품 리뷰 목록</a>
-                        <a class="collapse-item" href="<%= request.getContextPath()%>/proEnroll.pr">상품추가</a>
                     </div>
                 </div>
             </li>

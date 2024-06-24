@@ -72,7 +72,7 @@
 			  FROM PRODUCT P
 			  JOIN PRODUCT_IMG PI ON P.PRODUCT_NO = PI.PRODUCT_NO
 			 WHERE P.PRODUCT_NO = #{productNo}
-			  AND PI.IMG_TYPE = 1
+			  -- AND PI.IMG_TYPE = 1
 	</select>
 	
 	<!-- 상품 추가 -->
@@ -124,7 +124,7 @@
 	</insert>
 	
 	<!--  상품 정보 수정  -->
-	<update id="udpateProduct"
+	<update id="updateProduct"
 			parameterType="product">
 				UPDATE PRODUCT 
 					SET
@@ -138,7 +138,7 @@
 					TOP_NOTE = #{topNote},
 					MIDDLE_NOTE = #{middleNote},
 					BASE_NOTE = #{baseNote},
-					PRODUCT_STATUS = #{productStatus} 
+					PRODUCT_STATUS = #{productStatus}
 			WHERE PRODUCT_NO = #{productNo}
 	</update>
 	
@@ -146,7 +146,7 @@
 	<update id="deleteProduct"
 			parameterType="_int">
 			UPDATE product
-			SET PRODUCT_STATUS = 'Y'
+			SET PRODUCT_STATUS = 'N'
 			WHERE PRODUCT_NO = #{productNo}
 	</update>
 	
@@ -157,9 +157,9 @@
 				SET PRODUCT_IMG_PATH = #{productImgPath},
 				    PRODUCT_IMG_ORIGIN = #{productImgOrigin},
 				    PRODUCT_IMG_CHANGE = #{productImgChange},
-				    IMG_TYPE = #{imgType},
-				    STATUS = 'Y'
+				    IMG_TYPE = #{imgType}
 				WHERE PRODUCT_NO = #{productNo}
+				AND PRODUCT_IMG_PATH = #{prevImgPath}
 	</update>
 		
 		
@@ -169,5 +169,13 @@
 			resultMap="ProductReviewResultSet">
 		SELECT * 
 		  FROM PRODUCT_REVIEW
+	</select>
+	
+	<!-- 리뷰 삭제  -->
+	<select id="reviewDelete"
+			parameterType="_int">
+			UPDATE PRODUCT_REVIEW
+			SET REVIEW_STATUS = 'N'
+			WHERE REVIEW_NO = #{reviewNo}
 	</select>
 </mapper>

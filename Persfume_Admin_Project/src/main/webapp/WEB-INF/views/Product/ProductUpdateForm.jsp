@@ -121,7 +121,8 @@
                                 <div class="card-body">
 	                                <form action="updatePr.pr" method="post" enctype="multipart/form-data">
 	                                	<table class="table" border="1px">
-	                                	<c:forEach var="item" items="${list}">
+	                                	<c:forEach var="item" items="${list}" varStatus="i">
+	                                	<c:if test="${i.index eq 0 }">
 										<input type="hidden" name="productNo" value="${item.productNo}">
 	                                		<tr>
 	                                			<th colspan="2">상품 이름</th>
@@ -170,6 +171,10 @@
 												<th>성별</th>
 												<td>
 													<input type="text" class="form-control form-control-user"  name="gender"  value="${item.gender}">
+												</td>
+												<th>판매상태</th>
+												<td>
+													<input type="text" class="form-control form-control-user"  name="productStatus"  value="${item.productStatus}">
 												</td>
 											</tr>
 
@@ -220,6 +225,7 @@
 	                               				</td>
 												</c:forEach>
 	                                		</tr>
+	                                		</c:if>
 											</c:forEach>
 	                                	</table>
 	                                    
@@ -259,8 +265,13 @@
 				   	
 				});
 			   
-			   function uploadImg(element){
+			   function uploadImg(element, num){
 				   const imgInput = $(element).parent().prev();
+				   console.log("----")
+				   alert(num)
+				   console.log(num, imgInput);
+				   console.log("----")
+				   
 			   		const imgType = imgInput.attr("name");
 			   		
 			   		console.log(imgInput);
@@ -300,6 +311,8 @@
 			   
 			   function getImageFiles(e, imgType, imgInput) {
 				   
+				   // console.log("??")
+				   
 				   if(e.currentTarget.files.length == 1) {
 				   
 	  			      const file = e.currentTarget.files[0];
@@ -331,11 +344,12 @@
 				  	
 				  	
 				  	delElement.html('<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">');
+				  	
 				  	delElement.prev().remove();
 				  	
 				  	
 				  	if(imgType == 'upThumbnail'){
-					  	delElement.before('<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name=upThumbnail placeholder="첨부파일" style="display:none">');
+					  	delElement.before('<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upThumbnail" placeholder="첨부파일" style="display:none">');
 	
 				  	} else{
 				  		

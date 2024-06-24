@@ -74,17 +74,31 @@
                                             <th>상품 번호</th>
                                             <th>상태</th>
                                             <th>회원 번호</th>
+                                            <th>리뷰 삭제</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	<c:forEach var="item" items="${list}">
              		                             <tr>
-             		                             	<td>${item.reviewtNo}</td>
-		                                            <td>${item.reviewtContent}</td>
-		                                            <td>${item.reviewtContent}</td>
+             		                             	<td>${item.reviewNo}</td>
+                                                    <td>
+                                                      <c:choose>
+                                                        <c:when test="${not empty item.reviewImgPath }">
+                                                            <div>
+                                                                <img src="${item.reviewImgPath }" alt="${requestScope.list[0].reviewImgPath}" style="width: 150px; height: 150px;">
+                                                            </div>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <p>사진이 없는 리뷰입니다</p>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    </td>
+		                                            <td>${item.reviewContent}</td>
 		                                            <td>${item.productNo}</td>
 		                                            <td>${item.reviewStatus}</td>
 		                                            <td>${item.memNo}</td>
+                                                    <c:choose>
+                                                    <c:when test="${item.reviewStatus eq 'Y' }">
 		                                            <td>
 			                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check">
 					                                        <span class="icon text-white-50">
@@ -93,9 +107,14 @@
 					                                        <span class="text">리뷰 삭제</span>
 					                                    </a>
 		                                            </td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        
+                                                    </c:otherwise>
+                                                </c:choose>
 	                                            </tr> 
 		                    		    </c:forEach>
-                                     
+                    
                                     </tbody>
                                 </table>
                             </div>
@@ -132,10 +151,9 @@
 				  <form action="delete.re" method="post">			
 			      <!-- Modal body -->
 			      <div class="modal-body">
-			      <input type="hidden" name="reviewtNo" class="carNo">
+			      <input type="hidden" name="reviewNo" class="carNo">
                    		정말 
                    		 리뷰를 삭제 하시겠습니까?
-			      	
 			      </div>
 
 			      <!-- Modal footer -->
@@ -201,13 +219,13 @@
     $(function() {
     $(".delete-parking").click(function() {
         // 부모 요소에서 두 번 이전의 형제 요소의 텍스트를 가져옴
-        let reviewtNo = $(this).closest("tr").children("td:first").text().trim();
+        let reviewNo = $(this).closest("tr").children("td:first").text().trim();
 
         // memNo 값을 콘솔에 출력
-        console.log(productNo);
+        console.log(reviewNo);
 
         // 모달의 input 요소에 memNo 값을 설정
-        $(".modal-body .carNo").val(reviewtNo);
+        $(".modal-body .carNo").val(reviewNo);
     });
     });
 

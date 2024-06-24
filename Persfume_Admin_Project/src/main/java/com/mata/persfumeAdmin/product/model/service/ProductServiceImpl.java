@@ -84,5 +84,11 @@ public class ProductServiceImpl implements ProductService{
 		return productDao.selectAllreview(sqlSession);
 	}
 
+	@Override
+	public int reviewDelete(int reviewNo) {
+		
+		return productDao.reviewDelete(sqlSession,reviewNo);
+	}
+
 
 }

@@ -17,6 +17,9 @@ public class ProductImg {
 	private String productImgChange;	
 	private int imgType;
 	private int productNo;
+	private String productName;
 	private String status;
+	
+	private String prevImgPath;
 	
 }

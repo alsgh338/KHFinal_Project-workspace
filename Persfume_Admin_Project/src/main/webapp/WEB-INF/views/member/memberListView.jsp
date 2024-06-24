@@ -139,9 +139,9 @@
                                                             </c:when>
                                                             <c:otherwise>
 															<!-- 상태값이 N이면 회원 복구-->
-                                                            <a class="btn btn-primary btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#alive-check">
+                                                            <a class="btn btn-success btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#alive-check">
                                                                 <span class="icon text-white-50">
-                                                                    <i class="fas fa-trash"></i>
+                                                                    <i class="fas fa-redo"></i>
                                                                 </span>
                                                                 <span class="text">회원 복구</span>
                                                             </a>

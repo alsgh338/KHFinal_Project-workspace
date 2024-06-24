@@ -25,5 +25,7 @@ public interface ProductService {
 	int productImgUpdate(ProductImg pi);
 
 	ArrayList<ProductReview> selectAllreview();
+	
+	int reviewDelete(int reviewNo);
 
 }

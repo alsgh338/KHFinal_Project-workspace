@@ -152,29 +152,37 @@ public class ProductController {
 	@PostMapping("updatePr.pr")
 	public String productUpdate(Product p,
 						String[] classImgPath,
+						String prevThumb,
 						MultipartFile upThumbnail, 
 						MultipartFile[] upFiles, 
 						HttpSession session) {
-
-		
-		System.out.println("삼풍 수정하기 잘 호출 되나??");
-		
-		System.out.println("상품 수정하기 에서 p : " + p);
-		
-		System.out.println("상품 수정하기 에서 upTh :  " + upThumbnail);
-		// 썸네일 정보
-		
-		System.out.println("상품 수정하기에서 upfiles" + upFiles);
+//		System.out.println("classImgPath 가 뭐야??" + classImgPath[0]);
+//		System.out.println("삼풍 수정하기 잘 호출 되나??");
+//		
+//		System.out.println("상품 수정하기 에서 p : " + p);
+//		
+//		System.out.println("상품 수정하기 에서 upTh :  " + upThumbnail);
+//		// 썸네일 정보
+//		
+//		System.out.println("상품 수정하기에서 upfiles" + upFiles[0]);
 		// 그냥 첨부파일 정보
 		
 		// 상품 정보 수정
-		
 		int result1 = productService.productUpdate(p);
+		
 		
 		if(result1 > 0) {
 			System.out.println("상품 수정 성공 ");
+			
+			if(upThumbnail.getSize() > 0) {
+			// 사진이 있다면
 			// 이 때 부터 사진 정보 수정하기
 	        String upThumbnailchangeName = savePath(upThumbnail, session); // 썸네일 수정파일명 얻기
+
+	        System.out.println("1번이미지" + upThumbnailchangeName);
+	        System.out.println(p.getProductNo());
+	        
+	        int result2 = 0;
 			
 			ProductImg pi1 = new ProductImg();
 			// 썸네일 이미지 
@@ -183,43 +191,70 @@ public class ProductController {
 			pi1.setProductImgOrigin(upThumbnail.getOriginalFilename()); // 업로드된 파일의 원본명 얻어서 객체에 넣기
 			pi1.setProductImgPath("resources/uploadFiles/product/" + upThumbnailchangeName); // 저장경로 만들어서 객체에 넣기
 			pi1.setProductNo(p.getProductNo());
+            pi1.setPrevImgPath(prevThumb);
+
 			
-			int result2 = productService.productImgUpdate(pi1);
+			System.out.println();
+			System.out.println(pi1);
+			System.out.println();
 			
-			if(result2 > 0) {
-				// 이미지'들'
-				// 업로드된 파일들을 반복문을 통해 저장하고, ProductImg 객체 설정
-	            for (MultipartFile file : upFiles) {
-	                if (!file.isEmpty()) { // 파일이 비어있지 않다면!
-	                    String upFileschangeName = savePath(file, session); // 파일 저장 및 이름 변경
-	        
-	                    ProductImg pi2 = new ProductImg();
-	                    
-	                    pi2.setProductImgChange(upFileschangeName);
-	                    pi2.setImgType(2);
-	                    pi2.setProductImgOrigin(file.getOriginalFilename()); // 원본 파일 이름 설정
-	                    pi2.setProductImgPath("resources/uploadFiles/product/" + upFileschangeName); // 저장 경로 설정
-	                    pi2.setProductNo(p.getProductNo());
-	                    
-	                    // 이 시점에서는 pi2 객체에 이미지 파일'들'의 정보가 담겨있음
-	                    
-	                    System.out.println(pi2);
-	                    
-	                    int result3 = productService.insertProductImg(pi2);
-	                    
-	                    if(result3 > 0) {
-	                    	System.out.println("상품 이미지 수정 성공!");
-	                    	
-	                    }else {
-	                    	System.out.println("상품 이미지 수정 실패!");
-	                    }
-	                }
-	            }
-			}else {
-				System.out.println("썸네일 수정 실패!");
+			result2 = productService.productImgUpdate(pi1);
+			
+			System.out.println("result2 " + result2);
+			}else{
+				System.out.println("썸네일 수정 X");// 여기까지가 썸네일 수정
 			}
+			
+			// 여기서부터 본문사진들 수정
+	
+			// 이미지'들'
+			// 업로드된 파일들을 반복문을 통해 저장하고, ProductImg 객체 설정
+				if(upFiles != null) {
+					// upFiles null 이 아니면  수정작업 시작하기
+					for (int i = 0; i < upFiles.length;i++) {
+						
+						System.out.println("반복 1");
+						
+		                if (!upFiles[i].isEmpty()) { // 파일이 비어있지 않다면!
+		                    String upFileschangeName = savePath(upFiles[i], session); // 파일 저장 및 이름 변경
+		            		
+		            		System.out.println("2번 이미지" + upFileschangeName);
+		                    
+		                    ProductImg pi2 = new ProductImg();
+		                    
+		                    pi2.setProductImgChange(upFileschangeName);
+		                    pi2.setImgType(2);
+		                    pi2.setProductImgOrigin(upFiles[i].getOriginalFilename()); // 원본 파일 이름 설정
+		                    pi2.setProductImgPath("resources/uploadFiles/product/" + upFileschangeName); // 저장 경로 설정
+		                    pi2.setProductNo(p.getProductNo());
+		                    pi2.setPrevImgPath(classImgPath[i]);
+		                    
+		                    
+		                    
+		                    // 이 시점에서는 pi2 객체에 이미지 파일'들'의 정보가 담겨있음
+		                    
+		                    // 서비스단으로 pi2 넘기면서 결과값 보기
+		                    int result3 = productService.productImgUpdate(pi2);
+		              
+		                    System.out.println("result3!!" + result3);
+		                    
+		                    System.out.println(pi2);
+		                    
+		                }
+		            }
+					
+					  return "redirect:/proList.pr";
+					  
+				}else {
+					// upFiles 가 비었으면
+					
+					System.out.println("upFiles 가 비었으면");
+					 return "redirect:/proList.pr";
+				}
+	            
 		}
-		return "redirect:/proList.pr";
+		// 여기까지가 상품텍스트정보 수정 if 문 
+		 return "redirect:/proList.pr";
 	}
 	
 	
@@ -260,6 +295,36 @@ public class ProductController {
 		model.addAttribute("list", list); // Model에 list를  attribute로 설정
 		
 		return "Product/reviewListView";
+	}
+	
+	@PostMapping(value = "delete.re")
+	public String reviewDelete(int reviewNo,
+							ModelAndView mv,
+							HttpSession session) {
+		
+		
+		System.out.println("리뷰 삭제 controller 에서 리뷰번호 잘 가져오나 ? " + reviewNo);
+		
+		int result = productService.reviewDelete(reviewNo);
+		
+	
+		
+		if(result > 0) {
+			// 삭제 성공 
+			System.out.println("삭제 성공");
+			
+			return  "redirect:/reviewList.re";
+			
+		}else {
+			
+			System.out.println("삭제 실패");
+			
+			session.setAttribute("alertMsg", "리뷰 삭제 실패");
+			
+			return "redirect:/reviewList.re";
+
+		}
+		
 	}
 	
 	

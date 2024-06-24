@@ -58,19 +58,25 @@ public class ProductDao {
 	
 		System.out.println("상품 정보 수정하기 DAO");
 		
-		return sqlSession.update("productMapper.udpateProduct", p);
+		return sqlSession.update("productMapper.updateProduct", p);
 	}
 
 	public int productImgUpdate(SqlSessionTemplate sqlSession, ProductImg pi) {
 		
 		System.out.println("상품 사진 수정하기 DAO");
-		return sqlSession.update("productMapper.udpateProduct",pi);
+		
+		return sqlSession.update("productMapper.updateProductImg",pi);
 	}
 
 	public ArrayList<ProductReview> selectAllreview(SqlSessionTemplate sqlSession) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("productMapper.selectAllreview");
 
+	}
+
+	public int reviewDelete(SqlSessionTemplate sqlSession, int reviewNo) {
+		
+		return sqlSession.update("productMapper.reviewDelete",reviewNo);
 	}
 
 	
