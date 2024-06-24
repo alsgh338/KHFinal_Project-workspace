@@ -31,6 +31,20 @@
 	</resultMap>
 	
 	
+	<!-- 리뷰 테이블  -->
+	<resultMap type="productReview" id="ProductReviewResultSet">
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="REVIEW_CONTENT" property="reviewContent" />
+		<result column="REVIEW_IMG_PATH" property="reviewImgPath" />
+		<result column="REVIEW_IMG_ORIGIN" property="reviewImgOrigin" />
+		<result column="REVIEW_IMG_CHANGE" property="reviewImgChange" />
+		<result column="REVIEW_DATE" property="reviewDate" />
+		<result column="REVIEW_STATUS" property="reviewStatus" />
+		<result column="MEM_NO" property="memNo" />
+		<result column="PRODUCT_NO" property="productNo" />
+	</resultMap>
+	
+	
 	<!-- 상품조회 전체조회 -->
 	<select id="selectList"
 			resultMap="productResultSet">
@@ -113,19 +127,47 @@
 	<update id="udpateProduct"
 			parameterType="product">
 				UPDATE PRODUCT 
-					SET(SEQ_PRODUCT_NO.NEXTVAL,
-					#{productName},
-					#{productExplain},
-					#{productPrice},
-					#{productStock},
-					#{category},
-					#{discount},
-					#{gender},
-					#{topNote},
-					#{middleNote},
-					#{baseNote},
-					#{productStatus}) 
-			WHERE PRODUCT_NO = #{productNo};
+					SET
+					PRODUCT_NAME = #{productName},
+					PRODUCT_EXPLAIN = #{productExplain},
+					PRODUCT_PRICE = #{productPrice},
+					PRODUCT_STOCK = #{productStock},
+					DISCOUNT = #{discount},
+					CATEGORY = #{category},
+					GENDER = #{gender},
+					TOP_NOTE = #{topNote},
+					MIDDLE_NOTE = #{middleNote},
+					BASE_NOTE = #{baseNote},
+					PRODUCT_STATUS = #{productStatus} 
+			WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<!-- 상품 삭제  -->
+	<update id="deleteProduct"
+			parameterType="_int">
+			UPDATE product
+			SET PRODUCT_STATUS = 'Y'
+			WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+		<!-- 상품 사진 수정  -->
+	<update id="updateProductImg" 
+			parameterType="productImg">
+			   UPDATE PRODUCT_IMG
+				SET PRODUCT_IMG_PATH = #{productImgPath},
+				    PRODUCT_IMG_ORIGIN = #{productImgOrigin},
+				    PRODUCT_IMG_CHANGE = #{productImgChange},
+				    IMG_TYPE = #{imgType},
+				    STATUS = 'Y'
+				WHERE PRODUCT_NO = #{productNo}
 	</update>
 		
+		
+		
+	<!-- 리뷰 전체 조회  -->
+	<select id="selectAllreview"
+			resultMap="ProductReviewResultSet">
+		SELECT * 
+		  FROM PRODUCT_REVIEW
+	</select>
 </mapper>

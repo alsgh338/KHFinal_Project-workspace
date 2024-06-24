@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.mata.persfumeAdmin.product.model.vo.Product;
 import com.mata.persfumeAdmin.product.model.vo.ProductImg;
+import com.mata.persfumeAdmin.product.model.vo.ProductReview;
 
 public interface ProductService {
 	
@@ -16,5 +17,13 @@ public interface ProductService {
 	int insertProductImg(ProductImg pi1);
 
 	ArrayList<ProductImg> selectProductpi(int productNo);
+	
+	int deleteProduct(int productNo);
+
+	int productUpdate(Product p);
+
+	int productImgUpdate(ProductImg pi);
+
+	ArrayList<ProductReview> selectAllreview();
 
 }

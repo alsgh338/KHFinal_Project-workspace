@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mata.persfumeAdmin.product.model.vo.Product;
 import com.mata.persfumeAdmin.product.model.vo.ProductImg;
+import com.mata.persfumeAdmin.product.model.vo.ProductReview;
 
 @Repository
 public class ProductDao {
@@ -45,6 +46,31 @@ public class ProductDao {
 		System.out.println("상품 사진 조회");
 		
 		return (ArrayList)sqlSession.selectList("productMapper.selectProductpi",productNo);
+	}
+
+	public int deleteProduct(SqlSessionTemplate sqlSession, int productNo) {
+	
+		System.out.println("상품 삭제 DAO ");
+		return sqlSession.update("productMapper.deleteProduct",productNo);
+	}
+
+	public int productUpdate(SqlSessionTemplate sqlSession, Product p) {
+	
+		System.out.println("상품 정보 수정하기 DAO");
+		
+		return sqlSession.update("productMapper.udpateProduct", p);
+	}
+
+	public int productImgUpdate(SqlSessionTemplate sqlSession, ProductImg pi) {
+		
+		System.out.println("상품 사진 수정하기 DAO");
+		return sqlSession.update("productMapper.udpateProduct",pi);
+	}
+
+	public ArrayList<ProductReview> selectAllreview(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("productMapper.selectAllreview");
+
 	}
 
 	

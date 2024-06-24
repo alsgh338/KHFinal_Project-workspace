@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mata.persfumeAdmin.product.model.service.ProductService;
 import com.mata.persfumeAdmin.product.model.vo.Product;
 import com.mata.persfumeAdmin.product.model.vo.ProductImg;
+import com.mata.persfumeAdmin.product.model.vo.ProductReview;
 
 @Controller
 public class ProductController {
@@ -152,7 +152,9 @@ public class ProductController {
 	@PostMapping("updatePr.pr")
 	public String productUpdate(Product p,
 						String[] classImgPath,
-						MultipartFile upThumbnail, MultipartFile[] upFiles) {
+						MultipartFile upThumbnail, 
+						MultipartFile[] upFiles, 
+						HttpSession session) {
 
 		
 		System.out.println("삼풍 수정하기 잘 호출 되나??");
@@ -165,21 +167,100 @@ public class ProductController {
 		System.out.println("상품 수정하기에서 upfiles" + upFiles);
 		// 그냥 첨부파일 정보
 		
+		// 상품 정보 수정
 		
-//		이 시점부터는 새로 첨부된 이미지나 이미 있는 이미지의 정보가 담겨 있다.
+		int result1 = productService.productUpdate(p);
 		
+		if(result1 > 0) {
+			System.out.println("상품 수정 성공 ");
+			// 이 때 부터 사진 정보 수정하기
+	        String upThumbnailchangeName = savePath(upThumbnail, session); // 썸네일 수정파일명 얻기
+			
+			ProductImg pi1 = new ProductImg();
+			// 썸네일 이미지 
+			pi1.setProductImgChange(upThumbnailchangeName);
+			pi1.setImgType(1);
+			pi1.setProductImgOrigin(upThumbnail.getOriginalFilename()); // 업로드된 파일의 원본명 얻어서 객체에 넣기
+			pi1.setProductImgPath("resources/uploadFiles/product/" + upThumbnailchangeName); // 저장경로 만들어서 객체에 넣기
+			pi1.setProductNo(p.getProductNo());
+			
+			int result2 = productService.productImgUpdate(pi1);
+			
+			if(result2 > 0) {
+				// 이미지'들'
+				// 업로드된 파일들을 반복문을 통해 저장하고, ProductImg 객체 설정
+	            for (MultipartFile file : upFiles) {
+	                if (!file.isEmpty()) { // 파일이 비어있지 않다면!
+	                    String upFileschangeName = savePath(file, session); // 파일 저장 및 이름 변경
+	        
+	                    ProductImg pi2 = new ProductImg();
+	                    
+	                    pi2.setProductImgChange(upFileschangeName);
+	                    pi2.setImgType(2);
+	                    pi2.setProductImgOrigin(file.getOriginalFilename()); // 원본 파일 이름 설정
+	                    pi2.setProductImgPath("resources/uploadFiles/product/" + upFileschangeName); // 저장 경로 설정
+	                    pi2.setProductNo(p.getProductNo());
+	                    
+	                    // 이 시점에서는 pi2 객체에 이미지 파일'들'의 정보가 담겨있음
+	                    
+	                    System.out.println(pi2);
+	                    
+	                    int result3 = productService.insertProductImg(pi2);
+	                    
+	                    if(result3 > 0) {
+	                    	System.out.println("상품 이미지 수정 성공!");
+	                    	
+	                    }else {
+	                    	System.out.println("상품 이미지 수정 실패!");
+	                    }
+	                }
+	            }
+			}else {
+				System.out.println("썸네일 수정 실패!");
+			}
+		}
+		return "redirect:/proList.pr";
+	}
+	
+	
+	@PostMapping("delete.pr")
+	public String deleteProduct(int productNo) {
 		
+		System.out.println("상품 삭제하기 잘 호출되나?");
 		
+		System.out.println("상품 삭제하기 서블릿에서 상품번호 : " + productNo);
 		
+		int result = productService.deleteProduct(productNo);
 		
+		if(result > 0) {
+			// 삭제 성공
+			
+			System.out.println("삭제성공");
+		}else {
+			// 삭제 실패
+			System.out.println("삭제 실패");
+		}
 		
 		return "";
+	
 	}
 	
 	
 	
 	
-	
+	// ------- 상품 리뷰 ----------
+	@GetMapping("reviewList.re")
+	public String reviewList(Model model) {
+		
+		
+		ArrayList<ProductReview> list =  productService.selectAllreview();
+		
+		System.out.println(list);
+		
+		model.addAttribute("list", list); // Model에 list를  attribute로 설정
+		
+		return "Product/reviewListView";
+	}
 	
 	
 	

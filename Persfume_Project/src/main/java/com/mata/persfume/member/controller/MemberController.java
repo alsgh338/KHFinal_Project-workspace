@@ -141,6 +141,9 @@ public class MemberController {
 		= new MimeMessageHelper(message, true, "UTF-8");
 		
 		
+		mimeMessageHelper.setFrom("persfume2024@gmail.com");
+		// 발신자 이메일 주소-
+		
 		mimeMessageHelper.setTo(email);
 		// 입력 받은 이메일로 설정
 		
@@ -475,6 +478,9 @@ public class MemberController {
 		
 		mimeMessageHelper.setTo(email);
 		// 입력 받은 이메일로 설정
+		
+		mimeMessageHelper.setFrom("persfume2024@gmail.com");
+		// 발신자 이메일 주소-
 		
 		// 제목
 		mimeMessageHelper.setSubject("[Persfume] 임시 비밀번호 입니다");
