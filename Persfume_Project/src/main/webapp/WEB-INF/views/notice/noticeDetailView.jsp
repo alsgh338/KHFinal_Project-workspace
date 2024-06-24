@@ -20,7 +20,7 @@
         }
         .content-title {
             height: 320px;
-            background: url(resources/images/공지사항.jpg);
+    
             background-size: cover;
             background-position: center;
             object-fit: cover;

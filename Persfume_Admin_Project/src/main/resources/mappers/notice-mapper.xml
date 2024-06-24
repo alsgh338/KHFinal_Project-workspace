@@ -25,9 +25,9 @@
                NOTICE_CONTENT,
                NOTICE_COUNT,
                TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
-               NOTICE_IMG_ORIGIN
+               NOTICE_IMG_ORIGIN,
+               STATUS
         FROM NOTICE
-        WHERE STATUS = 'Y'
         ORDER BY NOTICE_NO DESC
     </select>
     
@@ -91,4 +91,13 @@
         AND STATUS = 'Y'
 </update>
 
+<!-- 공지글 복구 -->
+<update id="restoreNotice"
+			parameterType="_int">
+		UPDATE NOTICE
+	   SET STATUS = 'Y'
+	 WHERE NOTICE_NO = #{noticeNo}
+	   AND STATUS = 'N'
+	</update>
+	
 </mapper>

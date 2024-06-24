@@ -265,8 +265,14 @@ public String savePath(MultipartFile upfile,
 
 
 
+@PostMapping("restore.no")
+public String restoreNotice(int nno, Model model, HttpSession session) {
+	
+	int result = noticeService.restoreNotice(nno);
+	 session.setAttribute("alertMsg", "성공적으로 공지글이 복구되었습니다.");
+	return "redirect:/adList.no";
 }
-
+}
 
 
 

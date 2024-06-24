@@ -49,28 +49,16 @@
                                             <th>내용</th>
                                             <th>등록일</th>
                                             <th>조회수</th>
+                                            <th>노출여부</th>
                                             <th>정보 수정</th>
-                                            <th>글 삭제</th>
+                                            <th>Toggle</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="8">
-                                                <div id="sb-btn">
-                                                    <a href="adEnrollForm.no" class="btn btn-primary btn-sm btn-icon-split">
-                                                        <span class="icon text-white-50">
-                                                            <i class="fas fa-flag"></i>
-                                                        </span>
-                                                        <span class="text">공지글 작성</span>
-                                                    </a>
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    </tfoot>
+                                   
                                                            <tbody>
                                         <c:forEach var="n" items="${requestScope.list}">
                                             <tr>
-                                                <td>${n.noticeNo}</td>
+                                                <td id="nno">${n.noticeNo}</td>
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${empty n.noticeImgOrigin}">
@@ -88,6 +76,16 @@
                                                 <td>${n.createDate}</td>
                                                 <td>${n.count}</td>
                                                 <td>
+			                                            <c:choose>
+			                                            	<c:when test="${n.status eq 'Y'}">
+			                                            		정상
+			                                            	</c:when>
+			                                            	<c:otherwise>
+			                                            		삭제됨
+			                                            	</c:otherwise>
+			                                            </c:choose>
+		                                            </td>
+                                                <td>
                                                     <a href="detail.no?nno=${n.noticeNo}" class="btn btn-info btn-sm btn-icon-split">
                                                         <span class="icon text-white-50">
                                                             <i class="fas fa-info-circle"></i>
@@ -95,6 +93,8 @@
                                                         <span class="text">수정</span>
                                                     </a>
                                                 </td>
+                                                	<c:choose>
+		                                            	<c:when test="${ n.status eq 'Y' }">
                                                 <td>
                                              <a href="javascript:void(0);" class="btn btn-danger btn-sm btn-icon-split delete-notice"
 											    data-toggle="modal" data-target="#delete-check" data-notice-no="${n.noticeNo}" data-file-path="${n.noticeImgChange}">
@@ -103,22 +103,50 @@
 											    </span>
 											    <span class="text">삭제</span>
 											</a>
-
                                                 </td>
-                                            </tr>
+                                                   	</c:when>
+		                                            	<c:otherwise>
+		                                            		<td>
+					                                            <a class="btn btn-success btn-sm btn-icon-split restore-event" data-toggle="modal" data-target="#restore-check" onclick="restoreNotice(this);">
+							                                        <span class="icon text-white-50">
+							                                            <i class="fas fa-redo"></i>
+							                                        </span>
+							                                        <span class="text">복구</span>
+							                                    </a>
+		                                           	 		</td>
+		                                            	</c:otherwise>
+		                                            </c:choose>
+	                                            </tr>
+                                          
                                         </c:forEach>
                                     </tbody>
+                                   
+                                     <tfoot>
+                                        <tr>
+                                            <th colspan="9">
+                                                <div id="sb-btn">
+                                                    <a href="adEnrollForm.no" class="btn btn-primary btn-sm btn-icon-split">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-flag"></i>
+                                                        </span>
+                                                        <span class="text">공지글 작성</span>
+                                                    </a>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-<!--                   <script>
+                
+                  <script>
                     <c:if test="${not empty sessionScope.alertMsg}">
                         alert("${sessionScope.alertMsg}");
                         <c:remove var="alertMsg" scope="session" />
                     </c:if>
-                </script> -->
+                </script>
                 <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
@@ -163,6 +191,36 @@
                 </div>
             </div>
             <!-- End of Modal-->
+            
+            		<!-- The Modal -->
+			<div class="modal" id="restore-check">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			
+			      <!-- Modal Header -->
+			      <div class="modal-header">
+			        <h4 class="modal-title">공지글 복구</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
+
+				  <form action="restore.no" method="post">			
+			      <!-- Modal body -->
+			      <div class="modal-body">
+			      	<input type="hidden" name="nno" class="noticeNo">
+
+			        	정말 해당 공지글을 복구하시겠습니까?
+			      </div>
+			
+			      <!-- Modal footer -->
+			      <div class="modal-footer">
+			        <button type="submit" class="btn btn-danger restoreEvent">네</button>
+			        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
+			      </div>
+				</form>
+			    </div>
+			  </div>
+			</div>
+			<!-- End of Modal-->
         </div>
         <!-- End of Content Wrapper -->
     </div>
@@ -218,6 +276,12 @@
             $(".modal-body>.filePath").val(filePath); // 추가
         });
     });
+    
+
+	function restoreNotice(element) {
+		let nno = $(element).parent().siblings().eq(0).text().trim();
+		$("#restore-check .modal-body>.noticeNo").attr("value", nno);
+	}
 </script>
 
 </body>

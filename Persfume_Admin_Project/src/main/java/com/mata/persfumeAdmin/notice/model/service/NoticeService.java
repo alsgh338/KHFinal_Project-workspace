@@ -33,6 +33,10 @@ public  interface NoticeService {
 	int updateNotice(Notice n);
 
 
+	//공지글 복구
+	int restoreNotice(int nno);
+
+
 }
 
 

@@ -82,14 +82,14 @@
                                                 <td>${memCoupon.status}</td>
                                                 <td>
                                                     <!-- 수정 버튼 -->
-                                                    <a href="edit.co?memNo=${memCoupon.memNo}"
+                                                    <a href="#"
                                                         class="btn btn-info btn-sm btn-icon-split">
                                                         <span class="icon text-white-50">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </span>
                                                         <span class="text">수정</span>
                                                     </a>
-                                                    <!-- 삭제 버튼 -->
+                                                   <!-- 삭제 버튼 -->
                                                     <button type="button" class="btn btn-danger btn-sm btn-icon-split"
                                                         data-toggle="modal" data-target="#delete-check"
                                                         data-mem-no="${memCoupon.memNo}">
@@ -169,28 +169,24 @@
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal-->
+  <!-- Delete Confirmation Modal-->
     <div class="modal fade" id="delete-check" tabindex="-1" role="dialog" aria-labelledby="deleteCheckModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteCheckModalLabel">클래스 삭제</h5>
+                    <h5 class="modal-title" id="deleteCheckModalLabel">쿠폰 삭제</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="deleteForm" action="delete.oc" method="post">
-                    <div class="modal-body">
-                        <input type="hidden" id="memNoToDelete" name="memNoToDelete">
-
-                        정말 해당 사용자를 삭제하시겠습니까?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">네</button>
-                        <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
-                    </div>
-                </form>
+                <div class="modal-body">
+                    정말 해당 사용자를 삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="confirmDelete">네</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">아니오</button>
+                </div>
             </div>
         </div>
     </div>
@@ -210,19 +206,7 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script>
-        $(document).ready(function () {
-            // DataTables initialization
-            $('#dataTable').DataTable();
-
-            // Delete button click handler
-            $('#delete-check').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var memNo = button.data('mem-no'); // Extract info from data-* attributes
-                $('#memNoToDelete').val(memNo); // Set value to the hidden input in the form
-            });
-        });
-    </script>
+   
 
 </body>
 

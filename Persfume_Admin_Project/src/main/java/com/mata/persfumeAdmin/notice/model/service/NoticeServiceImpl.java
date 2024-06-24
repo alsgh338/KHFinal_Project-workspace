@@ -66,5 +66,11 @@ public class NoticeServiceImpl implements NoticeService {
 
 
 
- 
+
+
+	// 공지 복구
+	@Override
+	public int restoreNotice(int nno) {
+		return noticeDao.restoreNotice(sqlSession, nno);
+	}
 }

@@ -58,6 +58,12 @@ public class NoticeDao {
 }
 
 
+	public int restoreNotice(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.update("noticeMapper.restoreNotice", nno);
+		
+	}
+
+
    
 	
 	
