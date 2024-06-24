@@ -331,6 +331,19 @@
             color: #333;
         }
 
+        #class-refund>.wrap>.section{
+            width: 100%;
+            margin: 20px 0;
+            padding: 10px 0;
+            border-top: 2px dotted lightgray;
+        }
+
+        #class-refund>.wrap *{
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+        }
+
         #class-refund ul {
             list-style-type: disc;
         }

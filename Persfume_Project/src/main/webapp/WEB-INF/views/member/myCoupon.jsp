@@ -117,6 +117,69 @@
         width: 100%;
     }
     
+        .container {
+    width: 80%;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content-area h1 {
+    text-align: center;
+    margin-bottom: 50px;
+    color: #333;
+}
+
+.coupon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.coupon-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.coupon-info {
+    flex-grow: 1;
+    flex-direction:row;
+}
+
+.coupon-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #0073e6;
+}
+
+.coupon-description {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.coupon-expiry {
+    font-size: 12px;
+    color: #999;
+}
+
+.coupon-code {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    background-color: #e7f1ff;
+    padding: 10px;
+    border-radius: 5px;
+}
+    
     </style>
 </head>
 <body>
@@ -165,13 +228,33 @@
             
             <div id="classList">
                 <c:choose>
-                    <c:when test="${empty requestScope.registlist}">
+                    <c:when test="${empty requestScope.clist}">
                         <div id="oneclass-not-found">
                             <img alt="힝..." src="resources/images/error-sad.png"> <br>
                             <h1>주문 목록이 존재하지 않습니다.</h1>
                         </div>
                     </c:when>
                     <c:otherwise>
+                    
+                    <div class="container">
+					        <h1>나의 쿠폰리스트</h1>
+					        <div class="coupon-list">
+						        <c:forEach var="c" items="${ requestScope.clist }" varStatus="status">   
+						            <div class="coupon-item">
+						                <div class="coupon-info">
+						                    <h2 class="coupon-title">${cclist[status.index].coupon_name}</h2>
+						                    <p class="coupon-description">모든 상품에 적용 가능한 10,000원 할인 쿠폰입니다.</p>
+						                    <p class="coupon-expiry">${c.registDate}</p>
+					    	            </div>
+					        	        <div class="coupon-code">COUPON${c.couponNo}</div>
+				        	        </div>
+				              	</c:forEach> 
+					            
+					            <!-- 다른 쿠폰 항목들 추가 -->
+					        </div>
+					    </div>
+                    
+                    
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -532,10 +532,25 @@ function drawSalesChart(six, five, four, three, two, one ,TODAY) {
 			
 		}
     	
-	</script>
-	
-	
-	
+    	$(function(){
+    		
+        	/* 일일 접속자 수 관련 AJAX */
+        	$.ajax({
+        		url : "visitCnt.cm",
+        		type : "post",
+        		success : function (count) {
+        			$(".todayView .count").text(count);
+    			} ,
+        		error : function () {
+    				
+    			} 
+        	});
+    		
+    		
+    	})
+    
+    </script>
+
 </body>
 
 </html>

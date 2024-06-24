@@ -2,8 +2,8 @@ const qnaList = [
     {
         q:'1. 어떤 성별을 위한 향수를 원하시나요?',
         a:[
-            {answer : '남성', type : ['m'] },
-            {answer : '여성', type : ['f'] }
+            {answer : '남성', type : ['M'] },
+            {answer : '여성', type : ['F'] }
         ]
     },
     {
@@ -57,8 +57,8 @@ const qnaList = [
     },
     {
         q:'7.보통 외부 활동 시간이 어느 정도 인가요?',
-        a:[
             {answer : '1시간 ~ 3시간', type : ['오드 뜨 뚜왈렛'] },
+        a:[
             {answer : '3시간 ~ 5시간', type : ['오드 뜨 뚜왈렛'] },
             {answer : '5시간 ~ 7시간', type : ['오드 뜨 퍼퓸'] },
             {answer : '7시간 ~ 10시간', type : ['오드 뜨 퍼퓸'] },

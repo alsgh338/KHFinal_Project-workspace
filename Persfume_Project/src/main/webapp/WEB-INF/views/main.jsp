@@ -26,10 +26,13 @@
         /* 이미지 사이즈 조절 */
         .swiper-slide>.swiper-img{
             width : 30%;
+            height: 400px;
         }
 
         .swiper-img>img{
             width: 100%;
+            height : 100%;
+            object-fit:cover;
         }
 
         /* 화살표 버튼색 변경 (기본색은 파란색) */
@@ -360,6 +363,7 @@
 
         #home-text>h1{
             font-size: 70px;
+            text-shadow: 1px 1px 2px #072f57;
         }
         
         .event {
@@ -441,7 +445,8 @@
                 <source src="resources/images/perfume1.mp4" type="video/mp4">
             </video>
             <div id="home-text">
-                <h1>간단한 소개 텍스트</h1>
+                <h1>Experience Luxury <h1>
+                <h1>in Every Drop</h1>
             </div>
             <div id="home-bg"></div>
         </div>
@@ -667,7 +672,7 @@
          function findPosition(){
              $('.main-section').each(function(){
                  if( ($(this).offset().top - $(window).scrollTop() ) < 20){
-                     link.removeClass('active');
+                     $('.active').removeClass('active');
                      $('#nav-bar').find('[data-scroll="'+ $(this).attr('id') +'"]').addClass('active');
                  }
              });

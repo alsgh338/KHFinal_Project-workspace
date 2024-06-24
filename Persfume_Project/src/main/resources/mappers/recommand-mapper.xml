@@ -16,49 +16,46 @@
 		<result column="MIDDLE_NOTE" property="middleNote" />
 		<result column="BASE_NOTE" property="baseNote" />
 		<result column="PRODUCT_STATUS" property="productStatus" />
+		<result column="THUMBNAIL_IMG" property="thumbnailImg" />
 	</resultMap>
 	
 	<select id="selectList"
 			parameterType="recommand"
 			resultMap="productResultSet">
 			
-            SELECT PRODUCT_NAME, PRODUCT_EXPLAIN
+            SELECT P.PRODUCT_NO, P.PRODUCT_NAME, P.PRODUCT_EXPLAIN,P.TOP_NOTE,P.MIDDLE_NOTE,P.BASE_NOTE, PI.PRODUCT_IMG_PATH AS THUMBNAIL_IMG
               FROM PRODUCT P
-              JOIN PRODUCT_IMG PI USING(PRODUCT_NO)
-              JOIN PRODUCT_REVIEW PR USING(PRODUCT_NO)
-             WHERE GENDER = #{genderAnswer}
-              AND CATEGORY = #{categoryAnswer}
-			  AND (TOP_NOTE LIKE '%'||#{scentAnswer}||'%' 
-			   OR MIDDLE_NOTE LIKE '%'||#{scentAnswer}||'%'
-			   OR BASE_NOTE LIKE '%'||#{scentAnswer}||'%')              
-			  AND PRODUCT_STATUS = 'Y'
+              JOIN PRODUCT_IMG PI ON(P.PRODUCT_NO = PI.PRODUCT_NO)
+              LEFT JOIN PRODUCT_REVIEW PR ON(P.PRODUCT_NO = PR.PRODUCT_NO)
+             WHERE P.GENDER = #{genderAnswer}
+              AND PI.IMG_TYPE = 1
+              AND P.CATEGORY = #{categoryAnswer}
+			  AND (P.TOP_NOTE LIKE '%'||#{scentAnswer}||'%' 
+			   OR P.MIDDLE_NOTE LIKE '%'||#{scentAnswer}||'%'
+			   OR P.BASE_NOTE LIKE '%'||#{scentAnswer}||'%')              
+			  AND P.PRODUCT_STATUS = 'Y'
               <choose>
-              	<when test='reviewStart == 0'>
-	              	AND(SELECT COUNT(PR2.REVIEW_NO) 
-                 		  FROM PRODUCT_REVIEW PR2 
-                   		 WHERE PR2.PRODUCT_NO = PRODUCT_NO) BETWEEN 0 AND #{reviewStart}                                            
-
-              	</when>
-              	<when test='reviewEnd == 0'>
-             		AND(SELECT COUNT(PR2.REVIEW_NO) 
-                 		  FROM PRODUCT_REVIEW PR2 
-                   		 WHERE PR2.PRODUCT_NO = PRODUCT_NO) >= #{reviewEnd}
-              	</when>
-              	<otherwise>
-              		AND(SELECT COUNT(PR2.REVIEW_NO) 
-                 		  FROM PRODUCT_REVIEW PR2 
-                   		 WHERE PR2.PRODUCT_NO = PRODUCT_NO) BETWEEN #{reviewStart} AND #{reviewEnd}
-              	</otherwise>
-           	  </choose>
-        	  <choose>
-              	<when test='reviewStart == 0'>
-	              	AND PRODUCT_PRICE BETWEEN 0 AND #{priceEnd}
+              	<when test='priceStart == 0'>
+	              	AND P.PRODUCT_PRICE &lt;= #{priceEnd}
               	</when>
               	<when test='priceEnd == 0'>
-              		AND PRODUCT_PRICE >= #{priceEnd}
+             		AND P.PRODUCT_PRICE &gt;= #{priceStart}
               	</when>
               	<otherwise>
-              		AND PRODUCT_PRICE BETWEEN #{priceStart} AND #{priceEnd}
+              		AND P.PRODUCT_PRICE BETWEEN #{priceStart} AND #{priceEnd}
+              	</otherwise>
+           	  </choose>
+           	   GROUP BY P.PRODUCT_NO, P.PRODUCT_NAME, P.PRODUCT_EXPLAIN,P.TOP_NOTE,P.MIDDLE_NOTE,P.BASE_NOTE, PI.PRODUCT_IMG_PATH
+              
+        	  <choose>
+              	<when test='reviewStart == 0'>
+              		HAVING COUNT(PR.REVIEW_NO) &lt;= #{reviewEnd}
+              	</when>
+              	<when test='reviewEnd == 0'>
+	              	HAVING COUNT(PR.REVIEW_NO) &gt;= #{reviewStart} 
+              	</when>
+              	<otherwise>
+              		HAVING COUNT(PR.REVIEW_NO) BETWEEN #{reviewStart} AND #{reviewEnd}
               	</otherwise>
            	  </choose>
 

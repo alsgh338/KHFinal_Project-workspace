@@ -33,10 +33,9 @@ public class RecommandServiceImpl implements RecommandService {
 	}
 
 	@Override
-	@Transactional
 	public int selectCoupon(int memNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return recommandDao.selectCoupon(sqlSession, memNo);
+
 	}
 	
 

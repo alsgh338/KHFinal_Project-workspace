@@ -74,7 +74,12 @@
         #nav-logo img{
             width: 80%;
         }
-
+        
+        
+        #nav-auth a{
+        	font-size: 15px;
+        }
+        
 
         #nav-btn{
             width: 70%;
@@ -188,18 +193,15 @@
 
         
         #sub-btns>#sub-btn1{
-            --animate-delay: 1.5s; 
-            --animate-duration: 2.0s;
-        }
-        #sub-btns>#sub-btn2{
-            --animate-delay: 1.0s; 
+           --animate-delay: 1.0s; 
             --animate-duration: 1.5s;
         }
-        #sub-btns>#sub-btn3{
+
+        #sub-btns>#sub-btn2{
             --animate-delay: 0.5s; 
             --animate-duration: 1.0s;
         }
-        #sub-btns>#sub-btn4{
+        #sub-btns>#sub-btn3{
             --animate-delay: 0.0s; 
             --animate-duration: .5s;
         }
@@ -249,7 +251,7 @@
             <c:when test="${ empty sessionScope.loginMember }">
 		        <div id="nav-auth">
 		            <div>
-		                <a href="enroll.me">SIGN IN</a> |
+		                <a href="enroll.me">SIGN IN </a> |
 		                <a href="login.fo">SIGN UP</a> 
 		            </div>
 		        </div>
@@ -259,11 +261,16 @@
                <div id="nav-auth">
 		            <div>
 						<a href="myPage.me">MY PAGE</a> |
+						<a href="#" id="cartLink">CART</a> |
 			            <a href="logout.me">LOGOUT</a> 
 		            </div>
 		        </div>
             </c:otherwise>
             </c:choose>
+            
+            <form action="CartForm" method="post" id="goCart">
+            	<input type="hidden" name=mno value="${ sessionScope.loginMember.memNo}">
+            </form>
         
         
 
@@ -275,13 +282,11 @@
 	            <img src="resources/images/Chat.png" alt="dpgpdl dksskdhsp" onclick="openChatList();">
 	        </div>
     	</c:if>
+
         <div class="side-btn animate__animated animate__fast" id="sub-btn2">
-            <img src="resources/images/chatbot_white.png" alt="챗봇 연결">
-        </div>
-        <div class="side-btn animate__animated animate__fast" id="sub-btn3">
             <img src="resources/images/infoIcon.png" alt="상담 연결" style="transform: scale(0.8);" onclick="openTawkTo();">
         </div>
-        <div class="side-btn animate__animated animate__fast" id="sub-btn4">
+        <div class="side-btn animate__animated animate__fast" id="sub-btn3">
             <img src="resources/images/chav-up.png" alt="페이지 상단 이동 키" style="transform: rotate(180deg);" onclick="moveTop();">
         </div>
         <div class="side-btn" id="toggle-btn">
@@ -397,6 +402,17 @@
         	$(window).scrollTop(0);
 			
 		}
+        
+        document.getElementById('cartLink').addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 동작 방지
+            goCart();
+        });
+
+        
+        function goCart(){
+        	$('#goCart').submit();
+        }
+        
     </script>
     
     

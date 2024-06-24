@@ -46,6 +46,6 @@ public class Product {
 		this.baseNote = baseNote;
 	}
 	
-	
+	private String thumbnailImg;
 	
 }

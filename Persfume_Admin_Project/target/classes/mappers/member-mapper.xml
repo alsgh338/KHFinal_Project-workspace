@@ -47,6 +47,15 @@
 		WHERE MEM_NO = #{memNo}
 		AND STATUS = 'N'
 	</update>
+	
+	
+	 <!-- 대시보드 - 일일 접속자 수 Ajax -->
+	 <select id="visitorCount"
+	 		 resultType="_int">
+		SELECT COUNT(VISIT_DATE)
+		  FROM VISIT_COUNT
+		 WHERE TRUNC(VISIT_DATE) = TRUNC(SYSDATE)
+	 </select>
 	 
 
 </mapper>

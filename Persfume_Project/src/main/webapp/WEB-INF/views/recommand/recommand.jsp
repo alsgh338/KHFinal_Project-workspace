@@ -5,8 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="resources/js/recommand.js" charset="UTF-8"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <!-- 온라인 방식 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <style>
 
@@ -217,6 +226,10 @@
             align-items: center;
         }
 
+        #result #result-main{
+            margin: 20px 0;
+        }
+
         #result #result-main-title,
         #result #result-text{
             font-size: 35px;
@@ -231,6 +244,30 @@
         #result #result-main-content{
             font-size: 25px;
             font-weight: 600;
+        }
+
+        #result #result-main-notes,
+        #result #result-main-notes table{
+            margin-top: 10px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        #result #result-main-notes table th,
+        #result #result-main-notes table td{
+            width: 50%;
+            font-size: 25px;
+        }
+
+        #result #result-main-btn{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        #result #result-main-btn>div{
+            width: 35%;
         }
 
 
@@ -334,6 +371,30 @@
                 </div>
                 <div id="result-main-content">
                     향수 간단 소개말
+                </div>
+                <div id="result-main-notes">
+                    <table>
+                        <tr>
+                            <th>TOP-NOTE</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>MIDDLE-NOTE</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>BASE-NOTE</th>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="result-main-btn">
+                    <div id="detailBtn" class="btn btn-lg btn-secondary">
+                        해당 제품 보러가기
+                    </div>
+                    <div id="detailBtn" class="btn btn-lg btn-info" onclick="location.href='test.rc'">
+                        테스트 다시 하기
+                    </div>
                 </div>
             </div>
             <div id="result-sub"></div>
@@ -452,7 +513,7 @@
                     reviewEnd : reviewEnd,
                     priceStart : priceStart,
                     priceEnd : priceEnd,
-                    memNo : 3/*${ sessionScope.loginUser.memNo}*/,
+                    memNo : ${ sessionScope.loginMember.memNo},
                 },
                 success : function(result){
                 	console.log(result);
@@ -466,8 +527,21 @@
 
                     //여기서 화면에 그리기 시작
                     $("#result-main-title").text(result.productName);
-                    $("#result-main-img").html("<img src = 'resources/uploadFiles/"+result.productImgPath+"' alt='추천 향수'>");
+                    
+                    var contextPath = "../persfumeAdmin/" + result.thumbnailImg;
+                    console.log(contextPath);
+                    var imgTag = $('<img>').attr('src', contextPath).attr('alt', contextPath);
+                    
+                    $("#result-main-img").append(imgTag);
                     $("#result-main-content").text(result.productExplain);
+
+                    $("#result-main-notes>table tr:nth-child(1)>td").text(result.topNote);
+                    $("#result-main-notes>table tr:nth-child(2)>td").text(result.middleNote);
+                    $("#result-main-notes>table tr:nth-child(3)>td").text(result.baseNote);
+
+                    $("#detailBtn").attr("onclick","location.href='detail.po?pno="+result.productNo+"'");
+                    
+                    
 
                     //여기서 화면에 그리기 종료
                     const renderEndTime = performance.now();

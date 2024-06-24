@@ -27,15 +27,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.mata.persfume.member.model.service.MemberService;
 import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.member.model.vo.PWDmember;
 import com.mata.persfume.oneClass.model.vo.OneClass;
 import com.mata.persfume.oneClass.model.vo.OneClassRegist;
-import com.mata.persfume.oneClass.model.vo.OneClassReview;
+import com.mata.persfume.product.model.service.ProductService;
+import com.mata.persfume.product.model.vo.Coupon;
 import com.mata.persfume.product.model.vo.Favorites;
+import com.mata.persfume.product.model.vo.MemCoupon;
 import com.mata.persfume.product.model.vo.OrderDetail;
+import com.mata.persfume.product.model.vo.Product;
+import com.mata.persfume.product.model.vo.ProductImg;
 import com.mata.persfume.product.model.vo.ProductReview;
 
 @Controller
@@ -57,6 +60,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@GetMapping("enroll.me")
 	public String memberEnrollform() {
@@ -701,11 +707,33 @@ public class MemberController {
 		
 		System.out.println("현재 로그인한 회원의 회원번호도 잘 끌어오나?" + memNo);
 		
-		ArrayList<Favorites> list =  memberService.selectLike(memNo);
+		ArrayList<Favorites> flist =  productService.myFavoriteList(memNo);
+		System.out.println(flist);
 		
-		model.addAttribute("likeList", list); // Model에 list를  attribute로 설정
+		ArrayList<ProductImg> pilist = new ArrayList<>();
+		ArrayList<Product> plist = new ArrayList<>();
+		ArrayList<Favorites> falist = new ArrayList<>();
 		
-		System.out.println(list);
+		for(int i =0 ; i<flist.size() ; i++) {
+			System.out.println(i+"번째 반복중");
+			
+			ProductImg pi = productService.selectProductImg(flist.get(i).getProductNo());
+			pilist.add(pi);
+			
+			System.out.println("A");
+			
+			Product p = productService.selectProduct(flist.get(i).getProductNo());
+			System.out.println(flist.get(i).getProductNo());
+			plist.add(p);
+			
+			System.out.println("B");
+
+		}
+		
+		
+		model.addAttribute("plist", plist); // Model에 list를  attribute로 설정
+		model.addAttribute("pilist", pilist); // Model에 list를  attribute로 설정
+		model.addAttribute("flist", flist); // Model에 list를  attribute로 설정
 		
 		return "member/myLike";
 		
@@ -743,6 +771,28 @@ public class MemberController {
 		String result = String.valueOf(memberService.insertVisitCount(today));		
 		return result;
 		
+	}
+	
+	@PostMapping("myCoupon.me")
+	public String myCoupon(int memNo, Model model) {
+		
+		
+		ArrayList<MemCoupon> clist = productService.myCoupon(memNo);
+		System.out.println(clist);
+		
+		ArrayList<Coupon> cclist = new ArrayList<>();
+		
+		for(int i = 0 ; i<clist.size() ; i++) {
+			Coupon c = productService.CouponName(clist.get(i).getCouponNo());
+			cclist.add(c);
+		}
+		
+		model.addAttribute("clist", clist);
+		model.addAttribute("cclist", cclist);
+		System.out.println(cclist);
+		
+		return "member/myCoupon";
+	
 	}
 	
 	

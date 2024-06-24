@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mata.persfume.common.model.vo.PageInfo;
 import com.mata.persfume.product.model.dao.ProductDao;
@@ -305,8 +308,17 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
+	public int deleteFavorite(Favorites f) {
+		
+
+		return productDao.deleteFavorite(sqlSession, f);
+	}
+
+	@Override
 	public Favorites countFavorite(int pno) {
-		return productDao.countFavorite(sqlSession, pno);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

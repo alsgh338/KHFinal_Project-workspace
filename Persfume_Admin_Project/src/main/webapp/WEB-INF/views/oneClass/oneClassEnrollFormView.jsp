@@ -127,7 +127,7 @@
 	                               				</td>
 	                               				<th>강사명</th>
 	                                			<td>
-	                                				<input type="text" class="form-control form-control-user" name="classTeacher" placeholder="강사명" required>
+	                                				<input type="text" class="form-control form-control-user" maxlength="5" name="classTeacher" placeholder="강사명" required>
 	                               				</td>
 	                               				<th>최대 수강 인원</th>
 	                                			<td>

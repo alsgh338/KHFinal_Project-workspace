@@ -84,8 +84,8 @@
 			</resultMap>
 				<!--  찜 테이블 -->
 		<resultMap type="Favorites" id="FavoritesResultSet">
-		<result column="MEM_NO" property="productNo" />
-		<result column="PRODUCT_NO" property="memNo" />
+		<result column="MEM_NO" property="memNo" />
+		<result column="PRODUCT_NO" property="productNo" />
 	   </resultMap>
 	
 	
@@ -581,14 +581,14 @@
 		  FROM COUPON 
 		 WHERE COUPON_NO = #{CouponNo}  
 	</select>
-	<!--  찜 갯수 구하기 -->
-			<!--  나의 쿠폰 리스트에서 이름 가져오기-->
-		<select id="countFavorite"
-		parameterType="_int"
-			resultMap="FavoritesResultSet">
-	     SELECT COUNT(*) AS "MEM_NO"  
-         FROM FAVORITES 
-         WHERE PRODUCT_NO = #{pno} 
-	</select>
+	<!--  나의 쿠폰 리스트에서 이름 가져오기-->
+	<delete id="deleteFavorite"
+		parameterType="Favorites">
+		DELETE 
+		  FROM FAVORITES
+		 WHERE MEM_NO = #{memNo}
+		   AND PRODUCT_NO = #{productNo}
+	</delete>
+
 	
 </mapper>

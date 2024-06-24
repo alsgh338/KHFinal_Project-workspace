@@ -165,54 +165,57 @@ fieldset {
 	overflow-y: auto;
 }
 
+/* 여기서 부터 MypageList css */
+    
 #myPagelist{
-	display: flex;
-    list-style-type: none; /* 기본 목록 스타일 제거 */
-   	padding: 0;
-   	margin: 0;
-	justify-content: space-around;
-	width: 100%;
-}
+        display: flex;
+        list-style-type: none; /* 기본 목록 스타일 제거 */
+        padding: 0;
+        margin-top: 20px;
+        justify-content: space-around;
+        width: 100%;
+    }
 
 	#myPagelist a{
 		text-align: center;
 		text-decoration: none;
+		color: #1c4469;
+		font-weight: 800;
 	}
 
-#myPagelist li {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	margin-right: 10px; /* 각 항목 간 간격 추가 */
-	height: 50px; /* 필요에 따라 높이 조정 */
-	font-size: 20px;
-	position:relative;
-	
-}
+    #myPagelist li {
+    	position:relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-right: 10px; /* 각 항목 간 간격 추가 */
+        height: 50px; /* 필요에 따라 높이 조정 */
+        font-size: 20px;
+    }
 
 
-#nav-btn{
-    width: 70%;
-    display: flex;
-    align-items: center;
-}
+    #nav-btn{
+        width: 70%;
+        display: flex;
+        align-items: center;
+    }
 
-#myPagelist a::after {
-	content: "";
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 0;
-	height: 4px;
-	background: rgba(217, 93, 48, 1)/*#D95D30*/;
-	transition: all .5s ease-out;
- }
+    #myPagelist a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 4px;
+        background: rgba(217, 93, 48, 1)/*#D95D30*/;
+        transition: all .5s ease-out;
+    }
 
-#myPagelist a:hover::after {
-    width: 100%;
-}
+    #myPagelist a:hover::after {
+        width: 100%;
+    }
 
 #header{
 	width: 100%;
@@ -265,6 +268,12 @@ fieldset {
 			<li>
 				<a id="order" href="" onclick="orderGo(); return false;">내 주문목록(배송상태)</a>
 				<form method="post" action="myOrder.me" id="myOrderForm">
+					<input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+				</form>
+			</li>
+			<li>
+				<a id="class" href="" onclick="couponGo(); return false;">내 쿠폰 조회</a>
+				<form method="post" action="myCoupon.me" id="myCouponForm">
 					<input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
 				</form>
 			</li>
@@ -378,6 +387,14 @@ fieldset {
 			$("#myClassForm").submit();
 
 		}
+
+		function couponGo() {
+            
+            console.log("classGO야 실행 돼?");
+            
+            $("#myCouponForm").submit();
+
+        }
 		
 		
 		function reviewGo() {

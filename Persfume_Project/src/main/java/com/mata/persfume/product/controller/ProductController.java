@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -1047,7 +1048,7 @@ return changeName;
 	
 	}
 	@GetMapping("myCoupon.li")
-	public ModelAndView myCoupon( ModelAndView mv) {
+	public ModelAndView myCoupon(ModelAndView mv) {
 		
 		int mno = 1;
 		
@@ -1066,6 +1067,22 @@ return changeName;
 		
 		return mv;
 	
+	}
+	
+	@PostMapping("delFavorite.me")
+	public String deleteFavorite(Favorites f, Model model, HttpSession session) {
+		
+		int result = productService.deleteFavorite(f);
+		
+		if(result > 0) { // 삭제됨
+			session.setAttribute("alertMsg", "상품이 제거되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "상품 제거에 실패했습니다.");
+		}
+		
+		
+		
+		return "redirect:/myLike.me";
 	}
 	
 	

@@ -1,5 +1,7 @@
 package com.mata.persfume.recommand.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +26,30 @@ public class RecommandController {
 	
 	@ResponseBody
 	@PostMapping(value="result.rc", produces="application/json; charset=UTF-8")
-	public String selectList(Recommand r, int memNo) {
+	public String selectList(Recommand r, int memNo, HttpSession session) {
 		
+		r.setGenderAnswer(r.getGenderAnswer().toUpperCase());
+		System.out.println(r);
+		
+
 		
 		Product p =  recommandService.selectList(r);
+		System.out.println(p);
 		
 		
 		if(p != null) {
+		
 			int countCoupon = recommandService.selectCoupon(memNo);
 			
+			System.out.println(countCoupon);
+			
 			if(countCoupon <= 0) {
-				recommandService.insertCoupone(memNo);
+				int result = recommandService.insertCoupone(memNo);
+				session.setAttribute("alertMsg", "첫 테스트 쿠폰이 발급되었습니다.");
 			}
 				return new Gson().toJson(p);
+		} else {
+			System.out.println("null 넘어옴");
 		}
 		
 		return null;

@@ -46,7 +46,7 @@
     #outer {
         width: 1000px;
         height: 800px;
-        border: 1px solid red;
+        /* border: 1px solid red; */
         margin: auto;
         box-sizing: border-box;
         text-align: center; /* 버튼을 가운데로 정렬하기 위한 설정 */
@@ -57,17 +57,24 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin: 50px 0;
+	}
+
+	#classList img{
+		width: 500px;
+		height: 500px;
+		object-fit: cover;
 	}
     
     
 
-        /* 여기서 부터 MypageList css */
+	/* 여기서 부터 MypageList css */
     
-        #myPagelist{
+	#myPagelist{
         display: flex;
         list-style-type: none; /* 기본 목록 스타일 제거 */
         padding: 0;
-        margin: 0;
+        margin-top: 20px;
         justify-content: space-around;
         width: 100%;
     }
@@ -75,6 +82,8 @@
 	#myPagelist a{
 		text-align: center;
 		text-decoration: none;
+		color: #1c4469;
+		font-weight: 800;
 	}
 
     #myPagelist li {
@@ -120,7 +129,7 @@
 	<div class="content-title" id="home">WELCOME</div>
 	
 	<div id="outer">
-	    <ul id="myPagelist">
+		<ul id="myPagelist">
 	        <li>
 	            <a href="/persfume/myPage.me">내 정보 조회</a>
 	        </li>
@@ -142,19 +151,28 @@
 	                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
 	            </form>
 	        </li>
-	        <li>
+			<li>
+				<a id="class" href="" onclick="couponGo(); return false;">내 쿠폰 조회</a>
+				<form method="post" action="myCoupon.me" id="myCouponForm">
+					<input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+				</form>
+			</li>
+			<li>
 	            <a id="class" href="" onclick="classGo(); return false;">클래스 예약조회</a>
 	            <form method="post" action="myClass.me" id="myClassForm">
 	                <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
 	            </form>
 	        </li>
-	    </ul>
+		</ul>
 	    
 	    
 	    <div id="classList">
 	    	<c:choose>
 	    		<c:when test="${empty requestScope.registlist}">
-	    			<h1>예약된 클래스가 없습니다.</h1>
+	    			<div id="oneclass-not-found">
+						<img alt="힝..." src="resources/images/error-sad.png"> <br>
+						<h1>예약 내역이 존재하지 않습니다.</h1>
+					</div>
 	    		</c:when>
 	    		<c:otherwise>
 		    		<table>
@@ -204,7 +222,6 @@
 							    				</c:otherwise>
 							    			
 							    			</c:choose>
-							    			<input type="hidden">
 							    		</td>
 							    	</c:otherwise>
 						    	
@@ -219,70 +236,27 @@
 	    	</c:choose>
 	    
 	    	    
-<%-- 	        <c:forEach var="OneClassRegist" items="${classList}">
+	        <c:forEach var="OneClassRegist" items="${classList}">
 	            <div id="class">
 	                클래스예약번호 : <span id="registNo">${OneClassRegist.registNo}</span>
 	                <a class="cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">예약 취소</a>
 	             </div>
-	         </c:forEach>
+	         	</c:forEach>
 	
-	    </div>
-	    <div id="classAboutList">
-	        <c:forEach var="OneClass" items="${classAboutList}">
-	            <span>${OneClass.className}</span> | 
-	            <span>${OneClass.startTime}</span>    
-	         <br>
-	         </c:forEach>
-	    </div> --%>
+	    	</div>
+			<div id="classAboutList">
+				<c:forEach var="OneClass" items="${classAboutList}">
+					<span>${OneClass.className}</span> | 
+					<span>${OneClass.startTime}</span>    
+				<br>
+				</c:forEach>
+			</div>
 	    </div>
 		</div>
 	</div>
 	
 	
-	<script>
-	// 원데이 클래스 취소 버튼 스크립트
-	/*     $(document).ready(function() {
-	        $('.cancel-link').on('click', function(event) {
-	            event.preventDefault();
-	            // 클릭된 링크의 기본 동작(페이지 이동)을 막음
-	
-	            let registNo = $(this).parent().find("#registNo").text().trim();
-	            // 클릭된 요소의 부모 요소 내의 #registNo 요소의 텍스트 값 가져와서 공백 제거 후 registNo 변수에 저장
-	
-	            let form = $(this).parent().find(".cansleClass");
-	            // 클릭된 요소의 부모 요소 내의 .cansleClass 폼을 찾음
-	
-	            form.find('input[name="registNo"]').val(registNo);
-	            // 폼의 hidden input 요소에 registNo 값을 설정
-	
-	            console.log(registNo);
-	
-	           form.submit();
-	           
-	        });
-	    }); */
-	
-	
-	//     $(document).ready(function() {
-	//     $('.cancel-link').on('click', function(event) {
-	//         event.preventDefault();
-	//         // 클릭된 링크의 기본 동작(페이지 이동)을 막음
-	
-	//         // 클릭된 링크에 해당하는 클래스 예약 번호 가져오기
-	//         let registNo = $(this).siblings("#registNo").text().trim();
-	
-	//         let form = $(this).siblings(".cansleClass");
-	//         // 클릭된 링크의 형제 요소 중에서 .cansleClass 폼을 찾음
-	
-	//         form.find('input[name="registNo"]').val(registNo);
-	//         // 폼의 hidden input 요소에 registNo 값을 설정
-	
-	//         console.log(registNo);
-	
-	//         // form.submit();
-	//     });
-	// });
-	
+	<script>	
 	    function likeGo() {
 	                
 	                console.log("likeGO야 실행 돼?");
@@ -306,6 +280,14 @@
 	        $("#myClassForm").submit();
 	
 	    }
+
+		function couponGo() {
+			
+			console.log("classGO야 실행 돼?");
+			
+			$("#myCouponForm").submit();
+
+		}
 			
 			
 	    function reviewGo() {
@@ -431,6 +413,7 @@
 			  </div>
 			</div>
 			<!-- End of Modal-->
+			<jsp:include page="../common/footer.jsp" />
 
 
 </body>

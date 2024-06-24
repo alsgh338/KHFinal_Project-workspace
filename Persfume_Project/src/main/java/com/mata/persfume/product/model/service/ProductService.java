@@ -119,6 +119,9 @@ public interface ProductService {
 				 Coupon CouponName(int CouponNo);
 				 // 찜 개수 가져가기 
 				 Favorites countFavorite(int pno);
+				 
+				 
+	 int deleteFavorite(Favorites f);
 		
 		
 }//인터페이스 종료

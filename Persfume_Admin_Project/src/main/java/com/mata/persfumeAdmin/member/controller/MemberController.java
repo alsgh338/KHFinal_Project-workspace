@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mata.persfumeAdmin.member.model.service.MemberService;
 import com.mata.persfumeAdmin.member.model.vo.Member;
+
 
 @Controller
 public class MemberController {
@@ -93,6 +95,18 @@ public class MemberController {
 		
 		//return mv;
 		
+		
+	}
+	
+	
+	
+	@ResponseBody
+	@PostMapping(value="visitCnt.cm", produces="html/text; charset=UTF-8")
+	public String visitorCount() {
+		
+		int count = memberService.visitorCount();
+		
+		return String.valueOf(count);
 		
 	}
 
