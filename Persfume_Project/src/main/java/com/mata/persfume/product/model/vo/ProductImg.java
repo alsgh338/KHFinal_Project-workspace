@@ -17,6 +17,7 @@ public class ProductImg {
 	private String productImgChange;	
 	private int imgType;
 	private int productNo;
+	private String status;
 	// 이미지 넣기용 생성자
 
 	

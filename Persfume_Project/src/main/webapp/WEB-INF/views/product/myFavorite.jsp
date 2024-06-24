@@ -144,53 +144,29 @@ h1 {
             </ul>
         </nav>
         <div class="container">
-            <h1>나의 주문 내역</h1>
+            <h1>나의 찜한 상품 내역</h1>
         
             <table class="order-table">
                 <thead>
                     <tr>
-                        <th>주문 번호</th>
+                       	<th>상품이미지</th>
                         <th>상품명</th>
-                        <th>수량</th>
                         <th>가격</th>
-                        <th>주문 날짜</th>
-                        <th>배송 상태</th>
-                        <th>리뷰</th>
-                        <th>환불요청</th>
+                    
+                     
                      
                         
                     </tr>
                 </thead>
                 <tbody>
-                	 <c:forEach var="op" items="${ requestScope.oplist }" varStatus="status">
+                	 <c:forEach var="f" items="${ requestScope.flist }" varStatus="status">
                     <tr>
-                        <td>${op.odId}</td>
+                        <td><img src="${pilist[status.index].productImgPath}" style="width:400px; height:300px;" ></td>
                         <td>${plist[status.index].productName}</td>
-                        <td>${op.quantity}</td>
-                        <td>${op.price}</td>
+                        <td>${plist[status.index].productPrice}</td>
+                     
                       
-                        <c:forEach var="od" items="${ requestScope.odlist }" varStatus="status">
-                          <c:choose>
-                     		   <c:when test="${op.orderNo == od.orderNo}"><td>${od.orderDate}</td>
-          
-                     		    <c:if test="${od.deliveryStatus eq 'Y'}"> <td>배송준비</td></c:if>
-               					<c:if test="${od.deliveryStatus eq 'N'}"><td>배송완료</td></c:if> 
-	                                   <c:if test="${od.deliveryStatus eq 'N' && op.refundRequest == null }"> <td><a href="insertReview.po?odId=${op.odId}&pno=${op.productNo}&mno=${od.memNo}&ono=${od.orderNo}">리뷰작성</a></td></c:if>	
-	                                   <c:if test="${od.deliveryStatus eq 'Y'}"><td></td></c:if> 	 
-	                           
-               					<c:if test="${op.refundRequest == null}">
-               					     <form action="wantRefund.po" method="post"> <input type="number" style="display:none;" name="odId" value="${op.odId}" />
-               					<td><button type="submit">환불요청</button></td> </form> </c:if>  
-               					<c:if test="${op.refundRequest != null}"><td></td></c:if>
-               		
-               					<td>${op.refundRequest}</td>                                       
-                     		   </c:when>
-
-                     	  </c:choose>
-						</c:forEach>
-                   
-                      
-                       
+        
                     </tr>
                     </c:forEach>
                  
@@ -199,26 +175,7 @@ h1 {
             </table>
          
         </div>
-        
-        <!--  여기부터 실험시작 -->
-            <form action="https://info.sweettracker.co.kr/tracking/5" method="post">
-            <div class="form-group">
-              <label for="t_key">API key</label>
-              <input type="text" class="form-control" id="t_key" name="t_key" placeholder="제공받은 APIKEY">
-            </div>
-            <div class="form-group">
-              <label for="t_code">택배사 코드</label>
-              <input type="text" class="form-control" name="t_code" id="t_code" placeholder="택배사 코드">
-            </div>
-            <div class="form-group">
-              <label for="t_invoice">운송장 번호</label>
-              <input type="text" class="form-control" name="t_invoice" id="t_invoice" placeholder="운송장 번호">
-            </div>
-            <button type="submit" class="btn btn-default">조회하기</button>
-        </form>
-        <a href="https://tracker.delivery/#/:carrier_id/:track_id" target="_blank">배송조회</a>
-        
-        
+
         <!--  실험실 끝 -->
     </div>
 

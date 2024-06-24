@@ -365,93 +365,34 @@
                </div>
            
                  <div id="content_2">
-                    <table border="1" id="btn_3">
-                        <tr>
-                            <td>상품설명</td>
-                            <td>구매후기</td>
-                            <td>FAQ</td>
-                            <td>상품문의</td>
-                            <!-- jqeury function() 처리 예정 -->
-                        </tr>
-                    </table>
+               
                  </div>
     
                 <div id="content_3">
-                    <div id="about_salade">
-                        <img src="../../resources/Salade/cheese/cheese_01.jpg" alt="이미지">
-                        <img src="../../resources/Salade/cheese/cheese_02.jpg" alt="이미지">
-                        <img src="../../resources/Salade/cheese/cheese_03.jpg" alt="이미지">
-                        <img src="../../resources/Salade/cheese/cheese_04.jpg" alt="이미지">
-                        <img src="../../resources/Salade/cheese/cheese_05.jpg" alt="이미지">
-                    </div>
-                    <div id="about_delivery">
-                        <h2>배송안내</h2>
-                            <p>
-                            배송 비용 : 1회 배송비 3,500원 (1회 배송 시 결제금액 50,000원 이상 무료) <br>
-                            배송 기간 : 1일 (제주도, 도서산간 2~3일) <br>
-                            배송 안내 : 결제 단계에서 희망 수령일 선택이 가능하며, 출고 당일 오전 제작 안내 알림톡 발송 <br>
-                            <br><br>
-                            
-                            - 제주 및 도서 산간지역은 1회당 운임 3,000원이 추가 됩니다.  <br>
-    
-                            - 신선 식품 배송으로 월요일 및 공휴일 다음날은 배송이 불가합니다.  <br>
-    
-                            - 정기배송 상품의 홀딩기간은 주문일로부터 최대 3개월까지 입니다. <br>
-    
-                            - 새벽 배송 오전 8시 전 수령, 일반 배송은 자정 12시 전 수령 가능합니다. (네이버페이 구매 시 새벽배송 불가) <br>
-     
-                            - 배송 시 연락처 또는 주소 오기재(공동현관 비밀번호 누락 등)로 인해 대응 배송 또는 수령이
-                             되지 않을 경우 반송될 수 있으니 꼭 확인 후 주문 부탁드립니다. <br>
-    
-    
-                            - 상품 포장은 종이 박스(새벽 배송 일부) 또는 스티로폼 박스에 아이스팩과 함께 포장하여 배송됩니다. <br>
-    
-                            &nbsp;(단, 겨울철에는 아이스팩을 제외하고 배송됩니다) <br>
-    
-                            - 고객님께서 주문하신 상품은 발송되는 날, 당일 제작하여 당일 발송됩니다.  <br>
-                            </p>
-    
-                        <h2>교환 및 반품안내</h2>
-                            <p>
-                            - 제품의 하자나 판매자의 실수로 인한 경우 100% 교환/반품/환불이 가능합니다. <br>
-    
-                            - 식품 특성상 고객님의 단순변심으로 인한 상품 교환 및 반품은 불가하며, 상품 수령 후 임의 반품 및 환불 역시 불가합니다.  <br>
-    
-                            - 정기배송 상품의 경우 첫 배송 수령 후, 구성품 변경이 가능하며 그 전에는 취소 후 재주문하시면 됩니다. <br>
-    
-                            ​- 제품 문제 발생 시에는 수령 후 6일 이내 고객센터나 문의하기 게시판으로 접수 부탁드립니다.<br>
-    
-                            &nbsp; (식품 배송 특성상 유선 상으로 제품 확인이 어려워 사진 촬영본 확인 후 검토하여 환불 또는 재발송으로 진행됩니다) <br>
-                            - 제품에 하자가 있는 경우, 제품 배송 즉시 판매자에게 사전 전화통화를 해야 하며 판매자 승인없이 임의 반품하는 경우 반품/교환이 제한될 수 있습니다. <br>
-    
-    
-                            - 상품 수령후 보관상 발생한 변질, 파손에 대해서는 반품/교환이 제한될 수 있습니다.<br>
-                            </p>
-                        <h2>환불안내</h2>
-                            <p>
-                                - 정기 상품은 고객님의 단순 변심/개인 사유 포함하여 취소 요청 시, <br>
-                                쿠폰 사용 금액 제외한 실 결제 금액에서 배송 완료된 상품의 정상가 및 회차별 배송비를 합산한 금액을 제외하고 진행되며, <br>
-                                결제 수단에서 부분 취소됩니다. (단, 휴대폰 결제의 경우 부분환불이 어려워 해당 금액 무통장 입금 후 전체 취소로 진행됩니다.) <br>
-                            </p>
-                        <h2>보관방법 및 유통기한</h2>
-                            <p>
-                                - 보관 방법: 냉장보관(0~5⁰ⅽ), 채소칸에 보관하는 것이 가장 좋습니다.<br>
-    
-                                - 유통기한: 제조일로부터 6일 (제품 전면 제조일 표기) 
-                            </p> 
-                    </div>
+            
+                
                 </div>
             </div>
             </div>
+            
+            
+            
+            
+            
+            
             
             <div class="review-section">
             <h2>리뷰</h2>
             <div class="review-list">
             	 <c:forEach var="pr" items="${ requestScope.prlist }" varStatus="status">
                    
-                <div class="review-item">
-                    <h3>사용자1</h3>
-                  <c:if test="${pr.reviewRating == 10}"> <p class="review-rating">★★★★★</p></c:if>    
+       
+              
+					                 <div class="review">
+					            <div class="review-header">
+					                <span class="user-name">user1321</span>
+					                <span class="rating">                  
+			<c:if test="${pr.reviewRating == 10}"> <p class="review-rating">★★★★★</p></c:if>    
                    <c:if test="${pr.reviewRating == 9}"> <p class="review-rating">★★★★☆</p></c:if>
                     <c:if test="${pr.reviewRating == 8}"> <p class="review-rating">★★★★</p></c:if>
                      <c:if test="${pr.reviewRating == 7}"> <p class="review-rating">★★★☆</p></c:if>
@@ -460,13 +401,18 @@
                         <c:if test="${pr.reviewRating == 4}"> <p class="review-rating">★★</p></c:if>
                          <c:if test="${pr.reviewRating == 3}"> <p class="review-rating">★☆</p></c:if>
                           <c:if test="${pr.reviewRating == 2}"> <p class="review-rating">★</p></c:if>
-                           <c:if test="${pr.reviewRating == 1}"> <p class="review-rating">☆</p></c:if>
-                    <p class="review-text">${pr.reviewContent}</p>
-                    <img src="${pr.reviewImgPath}" class="review-image">
-                </div>
-                </c:forEach>
-                
-               
+                           <c:if test="${pr.reviewRating == 1}"> <p class="review-rating">☆</p></c:if></span>
+					            </div>
+					            <div class="review-body">
+					                <p class="review-text">${pr.reviewContent}</p>
+					            </div>
+					            <div class="review-footer">
+					                      <img src="${pr.reviewImgPath}" class="review-image">
+					                <span class="date">${pr.reviewDate}</span>
+					            </div>
+					        </div>
+					          </c:forEach>
+					               
             </div>
         </div>
             

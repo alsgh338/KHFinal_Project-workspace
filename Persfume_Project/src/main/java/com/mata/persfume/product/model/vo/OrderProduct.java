@@ -16,6 +16,7 @@ public class OrderProduct {
 	private int price;
 	private int orderNo;
 	private int productNo;
+	private String refundRequest;
 	public OrderProduct(int quantity, int price, int orderNo, int productNo) {
 		super();
 		this.quantity = quantity;

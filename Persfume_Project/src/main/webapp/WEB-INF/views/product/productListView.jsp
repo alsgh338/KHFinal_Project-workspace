@@ -74,6 +74,10 @@
 		.content-area {
 		text-align: center;
 		}
+		.content-area>div{
+		text-align: center;
+		
+		}
         .content-title{
             height: 190px;
             background: url(resources/images/class_title.jpg);
@@ -275,7 +279,7 @@
     <jsp:include page="../common/header.jsp" />
 
   
-    <div class="content-area">
+    <div class="content-area" style="text-align:center;">
         <div class="content-title" id="home">Perfume</div>
 <div class="content-subtitle">
     <div id="content_1">
@@ -311,11 +315,11 @@
                 <div  style="font-size: 18px; font-weight: 600; text-align: center;" > 성별 검색 </div>
                 <ul class="gender">
                     <li class="gender-li">
-                        <input name="search_form[option_data][]" id="man" value="man" type="checkbox"> 
+                        <input name="search_form[option_data][]" id="man" value="남자" type="checkbox"> 
                             <label for="man">남성</label>
                     </li>
                     <li class="gender-li">
-                        <input name="search_form[option_data][]" id="woman" value="woman" type="checkbox"> 
+                        <input name="search_form[option_data][]" id="woman" value="여자" type="checkbox"> 
                             <label for="woman">여성</label>
                     </li>
                 </ul>
@@ -371,8 +375,8 @@
                 </script>
            
              </div>
-
-             <div class="content-right">
+			
+             <div class="content-right"> 
                <div class="content-sort" style="display: block;" >
            
                     <p>
@@ -384,8 +388,8 @@
               </div>
 
            
-          
-	
+          <div id="a2"> 
+		<div id="a">
                <c:if test="${ requestScope.list == null }"> <div>검색결과가 없습니다.</div> </c:if>
 		<c:forEach var="p" items="${ requestScope.list }" varStatus="status">
 		
@@ -409,9 +413,16 @@
                 </div>
             </div>
                    </c:forEach>   
-        
+        </div>
+        </div>
 
-                      <div id="pagingArea" style="text-align:center;">
+                     
+            
+            
+        </div>
+       
+    </div>
+      <div id="pagingArea" style="text-align:center;  display:block; margin-left: 800px;" >
                 <ul class="pagination">
                 
                 	<c:choose>
@@ -471,9 +482,9 @@
                     </c:choose>
                 </ul>
             </div>
-        </div>
-    </div>
+   
  </div>
+
 
       <jsp:include page="../common/footer.jsp" />
   
@@ -524,6 +535,44 @@ function searching(){
 	var searchtext =  document.getElementById('searchtext').value;
 	location.href = "search.do?text="+searchtext;
 }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('input[name="search_form[option_data][]"]').on('change', function() {
+            var selectedValues = [];
+            $('input[name="search_form[option_data][]"]:checked').each(function() {
+                selectedValues.push($(this).val());
+            });
+
+            if (selectedValues.length > 0) {
+                var queryString = selectedValues.join(',');
+                var searchUrl = 'searchNote.no?notes=' + encodeURIComponent(queryString);
+                
+                
+        		$.ajax({
+    				url : "searchNote.no",
+    				type : "get",
+    				data : {
+    					notes : queryString
+    				},
+    				success : function(result) {
+    					$('#a').remove();
+    					$('#a2').html(result);
+    				console.log(result);
+    					
+    					
+    				},
+    				error : function() {
+    					console.log("ajax 통신 실패!");
+    				}
+    			});
+                
+                
+           
+            }
+        });
+    });
 </script>
 
 </body>

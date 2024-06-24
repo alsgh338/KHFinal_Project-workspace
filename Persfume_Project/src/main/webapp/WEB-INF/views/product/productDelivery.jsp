@@ -155,6 +155,8 @@ h1 {
                         <th>주문 날짜</th>
                         <th>배송 상태</th>
                         <th>택배 발송</th>
+                        <th>환불 요청</th>
+                        <th>환불 처리</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -169,10 +171,14 @@ h1 {
                           <c:choose>
                      		   <c:when test="${op.orderNo == od.orderNo}"><td>${od.orderDate}</td>
           
-                     		    <c:if test="${od.deliveryStatus eq 'Y'}"> <td>배송완료</td></c:if>
-               					<c:if test="${od.deliveryStatus eq 'N'}"><td>배송준비</td></c:if> 
-	                                   <c:if test="${od.deliveryStatus eq 'Y'}"> <td><a href="orderdelivery.po?odId=${op.odId}&pno=${op.productNo}&mno=${od.memNo}&ono=${od.orderNo}" onclick="del();">택배 발송</a></td></c:if> 
-	                                   <c:if test="${od.deliveryStatus eq 'N'}">   </c:if>                    
+                     		    <c:if test="${od.deliveryStatus eq 'N'}"> <td>배송완료</td></c:if>
+               					<c:if test="${od.deliveryStatus eq 'Y'}"><td>배송준비</td></c:if> 
+	                                   <c:if test="${od.deliveryStatus eq 'N'}"><td></td></c:if> 
+	                                   <c:if test="${od.deliveryStatus eq 'Y'}">   <td><a href="orderdelivery.po?odId=${op.odId}&pno=${op.productNo}&mno=${od.memNo}&ono=${od.orderNo}" onclick="del();">택배 발송</a></td> </c:if>                    
+                     		  <td>${op.refundRequest}</td>
+                     		  	 <c:if test="${op.refundRequest == '환불심사중'}"><td>
+                     		  	 <form action="doRefund.po" method="post">
+                     		  	 <input type="number" style="display:none;" name="odId" value="${op.odId}"  /> <button type="submit">환불승인</button> </form></td></c:if> 
                      		   </c:when>
 
                      	  </c:choose>
@@ -196,6 +202,9 @@ h1 {
 function del(){
 	window.alert("택배 발송 완료");
 	
+}
+function(){
+	window.reload();
 }
 </script>
   <jsp:include page="../common/footer.jsp" />

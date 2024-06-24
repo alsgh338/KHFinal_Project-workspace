@@ -13,6 +13,6 @@ import lombok.ToString;
 public class Coupon {
 	
 	private int coupon_no;
-	private int coupon_name;
+	private String coupon_name;
 	
 }
