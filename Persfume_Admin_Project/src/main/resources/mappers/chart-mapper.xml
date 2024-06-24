@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="chartMapper">
+
+	<resultMap type="chart" id="chartResultSet">
+		<result column="VISIT_DATE" property="visitDate" />
+		<result column="VISIT_COUNT" property="visitCount" />
+	</resultMap>
+	
+	<resultMap type="orderDetail" id="orderDetailResultSet">
+		<result column="ORDER_DATE" property="orderDate" />
+		<result column="TOTAL_PRICE" property="totalPrice" />
+	</resultMap>
+	
+	
+
+	<select id="totalMember"
+			resultType="_int">
+		SELECT COUNT(*)
+		  FROM MEMBER
+		 WHERE STATUS = 'Y'
+	</select>
+	
+	<select id="totalSales"
+			resultType="_int">
+		SELECT SUM(TOTAL_PRICE)
+		  FROM ORDER_DETAIL
+		 WHERE REFUND_DATE IS NULL
+	</select>
+	
+	
+	<select id="dailySales"
+			resultType="_int">
+		SELECT COUNT(*)
+		  FROM ORDER_DETAIL
+		 WHERE TRUNC(ORDER_DATE) = TRUNC(SYSDATE)
+		   AND PAY_CODE IS NOT NULL
+	</select>
+	
+	<select id="weekAccess"
+			resultMap="chartResultSet">
+		WITH date_range AS (
+	    SELECT TRUNC(SYSDATE) - 6 + LEVEL - 1 AS VISIT_DATE
+	    FROM DUAL
+	    CONNECT BY LEVEL &lt;= 7
+	)
+	SELECT d.VISIT_DATE, NVL(COUNT(vc.VISIT_DATE), 0) AS VISIT_COUNT
+	  FROM date_range d
+	  LEFT JOIN VISIT_COUNT vc
+	    ON d.VISIT_DATE = TRUNC(vc.VISIT_DATE)
+	 GROUP BY d.VISIT_DATE
+	 ORDER BY d.VISIT_DATE
+	</select>
+	
+	
+	<select id="weekSales"
+			resultMap="orderDetailResultSet">
+		WITH date_range AS (
+	    SELECT TRUNC(SYSDATE) - 6 + LEVEL - 1 AS ORDER_DATE
+	    FROM DUAL
+	    CONNECT BY LEVEL &lt;= 7
+	)
+	SELECT d.ORDER_DATE, NVL(SUM(od.TOTAL_PRICE), 0) AS TOTAL_PRICE
+	  FROM date_range d
+	  LEFT JOIN ORDER_DETAIL od
+	    ON d.ORDER_DATE = TRUNC(od.ORDER_DATE) AND od.REFUND_DATE IS NULL
+	 GROUP BY d.ORDER_DATE
+	 ORDER BY d.ORDER_DATE
+	</select>
+	
+	
+	
+</mapper>

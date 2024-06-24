@@ -1,6 +1,10 @@
 package com.mata.persfumeAdmin.event.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mata.persfumeAdmin.common.template.FileRename;
 import com.mata.persfumeAdmin.event.model.service.EventService;
 import com.mata.persfumeAdmin.event.model.vo.Event;
 import com.mata.persfumeAdmin.event.model.vo.EventImg;
@@ -64,7 +67,7 @@ public class EventController {
 		if(!upfiles[0].getOriginalFilename().equals("")) {
 			
 			// 수정 파일명 
-			thumbChangeName = FileRename.savePath(upfiles[0], session);			
+			thumbChangeName = savePath(upfiles[0], session);			
 							
 		}
 		
@@ -72,7 +75,7 @@ public class EventController {
 		if(!upfiles[1].getOriginalFilename().equals("")) {
 			
 			// 수정 파일명 
-			contentChangeName = FileRename.savePath(upfiles[1], session);			
+			contentChangeName = savePath(upfiles[1], session);			
 							
 		}
 		
@@ -123,11 +126,8 @@ public class EventController {
 		String thumbChangeName = "";
 		String contentChangeName ="";
 		
-		System.out.println("eno" + eno);
-		
 		e.setEventNo(eno);
 		
-		System.out.println(e);
 		
 		// 썸네일
 		if(!upfiles[0].getOriginalFilename().equals("")) {
@@ -135,7 +135,7 @@ public class EventController {
 			
 			
 			// 수정 파일명 
-			thumbChangeName = FileRename.savePath(upfiles[0], session);		
+			thumbChangeName = savePath(upfiles[0], session);		
 							
 		}
 		
@@ -143,7 +143,7 @@ public class EventController {
 		if(!upfiles[1].getOriginalFilename().equals("")) {
 			
 			// 수정 파일명 
-			contentChangeName = FileRename.savePath(upfiles[1], session);			
+			contentChangeName = savePath(upfiles[1], session);			
 							
 		}
 		
@@ -217,4 +217,43 @@ public class EventController {
 		return "redirect:/list.ev";
 	}
 	
+	
+	public String savePath(MultipartFile upfile, HttpSession session) {
+		
+		// 1. 원본파일명 뽑아오기
+		String originName = upfile.getOriginalFilename(); // "bono.jpg"
+		
+		// 2. 시간 형식으로 문자열 뽑아내기
+		// "20240521161430" (년월일시분초)
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 3. 뒤에 붙을 5자리 랜덤 수 얻어내기
+		int ranNum = (int)(Math.random() * 90000 + 10000);
+		
+		// 4. 원본파일명으로부터 확장자명 뽑기
+		String ext = originName.substring(originName.lastIndexOf("."));
+		// ".jpg"
+		
+		// 5. 2 ~ 4 까지 모두 이어 붙이기
+		String changeName = currentTime + ranNum + ext;
+		
+		// 6. 업로드하고자 하는 물리적인 서버의 경로 알아내기
+		// > application 객체로부터 
+		// (webapp/resources/uploadFiles/~~)
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/event/");
+		
+		// 7. 경로와 수정파일명 합체 후 파일을 업로드 해주기
+		// > MultipartFile 객체가 제공하는
+		//   transferTo 메소드를 이용함
+		try {
+			
+			upfile.transferTo(new File(savePath + changeName));
+			
+		} catch (IllegalStateException | IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return changeName;
+	}
 }

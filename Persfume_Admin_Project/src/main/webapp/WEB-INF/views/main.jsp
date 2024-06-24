@@ -49,9 +49,9 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            	일일 접속자 수 
+                                            	일일 판매 건 수 
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800 today-insert-cnt">40,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800 today-insert-cnt" id="dailySales"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -68,9 +68,9 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            	판매량
+                                            	총 판매 액
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800 sum-of-mf">215,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800 sum-of-mf" id="totalSales"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-won-sign fa-2x text-gray-300"></i>
@@ -105,8 +105,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                전체 접속자 수</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800 count"></div>
+                                                총 회원 수</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800 count" id="totalMember"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-laugh-squint fa-2x text-gray-300"></i>
@@ -142,12 +142,12 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">금일 등록 게시글 현황</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">최근 일주일 매출 추이</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4">
-                                        <canvas id="InsertPieChart"></canvas>
+                                        <canvas id="sales-chart-area"></canvas>
                                     </div>
                                     <hr>
                                 </div>
@@ -258,7 +258,284 @@
     <!-- Page level custom scripts -->
     <script src="resources/js/demo/chart-area-demo.js"></script>
     <script src="resources/js/demo/chart-pie-demo.js"></script>
-
+	
+	<!-- -----------------차-----------트-------------- -->
+	<script>
+		$.ajax({
+			url : "totalMember",
+			type : "post",
+			success : function (result) {
+				$("#totalMember").text(result);
+			} ,
+			error : function () {
+				
+			} 
+		});
+		
+		$.ajax({
+			url : "totalSales",
+			type : "post",
+			success : function (result) {
+				$("#totalSales").text(result);
+			} ,
+			error : function () {
+				
+			} 
+		});
+		
+		$.ajax({
+			url : "dailySales",
+			type : "post",
+			success : function (result) {
+				$("#dailySales").text(result);
+			} ,
+			error : function () {
+				
+			} 
+		});
+		
+		var visitorList = [];
+		var salesList = [];
+		
+		$.ajax({
+			url : "weekAccess",
+			type : "post",
+			success : function (list) {
+				for(let i in list){    	
+					visitorList.push(list[i]);
+					
+				}
+				let TODAY = list[6].visitCount;
+				let one = list[5].visitCount;
+				let two = list[4].visitCount;
+				let three = list[3].visitCount;
+				let four = list[2].visitCount;
+				let five = list[1].visitCount;
+				let six = list[0].visitCount;
+				drawChart(six, five, four, three, two, one ,TODAY);
+			} ,
+			error : function () {
+				
+			} 
+		});
+		
+		$.ajax({
+			url : "weekSales",
+			type : "post",
+			success : function (list) {
+				for(let i in list){    	
+					salesList.push(list[i]);
+				}
+				let TODAY = list[6].totalPrice;
+				let one = list[5].totalPrice;
+				let two = list[4].totalPrice;
+				let three = list[3].totalPrice;
+				let four = list[2].totalPrice;
+				let five = list[1].totalPrice;
+				let six = list[0].totalPrice;
+				drawSalesChart(six, five, four, three, two, one ,TODAY);
+			} ,
+			error : function () {
+				
+			} 
+		});
+		
+		
+    	function drawChart(six, five, four, three, two, one ,TODAY) { 
+    		
+    		
+    		/* 접속자 추이 그래프 템플릿 */
+        	var areactx = document.getElementById("visitor-chart-area");
+    		var myLineChart = new Chart(areactx, {
+    	    	  type: 'line',
+    	    	  data: {
+    	    	    labels: ["-6","-5","-4","-3", "-2", "-1", "TODAY"],
+    	    	    datasets: [{
+    	    	      label: "Visitor",
+    	    	      lineTension: 0.3,
+    	    	      backgroundColor: "rgba(78, 115, 223, 0.05)",
+    	    	      borderColor: "rgba(78, 115, 223, 1)",
+    	    	      pointRadius: 3,
+    	    	      pointBackgroundColor: "rgba(78, 115, 223, 1)",
+    	    	      pointBorderColor: "rgba(78, 115, 223, 1)",
+    	    	      pointHoverRadius: 3,
+    	    	      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+    	    	      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+    	    	      pointHitRadius: 10,
+    	    	      pointBorderWidth: 2,
+    	    	      data: [six, five, four, three, two, one ,TODAY]
+    	    	    }],
+    	    	  },
+    	    	  options: {
+    	    	    maintainAspectRatio: false,
+    	    	    layout: {
+    	    	      padding: {
+    	    	        left: 10,
+    	    	        right: 25,
+    	    	        top: 25,
+    	    	        bottom: 0
+    	    	      }
+    	    	    },
+    	    	    scales: {
+    	    	      xAxes: [{
+    	    	        time: {
+    	    	          unit: 'date'
+    	    	        },
+    	    	        gridLines: {
+    	    	          display: false,
+    	    	          drawBorder: false
+    	    	        },
+    	    	        ticks: {
+    	    	          maxTicksLimit: 7
+    	    	        }
+    	    	      }],
+    	    	      yAxes: [{
+    	    	        ticks: {
+    	    	          maxTicksLimit: 2,
+    	    	          padding: 10,
+    	    	          // Include a dollar sign in the ticks
+    	    	          callback: function(value, index, values) {
+    	    	            return number_format(value);
+    	    	          }
+    	    	        },
+    	    	        gridLines: {
+    	    	          color: "rgb(234, 236, 244)",
+    	    	          zeroLineColor: "rgb(234, 236, 244)",
+    	    	          drawBorder: false,
+    	    	          borderDash: [2],
+    	    	          zeroLineBorderDash: [2]
+    	    	        }
+    	    	      }],
+    	    	    },
+    	    	    legend: {
+    	    	      display: false
+    	    	    },
+    	    	    tooltips: {
+    	    	      backgroundColor: "rgb(255,255,255)",
+    	    	      bodyFontColor: "#858796",
+    	    	      titleMarginBottom: 10,
+    	    	      titleFontColor: '#6e707e',
+    	    	      titleFontSize: 14,
+    	    	      borderColor: '#dddfeb',
+    	    	      borderWidth: 1,
+    	    	      xPadding: 15,
+    	    	      yPadding: 15,
+    	    	      displayColors: false,
+    	    	      intersect: false,
+    	    	      mode: 'index',
+    	    	      caretPadding: 10,
+    	    	      callbacks: {
+    	    	        label: function(tooltipItem, chart) {
+    	    	          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+    	    	          return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + "명";
+    	    	        }
+    	    	      }
+    	    	    }
+    	    	  }
+    	    	});
+    		
+			
+		}
+    	
+function drawSalesChart(six, five, four, three, two, one ,TODAY) { 
+    		
+    		
+    		/* 매출 추이 템플릿 */
+        	var areactx = document.getElementById("sales-chart-area");
+    		var myLineChart = new Chart(areactx, {
+    	    	  type: 'line',
+    	    	  data: {
+    	    	    labels: ["-6","-5","-4","-3", "-2", "-1", "TODAY"],
+    	    	    datasets: [{
+    	    	      label: "Visitor",
+    	    	      lineTension: 0.3,
+    	    	      backgroundColor: "rgba(78, 115, 223, 0.05)",
+    	    	      borderColor: "rgba(78, 115, 223, 1)",
+    	    	      pointRadius: 3,
+    	    	      pointBackgroundColor: "rgba(78, 115, 223, 1)",
+    	    	      pointBorderColor: "rgba(78, 115, 223, 1)",
+    	    	      pointHoverRadius: 3,
+    	    	      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+    	    	      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+    	    	      pointHitRadius: 10,
+    	    	      pointBorderWidth: 2,
+    	    	      data: [six, five, four, three, two, one ,TODAY]
+    	    	    }],
+    	    	  },
+    	    	  options: {
+    	    	    maintainAspectRatio: false,
+    	    	    layout: {
+    	    	      padding: {
+    	    	        left: 10,
+    	    	        right: 25,
+    	    	        top: 25,
+    	    	        bottom: 0
+    	    	      }
+    	    	    },
+    	    	    scales: {
+    	    	      xAxes: [{
+    	    	        time: {
+    	    	          unit: 'date'
+    	    	        },
+    	    	        gridLines: {
+    	    	          display: false,
+    	    	          drawBorder: false
+    	    	        },
+    	    	        ticks: {
+    	    	          maxTicksLimit: 7
+    	    	        }
+    	    	      }],
+    	    	      yAxes: [{
+    	    	        ticks: {
+    	    	          maxTicksLimit: 2,
+    	    	          padding: 10,
+    	    	          // Include a dollar sign in the ticks
+    	    	          callback: function(value, index, values) {
+    	    	            return number_format(value);
+    	    	          }
+    	    	        },
+    	    	        gridLines: {
+    	    	          color: "rgb(234, 236, 244)",
+    	    	          zeroLineColor: "rgb(234, 236, 244)",
+    	    	          drawBorder: false,
+    	    	          borderDash: [2],
+    	    	          zeroLineBorderDash: [2]
+    	    	        }
+    	    	      }],
+    	    	    },
+    	    	    legend: {
+    	    	      display: false
+    	    	    },
+    	    	    tooltips: {
+    	    	      backgroundColor: "rgb(255,255,255)",
+    	    	      bodyFontColor: "#858796",
+    	    	      titleMarginBottom: 10,
+    	    	      titleFontColor: '#6e707e',
+    	    	      titleFontSize: 14,
+    	    	      borderColor: '#dddfeb',
+    	    	      borderWidth: 1,
+    	    	      xPadding: 15,
+    	    	      yPadding: 15,
+    	    	      displayColors: false,
+    	    	      intersect: false,
+    	    	      mode: 'index',
+    	    	      caretPadding: 10,
+    	    	      callbacks: {
+    	    	        label: function(tooltipItem, chart) {
+    	    	          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+    	    	          return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + "명";
+    	    	        }
+    	    	      }
+    	    	    }
+    	    	  }
+    	    	});
+			
+		}
+    	
+	</script>
+	
+	
+	
 </body>
 
 </html>
