@@ -86,19 +86,6 @@
                                         </tr>
                                     </thead>
                                     <tfoot>
-                                        <tr>
-                                            <th colspan="13">
-                                            	<div id="sb-btn">
-	                                            	<a href="enrollForm.oc" class="btn btn-primary btn-sm btn-icon-split">
-				                                        <span class="icon text-white-50">
-				                                            <i class="fas fa-flag"></i>
-				                                        </span>
-				                                        <span class="text">신규 클래스 등록</span>
-				                                    </a>
-			                                    </div>
-                                            </th>
-                                            
-                                        </tr>
                                     </tfoot>
                                     <tbody>
                                     	<c:forEach var="item" items="${list}">
@@ -130,7 +117,7 @@
                                                         <c:choose>
                                                             <c:when test="${item.status eq 'Y' }">
                                                             <!-- 상태값이 Y면 탈퇴-->
-                                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check">
+                                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check" onclick="delMem(this);">
                                                                 <span class="icon text-white-50">
                                                                     <i class="fas fa-trash"></i>
                                                                 </span>
@@ -139,7 +126,7 @@
                                                             </c:when>
                                                             <c:otherwise>
 															<!-- 상태값이 N이면 회원 복구-->
-                                                            <a class="btn btn-success btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#alive-check">
+                                                            <a class="btn btn-success btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#alive-check" onclick="aliveMem(this);">
                                                                 <span class="icon text-white-50">
                                                                     <i class="fas fa-redo"></i>
                                                                 </span>
@@ -189,7 +176,7 @@
 				  <form action="delete.me" method="post">			
 			      <!-- Modal body -->
 			      <div class="modal-body">
-			      <input type="hidden" name="memNo" class="carNo">
+			      <input type="hidden" name="memNo" class="mno">
 
 			      	정말 해당 회원을 탈퇴시키겠습니까?
 			      </div>
@@ -221,7 +208,7 @@
                     <form action="alive.me" method="post">			
                     <!-- Modal body -->
                     <div class="modal-body">
-                    <input type="hidden" name="memNo" class="carNo">
+                    <input type="hidden" name="memNo" class="mno">
                         	정말 해당 회원을 복구시키겠습니까??
                     </div>
               
@@ -310,6 +297,23 @@
         $(".modal-body .carNo").val(memNo);
     });
     });
+
+
+
+    function delMem(element){
+        let mno =$(element).parent().siblings().eq(0).text().trim();
+        console.log("번호" + mno);
+
+        $("#delete-check .mno").val(mno);
+    }
+
+    function aliveMem(element){
+        let mno =$(element).parent().siblings().eq(0).text().trim();
+        console.log("번호" + mno);
+
+        $("#alive-check .mno").val(mno);
+    }
+    </script>
 
 
     
