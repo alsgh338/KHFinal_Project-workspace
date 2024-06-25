@@ -151,6 +151,7 @@
             height: 50vh;
             display: flex;
             flex-direction: row;
+            justify-content: space-around;
 
         }
         #one2>img{
@@ -369,18 +370,26 @@
         .event {
 	        display: flex;
 	        flex-direction: column;
-	        width: calc(50%);
+	        width: 45%;
 	        border: 1px solid #e9ecef;
 	        border-radius: 10px;
 	        transition: transform 0.3s, box-shadow 0.3s;
 	        overflow: hidden;
 	        background-color: #ffffff;
+	    	height: 100%;
 	    }
 	    
-	    .event *{
-	    	width:100%;
+	    .event>.event-img{
+		    height : 80%;
+	    	width : 100%;
+	    }
+	    
+	    .event>.event-img>img{
+	    	height : 100%;
+	    	width : 100%;
 	    	object-fit: cover;
 	    }
+	    
 		.event:hover {
 	        cursor: pointer;
 	        transform: translateY(-10px);
@@ -388,9 +397,12 @@
 	    }
 	    
 	    #eventList{
+	    	width:100%;
+	    	height:80%;
 	    	display: flex;
 	    	justify-content: center;
 	    	align-items: center;
+	    	gap : 10px;
 	    	
 	    }
 </style>
@@ -595,15 +607,18 @@
 
              // 받아온 이벤트 목록을 반복하여 표시합니다.
              for (var i = 0; i < eventList.length; i++) {
+            	 console.log(i);
                  var event = eventList[i];
                  var eventHtml = '<div class="event">' +
                  					 '<div class="event-img">' +
                  					 	'<input type="hidden" value="' + event.eventNo +'">' +
                  					 	'<img src="../persfumeAdmin/' + event.eventImgPath + '" alt="' + event.eventTitle + '">' +
                  					 '</div>' +
+                 					 '<div align="center" style="margin: auto 0; font-size:20px; font-weight:700;">'+ event.eventTitle +'</div>'
                                  '</div>';
+
+                 eventListDiv.append(eventHtml);
              }
-             eventListDiv.append(eventHtml);
          }
         
          function displayNoticeList(noticeList) {
@@ -632,7 +647,7 @@
          });
          
          $(function(){
-        	$(document).on("click", "#noticeList tr", function(){
+        	$(document).on("click", "#noticeList>tr:not(:nth-child(1))", function(){
         		let noticeNo = $(this).children().eq(0).text();
         		
         		console.log(noticeNo);

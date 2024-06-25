@@ -127,5 +127,22 @@
 	   AND STATUS = 'N'
 	</update>
 	
+	<select id="getImgPathThumbnail"
+			resultType="string">
+		SELECT EVENTIMG_PATH
+		  FROM EVENT_IMG
+		 WHERE EVENTIMG_LEVEL = 1
+		   AND EVENT_NO = #{eventNo}
+		   AND STATUS = 'Y'
+	</select>
+	
+	<select id="getImgPathContent"
+			resultType="string">
+		SELECT EVENTIMG_PATH
+		  FROM EVENT_IMG
+		 WHERE EVENTIMG_LEVEL = 2
+		   AND EVENT_NO = #{eventNo}
+		   AND STATUS = 'Y'
+	</select>
 	
 </mapper>

@@ -22,6 +22,12 @@ public interface EventService {
 	// 이벤트 이미지 수정
 	int modifyEventImg(EventImg ei);
 
+	// 기존 이미지 경로 불러오기 (썸네일)
+	String getImgPathThumbnail(int eno);
+	
+	// 기존 이미지 경로 불러오기 (본문)
+	String getImgPathContent(int eno);
+	
 	// 이벤트 작성
 	int insertEvent(Event e);
 	

@@ -87,7 +87,7 @@ public class EventController {
 			ei1.setEventImgLevel("1");
 			ei1.setEventImgOrigin(upfiles[0].getOriginalFilename());
 			ei1.setEventImgChange(thumbChangeName);
-			ei1.setEventImgPath("resources/uploadFiles/" + thumbChangeName); // 파일 경로
+			ei1.setEventImgPath("resources/uploadFiles/event/" + thumbChangeName); // 파일 경로
 			ei1.setStatus("Y");
 			
 			int resultImg1 = eventService.insertEventImg(ei1);
@@ -96,7 +96,7 @@ public class EventController {
 			ei2.setEventImgLevel("2");
 			ei2.setEventImgOrigin(upfiles[1].getOriginalFilename());
 			ei2.setEventImgChange(contentChangeName);
-			ei2.setEventImgPath("resources/uploadFiles/" + contentChangeName); // 파일 경로
+			ei2.setEventImgPath("resources/uploadFiles/event/" + contentChangeName); // 파일 경로
 			ei2.setStatus("Y");
 			
 			int resultImg2 = eventService.insertEventImg(ei2);
@@ -128,11 +128,19 @@ public class EventController {
 		
 		e.setEventNo(eno);
 		
+		String prevThumbnailImg = eventService.getImgPathThumbnail(eno);
+		String prevContentImg = eventService.getImgPathContent(eno);
+		
+		System.out.println(session.getServletContext().getRealPath(prevContentImg));
 		
 		// 썸네일
 		if(!upfiles[0].getOriginalFilename().equals("")) {
 			
-			
+			// 서비스로 eno 넘기면서 레벨 1인 사진 삭제하는 로직
+			if(prevThumbnailImg != null) {
+				
+				deleteFile(prevThumbnailImg, session);
+			}
 			
 			// 수정 파일명 
 			thumbChangeName = savePath(upfiles[0], session);		
@@ -141,7 +149,12 @@ public class EventController {
 		
 		// 본문 이미지 저장
 		if(!upfiles[1].getOriginalFilename().equals("")) {
-			
+
+			// 서비스로 eno 넘기면서 레벨 2인 사진 삭제하는 로직
+			if(prevContentImg != null) {
+				
+				deleteFile(prevContentImg, session);
+			}
 			// 수정 파일명 
 			contentChangeName = savePath(upfiles[1], session);			
 							
@@ -167,7 +180,7 @@ public class EventController {
 			ei1.setEventImgLevel("1");
 			ei1.setEventImgOrigin(upfiles[0].getOriginalFilename());
 			ei1.setEventImgChange(thumbChangeName);
-			ei1.setEventImgPath("resources/uploadFiles/" + thumbChangeName); // 파일 경로
+			ei1.setEventImgPath("resources/uploadFiles/event/" + thumbChangeName); // 파일 경로
 			ei1.setStatus("Y");
 			ei1.setEventNo(eno);
 			
@@ -179,7 +192,7 @@ public class EventController {
 			ei2.setEventImgLevel("2");
 			ei2.setEventImgOrigin(upfiles[1].getOriginalFilename());
 			ei2.setEventImgChange(contentChangeName);
-			ei2.setEventImgPath("resources/uploadFiles/" + contentChangeName); // 파일 경로
+			ei2.setEventImgPath("resources/uploadFiles/event/" + contentChangeName); // 파일 경로
 			ei2.setStatus("Y");
 			ei2.setEventNo(eno);
 			
@@ -255,5 +268,15 @@ public class EventController {
 		}
 		
 		return changeName;
+	}
+	
+	public void deleteFile(String filePath, HttpSession session) {
+		
+		String realPath = session.getServletContext().getRealPath(filePath); // 실제 저장된 경로
+		File deleteFile = new File(realPath);
+		if(deleteFile.exists()) {
+	        deleteFile.delete();
+	    }
+		
 	}
 }

@@ -46,12 +46,24 @@ public class EventDao {
 		return sqlSession.update("eventMapper.insertEventImg", ei);
 	}
 
+	// 이벤트 삭제
 	public int deleteEvent(SqlSessionTemplate sqlSession, int eno) {
 		return sqlSession.update("eventMapper.deleteEvent", eno);
 	}
 
+	// 이벤트 복구
 	public int restoreEvent(SqlSessionTemplate sqlSession, int eno) {
 		return sqlSession.update("eventMapper.restoreEvent", eno);
+	}
+
+	// 기존 이미지 경로 불러오기 (썸네일)
+	public String getImgPathThumbnail(SqlSessionTemplate sqlSession, int eno) {
+		return sqlSession.selectOne("eventMapper.getImgPathThumbnail", eno);
+	}
+
+	// 기존 이미지 경로 불러오기 (본문)
+	public String getImgPathContent(SqlSessionTemplate sqlSession, int eno) {
+		return sqlSession.selectOne("eventMapper.getImgPathContent", eno);
 	}
 
 }

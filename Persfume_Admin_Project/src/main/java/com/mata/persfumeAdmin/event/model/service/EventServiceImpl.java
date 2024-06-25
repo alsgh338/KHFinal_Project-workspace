@@ -72,4 +72,16 @@ public class EventServiceImpl implements EventService {
 	public int restoreEvent(int eno) {
 		return eventDao.restoreEvent(sqlSession, eno);
 	}
+
+	// 기존 이미지 경로 불러오기 (썸네일)
+	@Override
+	public String getImgPathThumbnail(int eno) {
+		return eventDao.getImgPathThumbnail(sqlSession, eno);
+	}
+
+	// 기존 이미지 경로 불러오기 (본문)
+	@Override
+	public String getImgPathContent(int eno) {
+		return eventDao.getImgPathContent(sqlSession, eno);
+	}
 }
