@@ -20,4 +20,12 @@ public class CouponDao {
     public List<MemCoupon> selectMemberCoupons(SqlSessionTemplate sqlSession, int couponNo) {
         return sqlSession.selectList("couponMapper.selectMemberCoupons", couponNo);
     }
+
+    /*
+	public int deleteCoupon(SqlSessionTemplate sqlSession, int couponNo) {
+		return sqlSession.update("couponMapper.deleteCoupon",couponNo );
+	}
+	
+	*/
+
 }

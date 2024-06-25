@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <style>
+          <style>
         /* 컨텐츠 영역과 그 자식 div의 공통 스타일 */
         html, body {
             height: 100%;
@@ -59,14 +59,20 @@
             display: inline-block;
             text-align: center;
         }
-        
+
+        .bbs-tit {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+
         .bbs-tit h3 {
-            float: left;
-            font-size: 16px;
+            font-size: 30px;
             color: #000;
             font-weight: bold;
             line-height: 30px;
-            padding: 20px; /* 내용과 화면 가장자리 사이의 여백을 조정합니다 */
         }
 
         .bbs-sch {
@@ -97,7 +103,7 @@
         table {
             border-collapse: collapse;
             margin: 0 auto;
-            width: 100%; /* 테이블이 100% 너비를 차지하도록 설정합니다 */
+            width: 70%; /* 테이블이 100% 너비를 차지하도록 설정합니다 */
             border-collapse: collapse; /* 테두리가 겹치도록 설정합니다 */            
             table-layout: fixed; /* 이 속성을 추가하여 테이블의 너비를 고정합니다 */
         }
@@ -212,7 +218,7 @@
         .pagination a {
             text-decoration: none;
             color: #000;
-            padding: 5px 20px;
+            padding: 5px 11px;
             border: 1px solid #ddd;
             border-radius: 4px;
             transition: background-color 0.3s;
@@ -271,10 +277,12 @@
                     <div class="bbs-hd">
                         <div class="bbs-tit">
                             <h3>공지사항</h3>
-                            <br>
+                            
+                            
                             
                         </div>
                     </div>
+                  
 
                     <div class="bbs-table-list">
                         <table id="noticeList" summary="No, content,Name,Data,Hits">

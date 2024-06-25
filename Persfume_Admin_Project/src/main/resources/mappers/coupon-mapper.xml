@@ -47,7 +47,17 @@
             mc.COUPON_NO = #{couponNo}
     </select>
 
-    
+
+
+    <!-- 쿠폰 삭제
+<update id="deleteCoupon"
+		parameterType="memCoupon">
+     UPDATE MEM_COUPON 
+        SET STATUS = 'N' 
+        WHERE MEM_NO = #{MemNo} 
+        AND STATUS = 'Y'
+</update>
+-->
     
 
 </mapper>

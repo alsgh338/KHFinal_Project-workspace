@@ -7,10 +7,6 @@
     <meta charset="UTF-8">
     <title>공지사항</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-        }
         .content-area,
         .content-area>div:not(.content-main) {
             display: flex;
@@ -18,9 +14,10 @@
             justify-content: center;
             align-items: center;
         }
+
         .content-title {
             height: 320px;
-    
+            background: url(resources/images/공지사항.jpg);
             background-size: cover;
             background-position: center;
             object-fit: cover;
@@ -31,21 +28,30 @@
             color: white;
             width: 100%;
         }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+
         .container {
             background-color: #fff;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
         }
+
         .title h2 {
             font-size: 32px;
-            font-weight: 500;
+            font-weight: 700; /* 글씨를 두껍게 설정 */
             line-height: 42px;
             height: 50px;
-            font-weight: 400;
+            font-family: 'Pretendard', 'Poppins', 'Noto Sans KR', sans-serif; /* 폰트 변경 */
             background: none !important;
             padding: 0 !important;
+            text-align: center;
         }
+
         .subject {
             padding: 18px 15px;
             border-top: 1px solid #e8e8e8;
@@ -54,12 +60,14 @@
             word-break: keep-all;
             word-wrap: break-word;
         }
+
         .meta {
             list-style: none;
             padding: 0;
             margin: 0;
             font-size: 14px;
         }
+
         .meta li {
             display: inline-block;
             margin: 0;
@@ -69,6 +77,7 @@
             height: 28px;
             color: #666;
         }
+
         th {
             padding: 18px 0;
             border: 2px solid #e8e8e8;
@@ -82,6 +91,7 @@
             height: 56.92px;
             border-left: 0;
         }
+
         td {
             padding: 18px 15px;
             border-top: 1px solid #e8e8e8;
@@ -90,33 +100,39 @@
             word-break: keep-all;
             word-wrap: break-word;
         }
+
         .content {
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #ccc;
             margin-bottom: 1px; /* 내용 아래 여백 추가 */
         }
+
         .content p {
             font-size: 16px;
             color: #666;
             line-height: 1.6;
             margin-bottom: 10px;
         }
+
         .content img {
             max-width: 100%;
             height: auto;
             display: block;
             margin: 0 auto;
         }
+
         .center-text {
             text-align: center;
         }
+
         .divider {
             border-top: 1px solid #ccc; /* 구분선의 두께와 색상을 조정 */
-            margin-top: 100px; /* 구분선 위 여백 추가 */
+           
             margin-bottom: 20px; /* 구분선 아래 여백 추가 */
             width: 1000px; /* 가로 길이를 100%로 설정하여 전체 너비에 맞춤 */
         }
+
         .btn-normal {
             width: 102px;
             display: inline-block;
@@ -139,7 +155,9 @@
     </style>
 </head>
 <body>
+   <%-- 헤더 include --%>
     <jsp:include page="../common/header.jsp" />
+    
     <div class="content-area">
         <div class="content-title" id="home">NOTICE</div>
         <div class="container">
@@ -172,10 +190,10 @@
                                 <c:choose>
                                     <c:when test="${ not empty requestScope.n.noticeImgChange }">
                                       <img src="${pageContext.request.contextPath}/../persfumeAdmin/${requestScope.n.noticeImgChange }" alt="${ requestScope.n.noticeImgChange }">
-                                         <p class="center-text">${ n.noticeContent }</p>
+                                        <br> <pre class="center-text">${ n.noticeContent }</pre>
                                     </c:when>
                                     <c:otherwise>
-                                        <p class="center-text">${ n.noticeContent }</p>
+                                        <pre class="center-text">${ n.noticeContent }</pre>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -207,10 +225,4 @@
                     $("#postForm").attr("action", "delete.no").submit();
                     confirm("게시글을 삭제했습니다.");
                 } else {
-                    // 사용자가 취소를 선택한 경우 아무런 동작도 하지 않음
-                }
-            }
-        }
-    </script>
-</body>
-</html>
+                    // 사용자가 취소를 선택한 경우

@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mata.persfumeAdmin.coupon.model.dao.CouponDao;
 import com.mata.persfumeAdmin.coupon.model.vo.Coupon;
@@ -28,4 +29,15 @@ public class CouponServiceImpl implements CouponService {
     public List<MemCoupon> getMemberCoupons(int couponNo) {
         return couponDao.selectMemberCoupons(sqlSession, couponNo);
     }
+    
+    /*
+     * @Override
+    
+	@Transactional
+	public int deleteCoupon(int mno) {
+		
+		return couponDao.deleteCoupon(sqlSession, mno);
+	}
+	 */
+
 }

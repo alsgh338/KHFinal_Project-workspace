@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretendard/0.1.0/pretendard.min.css">
 <style>
   
- /* 기본 스타일 설정 */
+/* 기본 스타일 설정 */
 body {
     margin: 0;
     font-family: 'Pretendard', sans-serif;
@@ -91,14 +91,15 @@ footer .warning, footer .copy {
 }
 
 footer .copy {
-    text-align: center;
+    text-align: left;
     margin-top: 20px;
+    width: 100%; /* 중앙 정렬을 위해 전체 너비를 설정 */
 }
-
 
 </style>
 </head>
-<body><footer>
+<body>
+<footer>
     <section id="bottom">
         <article class="flex">
             <figure class="left">
@@ -138,5 +139,4 @@ footer .copy {
     </section>
 </footer>
 </body>
-
 </html>

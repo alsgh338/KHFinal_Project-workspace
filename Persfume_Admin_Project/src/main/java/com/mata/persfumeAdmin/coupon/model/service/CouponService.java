@@ -12,4 +12,6 @@ public interface CouponService {
 
     // 쿠폰 상세 조회
     List<MemCoupon> getMemberCoupons(int couponNo);
+
+//	/int deleteCoupon(int mno);
 }
