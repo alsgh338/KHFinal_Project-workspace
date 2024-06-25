@@ -270,12 +270,12 @@
 			FROM CLASS C
 			WHERE C.CLASS_NO = #{classNo}
 	</select>
-	
-	<!-- 접속 시 접속 기록 쿠키 데이터 저장 -->
+
+	<!-- 접속 시 접속 기록 쿠키 데이터 저장-->
 	<insert id="insertVisitCount" parameterType="java.util.Date">
 		INSERT INTO VISIT_COUNT(VISIT_DATE) VALUES(#{today})
 	</insert>
-	
+
 	
 
 	

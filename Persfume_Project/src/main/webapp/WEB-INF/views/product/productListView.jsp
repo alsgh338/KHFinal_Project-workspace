@@ -47,7 +47,7 @@
 
         #search_form {
             width : 100%;
-            height : 30%;
+            height : 20%;
             margin : auto;
         
         }
@@ -55,17 +55,20 @@
             display: inline;
         }
          #search_form input {
-            width: 85%;
+            width: 80%;
             border: 1px solid lightgrey;
             font-size: 14px;      
-            border-radius: 10px;          
+            border-radius: 10px;   
+               height: 100%;   
         }    
          #search_form img {
             border: 1px solid pink;
             width: 10%;
+         
         }
         #search_button {
             width: 10%;
+            height: 10%;
             cursor: pointer;
         }
 
@@ -99,7 +102,7 @@
             text-align: center;
         }
         .content-main>div{   
-        display: block;
+        display: inline-block;
            float: left;
         }
  
@@ -116,11 +119,6 @@
             float: left;
            
         }
-        .content-right #pagingArea {
-        
-        margin-left:500px;} 
-   
-
        .content-sort{
         width: 100%;
         height: 20px;
@@ -132,14 +130,12 @@
         text-decoration: none;
         color: black;
        }
-    
-        
 
         /* 여기서부턴 개별 스타일? (아마도) */
 
         .oneday-class{
             display: inline-block;
-            width: 260px;
+            width: 250px;
             height: 390px;
             margin: 12px 14px;
             transition: all .5s ease;
@@ -168,12 +164,11 @@
         }
 
         .oneday-class>.class-title{
-            width: 250px;
+            width: 245px;
             height: 70px;
             line-height: 20px;
             font-size: 13px;
-            font-weight: 200;
-            width: 250px; 
+            font-weight: 200; 
             word-wrap: break-word;
 
         }
@@ -186,7 +181,7 @@
         }
 
         .oneday-class .class-teacher{
-            width: 250px;
+            width: 245px;
             font-size: 14px;
             line-height: 35px;
             font-weight: 650;
@@ -263,8 +258,9 @@
     }
  
     .swiper {
-        width: 1000px;
-        height: 250px;
+        width: 1400px;
+        height: 300px;
+        margin: 20px;
     }
 
     /* 이미지 사이즈 조절 */
@@ -293,8 +289,167 @@
     font-size: 16px;
     color: #fff;
 }
+  /* gpt가 꾸며준 css 부분*/
+  .content-left {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+}
+
+/* 제목 스타일 설정 */
+.content-left > div {
+    font-size: 18px;
+    font-weight: 600;
+
+    margin-bottom: 10px;
+}
+
+/* 성별 검색 스타일 설정 */
+.gender {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+}
+
+.gender-li {
+    margin-bottom: 10px;
+}
+
+.gender-li input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.gender-li label {
+    font-size: 16px;
+}
+
+/* 성분 검색 스타일 설정 */
+.note-element {
+    margin-bottom: 20px;
+}
+
+.note-check {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.note-element-li {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.note-element-li > li {
+    margin-bottom: 10px;
+}
+
+.note-element-li .topnote,
+.note-element-li .middlenote,
+.note-element-li .basenote {
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.note-element-li input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.note-element-li label {
+    font-size: 14px;
+}
+
+/* 결과 내 검색 스타일 설정 */
+#header_2 {
+    margin-top: 10px;
+}
+
+.search {
+    display: flex;
+}
+
+.search input[type="text"] {
+    width: 70%;
+	height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.search button {
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height:25px;
+    width:25px;
+}
+
+.search button:hover {
+    background-color: #45a049;
+}
+/* 페이징 바 */
+#pagingArea {
+    margin-left: 40%;
+    margin-top: 20px;
+    position: relative;
+    width: 100%;
+}
+
+.pagination {
+    list-style: none;
+    padding: 0;
+    display: inline-block;
+    text-align: center;
+}
+
+.page-item {
+    display: inline;
+    margin: 0 5px;
+}
+
+.page-item a {
+    text-decoration: none;
+    color: #007bff;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.page-item a:hover {
+    background-color: #f0f0f0;
+}
+
+.page-item.disabled a {
+    color: #999;
+    pointer-events: none;
+}
+
+.page-item.active a {
+    background-color: #007bff;
+    color: white;
+    pointer-events: none;
+}
+/* sort부분  */
+.content-sort a {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
     
-    </style>
+}
+
+.content-sort a:hover {
+    background-color: navy;
+    color: white;
+}
+</style>
 </head>
 <body>
     <jsp:include page="../common/header.jsp" />
@@ -307,13 +462,12 @@
      
         <div class="swiper">
         
-            <div class="swiper-wrapper">
+            <div class="swiper-wrapper" >
          
-                <div class="swiper-slide"><img src="resources/images/banner1.jpg"></div>
-                <div class="swiper-slide"><img src="/04_Frontend-workspace/2_css-workspace/resources/image/bono.jpg"></div>
-                <div class="swiper-slide"><img src="/04_Frontend-workspace/2_css-workspace/resources/image/bono.jpg"></div>
-                <div class="swiper-slide"><img src="/04_Frontend-workspace/2_css-workspace/resources/image/bono.jpg"></div>
-                <div class="swiper-slide"><img src="/04_Frontend-workspace/2_css-workspace/resources/image/bono.jpg"></div>
+              <div class="swiper-slide"><img src="resources/images/banner2.jpg"></div>
+                <div class="swiper-slide"><img src="resources/images/banner3.jpg"></div>
+                <div class="swiper-slide"><img src="resources/images/banner4.jpg"></div>
+                <div class="swiper-slide"><img src="resources/images/banner5.jpg"></div>
             </div>
         
   
@@ -330,7 +484,7 @@
 
     
 </div>
-        <div class="content-main" style="border: 2px solid blue; text-align:center;">
+        <div class="content-main" style=" text-align:center;">
 
             <div class="content-left"> 
                 <div  style="font-size: 18px; font-weight: 600; text-align: center;" > 성별 검색 </div>
@@ -385,7 +539,7 @@
                         <input type="text" name="text" id="searchtext" placeholder=" 검색어 입력">
                         <button type="submit">
                      <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="searching();"
-                             id="search_button" style="color: black"></button>
+                             id="search_button" style="color: black; height:10px;"></button>
                     </div>
                 </form>
             </div>

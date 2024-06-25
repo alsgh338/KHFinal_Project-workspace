@@ -176,7 +176,7 @@
             <div class="customer-info">
                 <h2>고객 정보</h2>
                 <ul>
-                    <li><strong>주문자명:</strong> 홍길동(세션 가져와서 회원이름)</li>
+                    <li><strong>주문자명:</strong> ${ sessionScope.loginMember }(세션 가져와서 회원이름)</li>
                     <li><strong>전화번호:</strong>${requestScope.od.phone}</li>
                     <li><strong>배송주소:</strong>(${requestScope.od.addressNo}) ${requestScope.od.address} </li>
                     <li><strong>요청사항</strong> ${requestScope.od.orderWant}</li>

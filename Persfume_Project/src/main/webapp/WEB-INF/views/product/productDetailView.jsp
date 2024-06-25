@@ -136,23 +136,24 @@
            float: left;
         }
         #cart{
+        border-radius: 9px;
             text-align: center;
-            width: 200px;
+            width: 100px;
             height: 40px;
             color: black;
             background-color: white;
             border: 1px solid black;  
                         }
         #buy{
-            margin-left: 20px;
-         
+            margin-left: 30px;
+         border-radius: 9px;
             padding: 0px;
             font-size: 20px;
             border: 0px;
             text-align: center;
-            width: 200px;
+            width: 100px;
             height: 40px;
-            background-color: purple ;
+            background-color: black;
             color: white;
         }
         /* 상품 가격부분 */
@@ -274,6 +275,143 @@
             color: white;
             width: 100%;
         }
+        
+        #heart-button {
+        margin-left:20px;}
+
+/* 리뷰부분 gpt*/
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+/* 리뷰 스타일 설정 */
+.review {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fafafa;
+    transition: box-shadow 0.3s;
+}
+
+.review:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 리뷰 헤더 스타일 설정 */
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.rating .review-rating {
+    font-size: 16px;
+    color: #FFD700; /* 별 색상 */
+    margin: 0;
+}
+
+/* 리뷰 본문 스타일 설정 */
+.review-body {
+    margin-bottom: 10px;
+}
+
+.review-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 리뷰 푸터 스타일 설정 */
+.review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-image {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.date {
+    font-size: 12px;
+    color: #999;
+}
+/* 모달창 */
+.modal {
+    display: none; /* 기본적으로 보이지 않음 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.modal-text {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.modal-rating {
+    font-size: 16px;
+    color: #FFD700;
+    margin-bottom: 10px;
+}
      </style>
     </head>
     <body>
@@ -321,10 +459,10 @@
 				                        수량&nbsp;&nbsp;&nbsp;&nbsp;
 				               <div id='result' name='result' style="width: 50px; display:contents" >1</div>
 				                &nbsp;&nbsp;&nbsp;&nbsp;
-				                   <input type='button' style=" background-color: gray; color: white; border: 0px; font-weight:700; width:25px;"
+				                   <input type='button' style=" background-color: white; color: black; border: none; font-weight:700; width:25px; border-radius: 5px; cursor: pointer;  transition: background-color 0.3s, transform 0.3s;"
 				                    onclick='count("plus")'
 				                    value='+'/>
-				                   <input type='button' style=" background-color: gray; color: white; border: 0px; font-weight:700; width:25px;"
+				                   <input type='button' style=" background-color: white; color: black; border: none; font-weight:700; width:25px; border-radius: 5px; cursor: pointer;  transition: background-color 0.3s, transform 0.3s;"
 				                     onclick='count("minus")'
 				                     value='-'/>                            
                    </div> 
@@ -338,7 +476,7 @@
 				          </div><br>
                          <div id="c5_2"> 
                             <b style="font-size: 20px;">총 합계금액</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <p id="total_amount" name='total_amount' style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400;">
+                            <p id="total_amount" name='total_amount' style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400; ">
                              <fmt:formatNumber value="${ requestScope.p.productPrice}" type="number" /></p>
                              <b style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400;">원</b>   &nbsp;&nbsp;             
                             <b style="font-size: 20px;"> → </b>  
@@ -351,8 +489,9 @@
                             
                         </div>
                         <div id="cb" >                  
-                            <a id="cart" href="" onclick = 'sendit();' style="width: 250px; margin-bottom: 5px;">장바구니</a>   
-                            <button id="buy" type="submit" style="width: 250px;">바로구매</button>
+                            <a id="cart" href="" onclick = 'sendit();' style="width: 200px; margin-bottom: 5px;">장바구니</a>   
+                            <button id="buy" type="submit" style="width: 200px;">바로구매</button>
+                        
                             <c:choose>
                             <c:when test="${requestScope.fa != null}"> <img src="resources/images/redheart.jpg"  id="heart-button" onclick="favorite();"/></c:when>
                             <c:when test="${requestScope.fa == null}"> <img src="resources/images/heart.jpg"  id="heart-button" onclick="favorite();"/></c:when>
@@ -422,6 +561,15 @@
             </div>
         </div>
             
+            <!-- 모달 창 HTML -->
+<div id="reviewModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" class="modal-image" src="" alt="Review Image">
+        <p id="modalText" class="modal-text"></p>
+        <p id="modalRating" class="modal-rating"></p>
+    </div>
+</div>
          
            <jsp:include page="../common/footer.jsp" />
       
@@ -536,7 +684,36 @@ function favorite(){
 	
 }
 </script>
+<script>
+function openModal(imagePath, content, rating) {
+    document.getElementById('modalImage').src = imagePath;
+    document.getElementById('modalText').innerText = content;
+    document.getElementById('modalRating').innerText = getRatingStars(rating);
+    document.getElementById('reviewModal').style.display = "block";
+}
 
+function closeModal() {
+    document.getElementById('reviewModal').style.display = "none";
+}
+
+function getRatingStars(rating) {
+    const fullStar = '★';
+    const halfStar = '☆';
+    let stars = '';
+    for (let i = 1; i <= 10; i++) {
+        stars += i <= rating ? fullStar : halfStar;
+    }
+    return stars.substring(0, 5); // 최대 5개의 별만 표시
+}
+
+// 모달 창 외부 클릭 시 닫기
+window.onclick = function(event) {
+    const modal = document.getElementById('reviewModal');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 
      
 </body>

@@ -108,7 +108,7 @@
     }
 
     #total_2 {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
 
     #total_1>p {
@@ -122,12 +122,13 @@
         display: inline-block;
         font-size: 15px;
         font-weight: 900;
-        /* margin-left: 10px; */
+         margin-left: 10px;
+      
     }
 
     #total>h2 {
         margin-top: 50px;
-        /* margin-left: 10px; */
+        margin-left: 10px; 
     }
 
     .pro_about {
@@ -159,6 +160,68 @@
             color: white;
             width: 100%;
         }
+        /* 장바구니 꾸미기*/
+        .cart-summary {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+}
+
+.summary-details {
+    margin-bottom: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.summary-item p {
+    margin: 0;
+}
+
+.price {
+    font-weight: bold;
+    color: #333;
+}
+
+.separator {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+.total-amount {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d9534f;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: #218838;
+}
+
+.checkout-button:active {
+    transform: scale(0.98);
+}
+        
 </style>
 
 </head>
@@ -166,7 +229,7 @@
     <jsp:include page="../common/header.jsp" />
         <div class="content-area">
         <div class="content-title" id="home"></div>
-        <div class="content-subtitle">장바구니</div>
+        <div class="content-subtitle"></div>
         <div class="content-main">
         </div>
         
@@ -178,8 +241,8 @@
     
             <div id="left">
                 <div>
-                    <br><br>
-                    <hr>
+                    <br>
+                  
                   
          
                  
@@ -199,7 +262,7 @@
                             
                         </div>
                        
-                        <hr>
+                       
                     </div>
                 </div>
             </div>
@@ -214,11 +277,13 @@
     
             <div id="left">
                 <div>
+                
+                <b style="font-weight:700; font-size:40px;">장바구니 등록 상품</b>
                     <br><br>
                     <hr>
                     <input type="checkbox" id="selectAll"/><label>전체선택</label>
                     &nbsp; | &nbsp;
-                    <button type="button" id="checkedDel" onclick="deleteSelectedItems();">선택삭제</button>
+                    <button type="button" id="checkedDel" onclick="deleteSelectedItems();" style="background-color:orange; color: #fff; border-radius: 5px; border: none;" >선택삭제</button>
 
 				
                    
@@ -235,9 +300,12 @@
                             <div class="acount">
 					                            수량 : <p id="acount_${status.index}">${c.quantity}</p> &nbsp; 
 					                            <input type="hidden" name ="BasketNo" value="${c.cartNo}" />
-					                            <button type="button" class="plus-btn" data-index="${status.index}" data-basketNo="${c.cartNo}">+</button>
-					                            <button type="button" class="minus-btn" data-index="${status.index}">-</button>
-					                            <button type="button" class="update-btn" data-index="${status.index}" 
+					                            <button type="button" class="plus-btn" data-index="${status.index}" data-basketNo="${c.cartNo}"
+					                            style="background-color: #333; color: #fff; border: none; font-weight: 700; padding: 3px 7px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease;">+</button>
+					                            <button type="button" class="minus-btn" data-index="${status.index}"
+					                            style="background-color: #333; color: #fff; border: none; font-weight: 700; padding: 3px 7px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease;">-</button>
+					                            <button type="button" class="update-btn" data-index="${status.index}
+					                            "  style="background-color: orange; color: #fff; border: none; font-weight: 700; padding: 3px 7px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease;"
 					                            		onclick="updateQuantity(${c.cartNo});"
 					                            		>수정</button>
 					                            </div>
@@ -254,21 +322,24 @@
                 </c:if>
                 	</c:forEach>
             </div>
-   <div id="right" >
-                <div id="total">
-                  
-                        <div id="total_1">
-                            <p> 상품금액 : </p> <p id="total_price"></p>                    
-                        </div>
-                        <div id="total_2">
-                            <p> 배송비 : </p>3,000<p id="delivery_fee"></p>
-                        </div>
-                        <hr>
-                        <h3>결제예정금액</h3> <p id="total_amount"></p>
-                   
-                </div>
-                <button id="go" type="submit">결제</button>
+   <div id="right" class="cart-summary">
+        <div id="total" class="summary-details">
+            <div id="total_1" class="summary-item">
+                <p style="font-size:20px; color:black;" >상품금액 :</p>
+                <p id="total_price" class="price"></p>                    
             </div>
+            <div id="total_2" class="summary-item">
+                <p style="font-size:20px; color:black;">  배송비 :</p>
+                <p id="delivery_fee" class="price" >3,000</p>
+            </div>
+            <hr class="separator">
+            <div class="summary-item">
+                <h3>결제예정금액</h3>
+                <p id="total_amount" class="total-amount"></p>
+            </div>
+        </div>
+        <button id="go" type="submit" class="checkout-button" style="background-color:black; color:white; font-size:20px; margin:0; font-weight: 800;">결제</button>
+    </div>
     </form>
     </div>
     </c:if>
@@ -277,7 +348,7 @@
     function(){
     if( ${ requestScope.clist } == null){
     	$('#go').attr("disabled", true);
-    }
+    };
     }
     
     </script>

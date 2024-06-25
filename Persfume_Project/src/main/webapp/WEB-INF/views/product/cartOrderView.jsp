@@ -73,7 +73,8 @@
             color: white;
             width: 100%;
         }
-            #c2_1{ width: 350px; }  
+            #c2_1{ width: 350px;
+            		height: 350px; }  
             #c2_1 img {
                 width: 100%;
                 height: 100%;
@@ -82,19 +83,19 @@
             width:350px;
             	font-size: 22px;
             	 height:100%;
-            	 margin-top: 100px;
+            	 margin-top: 10%;
             }
             #c2_3{
               width:350px;
               	font-size: 22px;
             	 height:100%;
-            	  margin-top: 100px;
+            	  margin-top: 10%;
             	}             
             #c2_4
                 {width:350px;
                   font-size: 22px;
             	 height:100%;
-            	  margin-top: 100px;
+            	  margin-top: 10%;
             	 }
        
             #content_3>div {
@@ -452,7 +453,7 @@
 					             
           </div>
             
-             <div id="content_7" style="border-top: 1px solid gray; border-bottom: 1px solid gray; margin: 0;">
+             <div id="content_7" style=" margin: 0;">
                 <div id="c7_d1" style=" margin-top: 10px;  font-size: 20px; font-weight: 600;" >결제정보 선택 </div>
                 <div id="c7_d2"> <input type="radio" style="margin: 0;" required> 신용카드</div>
              </div>
@@ -464,12 +465,14 @@
 	                <b style="font-size: 13px;">구매하실 상품의 결제정보 및 배송지를 확인하였으며, 구매진행에 동의합니다.</b>
 	             </p>
                    
-            <button id="buy" type="button" style="background-color: rgb(150, 214, 177); border:0px; color: white; width: 150px;"  onclick="payment()">결제하기</button>
+            <button id="buy" class="dark-button" type="button" style="width: 150px;" onclick="payment()">결제하기</button>
              
            </div>
 
      </div>        
 </div>
+<input type="text" id="combined_address" name="combined_address" placeholder="전체 주소" readonly style="display:none;">
+   
              <jsp:include page="../common/footer.jsp" />
          
 
@@ -696,6 +699,10 @@ console.log(selectedpno);
                         		 },
                         success:  function(result) {
         				if(result > 0){
+        					
+        					
+        					
+        					
         					window.location.href = "list.po";
         				}
         												},
@@ -709,33 +716,7 @@ console.log(selectedpno);
     				  const message2 = "결제에 실패하였습니다. 다시 시도해주세요."
     		            	window.alert(message2);
     				
-    				  jQuery.ajax({
-                          url: "completeCart.po",
-                          method: "GET",
-                          dataType : "json",
-                          data: {
-                              merchant_uid: rsp.merchant_uid,
-                              imp_uid: rsp.imp_uid,
-                              amount : 100,
-    				 		  mno: ${ requestScope.memNo },
-    				 		  want5 : document.getElementById('want').value,
-    				 		  pno: JSON.stringify(selectedItems),
-    				 		  pcount: JSON.stringify(selectedpno),
-    				 	      adno:  document.getElementById('sample6_postcode').value,
-   				 			  address: document.getElementById("sample6_address").value,
-   				 		 	  phone: document.getElementById("sitephone").value
-                       	
-                        		 },
-                        success:  function(result) {
-        				if(result > 0){
-        					window.location.href = "orderComp.or?ono=" + result;
-        				}
-        												},
-        				error : function() {
-        				console.log("ajax 통신 실패!");
-        												}	
-
-        				});   
+    				 
     				  
                     }// else문 종료
     			});

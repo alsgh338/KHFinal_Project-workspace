@@ -364,7 +364,6 @@ return changeName;
 	@RequestMapping(value="ajax1.do", produces="application/json; charset=UTF-8")
 	public String ajaxMethod1(int mno) {
 		
-
 		ArrayList<MemCoupon> list =  productService.searchCoupon(mno);
 		ArrayList<Coupon> clist = new ArrayList<>();
 		
@@ -377,6 +376,7 @@ return changeName;
 		for(int i =0 ; i<list.size(); i++) {
 			Coupon c = productService.searchCouponName(list.get(i).getCouponNo());
 			clist.add(c);
+			
 	
 		}
 	

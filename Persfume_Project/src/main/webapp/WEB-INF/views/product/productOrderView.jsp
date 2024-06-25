@@ -361,10 +361,11 @@
 		            <div id="c5_d6"><div id="c5_d6L">요청사항 </div>  <div id="c5_d6R"><input type="text" id="want" name="want" placeholder="배송관련 요청사항을 입력해주세요." style="width:350px;" onkeyup='printName()' />
 		            </div>
 		            <input type="text" id="want1" style="display:none">
-            		<div id="c5_d7"><div id="c5_d7L">쿠폰적용</div> <div id="c5_d7R"><button type="button" onclick="test1();">쿠폰 조회</button> <input type="text" id="mno" value="${requestScope.memNo}" style="display:none;"> 
+            		<div id="c5_d7"><div id="c5_d7L">쿠폰적용</div> <div id="c5_d7R"><button type="button" onclick="test1();">쿠폰 조회</button>
+            		 <input type="number" id="mno" value="${requestScope.memNo}" style="display:none;"> 
             		<select name="couponlist" id="couponlist">         		
             		</select><button id="coupon" type="button" style="display:none" onclick="test2();" >쿠폰 적용</button></div>
-		           
+		           <div id="viewcoupon" style="display:none;"> 주문완료 시 선택하신 해당 쿠폰이 사용됩니다.</div>
             		</div>
             		
             		</div>
@@ -576,8 +577,8 @@ function selectAll(selectAll)  {
           
        <script>
 		function test1() {
-			
-			
+		
+		
 		
 			// 사용자가 위에서 입력한 이름, 나이를 서버로 전달 (ajax)
 			$.ajax({
@@ -587,15 +588,17 @@ function selectAll(selectAll)  {
 					mno : $("#mno").val()
 				},
 				success : function(result) {
+					
 					let resultStr = "";
-					if(result == null){
+					
+					if(result == null){// 해당 회원의 쿠폰이 없는경우
 						resultStr += "<option> 쿠폰이없습니다. </option>";		
-					}else{	resultStr += "<option> 쿠폰을 선택해주세요 </option>";
+					}else{	 // 해당해원의 쿠폰이 이쓴 경우
 						for(let i =0 ; i<2 ;i++){
 						
-							if(result[i].coupon_name == 1){
+							if(result[i].coupon_no == 1){
 							  resultStr += "<option value='1'> 회원가입쿠폰(1만원 할인) </option>";
-							}else if(result[i].coupon_name == 2){
+							}else if(result[i].coupon_no == 2){
 							 resultStr += "<option value='2'> 설문조사쿠폰(1만원 할인) </option>";
 							}	
 												}
@@ -619,12 +622,10 @@ function selectAll(selectAll)  {
     	 $("#buyprice2").html(str2);
      	let str3 = "<fmt:formatNumber value='${ (requestScope.p.productPrice * requestScope.pCount)-(requestScope.p.productPrice*(1-(20/100))* requestScope.pCount)+10000}' type='number'/>";
      	$("#buyprice3").html(str3);
-    
-     	 const hypenTel = (target) => {
-     		 target.value = target.value
-     		   .replace(/[^0-9]/g, '')
-     		   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
-     		}
+     	$("#coupon").attr("disabled", true);
+       $('#viewcoupon').css('display', 'block');
+		
+     	
      }
    
      
@@ -636,6 +637,14 @@ function selectAll(selectAll)  {
     	
      }
      </script>
+     <script>
+     function(){
+	 const hypenTel = (target) => {
+ 		 target.value = target.value
+ 		   .replace(/[^0-9]/g, '')
+ 		   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+ 		}}
+	 </script>
      
 <script>
 
@@ -655,6 +664,32 @@ function selectAll(selectAll)  {
     		},function(rsp){
     			console.log(rsp);
     			if(rsp.success == true){
+    				 jQuery.ajax({
+                         url: "complete.po",
+                         method: "GET",
+                         data: {
+                             merchant_uid: rsp.merchant_uid,
+                             imp_uid: rsp.imp_uid,
+                             amount : 100,
+   				 		  mno: ${ requestScope.memNo },
+   				 		  want5 : document.getElementById('want').value,
+   				 		  pno: ${ requestScope.p.productNo },
+   				 		  pcount: ${ requestScope.pCount},
+   				 		  adno:  document.getElementById('sample6_postcode').value,
+   				 		  address: document.getElementById("sample6_address").value,
+   				 		  phone: document.getElementById("sitephone").value
+                       		 },
+                       success:  function(result) {
+       				if(result > 0){
+       					window.location.href = "list.po";
+       				}
+       												},
+       				error : function() {
+       				console.log("ajax 통신 실패!");
+       												}	
+
+       				})
+    				
     				  const message = "결제에 성공하였습니다. 감사합니다."
     		            	window.alert(message);
     				 location.href = 'complete.po?'
@@ -663,31 +698,7 @@ function selectAll(selectAll)  {
     				  const message2 = "결제에 실패하였습니다. 다시 시도해주세요."
     		            	window.alert(message2);
     				
-    				 jQuery.ajax({
-                          url: "complete.po",
-                          method: "GET",
-                          data: {
-                              merchant_uid: rsp.merchant_uid,
-                              imp_uid: rsp.imp_uid,
-                              amount : 100,
-    				 		  mno: ${ requestScope.memNo },
-    				 		  want5 : document.getElementById('want').value,
-    				 		  pno: ${ requestScope.p.productNo },
-    				 		  pcount: ${ requestScope.pCount},
-    				 		  adno:  document.getElementById('sample6_postcode').value,
-    				 		  address: document.getElementById("sample6_address").value,
-    				 		  phone: document.getElementById("sitephone").value
-                        		 },
-                        success:  function(result) {
-        				if(result > 0){
-        					window.location.href = "list.po";
-        				}
-        												},
-        				error : function() {
-        				console.log("ajax 통신 실패!");
-        												}	
-
-        				})
+    		
                     }// else문 종료
     			});
                      
