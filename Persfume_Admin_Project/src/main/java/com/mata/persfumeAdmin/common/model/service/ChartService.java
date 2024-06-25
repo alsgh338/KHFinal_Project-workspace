@@ -24,5 +24,14 @@ public interface ChartService {
 	
 	// 최근 일주일 매출 추이
 	ArrayList<OrderDetail> weekSales();
+	
+	ArrayList<Chart> scentSale(String note);
+	
+	ArrayList<Chart> productStock();
+	
+	ArrayList<Integer>monthRefund();
+	
+	// 대시보드 일일 접속자 수 용 서비스
+	int visitorCount();
 
 }

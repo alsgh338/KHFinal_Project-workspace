@@ -43,10 +43,7 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
-	@Override
-	public int visitorCount() {
-		return memberDao.visitorCount(sqlSession);
-	}
+
 	
 	
 	

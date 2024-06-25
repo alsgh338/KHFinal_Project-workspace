@@ -5,6 +5,10 @@
 	<resultMap type="chart" id="chartResultSet">
 		<result column="VISIT_DATE" property="visitDate" />
 		<result column="VISIT_COUNT" property="visitCount" />
+		<result column="SCENT" property="scent" />
+		<result column="SALE_COUNT" property="saleCount" />
+		<result column="STOCK" property="stock" />
+		<result column="PRODUCT_NAME" property="productName" />
 	</resultMap>
 	
 	<resultMap type="orderDetail" id="orderDetailResultSet">
@@ -66,6 +70,88 @@
 	    ON d.ORDER_DATE = TRUNC(od.ORDER_DATE) AND od.REFUND_DATE IS NULL
 	 GROUP BY d.ORDER_DATE
 	 ORDER BY d.ORDER_DATE
+	</select>
+	
+ 	<select id="scentSale"
+ 			parameterType="String"
+			resultMap="chartResultSet">
+			
+		<choose>
+
+			<when test = "#{note} == 'TOP'">
+			
+			SELECT TOP_NOTE AS SCENT, TOTAL_SALES AS SALE_COUNT
+			FROM (
+			    SELECT TOP_NOTE, SUM(QUANTITY) AS TOTAL_SALES
+			    FROM product p
+			    JOIN order_product op ON p.PRODUCT_NO = op.PRODUCT_NO
+			    GROUP BY TOP_NOTE
+			    ORDER BY TOTAL_SALES DESC
+			)
+			WHERE ROWNUM &lt;= 5
+			
+			</when>
+			
+			<when test = "#{note} == 'MIDDLE'">
+			
+			SELECT MIDDLE_NOTE AS SCENT, TOTAL_SALES AS SALE_COUNT
+			FROM (
+			    SELECT MIDDLE_NOTE, SUM(QUANTITY) AS TOTAL_SALES
+			    FROM product p
+			    JOIN order_product op ON p.PRODUCT_NO = op.PRODUCT_NO
+			    GROUP BY MIDDLE_NOTE
+			    ORDER BY TOTAL_SALES DESC
+			)
+			WHERE ROWNUM &lt;= 5
+			
+			</when>
+			
+			<otherwise>
+			 
+			SELECT BASE_NOTE AS SCENT, TOTAL_SALES AS SALE_COUNT
+			FROM (
+			    SELECT BASE_NOTE, SUM(QUANTITY) AS TOTAL_SALES
+			    FROM product p
+			    JOIN order_product op ON p.PRODUCT_NO = op.PRODUCT_NO
+			    GROUP BY BASE_NOTE
+			    ORDER BY TOTAL_SALES DESC
+			)
+			WHERE ROWNUM &lt;= 5
+			
+			</otherwise>
+			
+		</choose>
+
+	</select>
+	
+	<select id="productStock"
+		resultMap="chartResultSet">
+		SELECT PRODUCT_NAME AS "PRODUCT_NAME", PRODUCT_STOCK AS "STOCK"
+			FROM (
+			  SELECT PRODUCT_NAME, PRODUCT_STOCK
+			  FROM PRODUCT
+			  ORDER BY PRODUCT_STOCK ASC
+			)
+			WHERE ROWNUM &lt;= 5
+
+	</select>
+	
+	<select id="monthRefundClass"
+		resultType="_int">
+			SELECT COUNT(STATUS)
+		  FROM CLASS_REGIST
+		 WHERE STATUS = 'N'
+             AND TO_CHAR(REGIST_CANCEL_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
+		
+	</select>
+	
+	<select id="monthRefundProduct"
+	resultType="_int">
+		SELECT COUNT(OP.REFUND_REQUEST)
+		FROM ORDER_PRODUCT OP
+		JOIN ORDER_DETAIL OD ON OP.ORDER_NO = OD.ORDER_NO
+		WHERE OP.REFUND_REQUEST IS NOT NULL
+		  AND TO_CHAR(OD.ORDER_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
 	</select>
 	
 	

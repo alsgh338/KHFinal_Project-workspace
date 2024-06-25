@@ -27,11 +27,7 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.aliveMember", memNo);
 	}
 	
-	
-	// 대시보드 - 일일 접속자 수 Ajax용 DAO	
-	public int visitorCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.visitorCount");
-	}
+
 	
 
 }

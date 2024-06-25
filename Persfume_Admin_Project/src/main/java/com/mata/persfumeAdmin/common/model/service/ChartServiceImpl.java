@@ -47,6 +47,29 @@ public class ChartServiceImpl implements ChartService {
 	@Override
 	public ArrayList<OrderDetail> weekSales() {
 		return chartDao.weekSales(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Chart> scentSale(String note) {
+		return chartDao.scentSale(sqlSession);
+
+	}
+
+	@Override
+	public ArrayList<Chart> productStock() {
+		return chartDao.productStock(sqlSession);
+
+	}
+
+	@Override
+	public ArrayList<Integer> monthRefund() {
+		return chartDao.monthRefund(sqlSession);
+
 	} 
+	
+	@Override
+	public int visitorCount() {
+		return chartDao.visitorCount(sqlSession);
+	}
 
 }

@@ -15,6 +15,21 @@
     <title>Persfume Admin - Dashboard</title>
     
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> <!-- 구글차트 api 라이브러리 연동 (cdn) -->
+
+
+	<style>
+
+		.note-area{
+			position: relative;
+		}
+
+		.notes{
+			position: absolute;
+			top: 9px;
+			right: 20px;
+		}
+
+	</style>
     
 
 </head>
@@ -81,14 +96,14 @@
                         </div>
 
                         <!-- 일 접속자 수 -->
-                        <div class="col-xl-3 col-md-6 mb-4 todayView">
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                                 일일 접속자 수</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800 count"></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800 count" id="todayView">1</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-laugh-squint fa-2x text-gray-300"></i>
@@ -154,47 +169,64 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="row">
 
-                        <!-- Content Column -->
-                        <div class="col-lg-12 mb-4">
+					<!-- Content Row -->
+					<div class="row">
 
-                            <!-- Project Card Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">총 게시글 수</h6>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="small font-weight-bold boardBar">소통 마당 <span
-                                            class="float-right">20%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
-                                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold shareBar">무료 나눔 <span
-                                            class="float-right">40%</span></h4>
-                                    <div class="progress mb-4">    
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold noticeBar">공지 사항 <span
-                                            class="float-right">60%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+						<div class="col-xl-4 col-lg-7">
 
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-
-                   </div>
+							<!-- Area Chart -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3" id="note-area">
+									<h6 class="m-0 font-weight-bold text-primary">향 별 매출 현황 (click)</h6>
+								</div>
+								<div class="card-body">
+									<div class="btn btn-sm btn-primary notes" onclick="changeNote(this);">TOP</div>
+									<div class="chart-area">
+										<canvas id="ScentSalePieChart"></canvas>
+									</div>
+								</div>
+							</div>
 
 
+						</div>
 
+						<!-- Donut Chart -->
+						<div class="col-xl-4 col-lg-5">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">재고 부족 상품 TOP 5</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="StockLessChart"></canvas>
+									</div>
+									<hr>
+								</div>
+							</div>
+						</div>
+
+						<!-- Donut Chart -->
+						<div class="col-xl-4 col-lg-5">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">이번 달 환불 요청 현황</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="monthRefundChart"></canvas>
+									</div>
+									<hr>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -261,6 +293,54 @@
 	
 	<!-- -----------------차-----------트-------------- -->
 	<script>
+
+		let scentList = [];
+		let scentSale = [];
+		
+		
+		let stockProductList = [];
+		let productStock = [];
+		let MonthRefund = [];
+
+		function changeNote(element){
+			scentList = [];
+			scentSale = [];
+			let note = '';
+
+			if($(element).text() == 'TOP'){
+				note = 'MIDDLE';
+				$(element).text('MIDDLE');
+			} else if($(element).text() == 'MIDDLE'){
+				note = 'BASE';
+				$(element).text('BASE');
+			} else{
+				note = 'TOP';
+				$(element).text('TOP');
+			}
+
+			console.log(note);
+
+			/* 향 별 매출 현황 Ajax*/
+			$.ajax({
+				url : "scentSale",
+				type : "post",
+				data : {
+					note : note
+				},
+				success : function (list) {
+					for(let i in list){    	
+						scentList.push(list[i].scent);
+						scentSale.push(list[i].saleCount);
+						drawChart();
+					}
+				} ,
+				error : function () {
+					
+				} 
+			});
+
+		}
+
 		$.ajax({
 			url : "totalMember",
 			type : "post",
@@ -276,10 +356,10 @@
 			url : "totalSales",
 			type : "post",
 			success : function (result) {
+				
 				$("#totalSales").text(result);
 			} ,
 			error : function () {
-				
 			} 
 		});
 		
@@ -293,6 +373,7 @@
 				
 			} 
 		});
+
 		
 		var visitorList = [];
 		var salesList = [];
@@ -334,6 +415,42 @@
 				let five = list[1].totalPrice;
 				let six = list[0].totalPrice;
 				drawSalesChart(six, five, four, three, two, one ,TODAY);
+			} ,
+			error : function () {
+				
+			} 
+		});
+
+		// 향 별 매출 현황
+		$.ajax({
+			url : "totalMember",
+			type : "post",
+			success : function (result) {
+				$("#totalMember").text(result);
+			} ,
+			error : function () {
+				
+			} 
+		});
+
+		// 재고 부족 상품 현황 TOP 5
+		$.ajax({
+			url : "totalMember",
+			type : "post",
+			success : function (result) {
+				$("#totalMember").text(result);
+			} ,
+			error : function () {
+				
+			} 
+		});
+
+		// 이번 달 환불 현황
+		$.ajax({
+			url : "totalMember",
+			type : "post",
+			success : function (result) {
+				$("#totalMember").text(result);
 			} ,
 			error : function () {
 				
@@ -435,9 +552,9 @@
     	    	});
     		
 			
-		}
+			}
     	
-function drawSalesChart(six, five, four, three, two, one ,TODAY) { 
+		function drawSalesChart(six, five, four, three, two, one ,TODAY) { 
     		
     		
     		/* 매출 추이 템플릿 */
@@ -447,7 +564,7 @@ function drawSalesChart(six, five, four, three, two, one ,TODAY) {
     	    	  data: {
     	    	    labels: ["-6","-5","-4","-3", "-2", "-1", "TODAY"],
     	    	    datasets: [{
-    	    	      label: "Visitor",
+    	    	      label: "Sale",
     	    	      lineTension: 0.3,
     	    	      backgroundColor: "rgba(78, 115, 223, 0.05)",
     	    	      borderColor: "rgba(78, 115, 223, 1)",
@@ -523,28 +640,188 @@ function drawSalesChart(six, five, four, three, two, one ,TODAY) {
     	    	      callbacks: {
     	    	        label: function(tooltipItem, chart) {
     	    	          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-    	    	          return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + "명";
+    	    	          return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + "원";
     	    	        }
     	    	      }
     	    	    }
     	    	  }
     	    	});
 			
+			}
+		
+
+		// 아래 세 개 그래프 관련 drawChart
+		function drawChart() { 
+		
+			// 향 별 매출 건수 파이 차트
+			var piectx = document.getElementById("ScentSalePieChart");
+    		var myPieChart = new Chart(piectx, {
+    		  type: 'doughnut',
+    		  data: {
+    		    labels: ["Board", "Share"],
+    		    datasets: [{
+    		      data: scentSale,
+    		      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+    		      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+    		      hoverBorderColor: "rgba(234, 236, 244, 1)",
+    		    }],
+    		  },
+    		  options: {
+    		    maintainAspectRatio: false,
+    		    tooltips: {
+    		      backgroundColor: "rgb(255,255,255)",
+    		      bodyFontColor: "#858796",
+    		      borderColor: '#dddfeb',
+    		      borderWidth: 1,
+    		      xPadding: 15,
+    		      yPadding: 15,
+    		      displayColors: false,
+    		      caretPadding: 10,
+    		    },
+    		    legend: {
+    		      display: false
+    		    },
+    		    cutoutPercentage: 80,
+    		  },
+    		});
+
+
+			// 재고 부족 상품 TOP 5
+			var stockctx = document.getElementById("StockLessChart");
+    		var myPieChart = new Chart(stockctx, {
+    		  type: 'bar',
+    		  data: {
+    		    labels: stockProductList,
+    		    datasets: [{
+    		      data: productStock,
+    		      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+    		      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+    		      hoverBorderColor: "rgba(234, 236, 244, 1)",
+    		    }],
+    		  },
+    		  options: {
+    		    maintainAspectRatio: false,
+    		    tooltips: {
+    		      backgroundColor: "rgb(255,255,255)",
+    		      bodyFontColor: "#858796",
+    		      borderColor: '#dddfeb',
+    		      borderWidth: 1,
+    		      xPadding: 15,
+    		      yPadding: 15,
+    		      displayColors: false,
+    		      caretPadding: 10,
+    		    },
+    		    legend: {
+    		      display: false
+    		    },
+    		    cutoutPercentage: 80,
+    		    scales: {
+    	            yAxes: [{
+    	                ticks: {
+    	                    min: 0 // 최소 값을 0으로 설정
+    	                }
+    	            }]
+    	        }
+    		  },
+    		});
+
+
+			// 이번 달 환불 요청 현황
+			var refundctx = document.getElementById("monthRefundChart");
+    		var myPieChart = new Chart(refundctx, {
+    		  type: 'doughnut',
+    		  data: {
+    		    labels: ["클래스 환불", "제품 환불"],
+    		    datasets: [{
+    		      data: MonthRefund,
+    		      backgroundColor: ['#4e73df', '#1cc88a'],
+    		      hoverBackgroundColor: ['#2e59d9', '#17a673'],
+    		      hoverBorderColor: "rgba(234, 236, 244, 1)",
+    		    }],
+    		  },
+    		  options: {
+    		    maintainAspectRatio: false,
+    		    tooltips: {
+    		      backgroundColor: "rgb(255,255,255)",
+    		      bodyFontColor: "#858796",
+    		      borderColor: '#dddfeb',
+    		      borderWidth: 1,
+    		      xPadding: 15,
+    		      yPadding: 15,
+    		      displayColors: false,
+    		      caretPadding: 10,
+    		    },
+    		    legend: {
+    		      display: false
+    		    },
+    		    cutoutPercentage: 80,
+    		  },
+    		});
+		
 		}
-    	
+
     	$(function(){
     		
         	/* 일일 접속자 수 관련 AJAX */
         	$.ajax({
         		url : "visitCnt.cm",
         		type : "post",
-        		success : function (count) {
-        			$(".todayView .count").text(count);
+        		success : function (result) {
+        			$("#todayView").text(result);
     			} ,
         		error : function () {
     				
     			} 
         	});
+
+			/* 재고 부족 상품 TOP 5 Ajax*/
+			$.ajax({
+				url : "productStock",
+				type : "post",
+				success : function (list) {
+					for(let i in list){
+						stockProductList.push(list[i].productName);
+						productStock.push(list[i].stock);
+						drawChart();
+					}
+				} ,
+				error : function () {
+					
+				} 
+			});
+			/* 이번 달 환불 현황 Ajax*/
+			$.ajax({
+				url : "MonthRefund",
+				type : "post",
+				success : function (list) {
+					for(let i in list){    	
+						MonthRefund.push(list[i]);
+						drawChart();
+					}
+				} ,
+				error : function () {
+					
+				} 
+			});
+
+
+			/* 향 별 매출 현황 Ajax*/
+			$.ajax({
+				url : "scentSale",
+				type : "post",
+				data : {
+					note : "TOP"
+				},
+				success : function (list) {
+					for(let i in list){    	
+						scentList.push(list[i].scent);
+						scentSale.push(list[i].saleCount);
+						drawChart();
+					}
+				} ,
+				error : function () {
+				} 
+			});
     		
     		
     	})

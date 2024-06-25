@@ -16,4 +16,9 @@ public class Chart {
 	private Date visitDate;
 	private int visitCount;
 	
+	private String scent;
+	private int saleCount;
+	private int stock;
+	private String productName;
+	
 }

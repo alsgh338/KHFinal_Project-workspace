@@ -13,7 +13,6 @@ public interface MemberService {
 	int aliveMember(int memNo);
 	
 	
-	// 대시보드 일일 접속자 수 용 서비스
-	int visitorCount();
+
 
 }

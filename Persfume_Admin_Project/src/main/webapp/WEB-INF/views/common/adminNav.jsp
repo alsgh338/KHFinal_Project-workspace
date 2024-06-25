@@ -178,24 +178,8 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                시설 관리
+                 클래스 및 게시판 관리
             </div>
-
-             <!-- Nav Item - Pages Collapse Menu -->
-             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#MF-ad-menu"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-chart-bar"></i>
-                    <span>관리비 관리</span>
-                </a>
-                <div id="MF-ad-menu" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">관리비 기능 : </h6>
-                        <a class="collapse-item" href="<%= request.getContextPath() %>/adList.ma">관리비 조회</a>
-                        <a class="collapse-item" href="<%= request.getContextPath() %>/adInsertForm.ma">관리비 추가</a>
-                    </div>
-                </div>
-            </li>
             
             <!-- Nav Item - Pages Collapse Menu -->
              <li class="nav-item">

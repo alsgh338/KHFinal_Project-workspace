@@ -31,6 +31,8 @@ public class ChartController {
 	@ResponseBody
 	public int totalSales() {
 		
+		System.out.println("여기까진??");
+		
 		int result = chartService.totalSales();
 		
 		return result;
@@ -63,6 +65,45 @@ public class ChartController {
 		System.out.println(list);
 		
 		return list;
+	}
+	
+	@PostMapping("scentSale")
+	@ResponseBody
+	public ArrayList<Chart> scentSale(String note){
+		
+		ArrayList<Chart> list = chartService.scentSale(note);
+		
+		System.out.println(list);
+		
+		return list;
+	}
+	
+	@PostMapping("productStock")
+	@ResponseBody
+	public ArrayList<Chart> productStock(){	
+		ArrayList<Chart> list = chartService.productStock();
+		
+		System.out.println(list);
+		
+		return list;
+	}
+	
+	@PostMapping("MonthRefund")
+	@ResponseBody
+	public ArrayList<Integer> monthRefund(){	
+		ArrayList<Integer> list = chartService.monthRefund();
+		System.out.println(list);
+		return list;
+	}
+	
+	@ResponseBody
+	@PostMapping(value="visitCnt.cm", produces="html/text; charset=UTF-8")
+	public String visitorCount() {
+		
+		int count = chartService.visitorCount();
+		
+		return String.valueOf(count);
+		
 	}
 	
 	

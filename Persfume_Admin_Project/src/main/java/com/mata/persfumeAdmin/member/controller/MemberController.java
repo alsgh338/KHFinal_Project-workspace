@@ -98,16 +98,6 @@ public class MemberController {
 		
 	}
 	
-	
-	
-	@ResponseBody
-	@PostMapping(value="visitCnt.cm", produces="html/text; charset=UTF-8")
-	public String visitorCount() {
-		
-		int count = memberService.visitorCount();
-		
-		return String.valueOf(count);
-		
-	}
+
 
 }
