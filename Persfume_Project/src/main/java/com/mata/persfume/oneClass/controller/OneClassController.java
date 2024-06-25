@@ -1,6 +1,9 @@
 package com.mata.persfume.oneClass.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -44,7 +47,7 @@ public class OneClassController {
 	
 	//클래스 목록 조회 컨트롤러 
 	@GetMapping("list.oc")
-	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) throws Exception {
 		
 		int listCount = oneClassService.selectListCount();
 		
@@ -60,6 +63,29 @@ public class OneClassController {
 		
 		ArrayList<OneClass> list = oneClassService.selectList(pi);  
 		
+		/*
+			예약 가능 클래스인지 확인하는 구문
+		*/
+		
+		for(OneClass oc : list) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = dateFormat.parse(oc.getStartDate());
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+            Date yesterday = calendar.getTime();
+            
+            if(date.before(yesterday)) {
+            	System.out.println(1);
+            	oc.setIsFuture("true");
+            } else {
+            	oc.setIsFuture("false");
+            	System.out.println(2);
+            }
+            
+            
+		}
+
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "oneClass/oneClassListView";

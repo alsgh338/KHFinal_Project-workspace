@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,9 +67,11 @@
             /* border: 1px solid blue; */
             margin: 15px 15px;
             transition: all .5s ease;
+            position: relative;
+            
         }
 
-        .onHover{
+        .onHover:not(.end-class){
             cursor: pointer;
             border-radius: 10px;
             border-color: rgba(0, 0, 0, 0.2);
@@ -85,6 +88,25 @@
         .oneday-class>.class-img{
             width: 100%;
             height: 60%;
+        }
+        
+        .end-class>.class-img::after{
+        	width: 100%;
+            height: 60%;
+            background-color : rgba(100,100,100,0.5);
+        	border: 1px solid red;
+        	display: flex;
+            position: absolute;
+            top : 0;
+            left : 0;
+            content: '예약 마감';
+            font-size : 50px;
+            color : white;
+            text-shadow : 0 19px 38px black, 0 15px 12px black;
+            justify-content : center;
+            align-items: center;
+            
+            z-index: 700;
         }
 
         .oneday-class>.class-img>img{
@@ -160,6 +182,8 @@
         }
         
         #pagingArea {width:fit-content; margin:auto;}
+        
+
 
 </style>
 
@@ -182,7 +206,14 @@
             	
             	<c:otherwise>        
 		            <c:forEach var="oc" items="${ requestScope.list }">
-			            <div class="oneday-class">
+		            	<c:choose>
+		            		<c:when test="${oc.isFuture == 'true'}">
+		            			<div class="oneday-class end-class">
+		            		</c:when>
+		            		<c:otherwise>
+		            			<div class="oneday-class">
+		            		</c:otherwise>
+		            	</c:choose>
 				            <input type="hidden" value="${ oc.classNo }">
 			                <div class="class-img">
 			                    <img src= "${pageContext.request.contextPath}/../persfumeAdmin/${oc.thumbnailImg}" alt="쌈네일">
@@ -286,9 +317,8 @@
 
         });
 
-
-    </script>
 	
+	</script>	
 	<jsp:include page="../common/footer.jsp"/>
 
 </body>

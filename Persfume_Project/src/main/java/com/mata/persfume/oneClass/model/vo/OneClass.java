@@ -31,4 +31,5 @@ public class OneClass {
 	
 	private int memNo;
 	private String isFuture;
+	
 }

@@ -590,7 +590,6 @@
 		  FROM COUPON 
 		 WHERE COUPON_NO = #{CouponNo}  
 	</select>
-<<<<<<< Updated upstream
 	<!--  나의 쿠폰 리스트에서 이름 가져오기-->
 	<delete id="deleteFavorite"
 		parameterType="Favorites">
@@ -600,8 +599,6 @@
 		   AND PRODUCT_NO = #{productNo}
 	</delete>
 
-	
-=======
 	<!--  찜 갯수 구하기 -->
 			<!--  나의 쿠폰 리스트에서 이름 가져오기-->
 		<select id="countFavorite"
@@ -627,5 +624,4 @@
 		  FROM PRODUCT_REVIEW
 		 WHERE PRODUCT_NO = #{pno}  
 	</select>
->>>>>>> Stashed changes
 </mapper>

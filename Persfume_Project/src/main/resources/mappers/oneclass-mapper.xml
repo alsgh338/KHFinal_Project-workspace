@@ -79,7 +79,7 @@
           JOIN CLASS_IMG CIMG ON C.CLASS_NO = CIMG.REF_CNO
 		 WHERE C.STATUS = 'Y'
            AND CIMG.CLASS_IMG_TYPE = 1
-         ORDER BY C.CLASS_NO DESC
+         ORDER BY C.START_DATE DESC
 	</select>
 	
 	<select id="countReservation"
