@@ -50,8 +50,6 @@
 			resultMap="productResultSet">
 		SELECT * 
 		  FROM PRODUCT
-		 WHERE PRODUCT_STATUS = 'Y'
-		 ORDER BY PRODUCT_NO DESC
 	</select>
 	
 	<!-- 상품이미지 조회 -->
@@ -123,23 +121,26 @@
 			                       'Y')
 	</insert>
 	
+		<insert id="insertProductImg2" 
+				parameterType="productImg">
+			INSERT INTO PRODUCT_IMG (PRODUCT_IMG_NO,
+			                       PRODUCT_IMG_PATH,
+			                       PRODUCT_IMG_ORIGIN,
+			                       PRODUCT_IMG_CHANGE,
+			                       IMG_TYPE,
+			                       PRODUCT_NO,
+			                       STATUS)
+			               VALUES (SEQ_IMG_NO.NEXTVAL,
+			                       #{productImgPath},
+			                       #{productImgOrigin},
+			                       #{productImgChange},
+			                       #{imgType},
+			                       #{productNo},
+			                       'Y')
+	</insert>
+	
+	
 	<!-- 이미지 삭제  -->
-	<delete id="productImgdele"
-			parameterType="productImg">
-		  DELETE FROM PRODUCT_IMG
-			WHERE PRODUCT_NO = #{productNo}
-				AND IMG_TYPE = #{imgType} 
-	</delete>
-	
-	<delete id="productImgdele2"
-		 parameterType="productImg">
-		  DELETE FROM PRODUCT_IMG
-			WHERE PRODUCT_NO = #{productNo}
-				AND IMG_TYPE = #{imgType} 
-				AND PRODUCT_IMG_PATH = #{prevImgPath}
-	</delete>
-	
-
 	<delete id="productImgdele3"
 			parameterType="string">
 		  DELETE FROM PRODUCT_IMG

@@ -127,7 +127,20 @@
 	        , #{extraAddress}
 	        , #{gender}
 	        , #{birthDate})
+	</insert>
 	
+	<!-- 회원가입시 회원가입 쿠폰 발급 -->
+	<insert id="insertCoupon">
+	INSERT INTO MEM_COUPON(MEM_COUPON_NO,
+                   REGIST_DATE,
+                   STATUS,
+                   MEM_NO,
+                   COUPON_NO)
+	    VALUES(SEQ_MEM_COUPON_NO.NEXTVAL,
+                SYSDATE,
+                DEFAULT,
+                SEQ_MEM_NO.CURRVAL,
+                1)          
 	</insert>
 	
 	<!-- 로그인용 쿼리문 -->
@@ -153,6 +166,7 @@
 			, ADDRESS = #{address}
 			, DETAILADDRESS = #{detailAddress}
 			, EXTRAADDRESS = #{extraAddress}
+			, GENDER = #{gender}
 			WHERE MEM_ID = #{memId}
 			AND STATUS = 'Y'
 	</update>
@@ -261,6 +275,9 @@
 	<insert id="insertVisitCount" parameterType="java.util.Date">
 		INSERT INTO VISIT_COUNT(VISIT_DATE) VALUES(#{today})
 	</insert>
+	
+	
+
 	
 	
 	

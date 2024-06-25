@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -85,7 +86,7 @@ public class ProductController {
                     pi2.setImgType(2); // 예시로 2로 설정, 실제로는 파일 타입에 따라 다를 수 있음
                     pi2.setProductImgOrigin(file.getOriginalFilename()); // 원본 파일 이름 설정
                     pi2.setProductImgPath("resources/uploadFiles/product/" + changeNamePr); // 저장 경로 설정
-                    
+      
                     // 이 시점에서는 pi2 객체에 이미지 파일'들'의 정보가 담겨있음
                     
                     int result2 = productService.insertProductImg(pi2);
@@ -210,51 +211,35 @@ public class ProductController {
 	
 			// 이미지'들'
 			// 업로드된 파일들을 반복문을 통해 저장하고, ProductImg 객체 설정
-				if(upFiles != null) {
-					// upFiles null 이 아니면  수정작업 시작하기
-					for (int i = 0; i < upFiles.length; i++) {
-						
-						System.out.println("반복 1");
-						
-						
-						
-		                if (!upFiles[i].isEmpty()) { // 파일이 비어있지 않다면!
-		                    String upFileschangeName = savePath(upFiles[i], session); // 파일 저장 및 이름 변경
-		            		
-//		            		System.out.println("2번 이미지" + upFileschangeName);
-		                    
-		                    ProductImg pi2 = new ProductImg();
-		                    
-		                    pi2.setProductImgChange(upFileschangeName);
-		                    pi2.setImgType(2);
-		                    pi2.setProductImgOrigin(upFiles[i].getOriginalFilename()); // 원본 파일 이름 설정
-		                    pi2.setProductImgPath("resources/uploadFiles/product/" + upFileschangeName); // 저장 경로 설정
-		                    pi2.setProductNo(p.getProductNo());
-		                    pi2.setPrevImgPath(classImgPath[i]);
-		                    
-		                    
-		                    
-		                    // 이 시점에서는 pi2 객체에 이미지 파일'들'의 정보가 담겨있음
-		                    
-		                    // 서비스단으로 pi2 넘기면서 결과값 보기
-		                    int result3 = productService.productImgUpdate(pi2);
-		              
-//		                    System.out.println("result3!!" + result3);
-//		                    
-//		                    System.out.println(pi2);
-		                    
-		                }else {
-		                	System.out.println("이미지 수정작업 실패");
-		                }
-		            }
+	        for (MultipartFile file : upFiles) {
+                if (!file.isEmpty()) { // 파일이 비어있지 않다면!
+                    String changeNamePr = savePath(file, session); // 파일 저장 및 이름 변경
+        
+                    ProductImg pi2 = new ProductImg();
+                    
+                    pi2.setProductImgChange(changeNamePr);
+                    pi2.setImgType(2); // 예시로 2로 설정, 실제로는 파일 타입에 따라 다를 수 있음
+                    pi2.setProductImgOrigin(file.getOriginalFilename()); // 원본 파일 이름 설정
+                    pi2.setProductImgPath("resources/uploadFiles/product/" + changeNamePr); // 저장 경로 설정
+                    pi2.setProductNo(p.getProductNo());
+                    
+                    
+                    System.out.println("사진 바꿔넣기 pi2 : " + pi2);
+                    
+                    // 이 시점에서는 pi2 객체에 이미지 파일'들'의 정보가 담겨있음
+                    
+                    int result2 = productService.insertProductImg2(pi2);
+                    
+                    if(result2 > 0) {
+                    	System.out.println("상품 이미지 바꿔넣기 성공!");
+                    	
+                    }else {
+                    	System.out.println("상품 이미지 바꿔넣기 실패!");
+                    }
+                }
+            }
+
 					
-					  return "redirect:/proList.pr";
-					  
-				}else {
-					
-					}
-					
-					System.out.println("upFiles 가 비었으면");
 					
 					 return "redirect:/proList.pr";
 				}
@@ -273,13 +258,14 @@ public class ProductController {
 	
 	
 	@PostMapping("imgdelte.pr")
+	@ResponseBody
 	public int imgdelte(String delimgPath) {
 		
 		System.out.println("사진 삭제 잘 호출되나?");
 		
 		System.out.println("이미지 파일 경로 잘 가져오나??" + delimgPath);
 		
-		int result = productService.productImgdele3(delimgPath);
+		int result = productService.productImgdele(delimgPath);
 		
 		return result;
 		

@@ -112,7 +112,21 @@ public class MemberController {
 		int result =  memberService.insertMember(m);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "반갑습니다" + m.getMemName() +"님");
+			session.setAttribute("alertMsg", "반갑습니다 " + m.getMemName() +" 님");
+			
+			int memNo = m.getMemNo();
+			
+			int resultCo = memberService.insertCoupon(memNo);
+			
+			if(resultCo > 0) {
+				
+				System.out.println("쿠폰 발급 성공!");
+				
+				
+			}else{
+				System.out.println("쿠폰 발급 실패!");
+			}
+			
 			
 			return "redirect:/";
 		}else {
@@ -398,6 +412,8 @@ public class MemberController {
 //		System.out.println("회원정보 수정 잘 호출되나?!");
 		
 		 int result =  memberService.updateMember(m);
+		 
+		 System.out.println(m.getGender());
 		 
 		 if(result > 0) {
 

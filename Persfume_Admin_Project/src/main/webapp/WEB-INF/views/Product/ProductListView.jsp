@@ -125,7 +125,7 @@
 					                                    </a>
 		                                            </td>
 		                                            <td>
-			                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check">
+			                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check" onclick="delProduct(this);">
 					                                        <span class="icon text-white-50">
 					                                            <i class="fas fa-trash"></i>
 					                                        </span>
@@ -172,7 +172,7 @@
 				  <form action="delete.pr" method="post">			
 			      <!-- Modal body -->
 			      <div class="modal-body">
-			      <input type="hidden" name="productNo" class="carNo">
+			      <input type="hidden" name="productNo" class="proNo">
                    		정말 
                    		 상품을 삭제 하시겠습니까?
 			      	
@@ -258,6 +258,13 @@
 			$("#updateProductForm").submit();
 
 		}
+
+    function delProduct(element){
+        let pno =$(element).parent().siblings().eq(0).text().trim();
+        console.log("번호" + pno);
+
+        $("#delete-check .proNo").val(pno);
+    }
     </script>
 
 </body>

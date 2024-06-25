@@ -217,6 +217,7 @@
 																		<img src="${item.productImgPath}" alt="${item.productImgPath}">
 																		<div class="delete-btn">
 								    		                				<img src="resources/img/x-circle.svg" alt="x-circle" onclick="deleteImg(this);">
+																			<input type="hidden" name="classImgPath" value="${item.productImgPath}">
 																		</div>
 																	</div>
 		                                						</c:when>
@@ -382,7 +383,11 @@
 				  	let delElement = $(element).parents('.uploadImg');
 				  	const imgType = delElement.prev().attr("name");
 				  	
-				  	
+				  	let classImgPath = $(element).next('input[name="classImgPath"]').val();
+
+					console.log(classImgPath);
+
+
 				  	delElement.html('<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">');
 				  	
 				  	delElement.prev().remove();
@@ -398,19 +403,17 @@
 				  	}
 
 
-					  const $memPwdConfirm = $("#EnrollForm input[name=memPwdConfirm]");
+					  const $delimgPath = $("#EnrollForm input[name=memPwdConfirm]");
 					
 					$.ajax({
 					url : "imgdelte.pr",
 					type : "post",
 					data : {
-						upFiles : $("").val(),
+						delimgPath : classImgPath
 					},
 					success : function(result) {
 						
-						
-						
-						
+						console.log("사진 삭제 성공!!!")
 						
 						
 					}, 

@@ -91,21 +91,15 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public int productImgdele(ProductImg pi) {
+	public int productImgdele(String delimgPath) {
 		
-		return productDao.productImgdele(sqlSession, pi);
-	}
-	
-	@Override
-	public int productImgdele2(ProductImg pi) {
-		
-		return productDao.productImgdele(sqlSession, pi);
+		return productDao.productImgdele(sqlSession, delimgPath);
 	}
 
 	@Override
-	public int productImgdele3(String delimgPath) {
+	public int insertProductImg2(ProductImg pi2) {
 		
-		return productDao.productImgdele3(sqlSession, delimgPath);
+		return productDao.insertProductImg2(sqlSession, pi2);
 	}
 	
 

@@ -14,7 +14,7 @@ public interface ProductService {
 
 	int insertProduct(Product p);
 
-	int insertProductImg(ProductImg pi1);
+	int insertProductImg(ProductImg pi);
 
 	ArrayList<ProductImg> selectProductpi(int productNo);
 	
@@ -23,15 +23,13 @@ public interface ProductService {
 	int productUpdate(Product p);
 
 	int productImgUpdate(ProductImg pi);
-	
-	int productImgdele(ProductImg pi);
-	
-	int productImgdele2(ProductImg pi);
 
 	ArrayList<ProductReview> selectAllreview();
 	
 	int reviewDelete(int reviewNo);
 	
-	int productImgdele3(String delimgPath);
+	int productImgdele(String delimgPath);
+
+	int insertProductImg2(ProductImg pi);
 
 }
