@@ -64,6 +64,12 @@
 		height: 500px;
 		object-fit: cover;
 	}
+	
+	#classList>table td>img{
+		width: 50px;
+		height: 50px;
+		object-fit: cover;
+	}
     
     /* 여기서 부터 MypageList css */
     
@@ -165,7 +171,7 @@
             
             <div id="classList">
                 <c:choose>
-                    <c:when test="${empty requestScope.flist}">
+                    <c:when test="${empty requestScope.relist}">
                         <div id="oneclass-not-found">
                             <img alt="힝..." src="resources/images/error-sad.png"> <br>
                             <h1>찜 목록이 존재하지 않습니다.</h1>
@@ -173,51 +179,42 @@
                     </c:when>
                     <c:otherwise>
 	                    
-	                    <table>
+	                    <table class="table">
 					    	<tr>
-					    		<th>번호</th>
-					    		<th width="300">상품 이미지</th>
-					    		<th width="200">상품 이름</th>
-					    		<th width="150">상품 가격</th>
-					    		<th width="100">상품 재고</th>
-					    		<th width="100">상세 보기</th>
-					    		<th width="100">상품 제거</th>
+					    		<th>No.</th>
+					    		<th width="120">리뷰 이미지</th>
+					    		<th width="300">리뷰 내용</th>
+					    		<th width="180">리뷰 작성일</th>
+					    		<th width="100">리뷰 별점</th>
+					    		<th width="110">상품 상세</th>
+					    		<th width="110">리뷰 삭제</th>
+                                
 					    	</tr>
-					    	<tr>
-								<c:forEach var="i" begin="0" end="${fn:length(flist) - 1}">
+                            
+                            <c:forEach var="re" items="${ requestScope.relist }" varStatus="status">
+    					    	<tr>
+                                    <td>${re.reviewNo}</td>
+                                    <td><img src="${re.reviewImgPath}" /></td>
+                                    <td>${re.reviewContent}</td>
+                                    <td>${re.reviewDate}</td>
+                                    <td>${re.reviewRating}</td>
 								    <td>
-								        ${i + 1}
-								    </td>
-								    <td>
-								    	<img alt="${requestScope.pilist[i].productImgPath}" src="${pageContext.request.contextPath}/../persfumeAdmin/${requestScope.pilist[i].productImgPath}">
-								    </td>
-								    <td>
-								        ${plist[i].productName}
-								    </td>
-								    <td>
-								        ${plist[i].productPrice}
-								    </td>
-								    <td>
-								        ${plist[i].productStock}
-								    </td>
-								    	
-								    <td>
-								        <div class="btn btn-sm btn-info" onclick="location.href = 'detail.po?pno='+ ${plist[i].productNo}">
+								        <div class="btn btn-sm btn-info" onclick="location.href = 'detail.po?pno='+ ${re.productNo}">
 								        	상품 보기
 								        </div>
 								    </td>
 								    <td>
-			                       		<form method="post" action="delFavorite.me" id="likeForm">
+			                       		<form method="post" action="delReview.me" id="ReviewForm">
                     						<input type="hidden" name='productNo' value="${plist[i].productNo}">
                     						<input type="hidden" name='memNo' value="${sesssionScope.loginMember.memNo}">
-									        <div class="btn btn-sm btn-danger" onclick="$('#likeForm').submit();">
-									        	상품 제거
+									        <div class="btn btn-sm btn-danger" onclick="$('#ReviewForm').submit();">
+									        	리뷰 제거
 									        </div>
 					                    </form>
 								    </td>
-								    
-								</c:forEach>
-					    	</tr>
+                                </tr>
+                            </c:forEach>
+					    	
 					    
 					    </table>
                     </c:otherwise>

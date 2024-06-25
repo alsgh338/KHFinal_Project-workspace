@@ -37,6 +37,7 @@ import com.mata.persfume.product.model.vo.Coupon;
 import com.mata.persfume.product.model.vo.Favorites;
 import com.mata.persfume.product.model.vo.MemCoupon;
 import com.mata.persfume.product.model.vo.OrderDetail;
+import com.mata.persfume.product.model.vo.OrderProduct;
 import com.mata.persfume.product.model.vo.Product;
 import com.mata.persfume.product.model.vo.ProductImg;
 import com.mata.persfume.product.model.vo.ProductReview;
@@ -687,12 +688,12 @@ public class MemberController {
 		// 1. 세션의 memNo 으로 회원이 쓴 리뷰 색출
 		// 2. 리뷰 테이블의 productNo 으로 리뷰를 누르면 해당 리뷰로 갈 수 있게 쏘기
 		// 3. 리뷰 제목, 리뷰 내용 정도만 보여주기 
-		 
-		ArrayList<ProductReview> list =  memberService.selectReview(memNo);
+			
+		ArrayList<ProductReview> relist = productService.myReview(memNo);
 		
-		model.addAttribute("reviewList", list); // Model에 list를  attribute로 설정
 		
-		System.out.println(list);
+		
+		model.addAttribute("relist", relist);
 		
 		
 		return "member/myReview";
@@ -749,11 +750,32 @@ public class MemberController {
 		
 		System.out.println("현재 로그인한 회원의 회원번호도 잘 끌어오나?" + memNo);
 		
-		ArrayList<OrderDetail> list = memberService.selectOrder(memNo);
+		ArrayList<OrderDetail> odlist = productService.selectOrderDetail(memNo);
 		
-		model.addAttribute("orderList", list); // Model에 list를  attribute로 설정
 		
-		System.out.println(list);
+		ArrayList<OrderProduct> oplist = new ArrayList<>();
+		ArrayList<OrderProduct> oplist2 = new ArrayList<>();
+		ArrayList<Product> plist = new ArrayList<>();
+		ArrayList<ProductReview> relist = new ArrayList<>();
+		for(int i =0; i<odlist.size(); i++) {
+			if(i == 0) {
+			 oplist = productService.selectOrderProduct1(odlist.get(i).getOrderNo());
+			}else {
+				oplist2 = productService.selectOrderProduct1(odlist.get(i).getOrderNo());
+				oplist.addAll(oplist2);
+			}
+			
+		}// 반복문 종료
+		for(int i = 0; i<oplist.size(); i++) {
+			Product p = productService.selectProduct(oplist.get(i).getProductNo());
+		plist.add(p);
+		ProductReview re = productService.selectReview(oplist.get(i).getOdId());
+		relist.add(re);
+		}
+		model.addAttribute("relist", relist);
+		model.addAttribute("odlist", odlist);
+		model.addAttribute("oplist", oplist);
+		model.addAttribute("plist", plist);
 		
 		return "member/myOrder";
 		

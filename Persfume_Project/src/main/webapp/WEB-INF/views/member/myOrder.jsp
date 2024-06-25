@@ -165,16 +165,64 @@
             
             <div id="classList">
                 <c:choose>
-                    <c:when test="${empty requestScope.registlist}">
+                    <c:when test="${empty requestScope.oplist}">
                         <div id="oneclass-not-found">
                             <img alt="힝..." src="resources/images/error-sad.png"> <br>
                             <h1>주문 목록이 존재하지 않습니다.</h1>
                         </div>
                     </c:when>
                     <c:otherwise>
+	                    
+	                    <table class="table">
+					    	<tr>
+					    		<th>No.</th>
+					    		<th width="120">주문 번호</th>
+					    		<th width="300">상품명</th>
+					    		<th width="180">수량</th>
+					    		<th width="100">가격</th>
+					    		<th width="110">주문 날짜</th>
+					    		<th width="110">배송 상태</th>
+					    		<th width="110">리뷰</th>
+					    		<th width="110">환불 요청</th>
+					    	</tr>
+					    	<c:forEach var="op" items="${ requestScope.oplist }" varStatus="status">
+                                <tr>
+                                    <td>${op.odId}</td>
+                                    <td>${plist[status.index].productName}</td>
+                                    <td>${op.quantity}</td>
+                                    <td>${op.price} </td>
+                                
+                                    <c:forEach var="od" items="${ requestScope.odlist }" varStatus="status">
+                                    <c:choose>
+                                        <c:when test="${op.orderNo == od.orderNo}"><td>${od.orderDate}</td>
+                    
+                                            <c:if test="${od.deliveryStatus eq 'Y'}"> <td>배송준비</td></c:if>
+                                            <c:if test="${od.deliveryStatus eq 'N'}"><td>배송완료</td></c:if> 
+                                                <c:if test="${od.deliveryStatus eq 'N' && op.refundRequest == null  }"> <td><a href="insertReview.po?odId=${op.odId}&pno=${op.productNo}&mno=${od.memNo}&ono=${od.orderNo}">리뷰작성</a></td></c:if>	
+                                                <c:if test="${od.deliveryStatus eq 'Y'  }"><td></td></c:if> 	 
+                                        
+                                            <c:if test="${op.refundRequest == null}">
+                                                <form action="wantRefund.po" method="post"> <input type="number" style="display:none;" name="odId" value="${op.odId}" />
+                                            <td><button type="submit">환불요청</button></td> </form> </c:if>  
+                                            <c:if test="${op.refundRequest != null}"><td></td></c:if>
+                                
+                                            <td>${op.refundRequest}</td>                                       
+                                        </c:when>
+
+                                    </c:choose>
+                                    </c:forEach>
+                            
+                                
+                                
+                                </tr>
+                                </c:forEach>
+					    
+					    </table>
                     </c:otherwise>
                 </c:choose>
             </div>
+
+
         </div>
     </div>
     

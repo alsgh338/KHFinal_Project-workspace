@@ -181,7 +181,7 @@
 	                    
 	                    <table class="table">
 					    	<tr>
-					    		<th>번호</th>
+					    		<th width="50">No.</th>
 					    		<th width="250">상품 이미지</th>
 					    		<th width="150">상품 이름</th>
 					    		<th width="150">상품 가격</th>
@@ -189,13 +189,13 @@
 					    		<th width="120">상세 보기</th>
 					    		<th width="120">상품 제거</th>
 					    	</tr>
-					    	<tr>
-								<c:forEach var="i" begin="0" end="${fn:length(flist) - 1}">
+                            <c:forEach var="i" begin="0" end="${fn:length(flist) - 1}">
+    					    	<tr>							
 								    <td>
 								        ${i + 1}
 								    </td>
 								    <td>
-								    	<img alt="${requestScope.pilist[i].productImgPath}" src="${pageContext.request.contextPath}/../persfumeAdmin/${requestScope.pilist[i].productImgPath}">
+								    	<img alt="" src="${pageContext.request.contextPath}/../persfumeAdmin/${requestScope.pilist[i].productImgPath}">
 								    </td>
 								    <td>
 								        ${plist[i].productName}
@@ -221,9 +221,9 @@
 									        </div>
 					                    </form>
 								    </td>
-								    
-								</c:forEach>
-					    	</tr>
+                                </tr>
+                            </c:forEach>
+					    	
 					    
 					    </table>
                     </c:otherwise>

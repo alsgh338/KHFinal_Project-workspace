@@ -94,12 +94,12 @@
         	width: 100%;
             height: 60%;
             background-color : rgba(100,100,100,0.5);
-        	border: 1px solid red;
+        	border-radius : 10px 10px 0 0;
         	display: flex;
             position: absolute;
             top : 0;
             left : 0;
-            content: '예약 마감';
+            content: '기간 만료';
             font-size : 50px;
             color : white;
             text-shadow : 0 19px 38px black, 0 15px 12px black;

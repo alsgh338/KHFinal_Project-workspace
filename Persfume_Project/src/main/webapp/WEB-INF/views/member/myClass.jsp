@@ -175,17 +175,18 @@
 					</div>
 	    		</c:when>
 	    		<c:otherwise>
-		    		<table>
+		    		<table class="table">
 				    	<tr>
 				    		<th>번호</th>
 				    		<th width="300">클래스 예약 번호</th>
 				    		<th width="200">클래스 이름</th>
 				    		<th width="150">클래스 일자</th>
-				    		<th width="100">취소</th>
-				    		<th width="100">기능</th>
+				    		<th width="110">취소</th>
+				    		<th width="110">기능</th>
 				    	</tr>
-				    	<tr>
-							<c:forEach var="i" begin="0" end="${fn:length(registlist) - 1}">
+						<c:forEach var="i" begin="0" end="${fn:length(registlist) - 1}">
+				    		<tr>
+							
 							    <td>
 							        ${i + 1}
 							    </td>
@@ -199,12 +200,12 @@
 							        ${classList[i].startTime}
 							    </td>
 						    	<c:choose>
-							    	<c:when test="${classList[i].isFuture eq 'N'}">
+							    	<c:when test="${classList[i].isFuture eq 'Y'}">
 							    		<td>
 							    			<button class="btn btn-sm btn-danger cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">예약 취소</button>
 							    		</td>
 							    		<td>
-							    			<button class="btn btn-sm btn-info" onclick="enrollChat(this);">채팅방 입장</button>
+							    			<button class="btn btn-sm btn-info" onclick="enrollChat(this);">채팅 입장</button>
 							    		</td>
 							    	
 							    	</c:when>
@@ -227,31 +228,13 @@
 						    	
 						    	</c:choose>
 							    
-							</c:forEach>
-				    	</tr>
-				    
+							</tr>
+						</c:forEach>
 				    </table>
 	    		
 	    		</c:otherwise>
 	    	</c:choose>
-	    
-	    	    
-	        <c:forEach var="OneClassRegist" items="${classList}">
-	            <div id="class">
-	                클래스예약번호 : <span id="registNo">${OneClassRegist.registNo}</span>
-	                <a class="cancel-link" data-toggle="modal" data-target="#delete-regist" onclick="deleteRegist(this);">예약 취소</a>
-	             </div>
-	         	</c:forEach>
-	
 	    	</div>
-			<div id="classAboutList">
-				<c:forEach var="OneClass" items="${classAboutList}">
-					<span>${OneClass.className}</span> | 
-					<span>${OneClass.startTime}</span>    
-				<br>
-				</c:forEach>
-			</div>
-	    </div>
 		</div>
 	</div>
 	

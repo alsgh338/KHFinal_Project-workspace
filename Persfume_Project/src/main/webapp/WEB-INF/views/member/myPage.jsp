@@ -148,7 +148,7 @@
 
 }
 
-#update_btn {
+/* #update_btn {
 	background-color: lightgray;
 	border-style: none;
 	width: 110px;
@@ -156,8 +156,7 @@
 	border-radius: 5px;
 	box-sizing: border-box;
 	display: inline-block;
-	
-}
+} */
 
 fieldset {
 	width: 100%;
@@ -350,9 +349,9 @@ fieldset {
 			</table>
 			<br><br>
 				<div id="btn_area">
-					<button type="submit" id="update_btn">회원정보 수정</button>
-					<a id="updatePwd" href="updatePwd.fo">비밀번호 변경</a>
-					<a id="deleteMem" href="" onclick="deleteMem();">회원탈퇴</a>
+					<button class="btn btn-sm btn-secondary" type="submit" id="update_btn">회원정보 수정</button>
+					<a class="btn btn-sm btn-info" id="updatePwd" href="updatePwd.fo">비밀번호 변경</a>
+					<a class="btn btn-sm btn-danger" id="deleteMem" href="" onclick="deleteMem();">회원탈퇴</a>
 				</div>
 			</form>
 		</div>	
