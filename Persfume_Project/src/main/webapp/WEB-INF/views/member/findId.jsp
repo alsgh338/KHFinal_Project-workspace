@@ -37,7 +37,6 @@
         border-radius: 5px;
         text-align: center;
     }
-
     .content-title {
         height: 320px;
         background-color: #0c263f;
@@ -83,16 +82,14 @@
 <body>
     <jsp:include page="../common/header.jsp" />
 <div class="content-title" id="home"></div>
-<br><br><br><br><br>
+<br><br><br><br>
 <div class="content">
     <form action="IDfind.me" method="post">
-        <label for="email">가입시 작성했던 이메일을 입력해주세요</label><br>
-        <input type="text" id="email" name="email" class="input-box" required><br><br>
-        
+        <label for="email"></label><br>
+        <input type="text" id="email" name="email" class="input-box" required placeholder="가입시 작성했던 이메일을 입력해주세요"><br>
 
-        <label for="ID">아이디 </label><br>
-        <input type="text" id="ID" name="findID" value="${ sessionScope.ID }" class="input-box" readonly> <br><br>
 
+        <input type="text" id="ID" name="findID" value="${ sessionScope.ID }" class="input-box" readonly placeholder="아이디"> <br><br>
         <button type="submit" class="button">아이디 찾기</button><br><br>
     </form>
 </div>

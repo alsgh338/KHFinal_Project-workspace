@@ -198,6 +198,15 @@
 			WHERE EMAIL = #{email}
 	</select>
 	
+	<!-- 이메일 존재 여부 체크 -->
+	<select id="selectEmail"
+			parameterType="string"
+			resultType="_int">
+			SELECT COUNT(*)
+				FROM MEMBER
+			WHERE EMAIL = #{email}
+	</select>
+	
 	<!-- 비밀번호 찾기  -->
 	
 	<!-- 아이디가 유효한지 체크 -->

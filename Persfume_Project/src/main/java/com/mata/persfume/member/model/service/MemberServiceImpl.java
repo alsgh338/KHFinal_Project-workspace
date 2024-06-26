@@ -138,6 +138,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.insertVisitCount(sqlSession, today);
 		
 	}
+
+	@Override
+	public int selectEmail(String email) {
+		
+		return memberDao.selectEmail(sqlSession, email);
+	}
 	
 }
 	

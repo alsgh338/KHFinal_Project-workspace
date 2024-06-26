@@ -154,7 +154,15 @@ public class MemberController {
 		
 		System.out.println(certNoList);
 		System.out.println("이메일 : " + email);
+		
+		int result = memberService.selectEmail(email);
 
+		if(result > 0) {
+			
+			return "이미 존재하는 이메일입니다.";
+			
+		}else {
+		
 		MimeMessage message = mailSender.createMimeMessage();
 		
 		
@@ -186,6 +194,7 @@ public class MemberController {
 		
 		
 		return "이메일 전송 성공!!";
+		}
 		
 //		------------------------------------------------------------
 		/*
@@ -454,11 +463,21 @@ public class MemberController {
 		
 		String result = memberService.IDfind(email);
 		
+		if(result == null) {
+			
+			System.out.println("이런 이메일 없는데?");
+			
+			return "redirect:/findId.me";
+			
+		}else {
+	
 		System.out.println("아이디 찾기 성공했나 ? : " + result );
 		
 		session.setAttribute("ID", result);
 		
 		return "redirect:/findId.me";
+		}
+		
 	}
 	
 	@GetMapping("findPwd.me")
@@ -473,6 +492,8 @@ public class MemberController {
 		
 		// 임시 비밀번호 생성 10자리 
 		String randomString = RandomStringUtils.randomAlphanumeric(10);
+		
+		System.out.println("임시 비밀번호 "+ randomString);
 		
 		// 발급한 인증번호를 사용자에게 그냥 넘기는게 아니라
 		// MEMEBR 테이블의 비밀번호 값을 임시 비밀번호로 바꿔주어야한다

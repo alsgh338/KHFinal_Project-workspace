@@ -4,14 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>비밀번호 변경</title>
 <style>
-    .font {
-        font-family: "Nanum Gothic", sans-serif;
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f1f1;
+        margin: 0;
+        padding: 0;
     }
-    
+
     .content-title {
+
         height: 320px;
         background-color: #0c263f;
         background-size: cover;
@@ -24,79 +28,85 @@
             black;
         color: white;
         width: 100%;
+        margin-bottom: 20px;
+        
     }
-    
-    .content-subtitle, .content-main {
-        width: 1400px;
+
+    #outer {
+        max-width: 1000px;
+        margin: auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    
-    .content-subtitle {
-        line-height: 150px;
-        font-size: 30px;
-        font-weight: 600;
-    }
-    
-    .content-main {
-        display: inline-block;
+
+    #updatePwdformDiv {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        background-color: #ffffff;
+        /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+        border-radius: 5px;
         text-align: center;
     }
-    
-    #outer {
-        width: 1000px;
-        /* border: 1px solid red; */
-        margin: auto;
-        box-sizing: border-box;
-        text-align: center; /* 버튼을 가운데로 정렬하기 위한 설정 */
-    }
 
-    
-    #ID{
-        padding-left: 15px;
-    }
-
-    #updatePwdformDiv{
-        width: 500px;
-        height: 200px;
-        margin: auto;
-    }
-
-    #loginform{
-        width: 100%;
-        height: 100%;
-        margin: auto;
-        border : solid;
-        padding-top: 40px;
-    }
-
-    #update_btn {
-        background-color: #0c263f;
-        color: white;
-        width: 150px;
-        height: 32px;
-        margin-top: 10px;
+    #loginform {
+        padding: 20px;
+        /* border: 1px solid #e0e0e0; */
         border-radius: 5px;
-        box-sizing: border-box;
-        display: inline-block;
+        /* background-color: #f9f9f9; */
     }
 
-    
-    </style>
+    input[type="text"], input[type="password"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
 
+    button[type="submit"] {
+        background-color: #4285f4;
+        color: white;
+        width: 100%;
+        padding: 12px 20px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #357ae8;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .content-title {
+            font-size: 40px;
+        }
+        input[type="text"], input[type="password"], button[type="submit"] {
+            width: 100%;
+        }
+    }
+</style>
 </head>
 <body>
-    <jsp:include page="../common/header.jsp" />
-<div class="content-title" id="home"></div>
+<jsp:include page="../common/header.jsp" />
+<div class="content-title">비밀번호 변경</div>
 <div id="outer">
     <div id="updatePwdformDiv">
         <form action="updatePwd.me" method="post" id="loginform">
-        &nbsp; &nbsp; 현재 비밀번호를 입력하세요 : <input type="text" id="randomPwd" name="randomPwd">
-        <br><br>
-        새로운 비밀번호를 입력하세요 : <input type="password" id="newPwd" name="newPwd">
+            현재 비밀번호를 입력하세요 : <input type="text" id="randomPwd" name="randomPwd"><br><br>
+            새로운 비밀번호를 입력하세요 : <input type="password" id="newPwd" name="newPwd">
 
-        <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
-        <input type="hidden" name="memPwd" value="${ sessionScope.loginMember.memPwd }">
-        <br>
-        <button type="submit" id="update_btn">비밀번호 변경</button>
+            <input type="hidden" name="memNo" value="${ sessionScope.loginMember.memNo }">
+            <input type="hidden" name="memPwd" value="${ sessionScope.loginMember.memPwd }">
+            <br>
+            <button type="submit">비밀번호 변경</button>
         </form>
     </div>
 </div>

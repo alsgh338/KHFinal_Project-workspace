@@ -109,4 +109,9 @@ public class MemberDao {
 	public int insertVisitCount(SqlSessionTemplate sqlSession,Date today) {
 		return sqlSession.insert("memberMapper.insertVisitCount", today);
 	}
+
+	public int selectEmail(SqlSessionTemplate sqlSession, String email) {
+		
+		return sqlSession.selectOne("memberMapper.selectEmail", email);
+	}
 }

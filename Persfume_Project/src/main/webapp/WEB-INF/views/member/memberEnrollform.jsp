@@ -867,14 +867,22 @@ fieldset {
 					},
 					success : function(result) {
 						alert(result);
+						if(result == '이미 존재하는 이메일입니다.'){
 
-						// 인증번호 발급 후 인증 관련 요소들 활성화
-						$("#checkNo").attr("disabled", false);
-						$("#validate").attr("disabled", false);
+							// 인증번호 발급 후 인증 관련 요소들 활성화
+							$("#checkNo").attr("disabled", true);
+							$("#validate").attr("disabled", true);
 
-						// 이메일 인증번호 보내기 관련 요소들 비활성화
-						$("#email").attr("readonly", true);
-						$("#cert").attr("disabled", true);
+						}else{
+							// 이메일 인증번호 보내기 후 관련 요소들 비활성화
+							$("#email").attr("readonly", true);
+							$("#cert").attr("disabled", true);
+							$("#checkNo").attr("disabled", false);
+							$("#validate").attr("disabled", false);
+						
+					
+						}
+					
 					},
 					error : function() {
 						console.log("인증번호 발급용 ajax 통신 실패!");

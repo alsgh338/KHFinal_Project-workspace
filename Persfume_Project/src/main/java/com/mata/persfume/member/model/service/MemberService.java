@@ -47,4 +47,6 @@ public interface MemberService {
 
 	int insertVisitCount(Date today);
 
+	int selectEmail(String email);
+
 }
