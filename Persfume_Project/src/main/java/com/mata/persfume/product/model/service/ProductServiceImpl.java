@@ -315,16 +315,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.deleteFavorite(sqlSession, f);
 	}
 
-<<<<<<< Updated upstream
 	@Override
 	public String countFavorite(int pno) {
 		return productDao.countFavorite(sqlSession, pno);
-=======
-
-	public String countFavorite(int pno) {
-		return productDao.countFavorite(sqlSession, pno);
-
->>>>>>> Stashed changes
 	}
 
 

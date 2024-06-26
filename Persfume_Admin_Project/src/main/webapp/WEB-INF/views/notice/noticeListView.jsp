@@ -141,12 +141,6 @@
                     </div>
                 </div>
                 
-                  <script>
-                    <c:if test="${not empty sessionScope.alertMsg}">
-                        alert("${sessionScope.alertMsg}");
-                        <c:remove var="alertMsg" scope="session" />
-                    </c:if>
-                </script>
                 <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->

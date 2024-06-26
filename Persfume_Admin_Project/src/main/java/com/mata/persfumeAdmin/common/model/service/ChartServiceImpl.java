@@ -31,7 +31,7 @@ public class ChartServiceImpl implements ChartService {
 
 	@Override
 	public int dailyAccess() {
-		return 0;
+		return chartDao.dailyAccess(sqlSession);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class ChartServiceImpl implements ChartService {
 
 	@Override
 	public ArrayList<Chart> scentSale(String note) {
-		return chartDao.scentSale(sqlSession);
+		return chartDao.scentSale(sqlSession, note);
 
 	}
 

@@ -323,7 +323,7 @@
 			<div id="content_1" style=" margin-top:10px; color:navy; font-size:20px">주문/결제</div>
             <hr>
             <div id="content_2">
-                <div id="c2_1"><img src="${ requestScope.pi.productImgPath}"></div>
+                <div id="c2_1"><img src="../persfumeAdmin/${ requestScope.pi.productImgPath}"></div>
                 <div id="c2_2">${ requestScope.p.productName }</div>                                                            
                 <div id="c2_3">선택수량 :  ${ requestScope.pCount }개</div> 
                 <div id="c2_4"><fmt:formatNumber value="${ requestScope.p.productPrice }" type="number"/>원</div> 

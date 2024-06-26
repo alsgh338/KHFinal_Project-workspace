@@ -53,6 +53,8 @@ public class ChartController {
 		
 		ArrayList<Chart> list = chartService.weekAccess(); 
 		
+		System.out.println("week" + list);
+		
 		return list;
 	}
 	
@@ -62,7 +64,7 @@ public class ChartController {
 		
 		ArrayList<OrderDetail> list = chartService.weekSales(); 
 		
-		System.out.println(list);
+		System.out.println("weekSale" + list);
 		
 		return list;
 	}
@@ -73,7 +75,7 @@ public class ChartController {
 		
 		ArrayList<Chart> list = chartService.scentSale(note);
 		
-		System.out.println(list);
+		System.out.println("scentSale" +list);
 		
 		return list;
 	}
@@ -83,7 +85,7 @@ public class ChartController {
 	public ArrayList<Chart> productStock(){	
 		ArrayList<Chart> list = chartService.productStock();
 		
-		System.out.println(list);
+		System.out.println("product" + list);
 		
 		return list;
 	}
@@ -92,7 +94,7 @@ public class ChartController {
 	@ResponseBody
 	public ArrayList<Integer> monthRefund(){	
 		ArrayList<Integer> list = chartService.monthRefund();
-		System.out.println(list);
+		System.out.println("monthRefund"+list);
 		return list;
 	}
 	

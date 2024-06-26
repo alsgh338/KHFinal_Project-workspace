@@ -70,7 +70,7 @@
 			  FROM PRODUCT P
 			  JOIN PRODUCT_IMG PI ON P.PRODUCT_NO = PI.PRODUCT_NO
 			 WHERE P.PRODUCT_NO = #{productNo}
-			  -- AND PI.IMG_TYPE = 1
+			   AND PI.IMG_TYPE = 1
 	</select>
 	
 	<!-- 상품 추가 -->

@@ -167,6 +167,8 @@ public class OneClassController {
 	@PostMapping(value="regist.oc", produces="text/html; charset=UTF-8")
 	public String insertOneClassReigst(OneClassRegist ocr)  throws Exception{
 		
+		System.out.println(ocr);
+		
 		OneClass oc = oneClassService.selectOneClass(ocr.getClassNo());
 				
 		if( oc.getCurrentStudent() >= oc.getStudentMaxNo()) {

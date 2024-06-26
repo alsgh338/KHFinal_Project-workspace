@@ -53,11 +53,12 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+            
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.jsp">
+                <a class="nav-link" href="../persfume">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Home Page</span></a>
             </li>
 
 			<!-- 새로운 네비게이션 바 (Toggle X version)를 추가하고 싶다면 여기서부터 선택  -->
@@ -88,7 +89,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="list.co">
-                    <i class="fas fa-fw fa-laugh-beam"></i>
+                    <i class="fas fa-fw fa-wrench"></i>
                     <span>쿠폰 관리</span>
                 </a>
             </li>
@@ -185,7 +186,7 @@
              <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#event-ad-menu"
                     aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-chart-bar"></i>
+                    <i class="fas fa-fw fa-wrench"></i>
                     <span>이벤트 관리</span>
                 </a>
                 <div id="event-ad-menu" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -201,7 +202,7 @@
              <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#oneClass-ad-menu"
                     aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-car-side"></i>
+                    <i class="fas fa-fw fa-wrench"></i>
                     
                     <span>원데이 클래스 관리</span>
                 </a>

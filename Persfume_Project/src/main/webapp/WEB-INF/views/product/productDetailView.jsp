@@ -103,12 +103,14 @@
         #c1 img{
             width: 85%;
             height: 95%;
-            margin-right: 25px;           
+            margin-right: 25px;
+            object-fit:cover;           
         }
         #c2 img{
-        width: 175px;
-        height: 145px;
-        margin: 13px;
+	        width: 175px;
+	        height: 145px;
+	        margin: 13px;
+         object-fit:cover;
         }
         #c3 {
             width: 100%;
@@ -429,14 +431,14 @@
             <div id="content_1" >
                 <div id="content_1L">
                     <div id="c1">
-                        <img id="img4" src="${ requestScope.pi.productImgPath }" alt="이미지">
+                        <img id="img4" src="../persfumeAdmin/${ requestScope.pi.productImgPath }" alt="이미지">
                     </div>
                     <div id="c2">
                           
                        <c:forEach var="i" items="${ requestScope.pilist }" varStatus="status">
-               			     <img id="img${status.count}" src="${i.productImgPath}" alt="이미지">
+               			     <img id="img${status.count}" src="../persfumeAdmin/${i.productImgPath}" alt="이미지">
                    	   </c:forEach>
-                   	   		 <img id="img3"  src="${ requestScope.pi.productImgPath }" alt="이미지">
+                   	   		 <img id="img3"  src="../persfumeAdmin/${ requestScope.pi.productImgPath }" alt="이미지">
                     </div>               
                 </div>
                <div id="content_1R">

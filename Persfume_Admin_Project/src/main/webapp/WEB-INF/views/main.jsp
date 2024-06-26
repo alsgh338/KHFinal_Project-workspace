@@ -382,10 +382,8 @@
 			url : "weekAccess",
 			type : "post",
 			success : function (list) {
-				for(let i in list){    	
-					visitorList.push(list[i]);
-					
-				}
+				
+				
 				let TODAY = list[6].visitCount;
 				let one = list[5].visitCount;
 				let two = list[4].visitCount;
@@ -393,7 +391,11 @@
 				let four = list[2].visitCount;
 				let five = list[1].visitCount;
 				let six = list[0].visitCount;
-				drawChart(six, five, four, three, two, one ,TODAY);
+				
+				console.log(list[6].visitCount);
+
+				
+				drawVisitorChart(six, five, four, three, two, one ,TODAY);
 			} ,
 			error : function () {
 				
@@ -421,46 +423,12 @@
 			} 
 		});
 
-		// 향 별 매출 현황
-		$.ajax({
-			url : "totalMember",
-			type : "post",
-			success : function (result) {
-				$("#totalMember").text(result);
-			} ,
-			error : function () {
-				
-			} 
-		});
-
-		// 재고 부족 상품 현황 TOP 5
-		$.ajax({
-			url : "totalMember",
-			type : "post",
-			success : function (result) {
-				$("#totalMember").text(result);
-			} ,
-			error : function () {
-				
-			} 
-		});
-
-		// 이번 달 환불 현황
-		$.ajax({
-			url : "totalMember",
-			type : "post",
-			success : function (result) {
-				$("#totalMember").text(result);
-			} ,
-			error : function () {
-				
-			} 
-		});
 		
 		
-    	function drawChart(six, five, four, three, two, one ,TODAY) { 
+		
+    	function drawVisitorChart(six, five, four, three, two, one ,TODAY) { 
     		
-    		
+    		console.log("뭐");
     		/* 접속자 추이 그래프 템플릿 */
         	var areactx = document.getElementById("visitor-chart-area");
     		var myLineChart = new Chart(areactx, {
@@ -794,7 +762,8 @@
 				url : "MonthRefund",
 				type : "post",
 				success : function (list) {
-					for(let i in list){    	
+					for(let i in list){
+						console.log(list);
 						MonthRefund.push(list[i]);
 						drawChart();
 					}

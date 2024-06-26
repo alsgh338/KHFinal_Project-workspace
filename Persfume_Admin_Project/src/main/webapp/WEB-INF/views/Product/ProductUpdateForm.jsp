@@ -311,6 +311,7 @@
 			      const deleteBtn = document.createElement('div');
 			      const btnImage = document.createElement('img');
 			      
+			      console.log("anj");
 			      
 			      btnImage.setAttribute('src', 'resources/img/x-circle.svg');
 			      btnImage.setAttribute('onClick','deleteImg(this);');

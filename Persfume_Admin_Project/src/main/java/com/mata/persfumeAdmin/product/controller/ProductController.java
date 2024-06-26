@@ -131,6 +131,8 @@ public class ProductController {
 		
 		ArrayList<Product> list = productService.selectProduct(productNo);
 		
+		System.out.println("상품 수정 리스트"+list);
+		
 		ArrayList<ProductImg> pilist = productService.selectProductpi(productNo);
 		
 		// 상품 수정하기 페이지용 - 한개의 제품만 보여져야함

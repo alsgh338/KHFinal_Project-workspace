@@ -174,7 +174,7 @@
                     <c:when test="${empty requestScope.relist}">
                         <div id="oneclass-not-found">
                             <img alt="힝..." src="resources/images/error-sad.png"> <br>
-                            <h1>찜 목록이 존재하지 않습니다.</h1>
+                            <h1>작성한 리뷰가 존재하지 않습니다.</h1>
                         </div>
                     </c:when>
                     <c:otherwise>

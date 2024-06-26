@@ -570,7 +570,7 @@
 		
             <div class="oneday-class" name="${p.productNo}">
                 <div class="class-img">
-                    <img src="${ilist[status.index].productImgPath}" alt="상품이미지">
+                    <img src="../persfumeAdmin/${ilist[status.index].productImgPath}" alt="상품이미지">
                 </div>
 
                 <div class="class-data">

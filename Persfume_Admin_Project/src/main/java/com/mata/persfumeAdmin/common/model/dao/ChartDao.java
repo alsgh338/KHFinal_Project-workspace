@@ -58,7 +58,7 @@ public class ChartDao {
 		
 		
 		int refundProduct = sqlSession.selectOne("chartMapper.monthRefundProduct");
-		list.add(refundClass);
+		list.add(refundProduct);
 		
 		
 		
