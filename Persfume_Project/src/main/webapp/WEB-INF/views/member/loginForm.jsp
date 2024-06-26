@@ -55,40 +55,70 @@
 	padding-left: 15px;
 }
 
-#loginformDiv{
-	width: 500px;
-	height: 200px;
-	margin: auto;
-}
+.content {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        text-align: center;
+ }
 
-#loginform{
-	width: 100%;
-	height: 100%;
-	margin: auto;
-	border : solid;
-	padding-top: 40px;
-}
+ .input-box {
+        width: calc(100% - 40px);
+        max-width: 300px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+	.button {
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        padding: 6px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-#login_btn {
-	background-color: #0c263f;
-	color: white;
-	width: 100px;
-	height: 32px;
-	margin-top: 10px;
-	border-radius: 5px;
-	box-sizing: border-box;
-	display: inline-block;
-}
+	/* #loginform{
+		width: 100%;
+		height: 100%;
+		margin: auto;
+		border : solid;
+		padding-top: 40px;
+	} */
 
-#findId {
-	text-decoration: none; /* 링크의 밑줄 제거 */  
-	color: inherit; /* 링크의 색상 제거 */
-}
+	/* #login_btn {
+		background-color: #0c263f;
+		color: white;
+		width: 100px;
+		height: 32px;
+		margin-top: 10px;
+		border-radius: 5px;
+		box-sizing: border-box;
+		display: inline-block;
+	} */
 
-#findPwd {
-	text-decoration: none; /* 링크의 밑줄 제거 */  
-	color: inherit; /* 링크의 색상 제거 */
-}
+	#findId {
+		text-decoration: none; /* 링크의 밑줄 제거 */  
+		color: inherit; /* 링크의 색상 제거 */
+	}
+
+	#findPwd {
+		text-decoration: none; /* 링크의 밑줄 제거 */  
+		color: inherit; /* 링크의 색상 제거 */
+	}
+
+	#IDCheck{
+		
+		padding-right: 100px;
+	}
 
 
 </style>
@@ -102,12 +132,13 @@
 <div id="outer">
 	<br><br>
 	<br>
-	<div id="loginformDiv">
+	<div class="content">
 		<form action="login.me" method="post" id="loginform">
 			<div id="ID">
-				아이디 : <input type="text" id="memId" name="memId" value="${ cookie.saveId.value }">
-				<br>
-				<!-- 만약 saveId 라는 쿠키가 있다면 : 체크박스가 체크되게끔 -->
+				아이디 : <input type="text" id="memId" name="memId" class="input-box" value="${ cookie.saveId.value }">
+			</div>
+			<!-- 만약 saveId 라는 쿠키가 있다면 : 체크박스가 체크되게끔 -->
+			<div id="IDCheck">
 				<c:choose>
 					<c:when test="${ not empty cookie.saveId }">
 						<!-- 만약 saveId 라는 쿠키가 있다면 : 체크박스가 체크되게끔 -->
@@ -122,12 +153,12 @@
 				</c:choose>
 			</div>
 			<div id="PWD">
-				비밀번호 : <input type="text" id="memPwd" name="memPwd">
+				비밀번호 : <input type="password" id="memPwd"  class="input-box" name="memPwd">
 			</div>
 			
-				<a id="findId" href="" onclick="findId();">아이디 찾기</a>
+				<a id="findId" href="" onclick="findId();">아이디 찾기 | </a>
 				<a id="findPwd" href="" onclick="findPwd();" >비밀번호 찾기</a>
-				<button type="submit" id="login_btn">로그인</button>
+				<button type="submit" id="login_btn" class="button">로그인</button>
 		
 		</form>
 	</div>
