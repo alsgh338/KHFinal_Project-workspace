@@ -4,6 +4,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,313 +12,206 @@
     <meta name="author" content="">
 
     <title>Persfume Admin - Notice</title>
-    <link rel="icon" href="resources/vendor/fontawesome-free/svgs/solid/cogs.svg">
+<link rel="icon" href="resources/vendor/fontawesome-free/svgs/solid/cogs.svg">
+    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-    <style>
-     .content-area,
-        .content-area>div:not(.content-main){
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    
+     <style>
+       #sb-btn{
           display: flex;
-          flex-direction: column;
+          justify-content: end;
+       }
+       
+       td>div{
+          position : relative;
+          width:100%;
+          height: 400px;
+          border-radius: 10px;
+          border: 3px dashed gray;
+          display: flex;
           justify-content: center;
           align-items: center;
-          background-color:white;
-        }
-
-        /* 여기서부턴 공통 스타일? (아마도) */
-
-        .content-title{
-            height: 320px;
-           background: url(resources/images/공지사항.jpg);
-            background-size: cover;
-            background-position: center;
-            object-fit: cover;
-            text-align: center;
-            line-height: 320px;
-            font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
-            color: white;
-            width: 100%;
-        }
-
-        .content-subtitle,
-        .content-main
-        {
-            width: 1400px;
-        }
-        
-
-        .content-subtitle{
-            line-height: 150px;
-            font-size: 30px;
-            font-weight: 600;
-        }
-
-        .content-main{
-            display: inline-block;
-            text-align: center;
-        }
-        /* 여기에 CSS 스타일을 복사하여 붙여넣으세요 */
-        
-        .bbs-tit {
-            margin-top: 60px;
-        }
-
-        .bbs-tit h3 {
-            text-align: center;
-            font-size: 16px;
-            color: #000000;
-            font-weight: bold;
-            line-height: 30px;
-        }
-
-        /* 단순화된 CSS 스타일 */
-        html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, img {
-            margin: 0;
-            padding: 0;
-        }
-
-        * {
-            -webkit-font-smoothing: antialiased;
-            -webkit-text-size-adjust: none;
-        }
-
-        div {
-            display: block;
-            unicode-bidi: isolate;
-        }
-
-        body, h1, h2, h3, h4, h5, h6, table, select, textarea, a, p {
-            font-family: 'Pretendard', "Noto Sans KR", "Roboto", Dotum, AppleGothic, Helvetica, sans-serif;
-            font-size: 14px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border-spacing: 0;
-            table-layout: fixed;
-            word-wrap: break-word;
-            word-break: keep-all;
-        }
-
-        /* 제목과 파일 스타일 */
-        .bbs-table-write .input_style2 {
-            width: 700px;
-        }
-
-        .bbs-table-write tbody th {
-            padding-left: 30px;
-            font-size: 14px;
-            font-weight: normal;
-            background: #f8f8f8;
-            text-align: center; /* 가운데 정렬 추가 */
-        }
-
-        .bbs-table-write tbody th div {
-            text-align: center; /* div 요소의 가운데 정렬 추가 */
-        }
-
-        /* textarea 스타일 */
-        textarea {
-            color: #1c1c1c;
-            line-height: 1.25;
-            word-wrap: break-word;
-            word-break: keep-all;
-            border-spacing: 0;
-            border-collapse: collapse;
-            font-family: 'Pretendard', "Noto Sans KR", "Roboto", Dotum, AppleGothic, Helvetica, sans-serif;
-            font-size: 14px;
-            -webkit-font-smoothing: antialiased;
-            -webkit-text-size-adjust: none;
-            width: 700px;
-            height: 328px !important; /* 높이 강제 적용 */
-            padding: 2px;
-            border: 1px solid #EDEDED;
-            resize: none;
-        }
- .bbs-table-write {
-        margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
-        width: 800px; /* 테이블의 최대 너비 설정 */
-    }
-        .bbs-table-write tbody th, .bbs-table-write tbody td {
-            padding: 13px 0;
-            text-align: left;
-            border-bottom: 1px solid #e9e9e9;
+       }
+       
+       td img{
+          position : relative;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+            background-color: transparent;
+       }
+       
+       td>div>div{
+            background-color: transparent;
+            margin : 0;
+            padding : 0;
+          border : none;
+          border-radius : 50%;
+          width: 30px;
+          height: 30px;
+          position : absolute;
+          right: 0;
+          top: 0;
+          z-index: 999;
+       }
+       
+       td>div>div:hover{
+          background-color:lightgray;
+       }
+       
+         .uploadImg>img{
+            width: 60px;
+            height: 60px;
+            background-color: transparent;
+            border-radius: 50px;
+            border: none;
         }
         
-        .bbs-table-write .MS_input_txt {
-            
-            height: 38px;
-            line-height: 31px;
-            border: 1px solid #ddd;
-            background: #fff;
+        .uploadImg:hover{
+           background-color: lightgray;
         }
-
-        .bbs-table-write tbody td {
-            padding: 13px 10px;
-        }
-
-        .bbs-table-write .btn_file {
-            display: inline-block;
-            margin-left: -1px;
-            padding: 0 5px;
-            height: 31px;
-            font-size: 11px;
-            line-height: 31px;
-            border: 1px solid #e4e4e5;
-            background: #f5f5f5;
-            text-decoration: none; /* 밑줄 제거 */
-        }
-
-        /* 버튼 */
-        #bbsData .bbs-link-btm {
-            margin-top: 40px;
-            text-align: center;
-        }
-        #bbsData .bbs-link-btm a {
-            width: 228px;
-            height: 58px;
-            font-size: 16px;
-            line-height: 58px;
-            text-decoration: none; /* 밑줄 제거 */
-        }
-
-        .CSSbuttonBlack {
-            display: inline-block;
-            color: #fff;
-            text-align: center;
-            border: 1px solid #231f20;
-            background: #231f20;
-            transition: all 0.3s ease;
-            text-decoration: none; /* 밑줄 제거 */
-        }
-
-        .CSSbuttonWhite {
-            display: inline-block;
-            color: #1d1b1b;
-            text-align: center;
-            border: 1px solid #dbdbdb;
-            background: #fff;
-            transition: all 0.3s ease;
-            text-decoration: none; /* 밑줄 제거 */
-        }
-
-        body, h1, h2, h3, h4, h5, h6, table, pre, xmp, plaintext, listing, input, textarea, select, button, a {
-            font-size: 13px;
-            color: #1c1c1c;
-            line-height: 1.25;
-            font-family: 'Pretendard', 'Poppins', 'Noto Sans KR', sans-serif, Dotum, "돋움", DotumChe, "돋움체", Verdana, monospace, Corbel, AppleGothic, Helvetica;
-        }
-          
-          
-      
         
     </style>
+
 </head>
 
 <body id="page-top">
+
+    <!-- Page Wrapper -->
     <div id="wrapper">
-        <%@ include file="../common/adminNav.jsp" %>
+
+        <jsp:include page="../common/adminNav.jsp"/>
+
+        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
             <div id="content">
-                <%@ include file="../common/adminTop.jsp" %>
-                <div class="content-area">
-                    <div id="contentWrapper">
-                        <div id="contentWrap">
-                            <div id="content">
-                                <div id="bbsData">
-                                    <div class="page-body">
-                                        <div class="bbs-tit">
-                                            <h3>공지글 수정하기</h3>
-                                        </div>
-                                        <div class="bbs-table-write">
-                                            <form name="adUpdateForm" action="adUpdate.no" method="post" enctype="multipart/form-data" style="position:relative;" autocomplete="off">
-                                                <input type="hidden" name="noticeNo" value="${ requestScope.n.noticeNo }">
-                                                <table align="center">
-                                                    <colgroup>
-                                                        <col width="135">
-                                                        <col width="*">
-                                                    </colgroup>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th><div>제목</div></th>
-                                                            <td colspan="3">
-                                                                <div class="title">
-                                                                    <input id="bw_input_subject" class="MS_input_txt input_style2" value="${requestScope.n.noticeTitle }" type="text" name="noticeTitle" required>
-                                                                    <div class="title_select"></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th><div>내용</div></th>
-                                                            <td colspan="3" class="text_content">
-                                                                <div>
-                                                                    <textarea id="MS_text_content" name="noticeContent" wrap="off" onfocus="clear_content()" class="MS_input_txt" style="font-family:굴림체;" style="resize:none;" required>${requestScope.n.noticeContent}</textarea>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th><div>파일</div></th>
+
+               <jsp:include page="../common/adminTop.jsp"/>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">공지사항 수정</h1>
+
+               <!-- Content Row -->
+                    <div class="row">
+
+                        <div class="col-xl-12 col-lg-7">
+
+                            <!-- Area Chart -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">공지글 수정</h6>
+                                </div>
+                                <div class="card-body">
+                                   <form name="adUpdateForm"  action= "adUpdate.no" method="post" enctype="multipart/form-data">
+                                      <input type="hidden" name="noticeNo" value="${ requestScope.n.noticeNo }">
+
+                                      <table class="table">
+                                         <tr>
+                                            <th>제목</th>
+                                            <td colspan="3">
+                                               <input type="text" id="title" class="form-control form-control-user" name="noticeTitle" value="${requestScope.n.noticeTitle }" name="noticeTitle" required >
+                                              </td>
+                                              
+                                              <th>조회수</th>
+                                            <td>
+                                               ${requestScope.n.count}
+                                              </td>
+                                           </tr>   
+                                         <tr>
+                                               
+                                                            <th>파일</th>
                                                             <td colspan="4">
-                                                                <div>
-                                                                    <input type="file" id="bw_input_file" class="MS_input_txt input_style2" name="reupfile">
-                                                                </div>     
-                                                                <c:if test="${not empty requestScope.n.noticeImgOrigin}">
-                                                                    현재 업로드된 파일 :
-                                                                    <a href="${requestScope.n.noticeImgChange}" download="${requestScope.n.noticeImgOrigin}">
-                                                                        ${requestScope.n.noticeImgOrigin}
-                                                                    </a>
-                                                                    <input type="hidden" name="noticeImgOrigin" value="${requestScope.n.noticeImgOrigin}">
-                                                                    <input type="hidden" name="noticeImgChange" value="${requestScope.n.noticeImgChange}">
-                                                                </c:if>
-                                                            </td>
+                                                                  <a class="form-control" name="upfile" required  style="resize: none;" href="${n.noticeImgChange}">${n.noticeImgOrigin} </a>
+                                            </td>
+                                            <td>
+                                               <input type="file" accept="image/png, image/jpeg"  required id="reupfile" class="form-control-file" name="reupfile" >
+                                              </td>
                                                         </tr>
-                                                    </tbody>
-                                                </table>
-                                                <dl class="bbs-link bbs-link-btm">
-                                                    <dt></dt>
-                                                    <dd>
-                                                        <a href="javascript:void(0);" class="CSSbuttonBlack" onclick="submitForm();">수정하기</a>
-                                                        <a href="/persfumeAdmin/adList.no" class="CSSbuttonWhite">뒤로가기</a>
-                                                    </dd>
-                                                </dl>
-                                            </form>
-                                        </div><!-- .bbs-table-write -->
-                                    </div><!-- .page-body -->
-                                </div><!-- #bbsData -->
-                            </div><!-- #content -->
-                        </div><!-- #contentWrap -->
-                    </div><!-- #contentWrapper -->
-                </div><!-- .content-area -->
-            </div><!-- #content -->
-        </div><!-- #content-wrapper -->
-    </div><!-- #wrapper -->
+                                         
+                                      
+                                         <tr>
+                                            <th colspan="1"> 내용</th>
+                                            <td colspan="11">
+                                               <textarea class="form-control" rows="20" name="noticeContent" style="resize: none;">${requestScope.n.noticeContent}</textarea>
+                                              </td>
+                                         </tr>
+                                         
+                                         
+                                      </table>
+                                       
+                                       <hr>
+                                       <div id="sb-btn">
+                                         <button type="submit" class="btn btn-sm btn-primary">수정하기</button>
 
-    <!-- JavaScript Section -->
-   <script>
-        function submitForm() {
-            var title = document.getElementById('bw_input_subject').value.trim();
-            var content = document.getElementById('MS_text_content').value.trim();
+                              </div>                                    
+                                   </form>
+                                </div>
+                            </div>
 
-            if (title === '') {
-                alert('제목을 입력해주세요.');
-                return;
-            }
+                        </div>
+                    </div>   
 
-            if (content === '') {
-                alert('내용을 입력해주세요.');
-                return;
-            }
+                </div>
+                <!-- /.container-fluid -->
 
-            // 폼 제출
-            document.adUpdateForm.submit();
+            </div>
+            <!-- End of Main Content -->
+            
+            
 
-           
-        }
-    </script>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; DongNet Since 2024</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
+
 </html>

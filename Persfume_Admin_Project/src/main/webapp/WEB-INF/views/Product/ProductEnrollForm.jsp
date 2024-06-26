@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="card-body">
 	                                <form action="insert.po" method="post" enctype="multipart/form-data">
-	                                	<table class="table" border="1px">
+	                                	<table class="table" >
 	                                		<tr>
 	                                			<th colspan="2">상품 이름</th>
 	                                			<td colspan="2">

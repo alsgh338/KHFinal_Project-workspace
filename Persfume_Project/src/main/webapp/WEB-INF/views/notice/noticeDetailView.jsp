@@ -130,7 +130,7 @@
             border-top: 1px solid #ccc; /* 구분선의 두께와 색상을 조정 */
            
             margin-bottom: 20px; /* 구분선 아래 여백 추가 */
-            width: 1000px; /* 가로 길이를 100%로 설정하여 전체 너비에 맞춤 */
+            width:100%; /* 가로 길이를 100%로 설정하여 전체 너비에 맞춤 */
         }
 
         .btn-normal {
