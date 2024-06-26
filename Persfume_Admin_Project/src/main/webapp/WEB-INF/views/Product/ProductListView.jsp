@@ -125,15 +125,21 @@
 					                                    </a>
 		                                            </td>
 		                                            <td>
-			                                            <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check" onclick="delProduct(this);">
-					                                        <span class="icon text-white-50">
-					                                            <i class="fas fa-trash"></i>
-					                                        </span>
-					                                        <span class="text">상품 삭제</span>
-					                                    </a>
+                                                        <c:choose>
+                                                            <c:when test="${item.productStatus eq 'Y'}">
+                                                                <a class="btn btn-danger btn-sm btn-icon-split delete-parking" data-toggle="modal" data-target="#delete-check" onclick="delProduct(this);">
+                                                                    <span class="icon text-white-50">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </span>
+                                                                    <span class="text">상품 삭제</span>
+                                                                </a>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                삭제 완료
+                                                            </c:otherwise>
+                                                        </c:choose>
 		                                            </td>
 	                                            </tr>
-				                    		   
 		                    		    </c:forEach>
                                      
                                     </tbody>
