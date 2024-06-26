@@ -5,14 +5,39 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Google Style Page</title>
 
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
+<!-- CSS Styles -->
 <style>
-    .font {
-        font-family: "Nanum Gothic", sans-serif;
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        color: #333;
     }
-    
+
+    .header {
+        background-color: #4285f4;
+        color: white;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .content {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        text-align: center;
+    }
+
     .content-title {
         height: 320px;
         background-color: #0c263f;
@@ -22,50 +47,53 @@
         text-align: center;
         line-height: 320px;
         font-size: 50px;
-        text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px
-            black;
+        text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
         color: white;
-        width: 100%;
+        margin-bottom: 20px;
     }
-    
-    .content-subtitle, .content-main {
-        width: 1400px;
-    }
-    
-    .content-subtitle {
-        line-height: 150px;
-        font-size: 30px;
-        font-weight: 600;
-    }
-    
-    .content-main {
-        display: inline-block;
-        text-align: center;
-    }
-    
-    #outer {
-        width: 1000px;
-        /* border: 1px solid red; */
-        margin: auto;
-        box-sizing: border-box;
-        text-align: center; /* 버튼을 가운데로 정렬하기 위한 설정 */
-    }
-    
-    </style>
 
+    .input-box {
+        width: calc(100% - 40px);
+        max-width: 400px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .button {
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+        background-color: #3c78dc;
+    }
+</style>
 </head>
 
 <body>
-
-<jsp:include page="../common/header.jsp" />
+    <jsp:include page="../common/header.jsp" />
 <div class="content-title" id="home"></div>
-    <div id="outer">
+<br><br><br><br><br>
+<div class="content">
     <form action="IDfind.me" method="post">
-    가입 시 입력했던 이메일을 입력해주세요 : <input type="text" id="email" name="email">
+        <label for="email">가입시 작성했던 이메일을 입력해주세요</label><br>
+        <input type="text" id="email" name="email" class="input-box" required><br><br>
+        
 
-    <button type="submit">아이디 찾기</button> <br><br>
+        <label for="ID">아이디 </label><br>
+        <input type="text" id="ID" name="findID" value="${ sessionScope.ID }" class="input-box" readonly> <br><br>
 
-    아이디 : <input type="text" id="ID" name="findID" value="${ sessionScope.ID }"> 
+        <button type="submit" class="button">아이디 찾기</button><br><br>
     </form>
 </div>
 
