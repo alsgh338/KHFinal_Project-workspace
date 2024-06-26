@@ -205,31 +205,31 @@
 	                                		<tr>
 												<c:choose>
 													<c:when test="${ list2.size() eq 2}">
+														<c:forEach var="item" items="${list2}">
 														<tr>
-															<c:forEach var="item" items="${list2}">
-																<th colspan="2">첨부파일</th>
-																<td colspan="8">
-																	<input type="hidden" name="classImgPath" value="${item.productImgPath}">
-																	<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upFiles" placeholder="첨부파일" style="display:none">
-																	<div class="uploadImg">
-																		<c:choose>
-																			<c:when test="${not empty item.productImgPath}">
-																				<div class="image-container">
-																					<img src="${item.productImgPath}" alt="${item.productImgPath}">
-																					<div class="delete-btn">
-																						<img src="resources/img/x-circle.svg" alt="x-circle" onclick="deleteImg(this);">
-																						<input type="hidden" name="classImgPath" value="${item.productImgPath}">
-																					</div>
+															<th colspan="2">첨부파일</th>
+															<td colspan="8">
+																<input type="hidden" name="classImgPath" value="${item.productImgPath}">
+																<input type="file" accept="image/png, image/jpeg" class="form-control form-control-user" name="upFiles" placeholder="첨부파일" style="display:none">
+																<div class="uploadImg">
+																	<c:choose>
+																		<c:when test="${not empty item.productImgPath}">
+																			<div class="image-container">
+																				<img src="${item.productImgPath}" alt="${item.productImgPath}">
+																				<div class="delete-btn">
+																					<img src="resources/img/x-circle.svg" alt="x-circle" onclick="deleteImg(this);">
+																					<input type="hidden" name="classImgPath" value="${item.productImgPath}">
 																				</div>
-																			</c:when>
-																			<c:otherwise>
-																				<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
-																			</c:otherwise>
-																		</c:choose>
-																	</div>
-																</td>
-															</c:forEach>
-														</tr>
+																			</div>
+																		</c:when>
+																		<c:otherwise>
+																			<img src="resources/img/plus-circle.svg" alt="plus-circle" onclick="uploadImg(this);">
+																		</c:otherwise>
+																	</c:choose>
+																</div>
+															</td>
+															</tr>
+													</c:forEach>
 													</c:when>
 													<c:when test="${ list2.size() eq 1}">
 														<tr>
