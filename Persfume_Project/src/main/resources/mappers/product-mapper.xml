@@ -622,6 +622,6 @@
 			resultMap="ProductReviewResultSet">
 		SELECT * 
 		  FROM PRODUCT_REVIEW
-		 WHERE PRODUCT_NO = #{pno}  
+		 WHERE OD_ID = #{pno}  
 	</select>
 </mapper>

@@ -52,7 +52,7 @@
         #content_2 div {float:left;}
         #content_3 {width:100%; }
         #content_5 {width:100%;  display: inline-block;}
-        #content_6 {width:100%; height: 12%; border-top: 1px solid gray; display: inline-block;}
+        #content_6 {width:100%; height: 12%;  display: inline-block;}
         #content_7 {width:100%; height: 8%; display: inline-block;}
         #content_8 {width:100%; height: 14%; display: inline-block;}
 
@@ -270,7 +270,6 @@
 			
 			#modalContent {
 			  position: absolute;
-			
 			  width: 800px;
 			  height: 1000px;
 			  padding: 15px;
@@ -307,6 +306,25 @@
 			z-index: 10;}
 			#modalContainer1.hidden {
 			  display: none;}
+			   .dark-button {
+    background-color: #fff; /* 어두운 배경색 */
+    color: #333; /* 밝은 글자 색 */
+    border: none;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid black;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dark-button:hover {
+    background-color: #555; /* 호버 시 밝은 어두운 색 */
+}
+
+.dark-button:active {
+    transform: scale(0.98); /* 클릭 시 살짝 축소 효과 */
+}
     
 </style>
 
@@ -353,7 +371,7 @@
 		            </div>
 		            <div id="c5_d4"> <div id="c5_d4L">받으실 곳</div> 
 		            <div id="c5_d4R"> <input type="text" id="sample6_postcode" name="sample6_postcode" placeholder="우편번호" readonly>
-		                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  style="background-color: white; color: rgb(150, 214, 177); border: 1px solid rgb(150, 214, 177); font-weight: 700;"><br>
+		                <input type="button" class="dark-button"  onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  style=" font-weight: 700;"><br>
 		                <input type="text" id="sample6_address" name="sample6_address" placeholder="주소" readonly style="margin-top:5px;"><br>
 		                <input type="text" id="sample6_detailAddress"  name="sample6_detailAddress" placeholder="상세주소">
 		                <input type="text" id="sample6_extraAddress"  name="sample6_extraAddress" placeholder="지역구명" style="margin-top:5px;" readonly></div> 
@@ -363,22 +381,23 @@
 		            <div id="c5_d6"><div id="c5_d6L">요청사항 </div>  <div id="c5_d6R"><input type="text" id="want" name="want" placeholder="배송관련 요청사항을 입력해주세요." style="width:350px;" onkeyup='printName()' />
 		            </div>
 		            <input type="text" id="want1" style="display:none">
-            		<div id="c5_d7"><div id="c5_d7L">쿠폰적용</div> <div id="c5_d7R"><button type="button" onclick="test1();">쿠폰 조회</button> <input type="text" id="mno" value="${requestScope.memNo}" style="display:none;"> 
+            		<div id="c5_d7"><div id="c5_d7L">쿠폰적용</div> <div id="c5_d7R"><button type="button" id="asdf" onclick="test1();">쿠폰 조회</button> <input type="text" id="mno" value="${requestScope.memNo}" style="display:none;"> 
             		<select name="couponlist" id="couponlist">         		
             		</select><button id="coupon" type="button" style="display:none" onclick="test2();" >쿠폰 적용</button></div>
-		           
+		           <div id="noticecoupon" style="display:none; margin-left:140px;">결제완료 할 경우 해당 쿠폰이 사용됩니다.</div>
+            		
             		</div>
             		
             		</div>
             </div>
-              
+              <hr>
             <div id="content_6" >
                 <div id="c6_d1" style=" font-size: 20px;
                 font-weight: 600; margin-top: 0;"> 결제정보 수집 동의</div>
                 <div id="c6_d2"> <input type="checkbox" name='agree' value='selectall' onclick='selectAll(this)'> 전체 동의합니다.</div>
                 <div id="c6_d3"><input type="checkbox" name="agree" required> (필수) 개인정보 이용 및 수집에 대한 동의 
 		
-					<button id="modalOpenButton" style="background-color: white; color: rgb(150, 214, 177); border: 1px solid rgb(150, 214, 177); font-weight: 700;">상세보기</button>
+					<button id="modalOpenButton" class="dark-button"  style="font-weight: 700;">상세보기</button>
 			
 						<div id="modalContainer" class="hidden">
 			 				 <div id="modalContent">
@@ -425,7 +444,7 @@
 				</div>
 				  			   	   
                 <div id="c6_d4"><input type="checkbox" name='agree' required> (필수) 쇼핑몰 이용약관에 대한 동의
-               <button id="modalOpenButton1" style="background-color: white; color: rgb(150, 214, 177); border: 1px solid rgb(150, 214, 177); font-weight: 700;">상세보기</button></div>
+               <button id="modalOpenButton1"  class="dark-button"  style="font-weight: 700;">상세보기</button></div>
                	<div id="modalContainer1" class="hidden">
 			 				 <div id="modalContent1">
  <pre style="background-color: white; border: 1px solid black;">
@@ -452,9 +471,9 @@
 						</div>
 					             
           </div>
-            
+            <hr>
              <div id="content_7" style=" margin: 0;">
-                <div id="c7_d1" style=" margin-top: 10px;  font-size: 20px; font-weight: 600;" >결제정보 선택 </div>
+                <div id="c7_d1" style=" font-size: 20px; font-weight: 600;" >결제정보 선택 </div>
                 <div id="c7_d2"> <input type="radio" style="margin: 0;" required> 신용카드</div>
              </div>
              
@@ -570,7 +589,7 @@ function selectAll(selectAll)  {
           
        <script>
 		function test1() {
-		
+			$("#asdf").attr("disabled", true);
 			// 사용자가 위에서 입력한 이름, 나이를 서버로 전달 (ajax)
 			$.ajax({
 				url : "ajax1.do",
@@ -582,12 +601,12 @@ function selectAll(selectAll)  {
 					let resultStr = "";
 					if(result == null){
 						resultStr += "<option> 쿠폰이없습니다. </option>";		
-					}else{	resultStr += "<option> 쿠폰을 선택해주세요 </option>";
+					}else{	
 						for(let i =0 ; i<2 ;i++){
 						
-							if(result[i].coupon_name == 1){
+							if(result[i].coupon_no == 1){
 							  resultStr += "<option value='1'> 회원가입쿠폰(1만원 할인) </option>";
-							}else if(result[i].coupon_name == 2){
+							}else if(result[i].coupon_no == 2){
 							 resultStr += "<option value='2'> 설문조사쿠폰(1만원 할인) </option>";
 							}	
 												}
@@ -629,6 +648,10 @@ function selectAll(selectAll)  {
         $("#buyprice1").html(count5.toLocaleString('ko-KR'));
         $("#buyprice2").html(count5.toLocaleString('ko-KR'));
         $("#buyprice3").html(count6.toLocaleString('ko-KR'));
+        
+    	$("#coupon").attr("disabled", true);
+     	$("#noticecoupon").css('display','block');
+        
     }
      </script>     
 <script>
@@ -656,72 +679,94 @@ console.log(selectedpno);
     console.log(want1);
     	
      }
+     const hypenTel = (target) => {
+ 		 target.value = target.value
+ 		   .replace(/[^0-9]/g, '')
+ 		   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+ 		}
+     </script>
+     <script>
+
+ 	 // 버튼 딸각 하면 그 회원의 정보를 배송정보에 넣기
+ 	function btn1Click() {
+		  const myinput1 = document.getElementById('sample6_address');
+ 		  const myinput2 = document.getElementById('sample6_detailAddress');
+ 		  const myinput3 = document.getElementById('sample6_extraAddress');
+ 		  const myinput4 = document.getElementById('sitename');
+ 		  const myinput5 = document.getElementById('sample6_postcode');
+ 		  const myinput6 = document.getElementById('sitephone');
+
+ 		  myinput1.value = ${ sessionScope.loginMember.address };
+ 	 	  myinput2.value = ${ sessionScope.loginMember.detailAddress};
+ 	 	  myinput3.value = ${ sessionScope.loginMember.extraAddress};
+ 		  myinput4.value = ${ sessionScope.loginMember.memName};
+ 		  myinput5.value = ${ sessionScope.loginMember.postcode};
+ 		  myinput6.value = ${ requestScope.memNo};
+ 		  
+ 		  
+ 		  
+ 			  
+ 		}
+ 	
+   
      </script>
      
+     
 <script>
+var merchant_uid = "A" + new Date().getTime();
 
+var IMP = window.IMP;
+IMP.init('imp85361566');
 
+  function payment(){
+	  IMP.request_pay({
+			pg : "html5_inicis",
+			pay_method : "card",
+			merchant_uid : merchant_uid,
+			name : "${ requestScope.p.productName }, ${ requestScope.pCount }개",
+			amount : 100
+		
+		},function(rsp){
+			console.log(rsp);
+			if(rsp.success == true){
+				  const message = "결제에 성공하였습니다. 감사합니다."
+		            	window.alert(message);
+				  jQuery.ajax({
+                    url: "completeCart.po",
+                    method: "GET",
+                    traditional: true, //  배열 넘기는 속성
+                    dataType: "text", // 배열 넘기는 속성 
+                    data: {
+                        merchant_uid: rsp.merchant_uid,
+                        imp_uid: rsp.imp_uid,
+                        amount : 100,
+				 		  mno: ${ requestScope.memNo },
+				 		  want5 : document.getElementById('want').value,
+				 		  pno: JSON.stringify(selectedItems),
+				 		  pcount: JSON.stringify(selectedpno),
+				 	      adno:  document.getElementById('sample6_postcode').value,
+				 			  address: document.getElementById("sample6_address").value,
+				 		 	  phone: document.getElementById("sitephone").value
+                  		 },
+                  success:  function(result) {
+  				if(result > 0){
+  					window.location.href = "orderComp.or?ono="+result;
+  				}
+  												},
+  				error : function() {
+  				console.log("ajax 통신 실패!");
+  												}	
 
- var merchant_uid = "A" + new Date().getTime();
+  				})   
 
-      var IMP = window.IMP;
-      IMP.init('imp85361566');
- 
-        function payment(){
-    		IMP.request_pay({
-    			pg : "html5_inicis",
-    			pay_method : "card",
-    			merchant_uid : merchant_uid,
-    			name : "${ requestScope.p.productName }, ${ requestScope.pCount }개",
-    			amount : 100
-    		
-    		},function(rsp){
-    			console.log(rsp);
-    			if(rsp.success == true){
-    				  const message = "결제에 성공하였습니다. 감사합니다."
-    		            	window.alert(message);
-    				  jQuery.ajax({
-                          url: "completeCart.po",
-                          method: "GET",
-                          traditional: true, //  배열 넘기는 속성
-                          dataType: "text", // 배열 넘기는 속성 
-                          data: {
-                              merchant_uid: rsp.merchant_uid,
-                              imp_uid: rsp.imp_uid,
-                              amount : 100,
-    				 		  mno: ${ requestScope.memNo },
-    				 		  want5 : document.getElementById('want').value,
-    				 		  pno: JSON.stringify(selectedItems),
-    				 		  pcount: JSON.stringify(selectedpno),
-    				 	      adno:  document.getElementById('sample6_postcode').value,
-   				 			  address: document.getElementById("sample6_address").value,
-   				 		 	  phone: document.getElementById("sitephone").value
-                        		 },
-                        success:  function(result) {
-        				if(result > 0){
-        					
-        					
-        					
-        					
-        					window.location.href = "list.po";
-        				}
-        												},
-        				error : function() {
-        				console.log("ajax 통신 실패!");
-        												}	
-
-        				})   
-	
-    			}else{
-    				  const message2 = "결제에 실패하였습니다. 다시 시도해주세요."
-    		            	window.alert(message2);
-    				
-    				 
-    				  
-                    }// else문 종료
-    			});
-                     
-                      }	      
+			}else{
+				  const message2 = "결제에 실패하였습니다. 다시 시도해주세요."
+		            	window.alert(message2);
+				
+				
+              }// else문 종료
+			});                     
+                }
 </script>
      
           

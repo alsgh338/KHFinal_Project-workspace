@@ -645,7 +645,7 @@
                     <c:otherwise>
 	                    <li class="page-item">
 	                    	<a class="page-link" 
-	                    	   href="list.bo?cpage=${ requestScope.pi.currentPage + 1 }">
+	                    	   href="list.po?cpage=${ requestScope.pi.currentPage + 1 }">
 	                    		Next
 	                    	</a>
 	                    </li>

@@ -106,11 +106,12 @@
             margin-right: 25px;
             object-fit:cover;           
         }
+
         #c2 img{
-	        width: 175px;
-	        height: 145px;
-	        margin: 13px;
-         object-fit:cover;
+        width: 175px;
+        height: 145px;
+        margin: 13px;
+         object-fit: fill;
         }
         #c3 {
             width: 100%;
@@ -138,22 +139,21 @@
            float: left;
         }
         #cart{
-        border-radius: 9px;
             text-align: center;
-            width: 100px;
+            width: 200px;
             height: 40px;
             color: black;
             background-color: white;
             border: 1px solid black;  
                         }
         #buy{
-            margin-left: 30px;
-         border-radius: 9px;
+            margin-left: 20px;
+         
             padding: 0px;
             font-size: 20px;
             border: 0px;
             text-align: center;
-            width: 100px;
+            width: 200px;
             height: 40px;
             background-color: black;
             color: white;
@@ -252,6 +252,7 @@
 
 #heart-button {
     background-color: transparent;
+    
     border: none;
     cursor: pointer;
     outline: none;
@@ -277,12 +278,11 @@
             color: white;
             width: 100%;
         }
+        #heart-button{
+        margin-left:30px;}
         
-        #heart-button {
-        margin-left:20px;}
-
-/* 리뷰부분 gpt*/
-.review-list {
+        /* 리뷰 꾸미기 */
+        .review-list {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -351,12 +351,14 @@
     max-height: 100px;
     border-radius: 8px;
     margin-right: 10px;
+    object-fit: fill;
 }
 
 .date {
     font-size: 12px;
     color: #999;
 }
+
 /* 모달창 */
 .modal {
     display: none; /* 기본적으로 보이지 않음 */
@@ -402,17 +404,13 @@
     border-radius: 8px;
     margin-bottom: 20px;
 }
-
-.modal-text {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 10px;
-}
-
-.modal-rating {
-    font-size: 16px;
-    color: #FFD700;
-    margin-bottom: 10px;
+.uniform-size {
+    width: 100%; /* 필요에 따라 고정 너비 설정 가능 */
+    max-width: 1000px; /* 원하는 최대 너비 설정 */
+    height: auto; /* 높이를 비율에 맞게 자동 조정 */
+    display: block;
+    margin: 0 auto;
+    text-align: center;
 }
      </style>
     </head>
@@ -461,10 +459,10 @@
 				                        수량&nbsp;&nbsp;&nbsp;&nbsp;
 				               <div id='result' name='result' style="width: 50px; display:contents" >1</div>
 				                &nbsp;&nbsp;&nbsp;&nbsp;
-				                   <input type='button' style=" background-color: white; color: black; border: none; font-weight:700; width:25px; border-radius: 5px; cursor: pointer;  transition: background-color 0.3s, transform 0.3s;"
+				                   <input type='button' style=" background-color: white; color: black; border: none; font-weight:700; width:25px;"
 				                    onclick='count("plus")'
 				                    value='+'/>
-				                   <input type='button' style=" background-color: white; color: black; border: none; font-weight:700; width:25px; border-radius: 5px; cursor: pointer;  transition: background-color 0.3s, transform 0.3s;"
+				                   <input type='button' style=" background-color: white; color: black; border: 1px; font-weight:700; width:25px;"
 				                     onclick='count("minus")'
 				                     value='-'/>                            
                    </div> 
@@ -473,12 +471,11 @@
                          <div id="c5_1">
                          <br>
 				                           선택수량 : <b id="select" name="select">1</b>   
-				                           개당가격 : &nbsp; <p id="select_amount"> <fmt:formatNumber value="${ requestScope.p.productPrice}" type="number" />원 </p>
-				            
+				                           개당가격 : &nbsp; <p id="select_amount"> <fmt:formatNumber value="${ requestScope.p.productPrice}" type="number" />원 </p>			            
 				          </div><br>
                          <div id="c5_2"> 
                             <b style="font-size: 20px;">총 합계금액</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <p id="total_amount" name='total_amount' style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400; ">
+                            <p id="total_amount" name='total_amount' style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400;">
                              <fmt:formatNumber value="${ requestScope.p.productPrice}" type="number" /></p>
                              <b style="font-size: 20px; margin: 0px; color:lightgray; font-weight:400;">원</b>   &nbsp;&nbsp;             
                             <b style="font-size: 20px;"> → </b>  
@@ -487,13 +484,11 @@
                 		      <b style="font-size: 20px; margin: 0px; color:red; font-weight:600;">원</b>
                    
                             <input type="text" id="result1" name="result1" style="display:none;">
-                        
-                            
+                                                   
                         </div>
                         <div id="cb" >                  
-                            <a id="cart" href="" onclick = 'sendit();' style="width: 200px; margin-bottom: 5px;">장바구니</a>   
-                            <button id="buy" type="submit" style="width: 200px;">바로구매</button>
-                        
+                            <a id="cart" href="" onclick = 'sendit();' style="width: 150px; margin-bottom: 5px; border-radius:8px;">장바구니</a>   
+                            <button id="buy" type="submit" style="width: 150px; border-radius:8px; ">바로구매</button>
                             <c:choose>
                             <c:when test="${requestScope.fa != null}"> <img src="resources/images/redheart.jpg"  id="heart-button" onclick="favorite();"/></c:when>
                             <c:when test="${requestScope.fa == null}"> <img src="resources/images/heart.jpg"  id="heart-button" onclick="favorite();"/></c:when>
@@ -509,33 +504,27 @@
                
                  </div>
     
-                <div id="content_3">
-  
-                <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/gogo.gif">
-                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/gogo1.gif">
-                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/gogo3.jpg">
-                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/go.gif">
-                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/go2.gif">
-                 <img style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/go5.jpg">
-                
-                </div>
+           <div id="content_3">
+    <img class="uniform-size" style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/gogo.gif">
+    <img class="uniform-size" style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/gogo1.gif">
+    <img class="uniform-size" style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/gogo3.jpg">
+   <br><br>
+    <img class="uniform-size" style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/go.gif">
+    <img class="uniform-size" style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/go2.gif">
+    <img class="uniform-size" style="display: block; vertical-align: top; margin: 0px auto; text-align: center;" result="success" name="copy-1715050123-ECA1B0EBA788EB939C_EB8BB9EC9DBCECB69CEAB3A0_gif.gif" size="1000px/649px" filesize="348,45 kB" error="" src="resources/images/go5.jpg">
+			</div>
+			
             </div>
-            </div>
-            
-            
-            
-            
-            
-            
+            </div>       
             
             <div class="review-section">
-            <h2>리뷰</h2>
+            <h2 style="text-align:center;">상품후기</h2>
             <div class="review-list">
             	 <c:forEach var="pr" items="${ requestScope.prlist }" varStatus="status">
                    
        
               
-					                 <div class="review">
+					                 <div class="review"  onclick="openModal('${pr.reviewImgPath}')">
 					            <div class="review-header">
 					                <span class="user-name">user1321</span>
 					                <span class="rating">                  
@@ -563,13 +552,11 @@
             </div>
         </div>
             
-            <!-- 모달 창 HTML -->
-<div id="reviewModal" class="modal">
+         <!--  모달 -->
+         <div id="reviewModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <img id="modalImage" class="modal-image" src="" alt="Review Image">
-        <p id="modalText" class="modal-text"></p>
-        <p id="modalRating" class="modal-rating"></p>
     </div>
 </div>
          
@@ -687,25 +674,13 @@ function favorite(){
 }
 </script>
 <script>
-function openModal(imagePath, content, rating) {
+function openModal(imagePath) {
     document.getElementById('modalImage').src = imagePath;
-    document.getElementById('modalText').innerText = content;
-    document.getElementById('modalRating').innerText = getRatingStars(rating);
     document.getElementById('reviewModal').style.display = "block";
 }
 
 function closeModal() {
     document.getElementById('reviewModal').style.display = "none";
-}
-
-function getRatingStars(rating) {
-    const fullStar = '★';
-    const halfStar = '☆';
-    let stars = '';
-    for (let i = 1; i <= 10; i++) {
-        stars += i <= rating ? fullStar : halfStar;
-    }
-    return stars.substring(0, 5); // 최대 5개의 별만 표시
 }
 
 // 모달 창 외부 클릭 시 닫기
@@ -714,6 +689,23 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const userNames = document.querySelectorAll('.user-name');
+    userNames.forEach(userName => {
+        userName.textContent = generateRandomString(5);
+    });
+});
+
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = 'ID: ';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
 }
 </script>
 

@@ -544,6 +544,7 @@ return changeName;
 		int result1 =  productService.orderComplete(merchant_uid, amount, want5, mno, adno, address, phone); // 일단 기본 주문테이블 넣기
 	if(result1 > 0) { //  기본 주문 테이블에 데이터 삽입 성공 시 
 		OrderDetail od = productService.orderview(merchant_uid);
+		result1 = od.getOrderNo();
 		for(int i = 0; i < array.length; i++ ) {
 			int pcount1 = Integer.parseInt(array[i]);
 			int pno1 = Integer.parseInt(array1[i]);
@@ -566,7 +567,7 @@ return changeName;
 			
 		}//for문 종료    오더지를   장바구니 담은 상품 수 만큼 넣기	
 		int result5 = productService.completeCart(mno); // 카트에 있는 것을 구매 완료 했으니 카트를 비우자
-		result1 = od.getOrderNo();
+	
 	}
 	 
 		return result1;
