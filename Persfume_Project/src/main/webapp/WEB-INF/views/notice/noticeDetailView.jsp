@@ -116,7 +116,7 @@
         }
 
         .content img {
-            max-width: 100%;
+            max-width: 60%;
             height: auto;
             display: block;
             margin: 0 auto;
