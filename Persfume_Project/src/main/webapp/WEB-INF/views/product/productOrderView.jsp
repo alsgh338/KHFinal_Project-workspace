@@ -61,15 +61,15 @@
 		text-align: center;
 		}
         .content-title{
-            height: 190px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/perfume-subtitle.jpg);
+            height: 320px;
             background-size: cover;
             background-position: center;
             object-fit: cover;
             text-align: center;
-            line-height: 230px;
+            line-height: 320px;
             font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             color: white;
             width: 100%;
         }
@@ -362,40 +362,64 @@
        <hr>     
        
       
-            <div id="content_5">
-		            <div id="c5_d1">  <div id="c5_d1L">배송정보</div> <div id="c5_d1R"></div>
-		            </div>
-		            <div id="c5_d2">  <div id="c5_d2L">배송지확인</div> <div id="c5_d2R"> <input id="jadong1" type="radio" onclick='btn1Click()'>회원정보와 동일</div>
-		            </div>
-		            <div id="c5_d3"> <div id="c5_d3L">받으실 분</div>  <div id="c5_d3R"> <input type="text" id="sitename" placeholder="장소명을 입력해주세요." name="sitename"   required></div>
-		            </div>
-		            <div id="c5_d4"> <div id="c5_d4L">받으실 곳</div> 
-		            <div id="c5_d4R"> <input type="text" id="sample6_postcode" name="sample6_postcode" placeholder="우편번호" readonly>
-		                <input type="button"  class="dark-button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  style=" font-weight: 700;"><br>
-		                <input type="text" id="sample6_address" name="sample6_address" placeholder="주소" readonly style="margin-top:5px;"><br>
-		                <input type="text" id="sample6_detailAddress"  name="sample6_detailAddress" placeholder="상세주소">
-		                <input type="text" id="sample6_extraAddress"  name="sample6_extraAddress" placeholder="지역구명" style="margin-top:5px;" readonly></div> 
-		            </div>
-		            <div id="c5_d5"> <div id="c5_d5L">연락처</div>  <div id="c5_d5R"><input type="text" id="sitephone" name="sitephone" placeholder="연락처를 입력해주세요." oninput="hypenTel(this)" required></div>
-		            </div>
-		            <div id="c5_d6"><div id="c5_d6L">요청사항 </div>  <div id="c5_d6R"><input type="text" id="want" name="want" placeholder="배송관련 요청사항을 입력해주세요." style="width:350px;" onkeyup='printName()' />
-		            </div>
-		            <input type="text" id="want1" style="display:none">
-            		<div id="c5_d7"><div id="c5_d7L">쿠폰적용</div> <div id="c5_d7R"><button type="button" id="asdf" onclick="test1();">쿠폰 조회</button> <input type="text" id="mno" value="${requestScope.memNo}" style="display:none;"> 
-            		<select name="couponlist" id="couponlist">         		
-            		</select><button id="coupon" type="button" style="display:none" onclick="test2();" >쿠폰 적용</button></div>
-		           <div id="noticecoupon" style="display:none; margin-left:140px;">결제완료 할 경우 해당 쿠폰이 사용됩니다.</div>
-            		
-            		</div>
-            		
-            		</div>
+         <div id="content_5">
+    <div id="c5_d1">
+        <div id="c5_d1L">배송정보</div>
+        <div id="c5_d1R"></div>
+    </div>
+    <div id="c5_d2">
+        <div id="c5_d2L">배송지확인</div>
+        <div id="c5_d2R">
+            <input id="jadong1" type="radio" onclick='btn1Click()'>회원정보와 동일
+        </div>
+    </div>
+    <div id="c5_d3">
+        <div id="c5_d3L">받으실 분</div>
+        <div id="c5_d3R">
+            <input type="text" id="sitename" placeholder="장소명을 입력해주세요." name="sitename" required>
+        </div>
+    </div>
+    <div id="c5_d4">
+        <div id="c5_d4L">받으실 곳</div>
+        <div id="c5_d4R">
+            <input type="text" id="sample6_postcode" name="sample6_postcode" placeholder="우편번호" readonly>
+            <input type="button" class="dark-button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style=" font-weight: 700;"><br>
+            <input type="text" id="sample6_address" name="sample6_address" placeholder="주소" readonly style="margin-top:5px;"><br>
+            <input type="text" id="sample6_detailAddress" name="sample6_detailAddress" placeholder="상세주소">
+            <input type="text" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="지역구명" style="margin-top:5px;" readonly>
+        </div>
+    </div>
+    <div id="c5_d5">
+        <div id="c5_d5L">연락처</div>
+        <div id="c5_d5R">
+            <input type="text" id="sitephone" name="sitephone" placeholder="연락처를 입력해주세요." required>
+        </div>
+    </div>
+    <div id="c5_d6">
+        <div id="c5_d6L">요청사항 </div>
+        <div id="c5_d6R">
+            <input type="text" id="want" name="want" placeholder="배송관련 요청사항을 입력해주세요." style="width:350px;" onkeyup='printName()' />
+        </div>
+        <input type="text" id="want1" style="display:none">
+        <div id="c5_d7">
+            <div id="c5_d7L">쿠폰적용</div>
+            <div id="c5_d7R">
+                <button type="button" id="asdf" class="dark-button" onclick="test1();">쿠폰 조회</button>
+                <input type="text" id="mno" value="${requestScope.memNo1}" style="display:none;">
+                <select name="couponlist" id="couponlist"></select>
+                <button id="coupon" type="button" class="dark-button" style="display:none" onclick="test2();">쿠폰 적용</button>
             </div>
-              
+            <div id="noticecoupon" style="display:none; margin-left:140px;">결제완료 할 경우 해당 쿠폰이 사용됩니다.</div>
+        </div>
+    </div>
+       </div>   
+       
+           
               <hr>
             <div id="content_6" >
                 <div id="c6_d1" style=" font-size: 20px;
                 font-weight: 600; margin-top: 0;"> 결제정보 수집 동의</div>
-                <div id="c6_d2"> <input type="checkbox" name='agree' value='selectall' onclick='selectAll(this)'> 전체 동의합니다.</div>
+                <div id="c6_d2"> <input type="checkbox" name='agree' value='selectall' onclick='selectAll(this)' required> 전체 동의합니다.</div>
                 <div id="c6_d3"><input type="checkbox" name="agree" required> (필수) 개인정보 이용 및 수집에 대한 동의 
 		
 					<button id="modalOpenButton" class="dark-button" style="font-weight: 700;">상세보기</button>
@@ -475,13 +499,13 @@
             <hr>
              <div id="content_7" style=" margin: 0;">
                 <div id="c7_d1" style="  font-size: 20px; font-weight: 600;" >결제정보 선택 </div>
-                <div id="c7_d2"> <input type="radio" style="margin: 0;" required> 신용카드</div>
+                <div id="c7_d2"> <input type="radio" style="margin: 0;" checked> 신용카드</div>
              </div>
              <hr>
              <div id="content_8" style=" font-size: 20px; font-weight: 600;">
 	              <p  name="buyPrice"> <b id="buyprice1">최종결제금액 : <fmt:formatNumber value="${requestScope.p.productPrice*(1-(20/100)) * requestScope.pCount +3000}" type="number"/></b>
 	               원<br>
-	                <input type="checkbox" required><b style="font-size: 13px; color: red;" >(필수)</b>
+	                <input type="checkbox" name="agree" selected><b style="font-size: 13px; color: red;" >(필수)</b>
 	                <b style="font-size: 13px;">구매하실 상품의 결제정보 및 배송지를 확인하였으며, 구매진행에 동의합니다.</b>
 	             </p>
             
@@ -489,7 +513,7 @@
 
               	
            
-            <button id="buy"  class="dark-button" type="button" style="width: 150px;"  onclick="payment()">결제하기</button>
+            <button id="buy" class="dark-button" type="button" style="width: 150px;" onclick="payment()" disabled>결제하기</button>
              
            </div>
           
@@ -502,7 +526,48 @@
              <jsp:include page="../common/footer.jsp" />
   
 
-         
+      <script>
+      function checkInputs() {
+    	    // 각 입력 필드의 값을 가져옵니다
+    	    var sitenameValue = document.getElementById('sitename').value;
+    	    var sample6_postcodeValue = document.getElementById('sample6_postcode').value;
+    	    var sample6_addressValue = document.getElementById('sample6_address').value;
+    	    var sitephoneValue = document.getElementById('sitephone').value;
+    	    var wantValue = document.getElementById('want').value;
+
+    	    // 값이 비어있는지 확인합니다
+    	    if (sitenameValue === '' || sample6_postcodeValue === '' || sample6_addressValue === '' || sitephoneValue === '' || wantValue === '') {
+    	        return false; // 하나라도 비어있으면 false를 반환
+    	    }
+    	    return true; // 모든 값이 채워져 있으면 true를 반환
+    	}
+
+    	// 입력값이 변경될 때마다 호출하여 버튼 활성/비활성화 상태를 업데이트합니다
+    	function updateButtonState() {
+    	    var buyButton = document.getElementById('buy');
+    	    var allInputsFilled = checkInputs();
+    	    
+    	    // 모든 입력값이 채워져 있으면 버튼을 활성화하고, 아니면 비활성화합니다
+    	    if (allInputsFilled) {
+    	        buyButton.removeAttribute('disabled');
+    	    } else {
+    	        buyButton.setAttribute('disabled', 'disabled');
+    	    }
+    	}
+
+    	// 페이지 로드 후 초기화 및 입력값 변경 시마다 호출하여 버튼 상태를 업데이트합니다
+    	document.addEventListener('DOMContentLoaded', function() {
+    	    updateButtonState();
+    	    
+    	    // 각 입력 필드의 입력이 변경될 때마다 버튼 상태를 업데이트합니다
+    	    var inputs = document.querySelectorAll('input[type="text"], input[type="radio"], select');
+    	    inputs.forEach(function(input) {
+    	        input.addEventListener('input', updateButtonState);
+    	    });
+    	});
+
+
+</script>   
 
 <script>	
  	
@@ -532,6 +597,28 @@ modalCloseButton1.addEventListener('click', () => {
  	
 </script>
   
+  <script>
+  // want null 일떄 자동으로 채워주는   기능 
+  document.addEventListener("DOMContentLoaded", function() {
+	    // 요청사항 입력란 요소를 가져옵니다.
+	    var wantInput = document.getElementById('want');
+	    var buyButton = document.getElementById('buy');
+	    // 요청사항 입력란의 내용이 변경될 때마다 이벤트를 처리합니다.
+	    wantInput.addEventListener('keyup', function() {
+	        // 입력된 텍스트를 가져옵니다.
+	        var text = wantInput.value.trim();
+	        
+	        // 텍스트가 비어있는지 확인합니다.
+	        if (text === '') {
+	            // 비어있으면 버튼을 비활성화합니다.
+	            buyButton.disabled = true;
+	        } else {
+	            // 비어있지 않으면 버튼을 활성화합니다.
+	            buyButton.disabled = false;
+	        }
+	    });
+	});
+  </script>
    
  <!--  모든 체크박스 한번에 클릭 -->      
 <script>
@@ -600,7 +687,8 @@ function selectAll(selectAll)  {
 		function test1() {
 			
 			$("#asdf").attr("disabled", true);
-		
+			
+			
 			// 사용자가 위에서 입력한 이름, 나이를 서버로 전달 (ajax)
 			$.ajax({
 				url : "ajax1.do",
@@ -609,22 +697,25 @@ function selectAll(selectAll)  {
 					mno : $("#mno").val()
 				},
 				success : function(result) {
+				
 					let resultStr = "";
 					if(result == null){
 						resultStr += "<option> 쿠폰이없습니다. </option>";		
 					}else{	
-						for(let i =0 ; i<2 ;i++){
+						for(let i =0 ; i<result.length ;i++){
 						
 							if(result[i].coupon_no == 1){
-							  resultStr += "<option value='1'> 회원가입쿠폰(1만원 할인) </option>";
+							  resultStr += "<option id='c1' value='1'> 회원가입쿠폰(1만원 할인) </option>";
 							}else if(result[i].coupon_no == 2){
-							 resultStr += "<option value='2'> 설문조사쿠폰(1만원 할인) </option>";
+							 resultStr += "<option id='c2' value='2'> 설문조사쿠폰(1만원 할인) </option>";
 							}	
-												}
+												
+							$("#couponlist").html(resultStr);
+							$("#coupon").css('display','inline');
+						}
 					}
 						
-					$("#couponlist").html(resultStr);
-					$("#coupon").css('display','inline');
+				
 				},
 				error : function() {
 					console.log("ajax 통신 실패!");
@@ -670,6 +761,14 @@ function selectAll(selectAll)  {
       IMP.init('imp85361566');
  
         function payment(){
+        	
+        	  if(document.getElementById('want').value == ""){
+        		  document.getElementById('want').value = "요청사항 없음";
+        	  }
+        	  if(document.getElementById('sitename').value == "" && document.getElementById('sample6_postcode').value == ""){
+        		  document.getElementById('jadong1').click();
+        	  }
+        	
     		IMP.request_pay({
     			pg : "html5_inicis",
     			pay_method : "card",
@@ -697,18 +796,19 @@ function selectAll(selectAll)  {
    				 		  pcount: ${ requestScope.pCount},
    				 		  adno:  document.getElementById('sample6_postcode').value,
    				 		  address: document.getElementById("sample6_address").value,
-   				 		  phone: document.getElementById("sitephone").value
+   				 		  phone: document.getElementById("sitephone").value,
+   				 		  cno : $("select[name=couponlist] option:selected").val()
                        		 },
                        success:  function(result) {
-       				if(result > 0){
-       					
-       					window.location.href = "orderComp.or?ono="+result;
-       				}
-       												},
-       				error : function() {
-       				console.log("ajax 통신 실패!");	}	
-
-       				})
+	       				if(result > 0){
+	       					
+	       					window.location.href = "orderComp.or?ono="+result;
+	       				}
+	       												},
+	       				error : function() {
+	       				console.log("ajax 통신 실패!");	}	
+	
+	       				})
     				
     			
     			}else{
@@ -721,6 +821,100 @@ function selectAll(selectAll)  {
                       }
     		                
 </script>
+<script>
+  	function btn1Click() {
+  
+  	   const requestScope = {
+  		        m: {
+  		            address: "${requestScope.m.address}",
+  		            detailAddress: "${requestScope.m.detailAddress}",
+  		            extraAddress: "${requestScope.m.extraAddress}",
+  		            sitename: "${requestScope.m.memName}",
+  		            postcode: "${requestScope.m.postcode}",
+  		            sitephone: "${requestScope.m.phone}"
+  		        }
+  		    };
+  		
+		  const myinput1 = document.getElementById('sample6_address');
+		  const myinput2 = document.getElementById('sample6_detailAddress');
+		  const myinput3 = document.getElementById('sample6_extraAddress');
+		  const myinput4 = document.getElementById('sitename');
+		  const myinput5 = document.getElementById('sample6_postcode');
+		  const myinput6 = document.getElementById('sitephone');
+
+
+		    myinput1.value = requestScope.m.address;
+		    myinput2.value = requestScope.m.detailAddress;
+		    myinput3.value = requestScope.m.extraAddress;
+		    myinput4.value = requestScope.m.sitename;
+		    myinput5.value = requestScope.m.postcode;
+		    myinput6.value = requestScope.m.sitephone;
+		  
+		    hypenTel(myinput6);
+
+		    function hypenTel(target) {
+		        target.value = target.value
+		            .replace(/[^0-9]/g, '')
+		            .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+		    }
+			  
+		}
+     </script>
+     
+     
+     <script>
+// 모든 체크박스 선택
+var checkboxes = document.querySelectorAll('input[type="checkbox"][name="agree"]');
+var buyButton = document.getElementById('buy');
+
+// 체크박스 상태 변화 감지
+checkboxes.forEach(function(checkbox) {
+    checkbox.addEventListener('change', function() {
+        // 모든 체크박스가 체크되었는지 확인
+        var allChecked = true;
+        checkboxes.forEach(function(cb) {
+            if (!cb.checked) {
+                allChecked = false;
+            }
+        });
+
+        // 모든 체크박스가 체크되었으면 버튼 활성화
+        if (allChecked) {
+            buyButton.removeAttribute('disabled');
+        } else {
+            buyButton.setAttribute('disabled', 'disabled');
+        }
+    });
+});
+
+// 전체 동의 체크박스 클릭 시 모든 필수 동의 체크박스 체크/해제
+function selectAll(selectAllCheckbox) {
+    checkboxes.forEach(function(cb) {
+        cb.checked = selectAllCheckbox.checked;
+    });
+
+    // 모든 체크박스 상태에 따라 버튼 상태 업데이트
+    updateButtonState();
+}
+
+// 체크박스 상태에 따라 버튼 상태 업데이트 함수
+function updateButtonState() {
+    var allChecked = true;
+    checkboxes.forEach(function(cb) {
+        if (!cb.checked) {
+            allChecked = false;
+        }
+    });
+
+    // 모든 체크박스가 체크되었으면 버튼 활성화
+    if (allChecked) {
+        buyButton.removeAttribute('disabled');
+    } else {
+        buyButton.setAttribute('disabled', 'disabled');
+    }
+}
+</script>
+     
      
           
 </body>

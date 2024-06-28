@@ -77,7 +77,7 @@ h1 {
 		}
         .content-title{
             height: 190px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/perfume-subtitle.jpg);
             background-size: cover;
             background-position: center;
             object-fit: cover;

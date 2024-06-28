@@ -237,6 +237,32 @@
 			       REGIST_CANCEL_DATE = SYSDATE
 			 WHERE REGIST_NO = #{ocrno}
 		</update>
+		
+		
+<select id="countReservation"
+    parameterType="oneClassRegist"
+    resultType="_int">
+    SELECT COALESCE(SUM(TO_NUMBER(CR.REGIST_PERSON_NO)), 0)
+    FROM CLASS_REGIST CR
+    JOIN CLASS C ON CR.CLASS_NO = C.CLASS_NO
+    JOIN MEMBER M ON CR.MEM_NO = CR.MEM_NO
+    WHERE M.MEM_NAME = #{memNo}
+        AND CR.REGIST_NO = #{classNo}
+        AND CR.STATUS = 'Y'
+</select>
+	
+	<delete id="deleteChatMem" parameterType="oneClassRegist">
+		   
+	   DELETE FROM CHAT_MEM
+		WHERE CLASS_NO IN (
+		    SELECT CR.CLASS_NO
+		    FROM CLASS_REGIST CR
+		    JOIN MEMBER M ON M.MEM_NO = CR.MEM_NO
+		    WHERE CR.REGIST_NO = #{classNo}
+		    AND M.MEM_NAME = #{memNo}
+		)
+		
+	</delete>
 
 
  	 

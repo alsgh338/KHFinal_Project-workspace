@@ -30,8 +30,8 @@
         }
         .chat-header {
             padding: 10px;
-            background-color: #ffeb3b;
-            color: #000;
+            background-color: #0C263F;
+            color: white;
             text-align: center;
             font-size: 20px;
             position: relative;
@@ -111,15 +111,17 @@
         }
         .chat-input button {
             padding: 10px 15px;
-            border: none;
-            background-color: #ffeb3b;
-            color: #000;
+            border: 1px solid #0C263F;
+            background-color: #0C263F;
+            color: white;
             border-radius: 4px;
             margin-left: 10px;
             cursor: pointer;
         }
         .chat-input button:hover {
-            background-color: #ffd700;
+        	border: 1px solid #0C263F;
+            background-color: white;
+            color: #0C263F;
         }
         
         .chat-header div:nth-child(2) {
@@ -187,7 +189,7 @@
 		
 		async function connectChat() {
 			
-			let url = "ws://192.168.0.71:8008/persfume/chat.do?classNo=" + classNo;
+			let url = "ws://192.168.0.71:8006/persfume/chat.do?classNo=" + classNo;
 			
 			socket = new WebSocket(url);
 			

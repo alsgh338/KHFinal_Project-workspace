@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>채팅방 리스트</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -16,10 +18,10 @@
 
     h1 {
         text-align: center;
-        color: #333;
+        color: white;
         padding: 20px 0;
         margin: 0;
-        background-color: #ffeb3b;
+        background-color: #0C263F;
     }
 
     .class-list {
@@ -68,18 +70,40 @@
     <h1>채팅방 리스트</h1>
     <br>
     <c:forEach var="chat" items="${requestScope.list}">
-        <div class="class-list" onclick="openChat('${chat.classNo}');">
-            <div class="class-title">클래스명: ${chat.className}</div>
-            <div class="class-teacher">강사명: ${chat.classTeacher}</div>
-            <div class="class-period">${chat.startTime} ~ ${chat.endTime}</div>
+        <div class="class-list" onclick="openChat(this , ${chat.classNo});">
+        
+		<form id="postForm" method="post" action="showChat" style="display:none;">
+			<input type="hidden" name="classNo" id="classNo">
+        </form>
+       
+        <div class="class-title">클래스명: ${chat.className}</div>
+        <div class="class-teacher">강사명: ${chat.classTeacher}</div>
+        <div class="class-period">${chat.startTime} ~ ${chat.endTime}</div>
+           
         </div>
         <hr>
     </c:forEach>
+	
+	<form id="postForm" method="post" action="showChat" style="display:none;">
+		<input type="hidden" name="classNo" id="classNo">
+	</form>
+
 
     <script>
-        function openChat(classNo) {
-            location.href = "showChat?classNo=" + classNo;
+        function openChat(element, classNo) {
+        	let div = $(element).children('form'); // 폼태그 저장
+        	
+        	div.children('input').val(classNo);
+        	
+        	console.log(div.html());
+        	console.log(classNo);
+
+        	
+        	// 폼태그 아래의 인풋태그 찾고 .val(classNo)
+        	div.submit();
+
         }
+        
     </script>
 </body>
 </html>

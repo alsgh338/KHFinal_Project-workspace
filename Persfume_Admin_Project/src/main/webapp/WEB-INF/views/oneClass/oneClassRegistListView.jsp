@@ -150,6 +150,7 @@
 			      <!-- Modal body -->
 			      <div class="modal-body" align="center">
 			      <input type="hidden" name="ocrno" class="classRegistNo">
+			      <input type="hidden" name="memNo" class="classRegistMemNo">
 			        <h3>정말 예약을 취소하시겠습니까?</h1><br>
 			       	<input type="text" name=refundMsg placeholder="취소 사유 "> 
 			      </div>
@@ -217,8 +218,10 @@
     
     	function deleteRegist(element) {
     		let ocrno = $(element).parent().siblings().eq(0).text().trim();
+    		let memNo = $(element).parent().siblings().eq(2).text().trim();
     		console.log(ocrno);
 			$(".modal-body>.classRegistNo").attr("value", ocrno);
+			$(".modal-body>.classRegistMemNo").attr("value", memNo);
 		}
     </script>
 

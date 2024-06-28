@@ -61,15 +61,15 @@
 		text-align: center;
 		}
         .content-title{
-            height: 190px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/perfume-subtitle.jpg);
+            height: 320px;
             background-size: cover;
             background-position: center;
             object-fit: cover;
             text-align: center;
-            line-height: 230px;
+            line-height: 320px;
             font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             color: white;
             width: 100%;
         }
@@ -343,9 +343,9 @@
             <hr>
             <c:forEach var="c" items="${ requestScope.clist }" varStatus="status">
             <div id="content_2">
-                <div id="c2_1"><img src="${ pilist[status.index].productImgPath}"></div>
+                <div id="c2_1"><img src="../persfumeAdmin/${ pilist[status.index].productImgPath}"></div>
                 <div id="c2_2">${ plist[status.index].productName }</div>                                                            
-                <div id="c2_3">선택수량 :  ${ c.quantity }개</div> 
+                <div id="c2_3">선택수량 :  ${c.quantity}개</div> 
                 <div id="c2_4"><fmt:formatNumber value="${plist[status.index].productPrice}" type="number"/>원</div> 
            </div>
            </c:forEach>
@@ -361,7 +361,7 @@
              <b id="buyprice2"></b><b>원</b></div>
             </div>
        <hr>     
-           
+           <form>
             <div id="content_5">
 		            <div id="c5_d1">  <div id="c5_d1L">배송정보</div> <div id="c5_d1R"></div>
 		            </div>
@@ -373,17 +373,18 @@
 		            <div id="c5_d4R"> <input type="text" id="sample6_postcode" name="sample6_postcode" placeholder="우편번호" readonly>
 		                <input type="button" class="dark-button"  onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  style=" font-weight: 700;"><br>
 		                <input type="text" id="sample6_address" name="sample6_address" placeholder="주소" readonly style="margin-top:5px;"><br>
-		                <input type="text" id="sample6_detailAddress"  name="sample6_detailAddress" placeholder="상세주소">
-		                <input type="text" id="sample6_extraAddress"  name="sample6_extraAddress" placeholder="지역구명" style="margin-top:5px;" readonly></div> 
+		                <input type="text" id="sample6_detailAddress"  name="sample6_detailAddress" placeholder="상세주소" required>
+		                <input type="text" id="sample6_extraAddress"  name="sample6_extraAddress" placeholder="지역구명" style="margin-top:5px;" readonly required></div> 
 		            </div>
 		            <div id="c5_d5"> <div id="c5_d5L">연락처</div>  <div id="c5_d5R"><input type="text" id="sitephone" name="sitephone" placeholder="연락처를 입력해주세요."   required></div>
 		            </div>
-		            <div id="c5_d6"><div id="c5_d6L">요청사항 </div>  <div id="c5_d6R"><input type="text" id="want" name="want" placeholder="배송관련 요청사항을 입력해주세요." style="width:350px;" onkeyup='printName()' />
+		            <div id="c5_d6"><div id="c5_d6L">요청사항 </div>  <div id="c5_d6R"> <input type="text" id="want" name="want" value="요청사항을 입력해주세요." placeholder="배송관련 요청사항을 입력해주세요." style="width:350px;" onkeyup='printName()' />
 		            </div>
 		            <input type="text" id="want1" style="display:none">
-            		<div id="c5_d7"><div id="c5_d7L">쿠폰적용</div> <div id="c5_d7R"><button type="button" id="asdf" onclick="test1();">쿠폰 조회</button> <input type="text" id="mno" value="${requestScope.memNo}" style="display:none;"> 
-            		<select name="couponlist" id="couponlist">         		
-            		</select><button id="coupon" type="button" style="display:none" onclick="test2();" >쿠폰 적용</button></div>
+            		<div id="c5_d7"><div id="c5_d7L">쿠폰적용</div> <div id="c5_d7R"><button type="button" class="dark-button" id="asdf" onclick="test1();">쿠폰 조회</button> <input type="text" id="mno" value="${requestScope.memNo}" style="display:none;"> 
+            		<select name="couponlist" id="couponlist" onchange="isRun();">
+            			<option value='3' selected> 쿠폰을 조회해주세요. </option>         		
+            		</select></div>
 		           <div id="noticecoupon" style="display:none; margin-left:140px;">결제완료 할 경우 해당 쿠폰이 사용됩니다.</div>
             		
             		</div>
@@ -473,19 +474,19 @@
           </div>
             <hr>
              <div id="content_7" style=" margin: 0;">
-                <div id="c7_d1" style=" font-size: 20px; font-weight: 600;" >결제정보 선택 </div>
-                <div id="c7_d2"> <input type="radio" style="margin: 0;" required> 신용카드</div>
+                <div id="c7_d1" style=" font-size: 20px; font-weight: 600;"  >결제정보 선택 </div>
+                <div id="c7_d2"> <input type="radio" style="margin: 0;" required checked> 신용카드</div>
              </div>
              
              <div id="content_8" style=" font-size: 20px; font-weight: 600;">
 	              <p  name="buyPrice">최종결제금액 : <b id="buyprice1"></b>
 	               원<br>
-	                <input type="checkbox" required><b style="font-size: 13px; color: red;" >(필수)</b>
+	                <input type="checkbox" name="agree" required><b style="font-size: 13px; color: red;" >(필수)</b>
 	                <b style="font-size: 13px;">구매하실 상품의 결제정보 및 배송지를 확인하였으며, 구매진행에 동의합니다.</b>
 	             </p>
                    
-            <button id="buy" class="dark-button" type="button" style="width: 150px;" onclick="payment()">결제하기</button>
-             
+            <button id="buy" class="dark-button" type="button" style="width: 150px;" onclick="payment()" disabled >결제하기</button>
+             </form>
            </div>
 
      </div>        
@@ -494,6 +495,30 @@
    
              <jsp:include page="../common/footer.jsp" />
          
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 요청사항 입력란과 결제 버튼 요소를 가져옵니다.
+    var wantInput = document.getElementById('want');
+    var buyButton = document.getElementById('buy');
+    
+    // 요청사항 입력란의 내용이 변경될 때마다 이벤트를 처리합니다.
+    wantInput.addEventListener('keyup', function() {
+        // 입력된 텍스트를 가져옵니다.
+        var text = wantInput.value.trim();
+        
+        // 텍스트가 비어있는지 확인합니다.
+        if (text === '') {
+            // 비어있으면 버튼을 비활성화합니다.
+            buyButton.disabled = true;
+        } else {
+            // 비어있지 않으면 버튼을 활성화합니다.
+            buyButton.disabled = false;
+        }
+    });
+});
+</script>
+
 
 <script>	
  	
@@ -600,20 +625,25 @@ function selectAll(selectAll)  {
 				success : function(result) {
 					let resultStr = "";
 					if(result == null){
-						resultStr += "<option> 쿠폰이없습니다. </option>";		
+						resultStr += "<option value='3' selected> 쿠폰이없습니다. </option>";		
 					}else{	
-						for(let i =0 ; i<2 ;i++){
 						
+						resultStr += "<option value='3' selected>-----------</option>";
+						
+						for(let i =0 ; i<result.length ;i++){
+							
 							if(result[i].coupon_no == 1){
 							  resultStr += "<option value='1'> 회원가입쿠폰(1만원 할인) </option>";
 							}else if(result[i].coupon_no == 2){
 							 resultStr += "<option value='2'> 설문조사쿠폰(1만원 할인) </option>";
 							}	
-												}
+												
+							$("#couponlist").html(resultStr);
+							$("#coupon").css('display','inline');
+						}
 					}
 						
-					$("#couponlist").html(resultStr);
-					$("#coupon").css('display','inline');
+
 				},
 				error : function() {
 					console.log("ajax 통신 실패!");
@@ -641,18 +671,38 @@ function selectAll(selectAll)  {
     $("#buyprice3").html(count2.toLocaleString('ko-KR'));
     
     
-    function test2() {
-    	count6 = count2 + 10000;
-    	count5 = count -= 7000;
+    function isRun() {
+		
+    	if($("select[name=couponlist] option:selected").val() != 3 ){
+    		console.log("1");
+    		test2('y');
+    	} else{
+    		console.log("2");
+
+    		test2('N');
+    	}
+	}
+    
+    function test2(sale) {
+    	if(sale === 'y'){
+    		count6 = count2 + 10000;
+        	count5 = count - 10000;
+    	} else{
+    		console.log("asdf");
+    		$("#coupon").attr("disabled", false);
+    		count6 = count2;
+        	count5 = count;
+    	}
+    	
         
         $("#buyprice1").html(count5.toLocaleString('ko-KR'));
         $("#buyprice2").html(count5.toLocaleString('ko-KR'));
         $("#buyprice3").html(count6.toLocaleString('ko-KR'));
         
-    	$("#coupon").attr("disabled", true);
      	$("#noticecoupon").css('display','block');
         
     }
+    
      </script>     
 <script>
 var selectedItems = [];
@@ -686,31 +736,45 @@ console.log(selectedpno);
  		}
      </script>
      <script>
-
- 	 // 버튼 딸각 하면 그 회원의 정보를 배송정보에 넣기
- 	function btn1Click() {
+  	function btn1Click() {
+  
+  	   const requestScope = {
+  		        m: {
+  		            address: "${requestScope.m.address}",
+  		            detailAddress: "${requestScope.m.detailAddress}",
+  		            extraAddress: "${requestScope.m.extraAddress}",
+  		            sitename: "${requestScope.m.memName}",
+  		            postcode: "${requestScope.m.postcode}",
+  		            sitephone: "${requestScope.m.phone}"
+  		        }
+  		    };
+  		
 		  const myinput1 = document.getElementById('sample6_address');
- 		  const myinput2 = document.getElementById('sample6_detailAddress');
- 		  const myinput3 = document.getElementById('sample6_extraAddress');
- 		  const myinput4 = document.getElementById('sitename');
- 		  const myinput5 = document.getElementById('sample6_postcode');
- 		  const myinput6 = document.getElementById('sitephone');
+		  const myinput2 = document.getElementById('sample6_detailAddress');
+		  const myinput3 = document.getElementById('sample6_extraAddress');
+		  const myinput4 = document.getElementById('sitename');
+		  const myinput5 = document.getElementById('sample6_postcode');
+		  const myinput6 = document.getElementById('sitephone');
 
- 		  myinput1.value = ${ sessionScope.loginMember.address };
- 	 	  myinput2.value = ${ sessionScope.loginMember.detailAddress};
- 	 	  myinput3.value = ${ sessionScope.loginMember.extraAddress};
- 		  myinput4.value = ${ sessionScope.loginMember.memName};
- 		  myinput5.value = ${ sessionScope.loginMember.postcode};
- 		  myinput6.value = ${ requestScope.memNo};
- 		  
- 		  
- 		  
- 			  
- 		}
- 	
-   
+
+		    myinput1.value = requestScope.m.address;
+		    myinput2.value = requestScope.m.detailAddress;
+		    myinput3.value = requestScope.m.extraAddress;
+		    myinput4.value = requestScope.m.sitename;
+		    myinput5.value = requestScope.m.postcode;
+		    myinput6.value = requestScope.m.sitephone;
+		  
+		    hypenTel(myinput6);
+
+		    function hypenTel(target) {
+		        target.value = target.value
+		            .replace(/[^0-9]/g, '')
+		            .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+		    }
+			  
+		}
      </script>
-     
+       
      
 <script>
 var merchant_uid = "A" + new Date().getTime();
@@ -719,11 +783,19 @@ var IMP = window.IMP;
 IMP.init('imp85361566');
 
   function payment(){
+	  
+	  if(document.getElementById('want').value == ""){
+		  document.getElementById('want').value = "요청사항 없음";
+	  }  if(document.getElementById('sitename').value == "" && document.getElementById('sample6_postcode').value == ""){
+		  document.getElementById('jadong1').click();
+	  }
+	  
+	  
 	  IMP.request_pay({
 			pg : "html5_inicis",
 			pay_method : "card",
 			merchant_uid : merchant_uid,
-			name : "${ requestScope.p.productName }, ${ requestScope.pCount }개",
+			name : "${ plist[0].productName } 외 장바구니 상품",
 			amount : 100
 		
 		},function(rsp){
@@ -745,8 +817,9 @@ IMP.init('imp85361566');
 				 		  pno: JSON.stringify(selectedItems),
 				 		  pcount: JSON.stringify(selectedpno),
 				 	      adno:  document.getElementById('sample6_postcode').value,
-				 			  address: document.getElementById("sample6_address").value,
-				 		 	  phone: document.getElementById("sitephone").value
+				 			 address: document.getElementById("sample6_address").value,
+				 		 	 phone: document.getElementById("sitephone").value,
+				 		 	cno : $("select[name=couponlist] option:selected").val()
                   		 },
                   success:  function(result) {
   				if(result > 0){
@@ -768,7 +841,58 @@ IMP.init('imp85361566');
 			});                     
                 }
 </script>
-     
+         <script>
+// 모든 체크박스 선택
+var checkboxes = document.querySelectorAll('input[type="checkbox"][name="agree"]');
+var buyButton = document.getElementById('buy');
+
+// 체크박스 상태 변화 감지
+checkboxes.forEach(function(checkbox) {
+    checkbox.addEventListener('change', function() {
+        // 모든 체크박스가 체크되었는지 확인
+        var allChecked = true;
+        checkboxes.forEach(function(cb) {
+            if (!cb.checked) {
+                allChecked = false;
+            }
+        });
+
+        // 모든 체크박스가 체크되었으면 버튼 활성화
+        if (allChecked) {
+            buyButton.removeAttribute('disabled');
+        } else {
+            buyButton.setAttribute('disabled', 'disabled');
+        }
+    });
+});
+
+// 전체 동의 체크박스 클릭 시 모든 필수 동의 체크박스 체크/해제
+function selectAll(selectAllCheckbox) {
+    checkboxes.forEach(function(cb) {
+        cb.checked = selectAllCheckbox.checked;
+    });
+
+    // 모든 체크박스 상태에 따라 버튼 상태 업데이트
+    updateButtonState();
+}
+
+// 체크박스 상태에 따라 버튼 상태 업데이트 함수
+function updateButtonState() {
+    var allChecked = true;
+    checkboxes.forEach(function(cb) {
+        if (!cb.checked) {
+            allChecked = false;
+        }
+    });
+
+    // 모든 체크박스가 체크되었으면 버튼 활성화
+    if (allChecked) {
+        buyButton.removeAttribute('disabled');
+    } else {
+        buyButton.setAttribute('disabled', 'disabled');
+    }
+}
+</script> 
           
 </body>
 </html>

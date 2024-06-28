@@ -41,7 +41,7 @@ public class NoticeController {
 		// 페이징처리용 변수들 
 		int listCount = noticeService.selectListCount();	
 		int pageLimit = 10;
-		int boardLimit = 5;
+		int boardLimit = 10;
 		
 		// PageInfo 객체 만들어내기
 		PageInfo pi 

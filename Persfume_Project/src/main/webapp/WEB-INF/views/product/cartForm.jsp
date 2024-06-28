@@ -148,15 +148,15 @@
 		text-align: center;
 		}
         .content-title{
-            height: 190px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/perfume-subtitle.jpg);
+            height: 320px;
             background-size: cover;
             background-position: center;
             object-fit: cover;
             text-align: center;
-            line-height: 230px;
+            line-height: 320px;
             font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             color: white;
             width: 100%;
         }
@@ -273,7 +273,7 @@
 
  <div class="wrap">
     <form id="cart" action="basketOrder.ba" method="post">
-    	<input type="number" value="${requestScope.memNo}" id="memNo" name="memNo" style="display:none;" />
+    	<input type="number"  id="memNo"  style="display:none;" />
     
             <div id="left">
                 <div>
@@ -281,7 +281,7 @@
                 <b style="font-weight:700; font-size:40px;">장바구니 등록 상품</b>
                     <br><br>
                     <hr>
-                    <input type="checkbox" id="selectAll"/><label>전체선택</label>
+                    <input type="checkbox" name="agree"  id="selectAll"/><label>전체선택</label>
                     &nbsp; | &nbsp;
                     <button type="button" id="checkedDel" onclick="deleteSelectedItems();" style="background-color:orange; color: #fff; border-radius: 5px; border: none;" >선택삭제</button>
 
@@ -293,8 +293,8 @@
                 <div id="order_1">
                 		
                     <div class="product" id="product_"${status.index}>
-                        <input type="checkbox" id="pro_check" required />
-                        <img src="${pilist[status.index].productImgPath}" width="300px" height="200px" />
+                        <input type="checkbox" name="agree" id="pro_check" required />
+                        <img src="../persfumeAdmin/${pilist[status.index].productImgPath}" width="300px" height="200px" />
                         <div class="pro_about">
                             <p id="product1_name">${plist[status.index].productName}</p>
                             <div class="acount">
@@ -338,7 +338,7 @@
                 <p id="total_amount" class="total-amount"></p>
             </div>
         </div>
-        <button id="go" type="submit" class="checkout-button" style="background-color:black; color:white; font-size:20px; margin:0; font-weight: 800;">결제</button>
+        <button id="go" disabled type="submit" class="checkout-button" style="background-color:black; color:white; font-size:20px; margin:0; font-weight: 800;">결제</button>
     </div>
     </form>
     </div>
@@ -533,7 +533,31 @@
        
     </script>
   
- 
+ <script>
+ var checkboxes = document.querySelectorAll('input[type="checkbox"][name="agree"]');
+ var buyButton = document.getElementById('go');
+
+ // 체크박스 상태 변화 감지
+ checkboxes.forEach(function(checkbox) {
+     checkbox.addEventListener('change', function() {
+         // 모든 체크박스가 체크되었는지 확인
+         var allChecked = true;
+         checkboxes.forEach(function(cb) {
+             if (!cb.checked) {
+                 allChecked = false;
+             }
+         });
+
+         // 모든 체크박스가 체크되었으면 버튼 활성화
+         if (allChecked) {
+             buyButton.removeAttribute('disabled');
+         } else {
+             buyButton.setAttribute('disabled', 'disabled');
+         }
+     });
+ });
+
+ </script>
 
   <jsp:include page="../common/footer.jsp" />
   

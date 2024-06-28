@@ -2,13 +2,13 @@ package com.mata.persfume.product.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,6 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.mata.persfume.common.model.vo.PageInfo;
 import com.mata.persfume.common.template.Pagination;
+import com.mata.persfume.member.model.service.MemberService;
+import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.product.model.service.ProductService;
 import com.mata.persfume.product.model.vo.Cart;
 import com.mata.persfume.product.model.vo.Coupon;
@@ -100,7 +102,7 @@ return changeName;
 		
 		int listCount = productService.selectListCount();
 		int pageLimit = 5;
-		int boardLimit = 5;
+		int boardLimit = 8;
 
 		PageInfo pi 
 		= Pagination.getPageInfo(listCount, 
@@ -142,8 +144,8 @@ return changeName;
 	public String searchDo(String text, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
 		
 		int listCount = productService.selectListCount();
-		int pageLimit = 10;
-		int boardLimit = 5;
+		int pageLimit = 100;
+		int boardLimit = 100;
 
 		PageInfo pi 
 		= Pagination.getPageInfo(listCount, 
@@ -187,8 +189,8 @@ return changeName;
 		
 		
 		int listCount = productService.selectListCount();
-		int pageLimit = 10;
-		int boardLimit = 5;
+		int pageLimit = 5;
+		int boardLimit = 8;
 
 		PageInfo pi 
 		= Pagination.getPageInfo(listCount, 
@@ -230,8 +232,8 @@ return changeName;
 		
 		
 		int listCount = productService.selectListCount();
-		int pageLimit = 10;
-		int boardLimit = 5;
+		int pageLimit = 5;
+		int boardLimit = 8;
 
 		PageInfo pi 
 		= Pagination.getPageInfo(listCount, 
@@ -274,8 +276,8 @@ return changeName;
 		
 		
 		int listCount = productService.selectListCount();
-		int pageLimit = 10;
-		int boardLimit = 5;
+		int pageLimit = 5;
+		int boardLimit = 8;
 
 		PageInfo pi 
 		= Pagination.getPageInfo(listCount, 
@@ -316,42 +318,64 @@ return changeName;
 	
 	
 	@GetMapping("detail.po")
-	public ModelAndView productDetail(int pno, ModelAndView mv) {
+	public ModelAndView productDetail(int pno, ModelAndView mv, HttpSession session) {
 		
 		Product p = productService.selectProduct(pno);
 		ArrayList<ProductImg> pilist = productService.selectProductImgList(pno);
 		ProductImg pi = productService.selectProductImg(pno);
 		
-		int memNo =1; // 회원기능 완성 전 테스트용 더미 데이터 나중에 꼭 지우셈 
+		
+				
+		if(session.getAttribute("loginMember") != null ) {
+			int  memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+			Favorites fa = productService.selectFavorites(memNo, pno);
+			mv.addObject("memNo", memNo);
+			mv.addObject("fa", fa);
+		}
+
+		// 이 상품에 대한 리뷰를 전부 가져옴
+		
 		
 		ArrayList<ProductReview> prlist = productService.selectProductReviewList(pno);
+		ArrayList<Member> mlist = new ArrayList<>();
+		
+		for(int i =0; i<prlist.size(); i++) {
+			Member m = productService.selectMember(prlist.get(i).getMemNo());
+		mlist.add(m);
+		}
+		
 		
 		mv.addObject("prlist", prlist);
-		mv.addObject("memNo", memNo);
+		mv.addObject("mlist", mlist);
 		
 		mv.addObject("pi", pi);
 		mv.addObject("pilist", pilist);
 		mv.addObject("p", p)
 		  .setViewName("product/productDetailView");
 		
-		Favorites fa = productService.selectFavorites(memNo, pno);
-		mv.addObject("fa", fa);
+		
 		
 	
 		return mv;
 		
 	}
 	
+	
+	
+	
 	@PostMapping("order.po")
-	public  ModelAndView productOrder(int pno, ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
+	public  ModelAndView productOrder(int pno, ModelAndView mv, HttpServletRequest request,HttpSession session, HttpServletResponse response) {
 		
 		int pCount = Integer.parseInt(request.getParameter("result1"));
 	
 		Product p = productService.selectProduct(pno);
 		ProductImg pi = productService.selectProductImg(pno);
 		
-		int memNo = 1; // 회원기능 완성 전 테스트용 더미 데이터 나중에 꼭 지우셈 
+		int memNo = ((Member)session.getAttribute("loginMember")) .getMemNo();
 		
+		Member m = productService.selectMember(memNo);
+		
+		mv.addObject("m", m);
 		mv.addObject("memNo", memNo);
 		mv.addObject("p", p);
 		mv.addObject("pi", pi);
@@ -363,6 +387,8 @@ return changeName;
 	@ResponseBody
 	@RequestMapping(value="ajax1.do", produces="application/json; charset=UTF-8")
 	public String ajaxMethod1(int mno) {
+		
+		System.out.println(mno);
 		
 		ArrayList<MemCoupon> list =  productService.searchCoupon(mno);
 		ArrayList<Coupon> clist = new ArrayList<>();
@@ -376,7 +402,7 @@ return changeName;
 		for(int i =0 ; i<list.size(); i++) {
 			Coupon c = productService.searchCouponName(list.get(i).getCouponNo());
 			clist.add(c);
-			
+			System.out.println(c);
 	
 		}
 	
@@ -387,17 +413,24 @@ return changeName;
 	
 	@GetMapping("complete.po")
 	@ResponseBody
-	public int complete2(String merchant_uid, int amount, String imp_uid, String want5, int mno, int pno, int pcount, int adno, String address, String phone, Model model)  throws Exception{
+	public int complete2(String merchant_uid, int amount, String imp_uid, String want5, int mno, int pno, int pcount, int adno, String address, String phone, Model model, int cno)  throws Exception{
 		
 		
 		int result =  productService.orderComplete(merchant_uid, amount, want5, mno, adno, address, phone);
 	
+		if(cno < 3) {
 		
+			MemCoupon mc = new MemCoupon(mno, cno); // 사용한 쿠폰번호, 회원번호로 객체 생성
+			
+			int cResult = productService.couponDelete(mc); // 사용한 쿠폰 삭제  Y > N 변경	
+		} 
 		
 		if(result >0) { 	//주문테이블 삽입 성공
 			
 			OrderDetail od = productService.orderview(merchant_uid);
 			Product p = productService.selectProduct(pno);
+			
+			result = od.getOrderNo();
 			int account = ((p.getProductPrice()*(100-p.getDiscount()))/100); 
 			int ono = od.getOrderNo();
 			int result2 = productService.insertOrderProduct(pcount, account, ono, pno);
@@ -452,7 +485,7 @@ return changeName;
 	
 	
 	@PostMapping("CartForm")
-	public String cartForm( Model model, int mno) {
+	public String cartForm( Model model, int mno, HttpSession session) {
 		ArrayList<Cart> clist = productService.selectCartList(mno);
 		ArrayList<ProductImg> pilist = new ArrayList<>(); 
 		ArrayList<Product> plist = new ArrayList<>(); 
@@ -464,7 +497,7 @@ return changeName;
 			plist.add(pp);
 			pilist.add(pi);
 			}
-			int memNo = 1;
+			int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
 			
 			model.addAttribute("memNo", memNo);
 			model.addAttribute("plist", plist);
@@ -504,20 +537,32 @@ return changeName;
 	
 	@ResponseBody
 	@PostMapping("basketOrder.ba")
-	public ModelAndView basketOrder(ModelAndView mv, Integer memNo){
+	public ModelAndView basketOrder(ModelAndView mv, HttpSession session){
 			
+		int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		
 		ArrayList<Cart> clist = productService.selectCartList(memNo);
 		
 		ArrayList<Product> plist = new ArrayList<>();
 		ArrayList<ProductImg> pilist = new ArrayList<>();
 		
-		for(int i = 0 ; i<clist.size(); i++ ) {
+		for(int i = 0 ; i<clist.size() ; i++ ) {
+			
 			Product p =  productService.selectProduct(clist.get(i).getProductNo());
 			ProductImg pi = productService.selectProductImg(clist.get(i).getProductNo());
 		
 			plist.add(p);
 			pilist.add(pi);
+			
+			System.out.println("장바구니나오는지확인"+clist.get(i));
+			System.out.println(plist.get(i));
 		}
+		
+		Member m = productService.selectMember(memNo);
+		
+		System.out.println("장바구니 확인용"+m );
+		
+		mv.addObject("m", m);
 		mv.addObject("clist", clist);
 		mv.addObject("plist", plist);
 		mv.addObject("pilist", pilist);
@@ -530,7 +575,7 @@ return changeName;
 
 	@GetMapping("completeCart.po")
 	@ResponseBody
-	public int complete3( String merchant_uid, int amount, String imp_uid, String want5, int mno, String pno, String pcount, int adno, String address, String phone, Model model)  throws Exception{		
+	public int complete3( String merchant_uid, int amount, String imp_uid, String want5, int mno, String pno, String pcount, int adno, String address, String phone, Model model, int cno)  throws Exception{		
 		 pcount = pcount.replaceAll("\\[", "");
 		 pcount = pcount.replaceAll("\\]", "");
 		
@@ -540,6 +585,12 @@ return changeName;
 		String[] array = pcount.split(",");
 		String[] array1 = pno.split(",");
 		
+		if(cno < 3) {
+		
+			MemCoupon mc = new MemCoupon(mno, cno); // 사용한 쿠폰번호, 회원번호로 객체 생성
+			
+			int cResult = productService.couponDelete(mc); // 사용한 쿠폰 삭제  Y > N 변경
+		}
 		
 		int result1 =  productService.orderComplete(merchant_uid, amount, want5, mno, adno, address, phone); // 일단 기본 주문테이블 넣기
 	if(result1 > 0) { //  기본 주문 테이블에 데이터 삽입 성공 시 
@@ -694,9 +745,9 @@ return changeName;
 	
 	
 	@GetMapping("myOrderList.po")
-	public ModelAndView myProductList( ModelAndView mv) {
+	public ModelAndView myProductList( ModelAndView mv, int memNo) {
 		
-		int mno =1;
+		int mno = memNo;
 		
 		ArrayList<OrderDetail> odlist = productService.selectOrderDetail(mno);
 		
@@ -704,7 +755,7 @@ return changeName;
 		ArrayList<OrderProduct> oplist = new ArrayList<>();
 		ArrayList<OrderProduct> oplist2 = new ArrayList<>();
 		ArrayList<Product> plist = new ArrayList<>();
-		ArrayList<ProductReview> relist = new ArrayList<>();
+		ArrayList<Integer> relist = new ArrayList<>();
 		for(int i =0; i<odlist.size(); i++) {
 			if(i == 0) {
 			 oplist = productService.selectOrderProduct1(odlist.get(i).getOrderNo());
@@ -717,13 +768,13 @@ return changeName;
 		for(int i = 0; i<oplist.size(); i++) {
 			Product p = productService.selectProduct(oplist.get(i).getProductNo());
 		plist.add(p);
-		ProductReview re = productService.selectReview(oplist.get(i).getOdId());
+		int re = productService.selectReview(oplist.get(i).getOdId());
 		relist.add(re);
 		}
 		mv.addObject("relist", relist);
 		mv.addObject("odlist", odlist);
 		mv.addObject("oplist", oplist);
-		mv.addObject("plist", plist).setViewName("product/myOrderList");
+		mv.addObject("plist", plist).setViewName("member/myOrderList");
 
 		
 
@@ -750,11 +801,11 @@ return changeName;
 			int result = productService.insertProductReview(pr);
 			
 			if(result >0){ // 리뷰 작성 성공
-			mv.addObject("errorMsg", "게시글 등록 성공")
-				  .setViewName("common/errorPage");
+			mv.addObject("alertMsg", "게시글 등록 성공")
+				  .setViewName("redirect:/myPage.me");
 			}else {// 리뷰 작성 실패
-				mv.addObject("errorMsg", "게시글 등록 실패")
-				  .setViewName("common/errorPage");
+				mv.addObject("alertMsg", "게시글 등록 실패")
+				  .setViewName("redirect:/myPage.me");
 			}
 			
 		}
@@ -948,13 +999,15 @@ return changeName;
 	}
 
 	@PostMapping("wantRefund.po")
-	public ModelAndView wantRefund(int odId , ModelAndView mv) {
+	public String wantRefund(int odId , Model model, int memNo) {
 		
 		int result = productService.wantRefund(odId);
 		
-		myProductList(mv);
+		/* myProductList(mv, memNo); */
 		
-		return mv;
+		
+		
+		return "redirect:/myOrder.me?memNo="+memNo;
 	
 	}
 
@@ -970,9 +1023,9 @@ return changeName;
 	}
 	
 	@GetMapping("myFavorite.li")
-	public ModelAndView myFavoriteList( ModelAndView mv) {
+	public ModelAndView myFavoriteList( ModelAndView mv, HttpSession session) {
 		
-		int mno = 1;
+		int mno = ((Member)session.getAttribute("loginMember")).getMemNo();
 		
 		ArrayList<Favorites> flist  =  productService.myFavoriteList(mno);
 		
@@ -1010,8 +1063,8 @@ return changeName;
 	
 		
 		int listCount = productService.selectListCount();
-		int pageLimit = 10;
-		int boardLimit = 5;
+		int pageLimit = 5;
+		int boardLimit = 8;
 
 		PageInfo pi 
 		= Pagination.getPageInfo(listCount, 
@@ -1028,11 +1081,41 @@ return changeName;
 	        // 나머지 검색 결과를 순회하며 Set에 추가합니다.
 	        for (int i = 0; i < array.length; i++) {
 	            ArrayList<Product> list2 = productService.searchselectList(pi, array[i]);
-	          
-	            resultSet.addAll(list2);
-	            for (Product product : list2) {
-	            	  productNoSet.add(String.valueOf(product.getProductNo()));
+	            
+	            for(Product p : list2) {
+	            	
+	            	int isExist = 1;
+	            
+	            	for(Product p2 : resultSet) {
+	            		
+	            		if(p.getProductNo() == p2.getProductNo()) {
+	            			isExist *= 0;
+	            		} else {
+	            			isExist *= 1;
+	            		}
+	            		
+	            	}
+	            	
+	            	if(isExist == 0) { // 이미 존재?
+	            		
+	            	} else { // 이미 존재 X?
+	            		
+	            		resultSet.add(p);
+	            		productNoSet.add(String.valueOf(p.getProductNo()));
+	            	}
+	            	
+	            
+//	            	for (Product product : list2) {
+//		            	  productNoSet.add(String.valueOf(product.getProductNo()));
+//		            }
+	            	
+	            	
 	            }
+	          
+	            //resultSet.addAll(list2);
+
+	            
+	        
 	        }
 	        
 	        // 최종 결과를 ArrayList로 변환합니다.
@@ -1050,8 +1133,6 @@ return changeName;
 			String fa = productService.countFavorite(list.get(i).getProductNo());
 			falist.add(fa);
 		}
-		
-		
 	    
 		
 		// 노트 종류 별 뽑아오기
@@ -1074,9 +1155,9 @@ return changeName;
 	
 	}
 	@GetMapping("myCoupon.li")
-	public ModelAndView myCoupon(ModelAndView mv) {
+	public ModelAndView myCoupon(ModelAndView mv, HttpSession session) {
 		
-		int mno = 1;
+		int mno = ((Member)session.getAttribute("loginMember")).getMemNo();
 		
 		ArrayList<MemCoupon> clist = productService.myCoupon(mno);
 		
@@ -1096,9 +1177,9 @@ return changeName;
 	}
 	
 	@GetMapping("myReview.re")
-	public ModelAndView myReview(ModelAndView mv) {
+	public ModelAndView myReview(ModelAndView mv, HttpSession session) {
 		
-		int mno = 1;
+		int mno = ((Member)session.getAttribute("loginMember")).getMemNo();
 		
 		ArrayList<ProductReview> relist = productService.myReview(mno);
 	
@@ -1124,7 +1205,7 @@ return changeName;
 		
 		
 		
-		return "redirect:/myLike.me";
+		return "redirect:/myPage.me";
 	}
 	
 	

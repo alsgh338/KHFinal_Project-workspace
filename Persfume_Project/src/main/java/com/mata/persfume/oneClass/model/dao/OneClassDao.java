@@ -31,9 +31,8 @@ public class OneClassDao {
 		
 	}
 	
-	public int countReservation(SqlSessionTemplate sqlSession, int memNo) {
-		System.out.println(memNo);
-		return sqlSession.selectOne("oneClassMapper.countReservation", memNo);
+	public int countReservation(SqlSessionTemplate sqlSession, OneClassRegist ocr) {
+		return sqlSession.selectOne("oneClassMapper.countReservation", ocr);
 	}
 	
 	public OneClass selectOneClass(SqlSessionTemplate sqlSession, int oneClassNo) {
@@ -44,8 +43,8 @@ public class OneClassDao {
 		return (ArrayList)sqlSession.selectList("oneClassMapper.selectOneClassImgList",oneClassNo);
 	}
 	
-	public ArrayList<OneClassReview> selectClassReviewList(SqlSessionTemplate sqlSession, int oneClassNo){
-		return (ArrayList)sqlSession.selectList("oneClassMapper.selectClassReviewList",oneClassNo);
+	public ArrayList<OneClassReview> selectClassReviewList(SqlSessionTemplate sqlSession, String octc){
+		return (ArrayList)sqlSession.selectList("oneClassMapper.selectClassReviewList",octc);
 
 	}
 

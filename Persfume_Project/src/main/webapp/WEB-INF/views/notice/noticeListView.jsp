@@ -39,7 +39,7 @@
             text-align: center;
             line-height: 320px;
             font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             color: white;
             width: 100%;
         }
@@ -147,7 +147,7 @@
 
         /* 테이블 셀 스타일링 */
         .bbs-table-list tbody td {
-            border: 1px solid #aliceblue;
+           
             padding: 5px; /* 패딩을 조정하여 셀의 크기를 조절합니다 */
             text-align: center;
             overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
@@ -210,44 +210,86 @@
             padding: 10px 0;
         }
 
-        .pagination li {
-            display: inline;
-            margin: 0 5px;
-        }
+       /* 페이징 바 컨테이너 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
-        .pagination a {
-            text-decoration: none;
-            color: #000;
-            padding: 5px 11px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
+/* 페이지 링크 */
+.pagination .page-link {
+    color: #007bff;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border: 1px solid #dee2e6;
+    margin: 0 4px;
+}
 
-        .pagination a:hover {
-            background-color: #f2f2f2;
-        }
+.pagination .page-link:hover {
+    background-color: #f8f9fa;
+}
 
-        /* 수정된 스타일 */
-        .bbs-table-list tbody tr:nth-child(even) {
-            background-color: #aliceblue; /* 짝수 행 배경색 */
-        }
+.pagination .page-link.active {
+    background-color: #1a3a5c;
+    color: #fff;
+    border-color: #1a3a5c;
+}
 
-        #pagingArea {
-            text-align: center;
-            margin-left: 45%; /* 필요한 경우 위 여백 추가 */
-        }
 
-        /* 공지사항 리스트 끝 */
-        /* 게시글 리스트 시작 (한 페이지당 게시글 수) */
-        /* 짝수형 색 설정
-        .bbs-table-list tbody tr:nth-child(even) {
-            background-color: #; 
-        }
-        */
+
+.pagination .page-link.prev:hover,
+.pagination .page-link.next:hover {
+    background-color: #0056b3;
+    color: #fff;
+    border-color: #0056b3;
+}
+
+/* 페이징 바 컨테이너 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+/* 페이지 링크 */
+.pagination .page-link {
+    color: #fff; /* 페이지 링크 텍스트 색상 (회색) */
+    background-color: #1a3a5c; /* 페이지 링크 배경색 (연회색) */
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
+    margin: 0 4px;
+}
+
+.pagination .page-link:hover {
+    background-color: #12428b94; /* 마우스 오버시 배경색 변경 (파란색) */
+
+    color: #fff; /* 마우스 오버시 텍스트 색상 (흰색) */
+}
+
+
+.pagination .page-link.active {
+    background-color: #1a3a5c; /* 활성화된 페이지 링크 배경색 (파란색) */
+    color: #fff; /* 활성화된 페이지 링크 텍스트 색상 (흰색) */
+   
+}
+
+
+.pagination .page-item.active .page-link {
+    background-color: #265481ee; /* 활성화된 페이지 링크 배경색 (파란색) */
+    border: 1px #265481ee;
+    color: #fff; /* 활성화된 페이지 링크 텍스트 색상 (흰색) */
+ 
+   
+}
+
 
         .bbs-table-list tbody tr:hover {
-            background-color: #aab9c6; /* 호버시 배경색 변경 */
+           background-color: #aab9c6; /* 호버시 배경색 변경 */
             cursor: pointer; /* 호버시 커서를 손가락 모양으로 설정 */
         }
 
@@ -261,6 +303,16 @@
             background-color: #f1f1f1;       
             padding: 10px;
         }
+        
+    .bbs-table-list tbody td {
+    padding: 15px; /* 셀 내 여백을 늘려 세로 높이를 더 길게 만듭니다 */
+    text-align: center;
+    overflow: hidden; /* 셀 경계 안에 컨텐츠를 유지합니다 */
+    white-space: nowrap; /* 텍스트 줄 바꿈을 방지합니다 */
+    text-overflow: ellipsis; /* 넘칠 경우 생략 부호(...)를 표시합니다 */
+}
+
+        
     </style>
 </head>
 <body>
@@ -408,8 +460,9 @@
             </div>
         </div>
  
-    
-    <%-- 푸터 include --%>
-    <jsp:include page="../common/footer.jsp" />
+
 </body>
 </html>
+
+    <%-- 푸터 include --%>
+    <jsp:include page="../common/footer.jsp" />

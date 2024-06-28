@@ -24,6 +24,7 @@ public class ProductReview {
 	private int odId;
 	private int memNo;
 	private int productNo;
+	private String memName;
 	//생성자
 	
 }

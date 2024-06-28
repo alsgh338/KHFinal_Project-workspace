@@ -113,7 +113,7 @@ footer .copy {
                         <li><a href="/persfume">홈 </a></li>
                         <li><a href="list.no">공지사항</a></li>
                         <li><a href="list.ev?condition=onGoing">이벤트</a></li>
-                        <li><a href="list.co">향수</a></li>
+                        <li><a href="list.po">향수</a></li>
                         <li><a href="list.oc">원데이 클래스</a></li>
                         <li><a href="#">향 추천</a></li>
                     </ul>

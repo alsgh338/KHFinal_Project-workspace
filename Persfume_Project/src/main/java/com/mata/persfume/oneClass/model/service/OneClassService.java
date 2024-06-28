@@ -20,7 +20,7 @@ public interface OneClassService {
 	
 	// 게시글 상세조회 서비스
 	
-	int countReservation(int memNo);
+	int countReservation(OneClassRegist ocr);
 	
 	// 게시글 상세 조회
 	OneClass selectOneClass(int oneClassNo);
@@ -29,7 +29,7 @@ public interface OneClassService {
 	ArrayList<OneClassImg> selectOneClassImgList(int oneClassNo);
 	
 	// 리뷰 리스트 조회 서비스 - ajax
-	ArrayList<OneClassReview> selectClassReviewList(int oneClassNo);
+	ArrayList<OneClassReview> selectClassReviewList(String octc);
 	
 	// 댓글 작성 서비스 - ajax
 	int insertReview(OneClassReview ocr);

@@ -83,15 +83,15 @@
 		}
 	
         .content-title{
-            height: 190px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/perfume-subtitle.jpg);
+            height: 320px;
             background-size: cover;
             background-position: center;
             object-fit: cover;
             text-align: center;
-            line-height: 230px;
+            line-height: 320px;
             font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             color: white;
             width: 100%;
         }
@@ -111,8 +111,10 @@
             width: 17%;
 
         }
+        #a2{
+        width: 83%;}
         .content-right{
-            width: 83%;
+           
 
         }
         .content-right div{
@@ -258,15 +260,16 @@
     }
  
     .swiper {
-        width: 1400px;
+        width: 1000px;
         height: 300px;
-        margin: 20px;
+        margin: 30px;
     }
 
     /* 이미지 사이즈 조절 */
     .swiper-slide>img {
         width : 100%;
         height : 100%;
+        object-fit : fill;
     }
 
     /* 화살표 버튼색 변경 (기본색은 파란색) */
@@ -478,7 +481,7 @@
             <div class="swiper-button-next"></div>
         
    
-            <div class="swiper-scrollbar"></div>
+            
         </div>
     </div>
 
@@ -551,6 +554,8 @@
            
              </div>
 			
+			  <div id="a2"> 
+				<div id="a">
              <div class="content-right"> 
                <div class="content-sort" style="display: block;" >
            
@@ -563,8 +568,7 @@
               </div>
 
            
-          <div id="a2"> 
-		<div id="a">
+        
                <c:if test="${ requestScope.list == null }"> <div>검색결과가 없습니다.</div> </c:if>
 		<c:forEach var="p" items="${ requestScope.list }" varStatus="status">
 		
@@ -589,8 +593,8 @@
                 </div>
             </div>
                    </c:forEach>   
-        </div>
-        </div>
+        
+        
 
                      
              <div id="pagingArea" style="text-align:center;  " >
@@ -652,10 +656,10 @@
 	                </c:otherwise>
                     </c:choose>
                 </ul>
+           		 </div>
             </div>
-            
         </div>
-          
+          </div>
     </div>
   
    
@@ -702,7 +706,7 @@
 			
 			console.log(pno);
 			
-			location.href = "http://localhost:8006/persfume/detail.po?pno=" + pno;
+			location.href = "detail.po?pno=" + pno;
 		});
 	});
 </script>

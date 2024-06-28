@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mata.persfumeAdmin.member.model.vo.Member;
 import com.mata.persfumeAdmin.oneClass.model.service.OneClassService;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClass;
 import com.mata.persfumeAdmin.oneClass.model.vo.OneClassImg;
@@ -273,16 +274,26 @@ public class OneClassController {
 	
 	// 클래스 예약 취소
 	@PostMapping("deleteRegist.oc")
-	public String deleteRegist(String ocrno, String refundMsg, Model model) {
+	public String deleteRegist(String ocrno, String memNo, String refundMsg, Model model) {
 		
 		try {
 			
-			System.out.println(apiKey + "  /  " +  secretKey);
 			int result = oneClassService.deleteRegist(ocrno);
 			
 			if(result > 0) { // DB에 해당 결제 정보 수정 성공
 				String token = oneClassService.getToken(apiKey, secretKey);
 				oneClassService.refundRequest(token, ocrno, refundMsg);
+				
+				OneClassRegist ocr = new OneClassRegist();
+				
+				ocr.setClassNo(ocrno);
+				ocr.setMemNo(memNo);
+				
+				int rimitReservation = oneClassService.countReservation(ocr);
+				
+				if(rimitReservation <= 0 ) {
+					System.out.println(oneClassService.deleteChatMem(ocr));
+				} 
 				
 				return "redirect:/registList.oc";
 				

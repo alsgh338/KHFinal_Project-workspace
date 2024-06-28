@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import com.mata.persfume.common.model.vo.PageInfo;
+import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.product.model.vo.Cart;
 import com.mata.persfume.product.model.vo.Coupon;
 import com.mata.persfume.product.model.vo.Favorites;
@@ -253,8 +253,15 @@ public class ProductDao {
 	public ArrayList<ProductReview> myReview(SqlSessionTemplate sqlSession, int mno){
 		return (ArrayList)sqlSession.selectList("productMapper.myReview", mno);
 	}
-	public ProductReview selectReview(SqlSessionTemplate sqlSession, int pno){
+	public int selectReview(SqlSessionTemplate sqlSession, int pno){
 		return sqlSession.selectOne("productMapper.selectReview", pno);
+	}
+	
+	public Member selectMember(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("memberMapper.selectMember", memNo);
+	}
+	public int couponDelete(SqlSessionTemplate sqlSession, MemCoupon mc) {
+		return sqlSession.update("productMapper.couponDelete", mc);
 	}
 	
 }// 클래스종료

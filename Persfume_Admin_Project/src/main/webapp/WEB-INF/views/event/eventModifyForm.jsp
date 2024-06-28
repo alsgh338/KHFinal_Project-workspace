@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Persfume Admin - OneClass</title>
+    <title>Persfume Admin - Event</title>
 <link rel="icon" href="resources/vendor/fontawesome-free/svgs/solid/cogs.svg">
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

@@ -144,6 +144,7 @@
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="<%= request.getContextPath()%>/proList.pr">상품 목록</a>
                         <a class="collapse-item" href="<%= request.getContextPath()%>/proEnroll.pr">상품추가</a>
+                        <a class="collapse-item" href="productDelivery.po">주문목록</a>
                     </div>
                 </div>
             </li>

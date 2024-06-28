@@ -133,9 +133,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Transactional
 	@Override
-	public int insertVisitCount(Date today) {
+	public int insertVisitCount() {
 		
-		return memberDao.insertVisitCount(sqlSession, today);
+		return memberDao.insertVisitCount(sqlSession);
 		
 	}
 

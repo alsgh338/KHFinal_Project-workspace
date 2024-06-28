@@ -3,6 +3,7 @@ package com.mata.persfume.product.model.service;
 import java.util.ArrayList;
 
 import com.mata.persfume.common.model.vo.PageInfo;
+import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.product.model.vo.Cart;
 import com.mata.persfume.product.model.vo.Coupon;
 import com.mata.persfume.product.model.vo.Favorites;
@@ -125,6 +126,12 @@ public interface ProductService {
 		 // 리뷰리스트 가져오기
 		 ArrayList<ProductReview> myReview(int mno);
 		 // 상품번호로 리뷰 가져오기 (나의 주문내역에서 리뷰 중복 작성 불가 위해서)
-		 ProductReview selectReview(int pno);
+		 int selectReview(int pno);
+		 
+		 public Member selectMember(int memNo);
+		 //사욯한 쿠폰 삭제
+		 int couponDelete(MemCoupon mc);
+		 // 회원 긁어오기
+		
 		
 }//인터페이스 종료

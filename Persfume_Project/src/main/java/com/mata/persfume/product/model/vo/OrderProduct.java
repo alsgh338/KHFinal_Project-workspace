@@ -24,6 +24,8 @@ public class OrderProduct {
 		this.orderNo = orderNo;
 		this.productNo = productNo;
 	}
+
+	
 	
 	
 	

@@ -106,8 +106,10 @@ public class MemberDao {
 		return list;
 	}
 	
-	public int insertVisitCount(SqlSessionTemplate sqlSession,Date today) {
-		return sqlSession.insert("memberMapper.insertVisitCount", today);
+	public int insertVisitCount(SqlSessionTemplate sqlSession) {
+		
+		System.out.println("여기까진 됨");
+		return sqlSession.insert("memberMapper.insertVisitCount");
 	}
 
 	public int selectEmail(SqlSessionTemplate sqlSession, String email) {

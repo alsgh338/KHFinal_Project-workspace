@@ -38,6 +38,13 @@
 	    </beans:property>
 	</beans:bean>
 	
-	
+	<interceptors>
+		<interceptor>
+			<mapping path="/" />
+<!-- 			<mapping path="/reservation.oc" />
+ -->			<beans:bean class="com.mata.persfumeAdmin.common.interceptor.LoginInterceptor"
+						id="loginInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

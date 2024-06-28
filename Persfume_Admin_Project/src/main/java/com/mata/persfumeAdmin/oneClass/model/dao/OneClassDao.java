@@ -92,5 +92,13 @@ public class OneClassDao {
 		return sqlSession.update("oneClassMapper.deleteRegist", ocrno);
 
 	}
+	
+	public int countReservation(SqlSessionTemplate sqlSession, OneClassRegist ocr) {
+		return sqlSession.selectOne("oneClassMapper.countReservation", ocr);
+	}
+	
+	public int deleteChatMem(SqlSessionTemplate sqlSession ,OneClassRegist oc) {
+		return sqlSession.delete("oneClassMapper.deleteChatMem", oc);
+	}
 
 }

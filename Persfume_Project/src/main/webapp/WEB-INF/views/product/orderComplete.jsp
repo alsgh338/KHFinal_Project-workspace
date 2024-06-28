@@ -127,15 +127,15 @@
 		text-align: center;
 		}
         .content-title{
-            height: 190px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/perfume-subtitle.jpg);
+            height: 320px;
             background-size: cover;
             background-position: center;
             object-fit: cover;
             text-align: center;
-            line-height: 230px;
+            line-height: 320px;
             font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             color: white;
             width: 100%;
         }
@@ -176,15 +176,15 @@
             <div class="customer-info">
                 <h2>고객 정보</h2>
                 <ul>
-                    <li><strong>주문자명:</strong> ${ sessionScope.loginMember }(세션 가져와서 회원이름)</li>
+                    <li><strong>주문자명:</strong> ${ sessionScope.loginMember.memName }</li>
                     <li><strong>전화번호:</strong>${requestScope.od.phone}</li>
                     <li><strong>배송주소:</strong>(${requestScope.od.addressNo}) ${requestScope.od.address} </li>
                     <li><strong>요청사항</strong> ${requestScope.od.orderWant}</li>
                 </ul>
             </div>
             <div class="actions">
-                <a href="#" class="button">마이페이지 </a>
-                <a href="#" class="button">쇼핑하기</a>
+                <a href="myOrder.me?memNo=${ sessionScope.loginMember.memNo }" class="button">마이페이지 </a>
+                <a href="list.po" class="button">쇼핑하기</a>
             </div>
         </div>
     </div>
@@ -194,7 +194,9 @@
 
       <jsp:include page="../common/footer.jsp" />
   
-
+<script>
+	console.log( ${ sessionScope.loginMember } );
+</script>
    
 
 

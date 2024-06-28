@@ -45,8 +45,8 @@ public class OneClassServiceImpl implements OneClassService {
 	}
 
 	@Override
-	public int countReservation(int memNo) {
-		return oneClassDao.countReservation(sqlSession,memNo);
+	public int countReservation(OneClassRegist ocr) {
+		return oneClassDao.countReservation(sqlSession,ocr);
 	}
 
 	@Override
@@ -56,8 +56,8 @@ public class OneClassServiceImpl implements OneClassService {
 	}
 
 	@Override
-	public ArrayList<OneClassReview> selectClassReviewList(int oneClassNo) {
-		return oneClassDao.selectClassReviewList(sqlSession, oneClassNo);
+	public ArrayList<OneClassReview> selectClassReviewList(String octc) {
+		return oneClassDao.selectClassReviewList(sqlSession, octc);
 	}
 
 	@Transactional

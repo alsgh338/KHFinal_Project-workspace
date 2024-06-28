@@ -22,8 +22,8 @@
         text-align: center;
         line-height: 320px;
         font-size: 50px;
-        text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px
-            black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
         color: white;
         width: 100%;
     }
@@ -185,7 +185,7 @@
 					    		<th width="250">상품 이미지</th>
 					    		<th width="150">상품 이름</th>
 					    		<th width="150">상품 가격</th>
-					    		<th width="100">상품 재고</th>
+					    		
 					    		<th width="120">상세 보기</th>
 					    		<th width="120">상품 제거</th>
 					    	</tr>
@@ -203,9 +203,7 @@
 								    <td>
 								        ${plist[i].productPrice}
 								    </td>
-								    <td>
-								        ${plist[i].productStock}
-								    </td>
+								
 								    	
 								    <td>
 								        <div class="btn btn-sm btn-info" onclick="location.href = 'detail.po?pno='+ ${plist[i].productNo}">
@@ -215,7 +213,7 @@
 								    <td>
 			                       		<form method="post" action="delFavorite.me" id="likeForm">
                     						<input type="hidden" name='productNo' value="${plist[i].productNo}">
-                    						<input type="hidden" name='memNo' value="${sesssionScope.loginMember.memNo}">
+                    						<input type="hidden" name='memNo' value="${sessionScope.loginMember.memNo}">
 									        <div class="btn btn-sm btn-danger" onclick="$('#likeForm').submit();">
 									        	상품 제거
 									        </div>

@@ -69,6 +69,7 @@
 		<result column="PRICE" property="price" />
 		<result column="ORDER_NO" property="orderNo" />
 		<result column="PRODUCT_NO" property="productNo" />
+		<result column="REFUND_REQUEST" property="refundRequest" />
 	</resultMap>
 	<!--  상품리뷰  테이블 -->
 			<resultMap type="ProductReview" id="ProductReviewResultSet">
@@ -81,6 +82,7 @@
 		<result column="OD_ID" property="odId" />
 		<result column="MEM_NO" property="memNo" />
 		<result column="PRODUCT_NO" property="productNo" />
+		<result column="MEM_NAME" property="memName" />
 			</resultMap>
 				<!--  찜 테이블 -->
 		<resultMap type="Favorites" id="FavoritesResultSet">
@@ -395,10 +397,11 @@
 		<select id="selectProductReviewList"
 		parameterType="_int"
 			resultMap="ProductReviewResultSet">
-		SELECT * 
-		  FROM PRODUCT_REVIEW  
-		 WHERE PRODUCT_NO = #{pno} 
-		 AND REVIEW_STATUS = 'Y'    
+		        SELECT PR.*, M.MEM_NAME
+		  FROM PRODUCT_REVIEW PR
+          JOIN MEMBER M ON M.MEM_NO = PR.MEM_NO
+		 WHERE PR.PRODUCT_NO = #{pno} 
+		 AND PR.REVIEW_STATUS = 'Y'    
 	</select>
 				<!--  찜테이블에 찜 추가 -->
  	  		<insert id="favoriteAdd"
@@ -529,14 +532,16 @@
 	
 	<select id="getProductThumbnail" resultMap="productImgResultSet">
 	    SELECT PRODUCT_IMG_PATH
-	      FROM (
-	          SELECT PRODUCT_IMG_PATH,
-	                 ROW_NUMBER() OVER (ORDER BY DBMS_RANDOM.VALUE) AS RNUM
-	          FROM PRODUCT_IMG
-	          JOIN PRODUCT USING (PRODUCT_NO)
-	          WHERE IMG_TYPE = '1'
-	      )
-	      WHERE RNUM &lt;= 12
+		     , PRODUCT_NO
+			      FROM (
+			          SELECT PRODUCT_IMG_PATH
+		                   , PRODUCT_NO
+			               , ROW_NUMBER() OVER (ORDER BY DBMS_RANDOM.VALUE) AS RNUM
+			          FROM PRODUCT_IMG
+			          JOIN PRODUCT USING (PRODUCT_NO)
+			          WHERE IMG_TYPE = '1'
+			      )
+			      WHERE RNUM &lt;= 12
 	</select>
 	
 	<!--  환불 요청 쿼리문  -->
@@ -619,9 +624,17 @@
 			<!-- 상품번호로 리뷰긁어가기-->
 		<select id="selectReview"
 		parameterType="_int"
-			resultMap="ProductReviewResultSet">
-		SELECT * 
+			resultType="_int">
+		SELECT COUNT(*) 
 		  FROM PRODUCT_REVIEW
 		 WHERE OD_ID = #{pno}  
 	</select>
+	    <!--  쿠폰 사용하면 쓴 쿠폰 삭제  -->
+		<update id="couponDelete"
+			parameterType="MemCoupon">
+		UPDATE MEM_COUPON     
+		 	 SET STATUS = 'N'   
+			WHERE MEM_NO = #{memNo} 
+			AND COUPON_NO = #{couponNo}  
+    	</update>
 </mapper>

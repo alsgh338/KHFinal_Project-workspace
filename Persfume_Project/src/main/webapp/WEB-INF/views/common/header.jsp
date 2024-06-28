@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -294,6 +293,7 @@
             <div class="stick"></div>
             <div class="stick"></div>
         </div>
+        
     </div>
 
     <script>
@@ -346,6 +346,7 @@
             
     		if(!document.cookie.includes("visit='Y'")) {
     			
+    			
     			var todayMidnight = new Date().setHours(0,0,0,0);
     			
     			var expireTime = new Date(new Date().setHours(0,0,0,0) + 24* 60 * 60 * 1000);
@@ -364,7 +365,6 @@
         		url : "visitcnt.me",
         		type : "post",
         		success : function (result) {
-        			console.log(result);
     			} ,
         		error : function () {
     				

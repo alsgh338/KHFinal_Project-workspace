@@ -21,8 +21,8 @@
 	text-align: center;
 	line-height: 320px;
 	font-size: 50px;
-	text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px
-		black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
 	color: white;
 	width: 100%;
 }
@@ -306,7 +306,7 @@ fieldset {
 				</tr>
 				
 				<th>이메일</th>
-				<td colspan="4"><input type="email" id="email" name="email" value="${ sessionScope.loginMember.email }" required>
+				<td colspan="4"><input type="email" id="email" name="email" value="${ sessionScope.loginMember.email }" required readonly>
 				</td>
 				
 				<tr>
@@ -344,7 +344,7 @@ fieldset {
 				</tr>
 				<tr>
 					<th>성별</th>
-					<td colspan="4"><input type="text" id="gender" name="gender" value="${ sessionScope.loginMember.gender }"  style="width: 200px;"></td>
+					<td colspan="4"><input type="text" id="gender" name="gender" value="${ sessionScope.loginMember.gender }"  style="width: 200px;" readonly></td>
 				</tr>
 			</table>
 			<br><br>

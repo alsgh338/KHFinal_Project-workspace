@@ -86,12 +86,15 @@
 			                                            </c:choose>
 		                                            </td>
                                                 <td>
-                                                    <a href="detail.no?nno=${n.noticeNo}" class="btn btn-info btn-sm btn-icon-split">
+                                                	<c:if test="${ n.status eq 'Y' }">
+                                                		<a href="detail.no?nno=${n.noticeNo}" class="btn btn-info btn-sm btn-icon-split">
                                                         <span class="icon text-white-50">
                                                             <i class="fas fa-info-circle"></i>
                                                         </span>
                                                         <span class="text">수정</span>
                                                     </a>
+                                                	</c:if>
+                                                    
                                                 </td>
                                                 	<c:choose>
 		                                            	<c:when test="${ n.status eq 'Y' }">

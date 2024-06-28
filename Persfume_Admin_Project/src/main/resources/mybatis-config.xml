@@ -24,6 +24,7 @@
 		<typeAlias type="com.mata.persfumeAdmin.oneClass.model.vo.OneClassTeacher" alias="oneClassTeacher" />
 		<typeAlias type="com.mata.persfumeAdmin.member.model.vo.Member" alias="member" />
 		<typeAlias type="com.mata.persfumeAdmin.common.model.vo.Chart" alias="chart" />
+		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.OrderProduct" alias="OrderProduct" />
 		<typeAlias type="com.mata.persfumeAdmin.product.model.vo.OrderDetail" alias="orderDetail" />
 	</typeAliases>
 	

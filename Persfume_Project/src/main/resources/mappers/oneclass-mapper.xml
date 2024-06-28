@@ -71,9 +71,10 @@
              , TO_CHAR(C.END_TIME, 'HH24:MI') AS "END_TIME"
              , TO_CHAR(C.START_DATE, 'YYYY-MM-DD') AS "START_DATE"
              , TO_CHAR(C.ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
-             , (SELECT COUNT(*) 
-				          FROM CLASS_REGIST CR 
-				         WHERE CR.CLASS_NO = C.CLASS_NO) AS CURRENT_STUDENT
+             , (SELECT NVL(SUM(REGIST_PERSON_NO), 0)
+FROM CLASS_REGIST CR
+WHERE CR.CLASS_NO = C.CLASS_NO
+  AND CR.STATUS='Y') AS CURRENT_STUDENT
                          
 		  FROM CLASS C
           JOIN CLASS_IMG CIMG ON C.CLASS_NO = CIMG.REF_CNO
@@ -83,11 +84,12 @@
 	</select>
 	
 	<select id="countReservation"
-			parameterType="_int"
+			parameterType="oneClassRegist"
 			resultType="_int">
 			SELECT COALESCE(SUM(REGIST_PERSON_NO), 0)
 			  FROM CLASS_REGIST
 			 WHERE MEM_NO = #{memNo}
+			   AND CLASS_NO = #{classNo}
 			   AND STATUS = 'Y'
 
 	</select>
@@ -107,6 +109,9 @@
              , TO_CHAR(C.START_DATE, 'YYYY-MM-DD') AS "START_DATE"
              , TO_CHAR(C.ENROLL_DATE, 'YYYY-MM-DD') AS "ENROLL_DATE"
 			 , CIMG.CLASS_IMG_PATH AS THUMBNAIL_IMG
+			 , (SELECT NVL(SUM(REGIST_PERSON_NO), 0)
+FROM CLASS_REGIST CR
+WHERE CR.CLASS_NO = C.CLASS_NO AND CR.STATUS='Y') AS CURRENT_STUDENT
 		  FROM CLASS C
 		  JOIN CLASS_IMG CIMG ON C.CLASS_NO = CIMG.REF_CNO
 		 WHERE C.CLASS_NO = #{oneClassNo}
@@ -127,7 +132,7 @@
 	
 	
 	<select id="selectClassReviewList"
-			parameterType="_int"
+			parameterType="String"
 			resultMap="oneClassReviewResultSet">
 				SELECT CR.CLASS_REVIEW_NO,
 				       CR.CLASS_REVIEW_CONTENT, 
@@ -139,7 +144,7 @@
 				  JOIN MEMBER M USING(MEM_NO)
 				  JOIN CLASS_REGIST CREG ON CREG.REGIST_NO = CR.LIST_NO
 				  JOIN CLASS C ON CREG.CLASS_NO = C.CLASS_NO
-				 WHERE CREG.CLASS_NO = #{oneClassNo}
+				 WHERE C.CLASS_TEACHER = #{octc}
 
 	</select>
 	

@@ -266,15 +266,15 @@
 		text-align: center;
 		}
         .content-title{
-            height: 190px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/perfume-subtitle.jpg);
+            height: 320px;
             background-size: cover;
             background-position: center;
             object-fit: cover;
             text-align: center;
-            line-height: 230px;
+            line-height: 320px;
             font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             color: white;
             width: 100%;
         }
@@ -417,7 +417,7 @@
     <body>
        <jsp:include page="../common/header.jsp" />
        <div class="content-area">
-        <div class="content-title" id="home"></div>
+        <div class="content-title" id="home">PERFUME</div>
         <div class="content-subtitle"></div>
         <div class="content-main">
         </div>
@@ -526,7 +526,7 @@
               
 					                 <div class="review"  onclick="openModal('${pr.reviewImgPath}')">
 					            <div class="review-header">
-					                <span class="user-name">user1321</span>
+					                <span class="user-name">${mlist[status.index].memName}</span>
 					                <span class="rating">                  
 			<c:if test="${pr.reviewRating == 10}"> <p class="review-rating">★★★★★</p></c:if>    
                    <c:if test="${pr.reviewRating == 9}"> <p class="review-rating">★★★★☆</p></c:if>
@@ -692,21 +692,6 @@ window.onclick = function(event) {
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    const userNames = document.querySelectorAll('.user-name');
-    userNames.forEach(userName => {
-        userName.textContent = generateRandomString(5);
-    });
-});
-
-function generateRandomString(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = 'ID: ';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-}
 </script>
 
      

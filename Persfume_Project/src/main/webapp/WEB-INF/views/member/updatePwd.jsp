@@ -24,8 +24,8 @@
         text-align: center;
         line-height: 320px;
         font-size: 50px;
-        text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px
-            black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  black;
         color: white;
         width: 100%;
         margin-bottom: 20px;

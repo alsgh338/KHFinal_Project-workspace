@@ -1,6 +1,8 @@
 package com.mata.persfume.oneClass.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -121,10 +123,10 @@ public class OneClassController {
 	// 클래스 상세 조회 리뷰 Ajax 조회 컨트롤러
 	@ResponseBody
 	@PostMapping(value="review.oc", produces="application/json; charset=UTF-8")
-	public String selectClassReviewList(int oneClassNo) {
+	public String selectClassReviewList(String octc) {
 		
 		
-		ArrayList<OneClassReview> list = oneClassService.selectClassReviewList(oneClassNo);
+		ArrayList<OneClassReview> list = oneClassService.selectClassReviewList(octc);
 		return new Gson().toJson(list);
 		
 	}
@@ -136,26 +138,44 @@ public class OneClassController {
 
 		OneClass oc = oneClassService.selectOneClass(ocno);
 		
-		int rimitReservation = oneClassService.countReservation(((Member)session.getAttribute("loginMember")).getMemNo());
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date = LocalDate.parse(oc.getStartDate(), formatter);
 		
-		
-		if( oc.getCurrentStudent() >= oc.getStudentMaxNo()) {
-			session.setAttribute("alertMsg", "클래스 정원이 모두 찼습니다.");
+		if(date.isBefore(today) ) {
+			session.setAttribute("alertMsg", "이미 기간이 지난 클래스는 예약이 불가합니다");
 			return "redirect:/list.oc";
 			
 		} else {
+			OneClassRegist ocr = new OneClassRegist();
 			
-			if(rimitReservation >= 4){
-				session.setAttribute("alertMsg", "한 클래스에는 한 계정 당 최대 4명까지 예약 가능합니다 (현재 예약 내역 : 4/4)");
+			ocr.setClassNo(ocno);
+			ocr.setMemNo(((Member)session.getAttribute("loginMember")).getMemNo());
+			
+			int rimitReservation = oneClassService.countReservation(ocr);
+			
+			
+			if( oc.getCurrentStudent() >= oc.getStudentMaxNo()) {
+				session.setAttribute("alertMsg", "클래스 정원이 모두 찼습니다.");
 				return "redirect:/list.oc";
-			}else {
-				model.addAttribute("oc",oc);
-				model.addAttribute("rimitReservation",rimitReservation);
-				model.addAttribute("impApiKey",impApiKey);
-				return "oneClass/oneClassReservationView";
+				
+			} else {
+				
+				if(rimitReservation >= 4){
+					session.setAttribute("alertMsg", "한 클래스에는 한 계정 당 최대 4명까지 예약 가능합니다 (현재 예약 내역 : 4/4)");
+					return "redirect:/list.oc";
+				}else {
+					model.addAttribute("oc",oc);
+					model.addAttribute("rimitReservation",rimitReservation);
+					model.addAttribute("impApiKey",impApiKey);
+					return "oneClass/oneClassReservationView";
+				}
+				
 			}
-			
 		}
+		
+		
+		
 		
 
 		
@@ -234,7 +254,13 @@ public class OneClassController {
 					String token = oneClassService.getToken(apiKey, secretKey);
 					oneClassService.refundRequest(token, ocrno, refundMsg);
 					
-					int rimitReservation = oneClassService.countReservation(((Member)session.getAttribute("loginMember")).getMemNo());
+					OneClassRegist ocr = new OneClassRegist();
+					
+					ocr.setClassNo(oc.getClassNo());
+					ocr.setMemNo(((Member)session.getAttribute("loginMember")).getMemNo());
+					
+					int rimitReservation = oneClassService.countReservation(ocr);
+					
 					
 					if(rimitReservation <= 0 ) {
 						oneClassService.deleteChatMem(oc);

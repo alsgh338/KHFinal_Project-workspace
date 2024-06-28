@@ -45,7 +45,7 @@ public interface MemberService {
 
 	ArrayList<OneClass> selectClassAbout(ArrayList<OneClassRegist> registlist);
 
-	int insertVisitCount(Date today);
+	int insertVisitCount();
 
 	int selectEmail(String email);
 

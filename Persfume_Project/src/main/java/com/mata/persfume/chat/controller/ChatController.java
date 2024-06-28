@@ -46,7 +46,7 @@ public class ChatController {
 		return mv;
 	}
 	
-	@GetMapping("showChat")
+	@PostMapping("showChat")
 	public String showChat(HttpSession session, int classNo, Model model) {
 		
 		model.addAttribute("classNo", classNo);

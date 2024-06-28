@@ -41,8 +41,10 @@ public class ChartDao {
 	}
 	
 	public ArrayList<Chart> scentSale(SqlSessionTemplate sqlSession, String note) {
-		return (ArrayList)sqlSession.selectList("chartMapper.scentSale");
-
+		System.out.println("note : "+ note);
+		ArrayList<Chart> result =  (ArrayList)sqlSession.selectList("chartMapper.scentSale", note);
+		System.out.println(result);
+		return result;
 	}
 
 	public ArrayList<Chart> productStock(SqlSessionTemplate sqlSession) {

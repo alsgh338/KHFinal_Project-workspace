@@ -92,11 +92,5 @@ public class EventController {
 		return mv;
 	}
 	
-	@GetMapping("enrollForm.ev")
-	public String eventEnrollForm() {
-		
-		return "event/eventEnrollForm";
-	}
-	
 	
 }

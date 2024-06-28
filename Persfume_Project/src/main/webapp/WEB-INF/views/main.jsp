@@ -27,12 +27,15 @@
         .swiper-slide>.swiper-img{
             width : 30%;
             height: 400px;
+            transition : all .3s ease;
         }
 
         .swiper-img>img{
             width: 100%;
             height : 100%;
             object-fit:cover;
+            box-shadow: 10px 10px 10px lightgray;
+            border-radius: 10px;
         }
 
         /* 화살표 버튼색 변경 (기본색은 파란색) */
@@ -390,7 +393,8 @@
 	    	object-fit: cover;
 	    }
 	    
-		.event:hover {
+		.event:hover,
+		.swiper-img:hover {
 	        cursor: pointer;
 	        transform: translateY(-10px);
 	        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -518,7 +522,7 @@
                 <p>
                     당신만의 개성과 취향을 반영한 퍼스널 향수를 추천해주는 자가진단 서비스입니다. 간단한 질문을 통해 당신의 라이프스타일, 좋아하는 향기, 감정 등을 분석하여 최적의 향수를 찾아드립니다. 지금 바로 시작하여 나만의 특별한 향기를 발견해보세요!
                 </p>
-                <h4> > <a href=""> 바로가기 </a></h4>
+                <h4> > <a href="test.rc"> 바로가기 </a></h4>
             </div> 
         </div>
 
@@ -532,7 +536,7 @@
 
             <div class="main-section-content">
                 <div class="main-section-content-img">
-                    <img src="resources/images/oneday.jpg" alt="">
+                    <img src="resources/images/mainOneclass.jpg" alt="엥">
                 </div>
                 <div class="main-section-content-text">
                     <div>
@@ -580,6 +584,7 @@
                  url: "noticeList", // 데이터를 가져올 엔드포인트 URL
                  success: function(result) {
                      // 서버로부터 받은 데이터를 처리하여 이벤트 목록을 표시하는 함수 호출
+                     console.log(result);
                      displayNoticeList(result);
                  },
                  error: function(xhr, status, error) {
@@ -632,11 +637,15 @@
                  					'<td>' + notice.noticeTitle + '</td>' +
                  					'<td>' + notice.createDate + '</td>' +
                  				  '</tr>';
+                 noticeListDiv.append(noticeHtml);
              }
-             noticeListDiv.append(noticeHtml);
          }
          
-         
+         function goToProduct(pno) {
+        	 
+        	 location.href = "detail.po?pno=" + pno;
+        	 
+         }
          
                   
          $(function(){
@@ -647,7 +656,7 @@
          });
          
          $(function(){
-        	$(document).on("click", "#noticeList>tr:not(:nth-child(1))", function(){
+        	$(document).on("click", "#noticeList>tbody>tr:not(:nth-child(1))", function(){
         		let noticeNo = $(this).children().eq(0).text();
         		
         		console.log(noticeNo);
@@ -702,6 +711,8 @@
        	        method: 'GET', // 요청 방식 (GET, POST 등)
        	        success: function(productList) {
        	        	
+       	        	console.log(productList);
+       	        	
        	        	 var productListDiv = $("#productList");
 	               	 var productHtml = ""; 
 	               	 // 받아온 상품 목록 반복하여 표시
@@ -709,7 +720,8 @@
 	               		  productHtml += "<div class='swiper-slide'>";
 	               		 for(var j=i; j<i+3 && j < productList.length; j++){
 	               			 var pImg = productList[j].productImgPath;
-	               			 productHtml += "<div class='swiper-img'><img src='../persfumeAdmin/" + pImg + "' alt='test'></div>";
+	               			 var pno = productList[j].productNo;
+	               			 productHtml += "<div class='swiper-img'><img src='../persfumeAdmin/" + pImg + "' alt='test' onclick='goToProduct(" + pno + ");'></div>";
 	               		 }
 	               		 productHtml += "</div>";
 	               	 }
@@ -718,7 +730,7 @@
 		            // 슬라이더 동작 정의
        	            const swiper = new Swiper('.swiper', {
        	                autoplay: {
-       	                    delay: 800 // 8초마다 이미지 변경
+       	                    delay: 6000 // 8초마다 이미지 변경
        	                },
        	                loop: true, // 반복 재생 여부
        	                slidesPerView: 1, // 이전, 이후 사진 미리보기 갯수
@@ -738,7 +750,6 @@
        	        }
        	    });
          })
-         
          
 		
          

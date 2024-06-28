@@ -29,8 +29,8 @@
 	text-align: center;
 	line-height: 320px;
 	font-size: 50px;
-	text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px
-		black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
 	color: white;
 	width: 100%;
 }
@@ -188,7 +188,7 @@ fieldset {
 				<tr>
 					<th>아이디</th>
 					<td colspan="4"><input type="text" id="memId" name="memId"
-						required> (영문소문자/숫자, 4~16자)
+						required> (대소문자와 특수기호 조합 4~16자로 입력해주세요)
 						<div id="checkResult" style="font-size: 0.8em; display: none;">
 						</div></td>
 				</tr>

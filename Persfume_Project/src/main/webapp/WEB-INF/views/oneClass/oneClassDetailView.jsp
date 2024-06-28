@@ -31,14 +31,14 @@
 
         .content-title{
             height: 320px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/oneClass-subtitle.jpg);
             background-size: cover;
             background-position: center;
             object-fit: cover;
             text-align: center;
             line-height: 320px;
             font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             color: white;
             width: 100%;
         }
@@ -374,7 +374,7 @@
                    <div class="class-simple-data">
                        <div id="class-name">${ requestScope.oc.className}</div>
                        <div id="class-data1"> 
-                       		<div>예약 현황 : ${ requestScope.oc.currentStudent} / ${ requestScope.oc.studentMaxNo}</div>
+                       		<div>예약 현황 : ${requestScope.oc.currentStudent} / ${requestScope.oc.studentMaxNo}</div>
                        		<div>등록일 : ${requestScope.oc.enrollDate}</div>
                    		</div>
                        <div id="class-teacher">Teacher : ${ requestScope.oc.classTeacher}</div>
@@ -425,16 +425,7 @@
                        <div></div>
                    </div>
                    <div class="class-review">
-                       <div class="class-review-section1">
-                           <div class="class-review-author">안해준</div>
-                           <div class="class-review-date">2023.01.01</div>
-                       </div>
-                       <div class="class-review-section2 ">
-                           공건희의 즐거운 향수 교실
-                       </div>
-                       <div class="class-review-section3">
-                           정말정말 재미있던 클래스 어쩌구 다른 분들도 꼭 한번 저쩌구
-                       </div>
+
                    </div>
                </div>
 
@@ -574,7 +565,7 @@
             				url : "review.oc",
             				type : "post",
             				data : {
-            					oneClassNo : ${requestScope.oc.classNo}
+            					octc : "${ requestScope.oc.classTeacher}"
             				},
             				success : function(list) {
             					console.log(list);
@@ -640,18 +631,24 @@
         	
         	});
         	
-        	$(".copy-address").on("click",function(){
-      			  // 복사문구값 가져오기
-      			  var copyTxt = $(this).parent().prev();
+        	$(".copy-address").on("click", function(){
+        	    // 복사할 텍스트 가져오기
+        	    var copyTxt = $(this).parent().prev().text().trim();
 
-      			  // 복사문구 선택
-      			  copyTxt.select();
-      			   // 복사
-      			  navigator.clipboard.writeText($.trim(copyTxt.text()));
-
-      			  // 복사완료에 대해 Alert으로 띄우기
-      			  alert("복사되었습니다.");
-        			
+        	    // 텍스트 선택 (필요한 경우)
+        	    var $temp = $("<textarea>");
+        	    $("body").append($temp);
+        	    $temp.val(copyTxt).select();
+        	    
+        	    try {
+        	        // 클립보드 복사 시도
+        	        document.execCommand("copy");
+        	        alert("복사되었습니다.");
+        	    } catch (err) {
+        	        console.error('클립보드 복사 도중 오류가 발생했습니다.', err);
+        	    } finally {
+        	        $temp.remove();
+        	    }
         	});
         });
 

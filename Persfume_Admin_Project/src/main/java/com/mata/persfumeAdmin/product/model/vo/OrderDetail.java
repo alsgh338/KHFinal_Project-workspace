@@ -12,7 +12,15 @@ import lombok.ToString;
 @Setter
 @ToString
 public class OrderDetail {
-
+	private int orderNo;
+	private String payCode;
 	private int totalPrice;
+	private String orderWant;
+	private String deliveryStatus;
 	private Date orderDate;
+	private Date refundDate;
+	private int memNo;
+	private int addressNo;
+	private String address;
+	private String phone;
 }

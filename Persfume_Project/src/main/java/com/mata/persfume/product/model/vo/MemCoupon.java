@@ -17,4 +17,11 @@ public class MemCoupon {
 		private String status;
 		private int memNo;
 		private int couponNo;
+		public MemCoupon(int memNo, int couponNo) {
+			super();
+			this.memNo = memNo;
+			this.couponNo = couponNo;
+		}
+		
+		
 }

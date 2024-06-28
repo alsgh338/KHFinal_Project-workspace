@@ -160,13 +160,11 @@
 			parameterType="member">
 			UPDATE MEMBER
 			SET MEM_NAME = #{memName}
-			, EMAIL = #{email}
 			, PHONE = #{phone}
 			, POSTCODE = #{postcode}
 			, ADDRESS = #{address}
 			, DETAILADDRESS = #{detailAddress}
 			, EXTRAADDRESS = #{extraAddress}
-			, GENDER = #{gender}
 			WHERE MEM_ID = #{memId}
 			AND STATUS = 'Y'
 	</update>
@@ -281,11 +279,20 @@
 	</select>
 
 	<!-- 접속 시 접속 기록 쿠키 데이터 저장-->
-	<insert id="insertVisitCount" parameterType="java.util.Date">
-		INSERT INTO VISIT_COUNT(VISIT_DATE) VALUES(#{today})
+	<insert id="insertVisitCount">
+		INSERT INTO VISIT_COUNT(VISIT_DATE) VALUES(SYSDATE)
 	</insert>
 
-	
+		<!--  회원번호로 회원정보 긁어가는 쿼리 -->
+	<select id="selectMember"
+			parameterType="_int"
+			resultMap="memberResultSet">
+	<!-- 암호화 작업 후 : 오로지 아이디만을 가지고 조회 -->
+	 	SELECT * 
+	 	  FROM MEMBER 
+	 	 WHERE MEM_NO = #{memNo} 
+	 	   AND STATUS = 'Y' 
+	</select>
 
 	
 	

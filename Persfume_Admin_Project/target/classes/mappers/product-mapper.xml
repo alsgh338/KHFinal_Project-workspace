@@ -44,6 +44,33 @@
 		<result column="PRODUCT_NO" property="productNo" />
 	</resultMap>
 	
+	   	<!--  주문테이블  -->
+		<resultMap id="OrderDetailResultSet"
+		type="OrderDetail">
+		<result column="ORDER_NO" property="orderNo" />
+		<result column="PAY_CODE" property="payCode" />
+		<result column="TOTAL_PRICE" property="totalPrice" />
+		<result column="ORDER_WANT" property="orderWant" />
+		<result column="DELIVERY_STATUS" property="deliveryStatus" />
+		<result column="ORDER_DATE" property="orderDate" />
+		<result column="REFUND_DATE" property="refundDate" />
+		<result column="MEM_NO" property="memNo" />
+		<result column="ADDRESS_NO" property="addressNo" />
+		<result column="ADDRESS" property="address" />
+		<result column="PHONE" property="phone" />
+	</resultMap>
+
+	<!--  주문상품(오더지) 테이블 -->
+		<resultMap type="OrderProduct" id="OrderProductResultSet">
+		<result column="OD_ID" property="odId" />
+		<result column="QUANTITY" property="quantity" />
+		<result column="PRICE" property="price" />
+		<result column="ORDER_NO" property="orderNo" />
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="REFUND_REQUEST" property="refundRequest" />
+	</resultMap>
+	
+	   
 	
 	<!-- 상품조회 전체조회 -->
 	<select id="selectList"
@@ -202,4 +229,50 @@
 			SET REVIEW_STATUS = 'N'
 			WHERE REVIEW_NO = #{reviewNo}
 	</select>
+		<!--  회원번호로 오더지 긁어오기 -->
+		<select id="selectOrderDetail"
+		parameterType="_int"
+			resultMap="OrderDetailResultSet">
+		SELECT * 
+		  FROM ORDER_DETAIL 
+		 WHERE MEM_NO = #{mno} 
+	</select>
+	<!-- 주문번호을 이용해서 오더지 가져오기 -->
+		<select id="selectOrderProduct1"
+		parameterType="_int"
+			resultMap="OrderProductResultSet">
+		SELECT * 
+		  FROM ORDER_PRODUCT 
+		 WHERE ORDER_NO = #{ono}  
+	</select>
+				<!-- 상품상세조회 상품 정보 구하는 쿼리문 -->
+	<select id="selectProduct1"
+		parameterType="_int"
+			resultMap="productResultSet">
+		SELECT * 
+		  FROM PRODUCT 
+		 WHERE PRODUCT_NO = #{pno}
+	</select>
+	    	<!--  관리자 배송시스템에서  배송 보내주면 배송상태 바꾸는 쿼리 -->
+			<update id="orderDelivery"
+			parameterType="_int">
+		UPDATE ORDER_DETAIL   
+		 	 SET DELIVERY_STATUS = 'Y' 
+			WHERE ORDER_NO = #{orderNo}  
+    	</update>
+    	    	  	<!--  환불 요청 들어온 것 승인해주는 쿼리문  -->
+		<update id="doRefund"
+			parameterType="_int">
+		UPDATE ORDER_PRODUCT    
+		 	 SET REFUND_REQUEST = '환불승인완료'   
+			WHERE OD_ID = #{odId}   
+    	</update>
+    			<!--  그냥 모든 오더지 긁어오기 -->
+		<select id="selectOrderDetail1"
+		parameterType="_int"
+			resultMap="OrderDetailResultSet">
+		SELECT * 
+		  FROM ORDER_DETAIL 
+	</select>
+    	
 </mapper>

@@ -111,6 +111,20 @@ public class OneClassServiceImpl implements OneClassService {
 		return oneClassDao.deleteRegist(sqlSession, ocrno);
 	}
 	
+	
+
+	@Override
+	public int countReservation(OneClassRegist ocr) {
+		return oneClassDao.countReservation(sqlSession,ocr);
+	}
+	
+	@Transactional
+	@Override
+	public int deleteChatMem(OneClassRegist oc) {
+		return oneClassDao.deleteChatMem(sqlSession, oc);
+	}
+
+	
 	/* 
 	 * 여기서부턴 아임 포트 통신용 메소드	 
 	 */

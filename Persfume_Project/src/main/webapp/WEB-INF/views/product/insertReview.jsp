@@ -14,7 +14,7 @@
 #wrap {
     font-family: 'Helvetica Neue', Arial, sans-serif;
 
-    margin-top: 200px;
+    margin: 60px 0;
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -81,14 +81,32 @@ img {
     border-radius: 5px;
     object-fit: cover;
 }
-
+.content-area {
+		text-align: center;
+		}
+        .content-title{
+            background: url(resources/images/perfume-subtitle.jpg);
+            height: 320px;
+            background-size: cover;
+            background-position: center;
+            object-fit: cover;
+            text-align: center;
+            line-height: 320px;
+            font-size: 50px;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 100%;
+        }
 </style>
 
 </head>
 <body>
    <jsp:include page="../common/header.jsp" />   
-<div id=wrap>
+     <div class="content-title" id="home">Perfume</div>
+     
+<div id=wrap class="content-area">
  
+ 	<div id="home"></div>
  
     <div class="review-container">
             <h1>리뷰 작성하기</h1>

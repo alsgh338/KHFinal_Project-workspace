@@ -171,11 +171,11 @@ h1 {
                           <c:choose>
                      		   <c:when test="${op.orderNo == od.orderNo}"><td>${od.orderDate}</td>
           
-                     		    <c:if test="${od.deliveryStatus eq 'N'}"> <td>배송완료</td></c:if>
-               					<c:if test="${od.deliveryStatus eq 'Y'}"><td>배송준비</td></c:if> 
-	                                   <c:if test="${od.deliveryStatus eq 'N'}"><td></td></c:if> 
-	                                   <c:if test="${od.deliveryStatus eq 'Y'}">   <td><a href="orderdelivery.po?odId=${op.odId}&pno=${op.productNo}&mno=${od.memNo}&ono=${od.orderNo}" onclick="del();">택배 발송</a></td> </c:if>                    
-                     		  <td>${op.refundRequest}</td>
+                     		    <c:if test="${od.deliveryStatus eq 'Y'}"> <td>배송완료</td></c:if>
+               					<c:if test="${od.deliveryStatus eq 'N'}"><td>배송준비</td></c:if> 
+	                                   <c:if test="${od.deliveryStatus eq 'Y'}"><td></td></c:if> 
+	                                   <c:if test="${od.deliveryStatus eq 'N'}">   <td><a href="orderdelivery.po?odId=${op.odId}&pno=${op.productNo}&mno=${od.memNo}&ono=${od.orderNo}" onclick="del();">택배 발송</a></td> </c:if>                    
+                     			  <td>${op.refundRequest}</td>
                      		  	 <c:if test="${op.refundRequest == '환불심사중'}"><td>
                      		  	 <form action="doRefund.po" method="post">
                      		  	 <input type="number" style="display:none;" name="odId" value="${op.odId}"  /> <button type="submit">환불승인</button> </form></td></c:if> 

@@ -29,7 +29,7 @@
 			resultType="_int">
 		SELECT SUM(TOTAL_PRICE)
 		  FROM ORDER_DETAIL
-		 WHERE REFUND_DATE IS NULL
+		 WHERE REFUND_DATE IS NOT NULL
 	</select>
 	
 	
@@ -67,62 +67,48 @@
 	SELECT d.ORDER_DATE, NVL(SUM(od.TOTAL_PRICE), 0) AS TOTAL_PRICE
 	  FROM date_range d
 	  LEFT JOIN ORDER_DETAIL od
-	    ON d.ORDER_DATE = TRUNC(od.ORDER_DATE) AND od.REFUND_DATE IS NULL
+	    ON d.ORDER_DATE = TRUNC(od.ORDER_DATE)
 	 GROUP BY d.ORDER_DATE
 	 ORDER BY d.ORDER_DATE
 	</select>
 	
- 	<select id="scentSale"
- 			parameterType="String"
-			resultMap="chartResultSet">
-			
-		<choose>
-
-			<when test = "#{note} == 'TOP'">
-			
-			SELECT TOP_NOTE AS SCENT, TOTAL_SALES AS SALE_COUNT
-			FROM (
-			    SELECT TOP_NOTE, SUM(QUANTITY) AS TOTAL_SALES
-			    FROM product p
-			    JOIN order_product op ON p.PRODUCT_NO = op.PRODUCT_NO
-			    GROUP BY TOP_NOTE
-			    ORDER BY TOTAL_SALES DESC
-			)
-			WHERE ROWNUM &lt;= 5
-			
-			</when>
-			
-			<when test = "#{note} == 'MIDDLE'">
-			
-			SELECT MIDDLE_NOTE AS SCENT, TOTAL_SALES AS SALE_COUNT
-			FROM (
-			    SELECT MIDDLE_NOTE, SUM(QUANTITY) AS TOTAL_SALES
-			    FROM product p
-			    JOIN order_product op ON p.PRODUCT_NO = op.PRODUCT_NO
-			    GROUP BY MIDDLE_NOTE
-			    ORDER BY TOTAL_SALES DESC
-			)
-			WHERE ROWNUM &lt;= 5
-			
-			</when>
-			
-			<otherwise>
-			 
-			SELECT BASE_NOTE AS SCENT, TOTAL_SALES AS SALE_COUNT
-			FROM (
-			    SELECT BASE_NOTE, SUM(QUANTITY) AS TOTAL_SALES
-			    FROM product p
-			    JOIN order_product op ON p.PRODUCT_NO = op.PRODUCT_NO
-			    GROUP BY BASE_NOTE
-			    ORDER BY TOTAL_SALES DESC
-			)
-			WHERE ROWNUM &lt;= 5
-			
-			</otherwise>
-			
-		</choose>
-
-	</select>
+ 	<select id="scentSale" parameterType="string" resultMap="chartResultSet">
+    <choose>
+        <when test='note == "TOP"'>
+            SELECT TOP_NOTE AS SCENT, SALE_COUNT
+            FROM (
+                SELECT TOP_NOTE, SUM(QUANTITY) AS SALE_COUNT
+                FROM product p
+                JOIN order_product op ON p.PRODUCT_NO = op.PRODUCT_NO
+                GROUP BY TOP_NOTE
+                ORDER BY SALE_COUNT DESC
+            )
+            WHERE ROWNUM &lt;= 5
+        </when>
+        <when test='note == "MIDDLE"'>
+            SELECT MIDDLE_NOTE AS SCENT, SALE_COUNT
+            FROM (
+                SELECT MIDDLE_NOTE, SUM(QUANTITY) AS SALE_COUNT
+                FROM product p
+                JOIN order_product op ON p.PRODUCT_NO = op.PRODUCT_NO
+                GROUP BY MIDDLE_NOTE
+                ORDER BY SALE_COUNT DESC
+            )
+            WHERE ROWNUM &lt;= 5
+        </when>
+        <otherwise>
+            SELECT BASE_NOTE AS SCENT, SALE_COUNT
+            FROM (
+                SELECT BASE_NOTE, SUM(QUANTITY) AS SALE_COUNT
+                FROM product p
+                JOIN order_product op ON p.PRODUCT_NO = op.PRODUCT_NO
+                GROUP BY BASE_NOTE
+                ORDER BY SALE_COUNT DESC
+            )
+            WHERE ROWNUM &lt;= 5
+        </otherwise>
+    </choose>
+</select>
 	
 	<select id="productStock"
 		resultMap="chartResultSet">

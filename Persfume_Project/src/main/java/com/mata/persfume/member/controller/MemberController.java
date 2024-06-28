@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -261,7 +262,7 @@ public class MemberController {
 		
 		// System.out.println("이렇게 해도 넘어오나 ? : " + m.getMemId());
 		
-			System.out.println("체크한거 잘 넘어오나? : " + saveId);
+		//	System.out.println("체크한거 잘 넘어오나? : " + saveId);
 		
 		// 아이디 저장 로직 추가
 		if(saveId != null && saveId.equals("y")) {
@@ -300,15 +301,19 @@ public class MemberController {
 		bcryptPasswordEncoder.matches(m.getMemPwd(), loginMember.getMemPwd())) {
 		// 로그인 성공
 			 
-		
-		session.setAttribute("loginMember", loginMember);
+		if(loginMember.getMemNo() == 0){
+			session.setAttribute("loginMember", loginMember);
+
+			mv.setViewName("redirect:/../persfumeAdmin");
+			
+		}else {session.setAttribute("loginMember", loginMember);
 			 
 		session.setAttribute("alertMsg", "성공적으로 로그인이 되었습니다.");
 	
 		
 		System.out.println("로그인 성공!!!");
 			 
-		mv.setViewName("redirect:/");
+		mv.setViewName("redirect:/");}
 			 
 		 }else {
 			 
@@ -780,7 +785,7 @@ public class MemberController {
 		
 	}
 	
-	@PostMapping("myOrder.me")
+	@RequestMapping("myOrder.me")
 	public String myOrder(int memNo, Model model){
 		
 //		 System.out.println("주문목록 폼 잘 호출 되나??");
@@ -793,7 +798,9 @@ public class MemberController {
 		ArrayList<OrderProduct> oplist = new ArrayList<>();
 		ArrayList<OrderProduct> oplist2 = new ArrayList<>();
 		ArrayList<Product> plist = new ArrayList<>();
-		ArrayList<ProductReview> relist = new ArrayList<>();
+		
+		ArrayList<Integer> relist = new ArrayList<>();
+		
 		for(int i =0; i<odlist.size(); i++) {
 			if(i == 0) {
 			 oplist = productService.selectOrderProduct1(odlist.get(i).getOrderNo());
@@ -806,9 +813,12 @@ public class MemberController {
 		for(int i = 0; i<oplist.size(); i++) {
 			Product p = productService.selectProduct(oplist.get(i).getProductNo());
 		plist.add(p);
-		ProductReview re = productService.selectReview(oplist.get(i).getOdId());
+		int re = productService.selectReview(oplist.get(i).getOdId());
 		relist.add(re);
+
 		}
+		
+		System.out.println(relist);
 		model.addAttribute("relist", relist);
 		model.addAttribute("odlist", odlist);
 		model.addAttribute("oplist", oplist);
@@ -824,10 +834,8 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping(value="visitcnt.me", produces="text/html; charset=UTF-8")
 	public String insertVisitCount() {
-		
-		Date today = new Date(System.currentTimeMillis());
-		
-		String result = String.valueOf(memberService.insertVisitCount(today));		
+		System.out.println("여기까진 됨");
+		String result = String.valueOf(memberService.insertVisitCount());		
 		return result;
 		
 	}

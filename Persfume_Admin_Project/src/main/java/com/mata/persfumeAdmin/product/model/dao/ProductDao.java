@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.mata.persfumeAdmin.product.model.vo.OrderDetail;
+import com.mata.persfumeAdmin.product.model.vo.OrderProduct;
 import com.mata.persfumeAdmin.product.model.vo.Product;
 import com.mata.persfumeAdmin.product.model.vo.ProductImg;
 import com.mata.persfumeAdmin.product.model.vo.ProductReview;
@@ -90,6 +92,22 @@ public class ProductDao {
 		
 		return sqlSession.insert("productMapper.insertProductImg2",pi);
 	}
-
-	
+	public ArrayList<OrderDetail> selectOrderDetail(SqlSessionTemplate sqlSession, int mno) {
+		 return (ArrayList)sqlSession.selectList("productMapper.selectOrderDetail", mno);
+	}
+	public ArrayList<OrderProduct> selectOrderProduct1(SqlSessionTemplate sqlSession, int ono) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectOrderProduct1", ono);
+	}
+	public Product selectProduct1(SqlSessionTemplate sqlSession, int pno) {
+		 return sqlSession.selectOne("productMapper.selectProduct1", pno);
+		}
+	public int orderDelivery(SqlSessionTemplate sqlSession, int ono) {
+		return sqlSession.update("productMapper.orderDelivery", ono);
+	}
+	public int doRefund(SqlSessionTemplate sqlSession, int odId) {
+		return sqlSession.update("productMapper.doRefund", odId);
+	}
+	public ArrayList<OrderDetail> selectOrderDetail1(SqlSessionTemplate sqlSession) {
+		 return (ArrayList)sqlSession.selectList("productMapper.selectOrderDetail1");
+	}
 }

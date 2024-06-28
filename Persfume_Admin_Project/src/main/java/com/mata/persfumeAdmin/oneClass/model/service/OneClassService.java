@@ -33,12 +33,14 @@ public interface OneClassService {
 	ArrayList<OneClassReview> selectReviewList(String octc);
 	
 	int deleteReview(int ocrno);
+
+	int deleteChatMem(OneClassRegist oc);
 	
 	int deleteOneClass(int ocno);
 	int restoreOneClass(int ocno);
 	int deleteRegist(String ocrno);
 	
-	
+	int countReservation(OneClassRegist ocr);
 	
 	// 아임 포트 결제 및 환불용 메소드	
 	// 결제 <-> 환불 관련 토큰 발급

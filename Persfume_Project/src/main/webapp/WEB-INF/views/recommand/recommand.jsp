@@ -361,7 +361,7 @@
         </div>
         <div id="result-data">
             <div id="result-text">
-                <span>xxx</span>님의 향수는...
+                <span>${sessionScope.loginMember.memName }</span>님의 향수는...
             </div>
             <div id="result-main">
                 <div id="result-main-title">
@@ -414,8 +414,6 @@
         let categoryAnswer ="";
         let reviewStart = "";
         let reviewEnd = "";
-        let priceStart = "";
-        let priceEnd = "";
 
         function startTest(){
             // main.style.WebkitAnimation = "fade-out .3s ease";
@@ -435,7 +433,7 @@
 
         function goNext(qIndex){
             console.log(qIndex);
-            if(qIndex === 9){
+            if(qIndex === 8){
                 goResult();
             } else{
                 var q = document.querySelector("#qna-question");
@@ -446,7 +444,7 @@
                 }
 
                 var progress = document.querySelector('#progress-bar');
-                progress.style.width=(100/9) * (qIndex+1) + '%';
+                progress.style.width=(100/8) * (qIndex+1) + '%';
             }
 
             
@@ -511,8 +509,6 @@
                     categoryAnswer : categoryAnswer ,
                     reviewStart : reviewStart,
                     reviewEnd : reviewEnd,
-                    priceStart : priceStart,
-                    priceEnd : priceEnd,
                     memNo : ${ sessionScope.loginMember.memNo},
                 },
                 success : function(result){
@@ -526,20 +522,22 @@
                     const renderStartTime = performance.now();
 
                     //여기서 화면에 그리기 시작
-                    $("#result-main-title").text(result.productName);
                     
-                    var contextPath = "../persfumeAdmin/" + result.thumbnailImg;
-                    console.log(contextPath);
-                    var imgTag = $('<img>').attr('src', contextPath).attr('alt', contextPath);
-                    
-                    $("#result-main-img").append(imgTag);
-                    $("#result-main-content").text(result.productExplain);
+                        $("#result-main-title").text(result.productName);
+                        
+                        var contextPath = "../persfumeAdmin/" + result.thumbnailImg;
+                        console.log(contextPath);
+                        var imgTag = $('<img>').attr('src', contextPath).attr('alt', contextPath);
+                        
+                        $("#result-main-img").append(imgTag);
+                        $("#result-main-content").text(result.productExplain);
 
-                    $("#result-main-notes>table tr:nth-child(1)>td").text(result.topNote);
-                    $("#result-main-notes>table tr:nth-child(2)>td").text(result.middleNote);
-                    $("#result-main-notes>table tr:nth-child(3)>td").text(result.baseNote);
+                        $("#result-main-notes>table tr:nth-child(1)>td").text(result.topNote);
+                        $("#result-main-notes>table tr:nth-child(2)>td").text(result.middleNote);
+                        $("#result-main-notes>table tr:nth-child(3)>td").text(result.baseNote);
 
-                    $("#detailBtn").attr("onclick","location.href='detail.po?pno="+result.productNo+"'");
+                        $("#detailBtn").attr("onclick","location.href='detail.po?pno="+result.productNo+"'");
+
                     
                     
 
@@ -593,7 +591,7 @@
                 { name : '아쿠아', value : 0, key : 8},
             ]
 
-            for(let i =0 ; i < 9 ; i++){
+            for(let i =0 ; i < 8 ; i++){
                 if(i == 0){
                     genderAnswer = qnaList[i].a[selected[i]].type[0];
                 } else if (i == 6){
@@ -602,10 +600,7 @@
                     reviewStart = qnaList[i].a[selected[i]].type[0];
                     reviewEnd = qnaList[i].a[selected[i]].type[1];
 
-                } else if (i == 8){
-                    priceStart = qnaList[i].a[selected[i]].type[0];
-                    priceEnd = qnaList[i].a[selected[i]].type[1];
-                } else {
+                }else {
                     var target = qnaList[i].a[selected[i]];
                     for(let j = 0; j < target.type.length; j++){
                         for(let k = 0; k <pointArray.length; k++){

@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mata.persfumeAdmin.product.model.service.ProductService;
+import com.mata.persfumeAdmin.product.model.vo.OrderDetail;
+import com.mata.persfumeAdmin.product.model.vo.OrderProduct;
 import com.mata.persfumeAdmin.product.model.vo.Product;
 import com.mata.persfumeAdmin.product.model.vo.ProductImg;
 import com.mata.persfumeAdmin.product.model.vo.ProductReview;
@@ -402,6 +404,86 @@ public class ProductController {
 			
 			// 수정파일명 문자열을 리턴
 			return changeName;
+		}
+		
+		@GetMapping("productDelivery.po")
+		public ModelAndView productDelivery( ModelAndView mv) {
+			
+			
+			
+			ArrayList<OrderDetail> odlist = productService.selectOrderDetail1();
+			
+			
+			ArrayList<OrderProduct> oplist = new ArrayList<>();
+			ArrayList<OrderProduct> oplist2 = new ArrayList<>();
+			ArrayList<Product> plist = new ArrayList<>();
+			
+			for(int i =0; i<odlist.size(); i++) {
+				if(i == 0) {
+				 oplist = productService.selectOrderProduct1(odlist.get(i).getOrderNo());
+				}else {
+					oplist2 = productService.selectOrderProduct1(odlist.get(i).getOrderNo());
+					oplist.addAll(oplist2);
+				}
+				
+			}// 반복문 종료
+			for(int i = 0; i<oplist.size(); i++) {
+				Product p = productService.selectProduct1(oplist.get(i).getProductNo());
+			plist.add(p);
+			}
+			mv.addObject("odlist", odlist);
+			mv.addObject("oplist", oplist);
+			mv.addObject("plist", plist).setViewName("Product/DeliveryListView");
+
+			
+
+			return mv;
+			
+		}
+		
+		@GetMapping("orderdelivery.po")
+		public ModelAndView orderDelivery(ModelAndView mv, int mno, int odId, int pno, int ono) {
+			int result = productService.orderDelivery(ono);
+			
+			ArrayList<OrderDetail> odlist = productService.selectOrderDetail(mno);
+			
+			
+			ArrayList<OrderProduct> oplist = new ArrayList<>();
+			ArrayList<OrderProduct> oplist2 = new ArrayList<>();
+			ArrayList<Product> plist = new ArrayList<>();
+			
+			for(int i =0; i<odlist.size(); i++) {
+				if(i == 0) {
+				 oplist = productService.selectOrderProduct1(odlist.get(i).getOrderNo());
+				}else {
+					oplist2 = productService.selectOrderProduct1(odlist.get(i).getOrderNo());
+					oplist.addAll(oplist2);
+				}
+				
+			}// 반복문 종료
+			for(int i = 0; i<oplist.size(); i++) {
+				Product p = productService.selectProduct1(oplist.get(i).getProductNo());
+			plist.add(p);
+			}
+			mv.addObject("odlist", odlist);
+			mv.addObject("oplist", oplist);
+			mv.addObject("plist", plist).setViewName("Product/DeliveryListView");
+
+			
+			
+			
+			return mv;
+			
+		}
+		@PostMapping("doRefund.po")
+		public ModelAndView doRefund(int odId , ModelAndView mv) {
+			
+			int result = productService.doRefund(odId);
+			
+			productDelivery(mv);
+			
+			return mv;
+		
 		}
 
 }

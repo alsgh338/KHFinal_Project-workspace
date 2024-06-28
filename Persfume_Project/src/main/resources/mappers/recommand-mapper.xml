@@ -23,7 +23,9 @@
 			parameterType="recommand"
 			resultMap="productResultSet">
 			
-            SELECT P.PRODUCT_NO, P.PRODUCT_NAME, P.PRODUCT_EXPLAIN,P.TOP_NOTE,P.MIDDLE_NOTE,P.BASE_NOTE, PI.PRODUCT_IMG_PATH AS THUMBNAIL_IMG
+			SELECT *
+			FROM (
+         	 SELECT P.PRODUCT_NO, P.PRODUCT_NAME, P.PRODUCT_EXPLAIN,P.TOP_NOTE,P.MIDDLE_NOTE,P.BASE_NOTE, PI.PRODUCT_IMG_PATH AS THUMBNAIL_IMG,ROW_NUMBER() OVER (ORDER BY P.PRODUCT_NO) AS RN
               FROM PRODUCT P
               JOIN PRODUCT_IMG PI ON(P.PRODUCT_NO = PI.PRODUCT_NO)
               LEFT JOIN PRODUCT_REVIEW PR ON(P.PRODUCT_NO = PR.PRODUCT_NO)
@@ -34,17 +36,6 @@
 			   OR P.MIDDLE_NOTE LIKE '%'||#{scentAnswer}||'%'
 			   OR P.BASE_NOTE LIKE '%'||#{scentAnswer}||'%')              
 			  AND P.PRODUCT_STATUS = 'Y'
-              <choose>
-              	<when test='priceStart == 0'>
-	              	AND P.PRODUCT_PRICE &lt;= #{priceEnd}
-              	</when>
-              	<when test='priceEnd == 0'>
-             		AND P.PRODUCT_PRICE &gt;= #{priceStart}
-              	</when>
-              	<otherwise>
-              		AND P.PRODUCT_PRICE BETWEEN #{priceStart} AND #{priceEnd}
-              	</otherwise>
-           	  </choose>
            	   GROUP BY P.PRODUCT_NO, P.PRODUCT_NAME, P.PRODUCT_EXPLAIN,P.TOP_NOTE,P.MIDDLE_NOTE,P.BASE_NOTE, PI.PRODUCT_IMG_PATH
               
         	  <choose>
@@ -58,6 +49,8 @@
               		HAVING COUNT(PR.REVIEW_NO) BETWEEN #{reviewStart} AND #{reviewEnd}
               	</otherwise>
            	  </choose>
+           	  )
+           	  WHERE RN = 1
 
 	</select>
 	

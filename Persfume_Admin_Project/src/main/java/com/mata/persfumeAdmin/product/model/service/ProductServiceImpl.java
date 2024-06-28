@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mata.persfumeAdmin.product.model.dao.ProductDao;
+import com.mata.persfumeAdmin.product.model.vo.OrderDetail;
+import com.mata.persfumeAdmin.product.model.vo.OrderProduct;
 import com.mata.persfumeAdmin.product.model.vo.Product;
 import com.mata.persfumeAdmin.product.model.vo.ProductImg;
 import com.mata.persfumeAdmin.product.model.vo.ProductReview;
@@ -101,6 +103,37 @@ public class ProductServiceImpl implements ProductService{
 		
 		return productDao.insertProductImg2(sqlSession, pi2);
 	}
+
+	@Override
+	public ArrayList<OrderDetail> selectOrderDetail(int mno) {
+		return productDao.selectOrderDetail(sqlSession, mno);
+	}
+
+	@Override
+	public ArrayList<OrderProduct> selectOrderProduct1(int ono) {
+		return productDao.selectOrderProduct1(sqlSession, ono);
+	}
+
+	@Override
+	public Product selectProduct1(int pno) {
+		return productDao.selectProduct1(sqlSession, pno);
+	}
+
+	@Override
+	public int orderDelivery(int ono) {
+		return productDao.orderDelivery(sqlSession, ono);
+	}
+
+	@Override
+	public int doRefund(int odId) {
+		return productDao.doRefund(sqlSession, odId);
+	}
+
+	@Override
+	public ArrayList<OrderDetail> selectOrderDetail1() {
+		return productDao.selectOrderDetail1(sqlSession);
+	}
+	
 	
 
 

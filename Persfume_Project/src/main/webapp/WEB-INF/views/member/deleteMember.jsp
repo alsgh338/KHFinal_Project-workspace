@@ -19,8 +19,8 @@
 	text-align: center;
 	line-height: 320px;
 	font-size: 50px;
-	text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px
-		black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
 	color: white;
 	width: 100%;
 }
@@ -43,29 +43,55 @@
 
 
 /* 여기서부터 비번찾기 css */
-* {
-	font-family: "Nanum Gothic", sans-serif;
-}
+* { font-family: "Nanum Gothic", sans-serif;}
 
-#outer {
-	width: 1000px;
-	/* border: 1px solid red; */
-	margin: auto;
-	box-sizing: border-box;
-	text-align: center; /* 버튼을 가운데로 정렬하기 위한 설정 */
-}
+.content {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        text-align: center;
+    }
+
+	.button {
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+	
+
+	.input-box {
+        width: calc(100% - 40px);
+        max-width: 400px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+
 
 </style>
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />
-
+<div class="content-title" id="home"></div>
 <br><br><br>
-<div id="outer">
+<div class="content">
 	<form method="post" action="delete.me">
-	비밀번호 : <input type="password" id="CheckPwd" name="CheckPwd" >
+		<label for="Pwd"></label>비밀번호<br>
+		<input type="password" id="Pwd" name="CheckPwd" class="input-box"><br><br>
 	
-	<button type="submit" id="delBtn">회원탈퇴</button>
+	<button type="submit" id="delBtn" class="button">회원탈퇴</button>
 	<input type="hidden" name="memId" value="${ sessionScope.loginMember.memId }">
 	<input type="hidden" name="memPwd" value="${ sessionScope.loginMember.memPwd }">
 	</form>

@@ -38,7 +38,7 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
+	
 		<jsp:include page="common/adminNav.jsp"/>
 
         <!-- Content Wrapper -->
@@ -328,7 +328,8 @@
 					note : note
 				},
 				success : function (list) {
-					for(let i in list){    	
+					for(let i in list){ 
+						console.log(list[i].scent +  list[i].saleCount);
 						scentList.push(list[i].scent);
 						scentSale.push(list[i].saleCount);
 						drawChart();
@@ -626,7 +627,7 @@
     		var myPieChart = new Chart(piectx, {
     		  type: 'doughnut',
     		  data: {
-    		    labels: ["Board", "Share"],
+    		    labels: scentList,
     		    datasets: [{
     		      data: scentSale,
     		      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
@@ -729,6 +730,8 @@
 		}
 
     	$(function(){
+    		
+    		console.log(${ sessionScope.loginMember });
     		
         	/* 일일 접속자 수 관련 AJAX */
         	$.ajax({

@@ -28,14 +28,14 @@
 
         .content-title{
             height: 320px;
-            background: url(resources/images/class_title.jpg);
+            background: url(resources/images/oneClass-subtitle.jpg);
             background-size: cover;
             background-position: center;
             object-fit: cover;
             text-align: center;
             line-height: 320px;
             font-size: 50px;
-            text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+        	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             color: white;
             width: 100%;
         }
@@ -310,7 +310,7 @@
                 $(this).toggleClass("onHover");
             });
             
-            $(".oneday-class").on("click",function(){
+            $(".oneday-class:not(.end-class)").on("click",function(){
             	let ocno = $(this).children().eq(0).val();
             	location.href = "detail.oc?ocno=" + ocno;
             });

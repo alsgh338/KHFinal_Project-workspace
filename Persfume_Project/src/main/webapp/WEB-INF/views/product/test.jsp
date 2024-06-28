@@ -9,28 +9,32 @@
     request.setAttribute("productNoSet", productNoSet);
 %>
   
-            
+  <div class="content-right"> 
+               <div class="content-sort" style="display: block;" >
+           
+                    <p>
+                        <a href="list.po">신상순</a>
+                        <a href="poplist.po">판매순</a>
+                        <a href="desclist.po">고가순</a>
+                        <a href="asclist.po">저가순</a>
+                    </p>
+              </div>
 
            
-          
-	
+        
                <c:if test="${ requestScope.list == null }"> <div>검색결과가 없습니다.</div> </c:if>
 		<c:forEach var="p" items="${ requestScope.list }" varStatus="status">
 		
-		  <c:choose>
-        <c:when test="${ not productNoSet.contains(p.productNo) }">
-       
-		
             <div class="oneday-class" name="${p.productNo}">
                 <div class="class-img">
-                    <img src="${ilist[status.index].productImgPath}" alt="상품이미지">
+                    <img src="../persfumeAdmin/${ilist[status.index].productImgPath}" alt="상품이미지">
                 </div>
 
                 <div class="class-data">
                     <div class="class-teacher"> 
                       ${p.productName}
                     </div>
-                       <div class="wishlist-badge">LIKE: <span>${falist[status.index]}</span></div>
+                      <div class="wishlist-badge">LIKE: <span>${falist[status.index]}</span></div>
                 </div>
                 
                 <div class="class-title">  ${p.productExplain}
@@ -41,10 +45,13 @@
                     <div class="class-price"><fmt:formatNumber value="${p.productPrice * (100-(p.discount))/100}" type="number" />원</div>
                 </div>
             </div>
-            
-                </c:when>
-    </c:choose>
                    </c:forEach>   
+        
+        
+
+          
+            </div>
+                 
                    <script>
 	$(function() {
 		

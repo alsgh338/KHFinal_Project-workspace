@@ -78,6 +78,7 @@
         width: 100%;
         height: 200px;
         overflow: hidden;
+        position: relative;
     }
 
     .event-img img {
@@ -90,6 +91,26 @@
         filter: grayscale(100%); /* 이미지를 회색조로 만듦 */
         opacity: 0.7; /* 이미지 투명도 조정 */
     }
+    
+    .expired::after {
+        	width: 100%;
+            height: 100%;
+            background-color : rgba(100,100,100,0.5);
+        	border-radius : 10px 10px 0 0;
+        	display: flex;
+            position: absolute;
+            top : 0;
+            left : 0;
+            content: '기간 만료';
+            font-size : 50px;
+            color : white;
+            text-shadow : 0 19px 38px black, 0 15px 12px black;
+            justify-content : center;
+            align-items: center;
+            z-index: 700;
+    }
+    
+    
 	
     .event-title {
         font-size: 20px;

@@ -6,10 +6,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mata.persfume.common.model.vo.PageInfo;
+import com.mata.persfume.member.model.dao.MemberDao;
+import com.mata.persfume.member.model.vo.Member;
 import com.mata.persfume.product.model.dao.ProductDao;
 import com.mata.persfume.product.model.vo.Cart;
 import com.mata.persfume.product.model.vo.Coupon;
@@ -28,7 +28,6 @@ public class ProductServiceImpl implements ProductService {
 	private SqlSessionTemplate sqlSession;
 	@Autowired
 	private ProductDao productDao;
-	
 	
 	@Override
 	public int selectListCount() {
@@ -329,11 +328,20 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductReview selectReview(int pno) {
+	public int selectReview(int pno) {
 		
 		return productDao.selectReview(sqlSession, pno);
 	}
 
+	@Override
+	public Member selectMember(int memNo) {
+		// 회원번호로 회원정보 긁어가기 홍현 0626
+		return productDao.selectMember(sqlSession, memNo);
+	}
 
+	@Override
+	public int couponDelete(MemCoupon mc) {
+		return productDao.couponDelete(sqlSession, mc);
+	}
 
 }
