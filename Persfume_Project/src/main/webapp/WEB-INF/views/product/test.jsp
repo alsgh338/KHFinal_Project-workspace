@@ -61,7 +61,7 @@
 			
 			console.log(pno);
 			
-			location.href = "http://localhost:8006/persfume/detail.po?pno=" + pno;
+			location.href = "/persfume/detail.po?pno=" + pno;
 		});
 	});
 </script>

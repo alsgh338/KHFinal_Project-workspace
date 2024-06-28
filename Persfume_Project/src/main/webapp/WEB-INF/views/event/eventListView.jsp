@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트 목록</title>
+<title>persfume</title>
 
 <style>
     body {

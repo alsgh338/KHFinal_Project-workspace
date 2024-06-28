@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>persfume</title>
 
     <!-- 구글 폰트/아이콘 API-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -401,16 +401,13 @@
             <input type="text" id="want" name="want" placeholder="배송관련 요청사항을 입력해주세요." style="width:350px;" onkeyup='printName()' />
         </div>
         <input type="text" id="want1" style="display:none">
-        <div id="c5_d7">
-            <div id="c5_d7L">쿠폰적용</div>
-            <div id="c5_d7R">
-                <button type="button" id="asdf" class="dark-button" onclick="test1();">쿠폰 조회</button>
-                <input type="text" id="mno" value="${requestScope.memNo1}" style="display:none;">
-                <select name="couponlist" id="couponlist"></select>
-                <button id="coupon" type="button" class="dark-button" style="display:none" onclick="test2();">쿠폰 적용</button>
-            </div>
-            <div id="noticecoupon" style="display:none; margin-left:140px;">결제완료 할 경우 해당 쿠폰이 사용됩니다.</div>
-        </div>
+                    		<div id="c5_d7"><div id="c5_d7L">쿠폰적용</div> <div id="c5_d7R"><button type="button" class="dark-button" id="asdf" onclick="test1();">쿠폰 조회</button> <input type="text" id="mno" value="${requestScope.memNo}" style="display:none;"> 
+            		<select name="couponlist" id="couponlist" onchange="isRun();">
+            			<option value='3' selected> 쿠폰을 조회해주세요. </option>         		
+            		</select></div>
+		           <div id="noticecoupon" style="display:none; margin-left:140px;">결제완료 할 경우 해당 쿠폰이 사용됩니다.</div>
+            		
+            		</div>
     </div>
        </div>   
        
@@ -569,6 +566,59 @@
 
 </script>   
 
+<script>
+
+let count6 = Number(document.getElementById('buyprice3').innerText.replace(/[^\d.-]/g, '')); // 총 할인 금액
+let count5 = Number(document.getElementById('buyprice2').innerText.replace(/[^\d.-]/g, '')); // 결제 금액
+let count4 = Number(document.getElementById('buyprice1').innerText.replace(/[^\d.-]/g, '')); // 하단 최종 결제 금액
+
+// 쿠폰 적용시 할인 되게 하자
+function isRun() {
+	
+	if($("select[name=couponlist] option:selected").val() != 3 ){
+		console.log("1");
+		calcPay('y');
+	} else{
+		console.log("2");
+		calcPay('N');
+	}
+}
+
+function calcPay(sale) {
+	console.log("dd");
+	Number(document.getElementById('buyprice3').innerText);
+	
+	
+	console.log(count6+" / "+count5+" / "+count4);
+	
+	let count3 = 0;
+	let count2 = 0;
+	let count1 = 0;
+	
+	if(sale === 'y'){
+		console.log(count6+" / "+count5+" / "+count4);
+		count3 = count6 + 10000;
+    	count2 = count5 - 10000;
+    	count1 = count4 - 10000;
+	} else{
+		$("#coupon").attr("disabled", false);
+		console.log(count6+" / "+count5+" / "+count4);
+		count3 = count6;
+    	count2 = count5;
+    	count1 = count4;
+	}
+
+	
+    
+    $("#buyprice1").html(count2.toLocaleString('ko-KR'));
+    $("#buyprice2").html(count1.toLocaleString('ko-KR'));
+    $("#buyprice3").html(count3.toLocaleString('ko-KR'));
+    
+ 	$("#noticecoupon").css('display','block');
+    
+}
+</script>
+
 <script>	
  	
 const modalOpenButton = document.getElementById('modalOpenButton');
@@ -685,10 +735,7 @@ function selectAll(selectAll)  {
           
        <script>
 		function test1() {
-			
 			$("#asdf").attr("disabled", true);
-			
-			
 			// 사용자가 위에서 입력한 이름, 나이를 서버로 전달 (ajax)
 			$.ajax({
 				url : "ajax1.do",
@@ -697,17 +744,19 @@ function selectAll(selectAll)  {
 					mno : $("#mno").val()
 				},
 				success : function(result) {
-				
 					let resultStr = "";
 					if(result == null){
-						resultStr += "<option> 쿠폰이없습니다. </option>";		
+						resultStr += "<option value='3' selected> 쿠폰이없습니다. </option>";		
 					}else{	
-						for(let i =0 ; i<result.length ;i++){
 						
+						resultStr += "<option value='3' selected>-----------</option>";
+						
+						for(let i =0 ; i<result.length ;i++){
+							
 							if(result[i].coupon_no == 1){
-							  resultStr += "<option id='c1' value='1'> 회원가입쿠폰(1만원 할인) </option>";
+							  resultStr += "<option value='1'> 회원가입쿠폰(1만원 할인) </option>";
 							}else if(result[i].coupon_no == 2){
-							 resultStr += "<option id='c2' value='2'> 설문조사쿠폰(1만원 할인) </option>";
+							 resultStr += "<option value='2'> 설문조사쿠폰(1만원 할인) </option>";
 							}	
 												
 							$("#couponlist").html(resultStr);
@@ -715,7 +764,7 @@ function selectAll(selectAll)  {
 						}
 					}
 						
-				
+
 				},
 				error : function() {
 					console.log("ajax 통신 실패!");

@@ -194,7 +194,7 @@ public class MemberController {
 		mailSender.send(message);
 		
 		
-		return "이메일 전송 성공!!";
+		return "이메일 전송 성공";
 		}
 		
 //		------------------------------------------------------------
@@ -472,6 +472,8 @@ public class MemberController {
 			
 			System.out.println("이런 이메일 없는데?");
 			
+			session.setAttribute("alertMsg", "없는 이메일입니다.");
+			
 			return "redirect:/findId.me";
 			
 		}else {
@@ -653,6 +655,7 @@ public class MemberController {
 			}else {
 				// 실패
 				System.out.println("비번 변경 실패!!");
+			
 				
 				return "member/updatePwd";
 			}
@@ -661,6 +664,8 @@ public class MemberController {
 		}else {
 			// 틀리면
 			System.out.println("너 누구여?!");
+			
+			session.setAttribute("alertMsg", "비밀번호 틀렸습니다.");
 			
 			return "member/updatePwd";
 		}

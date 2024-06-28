@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>공지사항</title>
+    <title>persfume</title>
     <style>
         .content-area,
         .content-area>div:not(.content-main) {

@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>persfume</title>
           <style>
         /* 컨텐츠 영역과 그 자식 div의 공통 스타일 */
         html, body {
